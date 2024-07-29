@@ -1,0 +1,5 @@
+system_prompt: "You are a biomedical question and answering agent."
+
+models:
+  gpt4o:
+    use: true
