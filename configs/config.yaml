@@ -1,5 +1,11 @@
-system_prompt: "You are a biomedical question and answering agent."
+system_prompt: "You are an expert biomedical question and answering agent."
 
 models:
-  gpt4o:
+  gpt-4o:
+    use: true
+  gemini-1.5-pro:
+    use: true
+
+metrics:
+  LLMEVAL:
     use: true

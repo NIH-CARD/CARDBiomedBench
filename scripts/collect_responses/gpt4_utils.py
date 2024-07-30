@@ -1,8 +1,5 @@
-import os
-from openai import OpenAI
-from . import SYSTEM_PROMPT
-
-openai_client = OpenAI(api_key=os.environ.get("OPENAI_API_KEY"))
+from scripts import SYSTEM_PROMPT
+from . import OPENAI_CLIENT
 
 def query_gpt4o(query: str) -> str:
     """
@@ -15,7 +12,7 @@ def query_gpt4o(query: str) -> str:
     - str: The response content from the API or an error message.
     """
     try:
-        chat_completion = openai_client.chat.completions.create(
+        chat_completion = OPENAI_CLIENT.chat.completions.create(
             model='gpt-4o',
             messages=[
                 {"role": "system", "content": SYSTEM_PROMPT},

@@ -1,3 +1,6 @@
+pandas
+tqdm
+argparse
 openai
 google-generativeai
 pyyaml
