@@ -4,7 +4,7 @@ import pandas as pd
 from tqdm import tqdm
 from scripts import MODELS, METRICS
 from scripts.utils import load_dataset, save_responses
-from scripts.collect_responses.gpt4_utils import query_gpt4o
+from scripts.collect_responses.gpt4o_query import query_gpt4o
 from scripts.compute_metrics.prompts import biomedical_grading_prompt
 
 def grade_llm_responses(data: pd.DataFrame, model_list: list, query_col: str='question', answer_col: str='answer', retries: int=5) -> pd.DataFrame:
