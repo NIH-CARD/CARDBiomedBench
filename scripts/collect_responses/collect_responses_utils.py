@@ -52,7 +52,7 @@ def collect_model_responses(model: str, queries: list, query_checker: Callable[[
 
     with ThreadPoolExecutor(max_workers=max_workers) as executor:
         future_to_index = {executor.submit(query_model_retries, query, query_instance, query_checker, retries): i for i, query in enumerate(queries)}
-        for future in tqdm(as_completed(future_to_index), total=len(queries), desc=f"Processing {model}"):
+        for future in tqdm(as_completed(future_to_index), total=len(queries), desc=f"Running queries on {model}"):
             index = future_to_index[future]
             try:
                 response = future.result()
