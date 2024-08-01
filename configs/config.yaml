@@ -1,3 +1,5 @@
+benchmark_filename: CARDBench.csv
+
 system_prompt: "You are an expert neuro question and answering agent."
 
 models:

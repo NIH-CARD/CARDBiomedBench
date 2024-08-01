@@ -1,7 +1,10 @@
 #!/bin/bash
 
-# Define the benchmark filename
-BENCHMARK_FILE_NAME="CARDBench.csv"
+# Define the path to the configuration file
+CONFIG_FILE="configs/config.yaml"
+
+# Extract the benchmark_filename value from the YAML file
+BENCHMARK_FILE_NAME=$(grep 'benchmark_filename' $CONFIG_FILE | awk '{print $2}')
 
 # Set res, scored, and stats filenames accordingly
 RES_FILE_NAME="${BENCHMARK_FILE_NAME%.csv}_res.csv"
