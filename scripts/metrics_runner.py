@@ -1,7 +1,4 @@
 import argparse
-import re
-import pandas as pd
-from tqdm import tqdm
 from scripts import MODELS_DICT, METRICS_DICT, NUM_WORKERS
 from scripts.utils import load_dataset, save_responses
 from scripts.compute_metrics.utils import get_all_model_LLMEVAL
