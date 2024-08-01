@@ -1,6 +1,6 @@
 import argparse
 from scripts import MODELS_DICT, NUM_WORKERS
-from scripts.utils import load_dataset, save_responses
+from scripts.utils import load_dataset, save_dataset
 from scripts.collect_responses.utils import get_all_model_responses
 
 def main():
@@ -24,7 +24,7 @@ def main():
     # TODO DELETE
 
     data = get_all_model_responses(data, model_dict=MODELS_DICT, max_workers=NUM_WORKERS)
-    save_responses(local_res_path, data)
+    save_dataset(local_res_path, data)
     print(f"Responses collected and saved to {local_res_path}.")
 
 if __name__ == "__main__":

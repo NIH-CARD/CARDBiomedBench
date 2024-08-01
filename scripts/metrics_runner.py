@@ -1,6 +1,6 @@
 import argparse
 from scripts import MODELS_DICT, METRICS_DICT, NUM_WORKERS
-from scripts.utils import load_dataset, save_responses
+from scripts.utils import load_dataset, save_dataset
 from scripts.compute_metrics.utils import get_all_model_LLMEVAL
 
 def main():
@@ -20,7 +20,7 @@ def main():
     if "LLMEVAL" in METRICS_DICT:
         data = get_all_model_LLMEVAL(data, grading_model='gpt-4o', model_dict=MODELS_DICT, max_workers=NUM_WORKERS)
 
-    save_responses(local_scored_path, data)
+    save_dataset(local_scored_path, data)
     print(f"Responses scored and saved to {local_scored_path}.")
 
 if __name__ == "__main__":
