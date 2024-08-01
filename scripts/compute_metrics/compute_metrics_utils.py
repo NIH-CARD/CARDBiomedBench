@@ -44,7 +44,7 @@ def get_all_model_LLMEVAL(data: pd.DataFrame, grading_model: str, model_dict: di
             biomedical_grading_prompt(row[query_col], row[gold_col], row[f'{model}_{response_col}'])
             for _, row in data.iterrows()
         ]
-        responses = collect_model_responses(grading_model, grading_prompts, check_LLMEVAL_response, model_dict, retries, max_workers)
+        responses = collect_model_responses(grading_model, grading_prompts, check_LLMEVAL_response, model_dict, max_workers, retries)
         data[f'{model}_LLMEVAL'] = responses
 
     return data
