@@ -4,7 +4,15 @@ from typing import Callable
 from concurrent.futures import ThreadPoolExecutor, as_completed
 
 def check_model_response(response: str) -> bool:
-    ''''''
+    """
+    Checks that a model response to a query was valid and not an error returned by the query instance.
+
+    Parameters:
+    - response (str): The models response
+
+    Returns:
+    - str response if valid, else None
+    """
     if "Error in" not in response:
         return response
     else:
@@ -31,7 +39,7 @@ def query_model_retries(query: str, query_instance: object, query_checker: Calla
         else:
             retry_count += 1
             print(f"Error querying model. Retry {retry_count}/{retries}")
-    return f"ERROR: Failed after {retries} retries."
+    return f"ERROR: Failed getting response for {query} after {retries} retries."
 
 def collect_model_responses(model: str, queries: list, query_checker: Callable[[str], bool], model_dict: dict, max_workers: int, retries: int) -> list:
     """
