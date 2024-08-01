@@ -1,4 +1,14 @@
-.env
-.vscode
-__pycache__
+# Repository Specific
 results/*
+
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# VSCode directory
+.vscode
+
+# Environment variables
+.env
