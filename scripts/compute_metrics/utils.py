@@ -1,59 +1,6 @@
 import pandas as pd
-from tqdm import tqdm
-from concurrent.futures import ThreadPoolExecutor, as_completed
+from scripts.collect_responses.utils import collect_model_responses
 from .prompts import biomedical_grading_prompt
-
-def query_model_retries(query: str, query_instance: object, retries: int) -> str:
-    """
-    Query the model with retries in case of failure.
-
-    Parameters:
-    - query (str): The input query string.
-    - query_instance (object): The model query instance.
-    - retries (int): Number of retries in case of failure.
-
-    Returns:
-    - str: The response from the model or an error message.
-    """
-    retry_count = 0
-    while retry_count < retries:
-        response = query_instance.query(query)
-        if "Error in" not in response:
-            return response
-        else:
-            retry_count += 1
-            print(f"Error querying model. Retry {retry_count}/{retries}")
-    return f"ERROR: Failed after {retries} retries."
-
-def collect_model_responses(model: str, queries: list, model_dict: dict, retries: int=3, max_workers: int=10) -> list:
-    """
-    Collect responses from a specific model for a list of queries in parallel.
-
-    Parameters:
-    - model (str): The model name.
-    - queries (list): List of queries to be processed.
-    - model_dict (dict): Dictionary containing model instances.
-    - retries (int): Number of retries for each query in case of failure.
-    - max_workers (int): Maximum number of threads to use for parallel processing.
-
-    Returns:
-    - list: List of responses from the model.
-    """
-    print(model_dict)
-    query_instance = model_dict[model]['query_instance']
-    responses = [None] * len(queries)
-
-    with ThreadPoolExecutor(max_workers=max_workers) as executor:
-        future_to_index = {executor.submit(query_model_retries, query, query_instance, retries): i for i, query in enumerate(queries)}
-        for future in tqdm(as_completed(future_to_index), total=len(queries), desc=f"Processing {model}"):
-            index = future_to_index[future]
-            try:
-                response = future.result()
-            except Exception as e:
-                response = f"ERROR: Exception {str(e)}"
-            responses[index] = response
-
-    return responses
 
 def get_all_model_LLMEVAL(data: pd.DataFrame, grading_model: str, model_dict: dict, query_col: str='question', gold_col: str='answer', response_col: str='response', retries: int=3, max_workers: int=10) -> pd.DataFrame:
     """
