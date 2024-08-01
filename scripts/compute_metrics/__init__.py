@@ -1,0 +1,1 @@
+import scripts.collect_responses
