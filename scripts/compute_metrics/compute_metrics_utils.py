@@ -1,6 +1,24 @@
 import pandas as pd
-from scripts.collect_responses.utils import collect_model_responses
+import re
 from .prompts import biomedical_grading_prompt
+from scripts.collect_responses.collect_responses_utils import collect_model_responses
+
+def check_LLMEVAL_response(response: str) -> float:
+    """
+    Check the LLMEVAL evaluation response for a valid score.
+
+    Parameters:
+    - response (str): The response from LLMEVAL evaluation.
+
+    Returns:
+    - float: The valid score extracted from the response, or None if no valid score is found.
+    """
+    match = re.search(r"[-+]?[0-9]*\.?[0-9]+", response)
+    if match:
+        number = float(match.group(0))
+        if number in [-1, 0.0, 0.5, 1.0, 1.5, 2.0, 2.5, 3.0]:
+            return number
+    return None
 
 def get_all_model_LLMEVAL(data: pd.DataFrame, grading_model: str, model_dict: dict, max_workers: int, query_col: str='question', gold_col: str='answer', response_col: str='response', retries: int=3) -> pd.DataFrame:
     """
@@ -26,7 +44,7 @@ def get_all_model_LLMEVAL(data: pd.DataFrame, grading_model: str, model_dict: di
             biomedical_grading_prompt(row[query_col], row[gold_col], row[f'{model}_{response_col}'])
             for _, row in data.iterrows()
         ]
-        responses = collect_model_responses(grading_model, grading_prompts, model_dict, retries, max_workers)
+        responses = collect_model_responses(grading_model, grading_prompts, check_LLMEVAL_response, model_dict, retries, max_workers)
         data[f'{model}_LLMEVAL'] = responses
 
     return data

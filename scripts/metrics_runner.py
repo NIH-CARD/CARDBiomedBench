@@ -1,7 +1,7 @@
 import argparse
 from scripts import MODELS_DICT, METRICS_DICT, NUM_WORKERS
-from scripts.utils import load_dataset, save_dataset
-from scripts.compute_metrics.utils import get_all_model_LLMEVAL
+from scripts.scripts_utils import load_dataset, save_dataset
+from scripts.compute_metrics.compute_metrics_utils import get_all_model_LLMEVAL
 
 def main():
     parser = argparse.ArgumentParser(description="Grade responses on the QA benchmark.")

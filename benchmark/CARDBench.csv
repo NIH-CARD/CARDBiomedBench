@@ -1,4 +1,4 @@
-uuid,question,answer,source,Date,Responder 1,Response 2,Source,Date,Responder 2,Notes,Template Questions ,,
+uuid,question,answer,source,Date,Responder 1,Response 2,Source,Date,Responder 2,Notes,Template Questions ,,,,,
 Q1,Is TUBB a druggable gene?,"There are currently 20 approved drugs which target TUBB, indicating that it is a druggable gene.  ","DrugGeneTargets_text_627
 DrugGeneTargets_text_613
 DrugGeneTargets_text_614
@@ -19,15 +19,15 @@ DrugGeneTargets_text_578
 DrugGeneTargets_text_630
 DrugGeneTargets_text_591
 DrugGeneTargets_text_602
-DrugGeneTargets_text_580",7/17/2024,Maya,,,,,,Is [approvedSymbol] a druggable gene?,"There are currently {number_of_approved_drugs} approved drugs which target {approvedSymbol}, indicating that it is a druggable gene.","There are currently no approved drugs targeting {approvedSymbol}, but there are {number_of_potential_targets (not approved yet)} potential targets indicating that it may be a druggable gene."
-Q2,What are the allele frequencies of variant rs12206095 in PD?,"In the GWAS summary statistics for PD from Nalls (2019), single nucleotide polymorphism rs12206095 has an alternate allele (A) frequency of 0.0317, and a reference allele (G) frequency of 0.9683.",PDno23andme_full_gene_notext_198,7/22/2024,Maya,,,,,,What are the allele frequencies of variant x in y?,,
+DrugGeneTargets_text_580",7/17/2024,Maya,,,,,,Is [approvedSymbol] a druggable gene?,"There are currently {number_of_approved_drugs} approved drugs which target {approvedSymbol}, indicating that it is a druggable gene.","There are currently no approved drugs targeting {approvedSymbol}, but there are {number_of_potential_targets (not approved yet)} potential targets indicating that it may be a druggable gene.","There are currently no approved drugs or potential targets for {approvedSymbol}, suggesting that it is not currently considered a druggable gene.","There was one approved drug that targeted {approvedSymbol} but it has been withdrawn, suggesting complications in its druggability.","There were {number_of_withdrawn_drugs} drugs that targeted {approvedSymbol} but they have been withdrawn, suggesting complications in its druggability."
+Q2,What are the allele frequencies of variant rs12206095 in PD?,"In the GWAS summary statistics for PD from Nalls (2019), single nucleotide polymorphism rs12206095 has an alternate allele (A) frequency of 0.0317, and a reference allele (G) frequency of 0.9683.",PDno23andme_full_gene_notext_198,7/22/2024,Maya,,,,,,What are the allele frequencies of variant x in y?,,,,,
 Q3,What are the allele frequencies of variant rs61769339 in AD?,"In GWAS summary statistics for AD from Bellenguez (2022), single nucleotide polymorphism rs61769339 has an alternate allele (A) frequency of 0.1105 and reference
-allele (G) frequency of 0.8895.",AD_combo_gene_notext_UUID_7,7/22/2024,Maya,,,,,,,,
+allele (G) frequency of 0.8895.",AD_combo_gene_notext_UUID_7,7/22/2024,Maya,,,,,,,,,,,
 Q4,What drugs target the gene ACACA? ,"There are no FDA approved drugs targeting the gene ACACA. However the following drugs, Firsocostat
 Pf-05175157, Clesacostat, and Olumacostat Glasaretil are currently in various clinical trial stages. ","DrugGeneTargets_text_11316
 DrugGeneTargets_text_11314
 DrugGeneTargets_text_11315
-DrugGeneTargets_text_11313",7/22/2024,Maya,,,,,,What drugs target the gene x? ,,
+DrugGeneTargets_text_11313",7/22/2024,Maya,,,,,,What drugs target the gene x? ,,,,,
 Q5,Is Rotigotine approved to treat AD?,"Rotigotine has not been approved by the FDA as a treatment for Alzheimer's disease (AD), but it is currently undergoing evaluation in clinical trials for this purpose.","DrugTargetsIndication121923_text_201120
 DrugTargetsIndication121923_text_200835
 DrugTargetsIndication121923_text_201210
@@ -153,7 +153,7 @@ DrugTargetsIndication121923_text_201260
 DrugTargetsIndication121923_text_201040
 DrugTargetsIndication121923_text_200940
 DrugTargetsIndication121923_text_200995
-DrugTargetsIndication121923_text_201240",7/22/2024,Maya,,,,,,Is x approved to treat y?,,
+DrugTargetsIndication121923_text_201240",7/22/2024,Maya,,,,,,Is x approved to treat y?,,,,,
 Q6,What genes does Rotigotine target when it's used to treat AD?,"Rotigotine has not been approved by the FDA as a treatment for Alzheimer's disease (AD), but it is currently undergoing evaluation in clinical trials for this purpose. However, the proposed gene targets are DRD2, DRD3, and DRD4.","DrugTargetsIndication121923_text_201120
 DrugTargetsIndication121923_text_200835
 DrugTargetsIndication121923_text_201210
@@ -279,7 +279,7 @@ DrugTargetsIndication121923_text_201260
 DrugTargetsIndication121923_text_201040
 DrugTargetsIndication121923_text_200940
 DrugTargetsIndication121923_text_200995
-DrugTargetsIndication121923_text_201240",7/22/2024,Maya,,,,,,What genes does x target when it's used to treat y?,,
+DrugTargetsIndication121923_text_201240",7/22/2024,Maya,,,,,,What genes does x target when it's used to treat y?,,,,,
 Q7,What are the approved uses for Rotigotine?,Rotigotine has been approved to treat Parkinson Disease and Restless Legs Syndrome. ,"DrugTargetsIndication121923_text_200751
 DrugTargetsIndication121923_text_200846
 DrugTargetsIndication121923_text_200941
@@ -531,7 +531,7 @@ DrugTargetsIndication121923_text_200727
 DrugTargetsIndication121923_text_200966
 DrugTargetsIndication121923_text_200762
 DrugTargetsIndication121923_text_201272
-DrugTargetsIndication121923_text_201282",7/22/2024,Maya,,,,,,What are the approved uses for x?,x has been approved by the FDA to treat [comma sep list with and]. ,The drug x has not been approved by the FDA for treatment of any disease but has reached phase y clinical trials.
+DrugTargetsIndication121923_text_201282",7/22/2024,Maya,,,,,,What are the approved uses for x?,x has been approved by the FDA to treat [comma sep list with and]. ,The drug x has not been approved by the FDA for treatment of any disease but has reached phase y clinical trials.,,,
 Q8,Is Rg-7841 approved by the FDA for any disease treatment?,The drug Rg-7841 is not approved by the FDA for treatment of any disease but has reached phase 1 clinical trials.,"DrugGeneTargets_text_44
 DrugGeneTargets_text_115
 DrugGeneTargets_text_185
@@ -547,7 +547,7 @@ DrugGeneTargets_text_819
 DrugGeneTargets_text_890
 DrugGeneTargets_text_961
 DrugGeneTargets_text_1032
-DrugGeneTargets_text_13479",7/22/2024,Maya ,,,,,,Is x approved by the FDA for any disease treatment?,,
+DrugGeneTargets_text_13479",7/22/2024,Maya ,,,,,,Is x approved by the FDA for any disease treatment?,,,,,
 Q9,Is Vinblastine Sulfate approved by the FDA and if so when was it?,"Yes, the drug Vinblastine Sulfate was first FDA approved for use in 1965.","DrugGeneTargets_text_48
 DrugGeneTargets_text_119
 DrugGeneTargets_text_189
@@ -562,8 +562,71 @@ DrugGeneTargets_text_753
 DrugGeneTargets_text_823
 DrugGeneTargets_text_894
 DrugGeneTargets_text_965
-DrugGeneTargets_text_1036",7/22/2024,Maya,,,,,,Is x approved by the FDA and if so when was it?,,
-Q10,Are there any CR1 SNPs that have a statistically significant association with Alzheimer's Disease?,"Yes, the CR1 gene has four SNPs that are statistically significant in Alzheimer's Disease. Here are the SNPs along with their adjusted SMR p-values:
+DrugGeneTargets_text_1036",7/22/2024,Maya,,,,,,Is x approved by the FDA and if so when was it?,,,,,
+Q10,Are there any CR1 SNPs that have a statistically significant association with Alzheimer's Disease?,"Yes, the CR1 gene has 47 SNPs that are statistically significant in Alzheimer's Disease. Here are the top 5 SNPs along with their associated p-values:
+
+• rs6656401        
+  •GWAS P-value: 2.84E-33
+  •b value: 0.1253
+• rs679515        
+  •GWAS P-value: 5.15E-33
+  •b value: 0.1244
+•rs4562624        
+  •GWAS P-value: 1.11E-32  
+  •b value: 0.124
+•rs4844610        
+  •GWAS P-value: 11.14E-32  
+  •b value: 0.1238
+•rs12037841        
+  •GWAS P-value: 2.69E-32  
+  •b value: 0.1234","AD_combo_gene_notext_UUID_1352743
+AD_combo_gene_notext_UUID_1352901
+AD_combo_gene_notext_UUID_1352711
+AD_combo_gene_notext_UUID_1353285
+AD_combo_gene_notext_UUID_1352701
+AD_combo_gene_notext_UUID_1353301
+AD_combo_gene_notext_UUID_1353247
+AD_combo_gene_notext_UUID_1353256
+AD_combo_gene_notext_UUID_1352868
+AD_combo_gene_notext_UUID_1353273
+AD_combo_gene_notext_UUID_1353277
+AD_combo_gene_notext_UUID_1353316
+AD_combo_gene_notext_UUID_1353262
+AD_combo_gene_notext_UUID_1353279
+AD_combo_gene_notext_UUID_1353235
+AD_combo_gene_notext_UUID_1353168
+AD_combo_gene_notext_UUID_1353161
+AD_combo_gene_notext_UUID_1353151
+AD_combo_gene_notext_UUID_1353172
+AD_combo_gene_notext_UUID_1353261
+AD_combo_gene_notext_UUID_1352788
+AD_combo_gene_notext_UUID_1352709
+AD_combo_gene_notext_UUID_1352659
+AD_combo_gene_notext_UUID_1353238
+AD_combo_gene_notext_UUID_1353221
+AD_combo_gene_notext_UUID_1353189
+AD_combo_gene_notext_UUID_1353264
+AD_combo_gene_notext_UUID_1353294
+AD_combo_gene_notext_UUID_1353308
+AD_combo_gene_notext_UUID_1353288
+AD_combo_gene_notext_UUID_1353278
+AD_combo_gene_notext_UUID_1353291
+AD_combo_gene_notext_UUID_1353246
+AD_combo_gene_notext_UUID_1353317
+AD_combo_gene_notext_UUID_1352918
+AD_combo_gene_notext_UUID_1353160
+AD_combo_gene_notext_UUID_1353158
+AD_combo_gene_notext_UUID_1352838
+AD_combo_gene_notext_UUID_1352930
+AD_combo_gene_notext_UUID_1352639
+AD_combo_gene_notext_UUID_1352825
+AD_combo_gene_notext_UUID_1352638
+AD_combo_gene_notext_UUID_1352803
+AD_combo_gene_notext_UUID_1352823
+AD_combo_gene_notext_UUID_1352621
+AD_combo_gene_notext_UUID_1352601
+AD_combo_gene_notext_UUID_1352600",7/29/2024,Maya,,,,,,Are there any x SNPs that have a statistically significant association with y?,Yes there are (count significant) SNPs that's have a significant association with y. Here are the top 5:  snp tissue pvalue effect size ,"No, based on the (list tissue samples comma separated with second to last one separated by , and ) samples tested there are no alleles within the gene x that are significantly associated with Y.",,,
+Q11,Are there any CR1 SNPs that have a statistically significant adjusted SMR p-value in association with Alzheimer's Disease and what tissues are they significant in?,"Yes, the CR1 gene has four SNPs that are statistically significant in Alzheimer's Disease. Here are the SNPs along with their adjusted SMR p-values:
 
 •rs679515:
   •Found in the prefrontal cortex, whole brain, multi ancestry whole brain, and cortex datasets
@@ -580,16 +643,15 @@ Q10,Are there any CR1 SNPs that have a statistically significant association wit
 •rs6697005:
   •Found in the basal ganglia dataset
   •Multi SNP SMR p-value: 2.48e-08
-  •HEIDI value: 0.0786
-","NDD_SMR_genes_all_update_text_2441
+  •HEIDI value: 0.0786","NDD_SMR_genes_all_update_text_2441
 NDD_SMR_genes_all_update_text_1105231
 NDD_SMR_genes_all_update_text_1265685
 NDD_SMR_genes_all_update_text_24520
 NDD_SMR_genes_all_update_text_1195476
 NDD_SMR_genes_all_update_text_1605472
 NDD_SMR_genes_all_update_text_1389608
-NDD_SMR_genes_all_update_text_1244290",7/26/2024,Maya,,,,,,Are there any x SNPs that have a statistically significant association with y?,Yes there are (count significant) SNPs that's have a significant association with y. Here are the top 5:  snp tissue pvalue effect size ,"No, based on the (list tissue samples comma separated with second to last one separated by , and ) samples tested there are no alleles within the gene x that are significantly associated with Y."
-Q11,Is ANGPTL8 significantly associated with any neurological diseases?,"No, based on the research conducted on the following neurological diseases, the gene ANGPTL8 is not found to be significantly associated with:
+NDD_SMR_genes_all_update_text_1244290",7/26/2024,Maya,,,,,,Are there any x SNPs that have a statistically significant association with y?,Yes there are (count significant) SNPs that's have a significant association with y. Here are the top 5:  snp tissue pvalue effect size ,"No, based on the (list tissue samples comma separated with second to last one separated by , and ) samples tested there are no alleles within the gene x that are significantly associated with Y.",,,
+Q12,Is ANGPTL8 significantly associated with any neurological diseases?,"No, based on the research conducted on the following neurological diseases, the gene ANGPTL8 is not found to be significantly associated with:
 Alzheimer's Disease (AD)
 Frontotemporal Dementia (FTD)
 Lewy Body Dementia (LBD)
@@ -600,8 +662,8 @@ NDD_SMR_genes_all_update_text_1151716
 NDD_SMR_genes_all_update_text_1114471
 NDD_SMR_genes_all_update_text_1126904
 NDD_SMR_genes_all_update_text_1139723
-NDD_SMR_genes_all_update_text_1138430",7/22/2024,Maya/Marzieh,,,,,,Is x significantly associated with any neurological diseases?,,
-Q12,what other names are there for the drug Vinblastine Sulfate?,"Some additional names for Vinblastine Sulfate are 29060-LE, 29060LE, Alkaban-aq, NSC-49842, Vinblastine sulphate, Vinblastini sulfas, and Vincaleukoblastine sulfateVlb monosulfate.","DrugGeneTargets_text_48
+NDD_SMR_genes_all_update_text_1138430",7/22/2024,Maya/Marzieh,,,,,,Is x significantly associated with any neurological diseases?,,,,,
+Q13,what other names are there for the drug Vinblastine Sulfate?,"Some additional names for Vinblastine Sulfate are 29060-LE, 29060LE, Alkaban-aq, NSC-49842, Vinblastine sulphate, Vinblastini sulfas, and Vincaleukoblastine sulfateVlb monosulfate.","DrugGeneTargets_text_48
 DrugGeneTargets_text_119
 DrugGeneTargets_text_189
 DrugGeneTargets_text_259
@@ -615,12 +677,12 @@ DrugGeneTargets_text_753
 DrugGeneTargets_text_823
 DrugGeneTargets_text_894
 DrugGeneTargets_text_965
-DrugGeneTargets_text_1036",7/22/2024,Maya,,,,,,what other names are there for the drug x?,,
-Q13,When was Escitalopram approved by the FDA?,The drug Escitalopram was first FDA approved for use in 2002.,DrugGeneTargets_text_1476,7/22/2024,Maya,,,,,,,,
-Q14,What mechanism type does the drug Testosterone Enanthate use? ,The drug Testosterone Enanthate is an agonist. ,DrugGeneTargets_text_5109,7/22/2024,Maya,,,,,,What mechanism type does the drug x use? ,,
-Q15,Has Mifamurtide been removed from the market? ,"No , the drug Mifamurtide has not been withdrawn from the market. ","DrugGeneTargets_text_13688
-DrugGeneTargets_text_13689",7/22/2024,Maya,,,,,,Has x been removed from the market? ,,
-Q16,What gene does the drug Ocaliva target?,Ocaliva targets the gene NR1H4.,"DrugTargetsIndication121923_text_1104360
+DrugGeneTargets_text_1036",7/22/2024,Maya,,,,,,what other names are there for the drug x?,,,,,
+Q14,When was Escitalopram approved by the FDA?,The drug Escitalopram was first FDA approved for use in 2002.,DrugGeneTargets_text_1476,7/22/2024,Maya,,,,,,,,,,,
+Q15,What mechanism type does the drug Testosterone Enanthate use? ,The drug Testosterone Enanthate is an agonist. ,DrugGeneTargets_text_5109,7/22/2024,Maya,,,,,,What mechanism type does the drug x use? ,,,,,
+Q16,Has Mifamurtide been removed from the market? ,"No , the drug Mifamurtide has not been withdrawn from the market. ","DrugGeneTargets_text_13688
+DrugGeneTargets_text_13689",7/22/2024,Maya,,,,,,Has x been removed from the market? ,,,,,
+Q17,What gene does the drug Ocaliva target?,Ocaliva targets the gene NR1H4.,"DrugTargetsIndication121923_text_1104360
 DrugTargetsIndication121923_text_1104361
 DrugTargetsIndication121923_text_1104363
 DrugTargetsIndication121923_text_1104405
@@ -919,13 +981,13 @@ DrugTargetsIndication121923_text_1104323
 DrugTargetsIndication121923_text_1104456
 DrugTargetsIndication121923_text_1104459
 DrugTargetsIndication121923_text_1104493
-DrugTargetsIndication121923_text_1104507",7/22/2024,Maya/Mary,,,,,,What gene does the drug x target?,,
-Q17,For which condition is Sonidegib Phosphate indicated according to the Experimental Factor Ontology (EFO) and Medical Subject Headings (MeSH)?,"Sonidegib Phosphate is indicated for the treatment of basal cell carcinoma, according to EFO (EFO:0004193) and MeSH (Carcinoma, Basal Cell, D002280).","DrugTargetsIndication121923_text_1072620 
+DrugTargetsIndication121923_text_1104507",7/22/2024,Maya/Mary,,,,,,What gene does the drug x target?,,,,,
+Q18,For which condition is Sonidegib Phosphate indicated according to the Experimental Factor Ontology (EFO) and Medical Subject Headings (MeSH)?,"Sonidegib Phosphate is indicated for the treatment of basal cell carcinoma, according to EFO (EFO:0004193) and MeSH (Carcinoma, Basal Cell, D002280).","DrugTargetsIndication121923_text_1072620 
 DrugTargetsIndication121923_text_1072622 
-DrugTargetsIndication121923_text_1072621",July 3th,Marzieh,,,,,,,,
-Q18,What SNP is most significantly associated with AD in Caudate Basal Ganglia?,"The most significantly associated SNP with Alzheimer's Disease in the Caudate Basal Ganglia is rs2288911, located in the APOC2 gene, with a multi SMR p value of 1.951e-10
-and a p HEIDI value of 2.226e-07.",NDD_SMR_genes_all_update_text_1268425,07/17/2024,Maya,,,,,,What SNP is most significantly associated with AD in x?,,
-Q19,How do the associations between rs10256524 and Alzheimer's disease or Parkinson's disease risk differ across different brain tissues?,"The associations between rs10256524 and Alzheimer's disease or Parkinson's disease risk differ across the Amygdala and the Frontal Cortex BA9. 
+DrugTargetsIndication121923_text_1072621",July 3th,Marzieh,,,,,,,,,,,
+Q19,What SNP is most significantly associated with AD in Caudate Basal Ganglia?,"The most significantly associated SNP with Alzheimer's Disease in the Caudate Basal Ganglia is rs2288911, located in the APOC2 gene, with a multi SMR p value of 1.951e-10
+and a p HEIDI value of 2.226e-07.",NDD_SMR_genes_all_update_text_1268425,07/29/2024,Maya,,,,,,What SNP is most significantly associated with AD in x?,,,,,
+Q20,How do the SMR associations between rs10256524 and Alzheimer's disease or Parkinson's disease risk differ across different brain tissues?,"The associations between rs10256524 and Alzheimer's disease or Parkinson's disease risk differ across the Amygdala and the Frontal Cortex BA9. 
 Parkinson's Disease:
 • In the Amygdala, rs10256524 exhibits a functionally significant association (P-SMR multi = 2.339e-06, p-HEIDI = 0.018).
 • Similarly, in the Frontal Cortex BA9, rs10256524 shows a functionally significant association (P-SMR multi = 4.735e-07, p-HEIDI = 0.013).
@@ -935,11 +997,11 @@ Alzheimer's Disease:
 NDD_SMR_genes_all_update_text_1155910
 NDD_SMR_genes_all_update_text_1603159
 NDD_SMR_genes_all_update_text_1597657
-",07/22/2024,Maya,,,,,,,,
-Q20,"How many synonym names does Sonidegib Phosphate have, and what are they?","Sonidegib Phosphate has 3 synonym names: Erismodegib phosphate, Sonidegib diphosphate, and Sonidegib phosphate.","DrugTargetsIndication121923_text_1072620 
+",07/22/2024,Maya,,,,,,,,,,,
+Q21,"How many synonym names does Sonidegib Phosphate have, and what are they?","Sonidegib Phosphate has 3 synonym names: Erismodegib phosphate, Sonidegib diphosphate, and Sonidegib phosphate.","DrugTargetsIndication121923_text_1072620 
 DrugTargetsIndication121923_text_1072622 
-DrugTargetsIndication121923_text_1072621",July 3th,Marzieh,,,,,,,,
-Q21,What is Aplenzin?,"Aplenzin, also known generically as bupropion hydrobromide, is used to treat major depressive disorder. It is a single protein drug that acts as an inhibitor. ","DrugTargetsIndication121923_text_434167
+DrugTargetsIndication121923_text_1072621",July 3th,Marzieh,,,,,,,,,,,
+Q22,What is Aplenzin?,"Aplenzin, also known generically as bupropion hydrobromide, is used to treat major depressive disorder. It is a single protein drug that acts as an inhibitor. ","DrugTargetsIndication121923_text_434167
 DrugTargetsIndication121923_text_434188
 DrugTargetsIndication121923_text_434177
 DrugTargetsIndication121923_text_434149
@@ -1034,9 +1096,9 @@ DrugTargetsIndication121923_text_434211
 DrugTargetsIndication121923_text_434190
 DrugTargetsIndication121923_text_434186
 DrugTargetsIndication121923_text_434209
-DrugTargetsIndication121923_text_434154",07/22/2024,Mary/Maya,,,,,,,,
-Q22,Have any drugs targeting proteins been withdrawn from the market?,"Yes, there are drugs targeting proteins that have been withdrawn from the market. Two examples are Calcitonin and Peginesatide Acetate.","DrugGeneTargets_text_11099, DrugGeneTargets_text_12182",05/07/2024,Mary,,,,,,Have any drugs targeting x been withdrawn from the market?,,
-Q23,Are there any oligonucleotide therapies that are in phase 2 clinical trials?,"Yes, there are 16 oligonucleotide therapies that have a maximum clinical trial phase of 2:
+DrugTargetsIndication121923_text_434154",07/22/2024,Mary/Maya,,,,,,,,,,,
+Q23,Have any drugs targeting proteins been withdrawn from the market?,"Yes, there are drugs targeting proteins that have been withdrawn from the market. Two examples are Calcitonin and Peginesatide Acetate.","DrugGeneTargets_text_11099, DrugGeneTargets_text_12182",05/07/2024,Mary,,,,,,Have any drugs targeting x been withdrawn from the market?,,,,,
+Q24,Are there any oligonucleotide therapies that are in phase 2 clinical trials?,"Yes, there are 16 oligonucleotide therapies that have a maximum clinical trial phase of 2:
 Imetelstat Sodium, Vupanorsen, Bamosiran, Olpasiran, Suvodirsen, Sepofarsen, Aganirsen, Cenersen Sodium, Volanesorsen Sodium, Sapablursen, Prexigebersen, Cenersen, Cofirasersen, Gataparsen, Apatorsen, Danvatirsen. However, the data does not specify if these drugs did not pass phase 2 or are currently in it. ","DrugGeneTargets_text_13562
 DrugGeneTargets_text_12630
 DrugGeneTargets_text_5679
@@ -1055,9 +1117,9 @@ DrugGeneTargets_text_12833
 DrugGeneTargets_text_12838
 DrugGeneTargets_text_13578
 DrugGeneTargets_text_13388
-DrugGeneTargets_text_12820",07/22/2024,Mary/Maya,,,,,,,,
-Q24,What is the effect size of rs112485576 in Parkinson's disease?,"The effect size, or beta, of rs112485576 is -0.1871 according to the largest European genome-wide meta-analysis of Parkinson's disease (Nalls et al., 2019).",PDno23andme_full_gene_notext_1635378,07/22/2024,Mary/Maya,,,,,,What is the effect size of x in Parkinson's disease?,,
-Q25,How many SNPs are genome-wide significant in chr10 for Parkinson's disease?,"There are 4 SNPs that are genome-wide significant (p<5E-8) within chr10 in the largest European genome-wide meta-analysis of Parkinson's disease (Nalls et al., 2019).
+DrugGeneTargets_text_12820",07/22/2024,Mary/Maya,,,,,,,,,,,
+Q25,What is the effect size of rs112485576 in Parkinson's disease?,"The effect size, or beta, of rs112485576 is -0.1871 according to the largest European genome-wide meta-analysis of Parkinson's disease (Nalls et al., 2019).",PDno23andme_full_gene_notext_1635378,07/22/2024,Mary/Maya,,,,,,What is the effect size of x in Parkinson's disease?,,,,,
+Q26,How many SNPs are genome-wide significant in chr10 for Parkinson's disease?,"There are 4 SNPs that are genome-wide significant (p<5E-8) within chr10 in the largest European genome-wide meta-analysis of Parkinson's disease (Nalls et al., 2019).
 The p-values are as follows:
 
 - rs118117788 (p=1.328e-09)
@@ -1066,8 +1128,8 @@ The p-values are as follows:
 - rs188789342 (p=8.491e-10)","PDno23andme_full_gene_notext_1145950
 PDno23andme_full_gene_notext_4158122
 PDno23andme_full_gene_notext_933245
-PDno23andme_full_gene_notext_4171570",07/22/2024,Mary/Marzieh,,,,,,,,
-Q26,When was Donepezil approved to treat Alzheimer's disease?,The drug Donepezil was approved to treat Alzheimer's disease in 1996. ,"DrugTargetsIndication121923_text_993824
+PDno23andme_full_gene_notext_4171570",07/22/2024,Mary/Marzieh,,,,,,,,,,,
+Q27,When was Donepezil approved to treat Alzheimer's disease?,The drug Donepezil was approved to treat Alzheimer's disease in 1996. ,"DrugTargetsIndication121923_text_993824
 DrugTargetsIndication121923_text_993944
 DrugTargetsIndication121923_text_993884
 DrugTargetsIndication121923_text_993800
@@ -1081,8 +1143,8 @@ DrugTargetsIndication121923_text_993848
 DrugTargetsIndication121923_text_993812
 DrugTargetsIndication121923_text_993872
 DrugTargetsIndication121923_text_993956
-DrugTargetsIndication121923_text_993932",7/22/2024,Maya,,,,,,,,
-Q27,What drugs are approved to treat AD? ,"There are two drugs that are approved to treat Alzheimer's disease:
+DrugTargetsIndication121923_text_993932",7/22/2024,Maya,,,,,,,,,,,
+Q28,What drugs are approved to treat AD? ,"There are two drugs that are approved to treat Alzheimer's disease:
 • Donepezil Hydrochloride, which was approved in 1996
 •Memantine Hydrochloride, which was approved in 2003
 ","DrugTargetsIndication121923_text_993836
@@ -1155,17 +1217,17 @@ DrugTargetsIndication121923_text_455008
 DrugTargetsIndication121923_text_455526
 DrugTargetsIndication121923_text_455582
 DrugTargetsIndication121923_text_455624
-DrugTargetsIndication121923_text_455764",7/22/2024,Maya,,,,,More but only listed two in table,,,
-Q28,What SNP is most significantly associated with PSP in spinalcord tissue?,"The most significantly associated SNP with Progressive supranuclear palsy in Spinalcord eQTL omic data is rs8070723, located in the LRRC37A2 gene, with a multi SNP SMR p value of 2.163e-11 and a HEIDI value of 1.775e-07.",NDD_SMR_genes_all_update_text_30484,7/22/2024,Maya,,,,,,,,
-Q29,Is the gene GRIA4 targeted by multiple different drugs to treat PD?,"Yes, the gene GRIA4 is targeted by two drugs for the treatment of PD:
+DrugTargetsIndication121923_text_455764",7/22/2024,Maya,,,,,More but only listed two in table,,,,,,
+Q29,What SNP is most significantly associated with PSP in spinalcord tissue?,"The most significantly associated SNP with Progressive supranuclear palsy in Spinalcord eQTL omic data is rs8070723, located in the LRRC37A2 gene, with a multi SNP SMR p value of 2.163e-11 and a HEIDI value of 1.775e-07.",NDD_SMR_genes_all_update_text_30484,7/22/2024,Maya,,,,,,,,,,,
+Q30,Is the gene GRIA4 targeted by multiple different drugs to treat PD?,"Yes, the gene GRIA4 is targeted by two drugs for the treatment of PD:
 •Topiramate
 •Perampanel","DrugGeneTargets_text_8342
-DrugGeneTargets_text_8345",7/22/2024,Maya,,,,,,,,
-Q30,Has the FDA approved any drugs targeting the gene APOE for the treatment of neurodegenerative diseases?,No the FDA hasn't approved any drugs targeting the gene APOE for the treatment of neurodegenerative diseases.,`card-ai-389220.card_ai_june_mvp.DrugTargetIndications`,7/22/2024,Maya,,,,,,,,
-Q31,What is the top SNP in blood for Lewy Body Dementia?,"The top SNP when analyzing whole blood in Lewy Body Dementia is rs17561351, located in the PVRL2 gene, with a multi SNP SMR p value of 2.638e-25 and a p Heidi of 2.172e-14",NDD_SMR_genes_all_update_text_1550598,7/22/2024,Mary/Maya,,,,,,What is the top SNP in x for y?,,
-Q32,What is the allele frequency of the SNP rs2075650 in the context of Parkinson's disease?,"In GWAS summary statistics for PD from Nalls (2019), single nucleotide polymorphism rs2075650 has an alternate allele (G) frequency of 0.131 and reference
-allele (A) frequency of 0.869.",PDno23andme_full_gene_notext_378423,7/22/2024,Maya,,,,,,,,
-Q33,Which genes are targeted by the drug Levodopa in the treatment of Parkinson's disease?,"In the context of Parkinson's disease, the drug Levodopa targets the gene DRD3.","DrugTargetsIndication121923_text_205011
+DrugGeneTargets_text_8345",7/22/2024,Maya,,,,,,,,,,,
+Q31,Has the FDA approved any drugs targeting the gene APOE for the treatment of neurodegenerative diseases?,No the FDA hasn't approved any drugs targeting the gene APOE for the treatment of neurodegenerative diseases.,`card-ai-389220.card_ai_june_mvp.DrugTargetIndications`,7/22/2024,Maya,,,,,,,,,,,
+Q32,What is the top SNP in blood for Lewy Body Dementia?,"The top SNP when analyzing whole blood in Lewy Body Dementia is rs17561351, located in the PVRL2 gene, with a multi SNP SMR p value of 2.638e-25 and a p Heidi of 2.172e-14",NDD_SMR_genes_all_update_text_1550598,7/22/2024,Mary/Maya,,,,,,What is the top SNP in x for y?,,,,,
+Q33,What is the allele frequency of the SNP rs2075650 in the context of Parkinson's disease?,"In GWAS summary statistics for PD from Nalls (2019), single nucleotide polymorphism rs2075650 has an alternate allele (G) frequency of 0.131 and reference
+allele (A) frequency of 0.869.",PDno23andme_full_gene_notext_378423,7/22/2024,Maya,,,,,,,,,,,
+Q34,Which genes are targeted by the drug Levodopa in the treatment of Parkinson's disease?,"In the context of Parkinson's disease, the drug Levodopa targets the gene DRD3.","DrugTargetsIndication121923_text_205011
 DrugTargetsIndication121923_text_205086
 DrugTargetsIndication121923_text_204911
 DrugTargetsIndication121923_text_204961
@@ -1174,15 +1236,15 @@ DrugTargetsIndication121923_text_205061
 DrugTargetsIndication121923_text_205036
 DrugTargetsIndication121923_text_204886
 DrugTargetsIndication121923_text_204936
-DrugTargetsIndication121923_text_204986",7/22/2024,Maya,,,,,,,,
-Q34,Is the SNP rs12032182 significant in AD? ,"No, according to the GWAS summary statistics for AD from Bellenguez (2022), the SNP rs12032182 is not significant in AD. ",AD_combo_gene_notext_UUID_32322,7/22/2024,Maya,,,,,,,,
-Q35,What is the genomic location of SNP rs12032182 ,"The SNP rs12032182 is located on chromosome 1:
+DrugTargetsIndication121923_text_204986",7/22/2024,Maya,,,,,,,,,,,
+Q35,Is the SNP rs12032182 significant in AD? ,"No, according to the GWAS summary statistics for AD from Bellenguez (2022), the SNP rs12032182 has a p-value of 0.4058 and therefore is not significant in AD. ",AD_combo_gene_notext_UUID_32322,7/29/2024,Maya,,,,,,,,,,,
+Q36,What is the genomic location of SNP rs12032182 ,"The SNP rs12032182 is located on chromosome 1:
 • Genomic Build GrCh37/HG19: base pair position 4431315
 • Genomic Build GrCh38: base pair position 4371255","AD_combo_gene_notext_UUID_32322
 PDno23andme_full_gene_notext_6154340",7/22/2024,Maya,,,,,,What is the genomic location of SNP x?,"The SNP x is located on chromosome y:
 • Genomic Build GrCh37/HG19: base pair position z
-• Genomic Build GrCh38: base pair position q",The SNP rs1804519 is not listed in the data so I cannot identify its genomic location.
-Q36,Which genes are targeted by the drug Dasatinib in the treatment of Alzheimer's disease?,"The drug Dasatinib has not been approved by the FDA as a treatment for Alzheimer's disease (AD), but it is currently undergoing evaluation in clinical trials for this purpose. However, there are 15 proposed gene targets: KIT, BCR, ABL1, PDGFRB, SRC, FRK, YES1, BLK, SRMS, LCK, LYN, FYN, EPHA2, FGR, and HCK.","DrugTargetsIndication121923_text_731956
+• Genomic Build GrCh38: base pair position q",The SNP rs1804519 is not listed in the data so I cannot identify its genomic location.,,,
+Q37,Which genes are targeted by the drug Dasatinib in the treatment of Alzheimer's disease?,"The drug Dasatinib has not been approved by the FDA as a treatment for Alzheimer's disease (AD), but it is currently undergoing evaluation in clinical trials for this purpose. However, there are 15 proposed gene targets: KIT, BCR, ABL1, PDGFRB, SRC, FRK, YES1, BLK, SRMS, LCK, LYN, FYN, EPHA2, FGR, and HCK.","DrugTargetsIndication121923_text_731956
 DrugTargetsIndication121923_text_741628
 DrugTargetsIndication121923_text_742408
 DrugTargetsIndication121923_text_725638
@@ -1565,20 +1627,521 @@ DrugTargetsIndication121923_text_715498
 DrugTargetsIndication121923_text_718384
 DrugTargetsIndication121923_text_727198
 DrugTargetsIndication121923_text_735154
-DrugTargetsIndication121923_text_739522",7/22/2024,Maya,,,,,,,,
-Q37,Have any antibody therapies been withdrawn from the market?,"Yes, the following antibody therapies have been removed from the market:
+DrugTargetsIndication121923_text_739522",7/22/2024,Maya,,,,,,,,,,,
+Q38,Have any antibody therapies been withdrawn from the market?,"Yes, the following antibody therapies have been removed from the market:
 - Daclizumab
 - Efalizumab","DrugGeneTargets_text_11328
 DrugGeneTargets_text_11336
 DrugGeneTargets_text_12881
 DrugGeneTargets_text_10133
-DrugGeneTargets_text_10142",07/22/2024,Mary/Maya,,,,,,,,
-Q38,Are there any specific alleles within the gene CHRM3 associated with increased susceptibility to developing Alzheimer's disease?,"No, based on the blood, liver, and 
+DrugGeneTargets_text_10142",07/22/2024,Mary/Maya,,,,,,,,,,,
+Q39,Are there any specific alleles within the gene CHRM3 associated with increased susceptibility to developing Alzheimer's disease?,"No, there are no alleles within the gene CHRM3 that are significantly associated with an increased susceptibility to developing Alzheimer's disease based on AD GWAS data.","AD_combo_gene_notext_UUID_1610513
+AD_combo_gene_notext_UUID_1611098
+AD_combo_gene_notext_UUID_1607682
+AD_combo_gene_notext_UUID_1611062
+AD_combo_gene_notext_UUID_1611086
+AD_combo_gene_notext_UUID_1611049
+AD_combo_gene_notext_UUID_1608959
+AD_combo_gene_notext_UUID_1611520
+AD_combo_gene_notext_UUID_1611271
+AD_combo_gene_notext_UUID_1611700
+AD_combo_gene_notext_UUID_1609179
+AD_combo_gene_notext_UUID_1611660
+AD_combo_gene_notext_UUID_1609909
+AD_combo_gene_notext_UUID_1611135
+AD_combo_gene_notext_UUID_1609829
+AD_combo_gene_notext_UUID_1611422
+AD_combo_gene_notext_UUID_1611336
+AD_combo_gene_notext_UUID_1611141
+AD_combo_gene_notext_UUID_1609931
+AD_combo_gene_notext_UUID_1609003
+AD_combo_gene_notext_UUID_1610795
+AD_combo_gene_notext_UUID_1610811
+AD_combo_gene_notext_UUID_1610703
+AD_combo_gene_notext_UUID_1609378
+AD_combo_gene_notext_UUID_1608322
+AD_combo_gene_notext_UUID_1611005
+AD_combo_gene_notext_UUID_1611836
+AD_combo_gene_notext_UUID_1611109
+AD_combo_gene_notext_UUID_1608000
+AD_combo_gene_notext_UUID_1608808
+AD_combo_gene_notext_UUID_1611018
+AD_combo_gene_notext_UUID_1609251
+AD_combo_gene_notext_UUID_1608454
+AD_combo_gene_notext_UUID_1610519
+AD_combo_gene_notext_UUID_1609728
+AD_combo_gene_notext_UUID_1608444
+AD_combo_gene_notext_UUID_1608011
+AD_combo_gene_notext_UUID_1607971
+AD_combo_gene_notext_UUID_1608568
+AD_combo_gene_notext_UUID_1611128
+AD_combo_gene_notext_UUID_1609967
+AD_combo_gene_notext_UUID_1609093
+AD_combo_gene_notext_UUID_1610671
+AD_combo_gene_notext_UUID_1609779
+AD_combo_gene_notext_UUID_1608434
+AD_combo_gene_notext_UUID_1608433
+AD_combo_gene_notext_UUID_1608151
+AD_combo_gene_notext_UUID_1610120
+AD_combo_gene_notext_UUID_1610025
+AD_combo_gene_notext_UUID_1608353
+AD_combo_gene_notext_UUID_1610461
+AD_combo_gene_notext_UUID_1611214
+AD_combo_gene_notext_UUID_1608493
+AD_combo_gene_notext_UUID_1608853
+AD_combo_gene_notext_UUID_1609514
+AD_combo_gene_notext_UUID_1611258
+AD_combo_gene_notext_UUID_1609029
+AD_combo_gene_notext_UUID_1609362
+AD_combo_gene_notext_UUID_1609368
+AD_combo_gene_notext_UUID_1610532
+AD_combo_gene_notext_UUID_1610877
+AD_combo_gene_notext_UUID_1607942
+AD_combo_gene_notext_UUID_1608893
+AD_combo_gene_notext_UUID_1611013
+AD_combo_gene_notext_UUID_1611044
+AD_combo_gene_notext_UUID_1608437
+AD_combo_gene_notext_UUID_1611497
+AD_combo_gene_notext_UUID_1609518
+AD_combo_gene_notext_UUID_1610679
+AD_combo_gene_notext_UUID_1609288
+AD_combo_gene_notext_UUID_1608446
+AD_combo_gene_notext_UUID_1610016
+AD_combo_gene_notext_UUID_1609392
+AD_combo_gene_notext_UUID_1609183
+AD_combo_gene_notext_UUID_1608047
+AD_combo_gene_notext_UUID_1611829
+AD_combo_gene_notext_UUID_1611474
+AD_combo_gene_notext_UUID_1608610
+AD_combo_gene_notext_UUID_1608366
+AD_combo_gene_notext_UUID_1608336
+AD_combo_gene_notext_UUID_1610385
+AD_combo_gene_notext_UUID_1611805
+AD_combo_gene_notext_UUID_1608386
+AD_combo_gene_notext_UUID_1608549
+AD_combo_gene_notext_UUID_1611881
+AD_combo_gene_notext_UUID_1611681
+AD_combo_gene_notext_UUID_1611717
+AD_combo_gene_notext_UUID_1608059
+AD_combo_gene_notext_UUID_1608001
+AD_combo_gene_notext_UUID_1610642
+AD_combo_gene_notext_UUID_1611496
+AD_combo_gene_notext_UUID_1611465
+AD_combo_gene_notext_UUID_1611023
+AD_combo_gene_notext_UUID_1608150
+AD_combo_gene_notext_UUID_1608707
+AD_combo_gene_notext_UUID_1611477
+AD_combo_gene_notext_UUID_1611809
+AD_combo_gene_notext_UUID_1611641
+AD_combo_gene_notext_UUID_1610246
+AD_combo_gene_notext_UUID_1609762
+AD_combo_gene_notext_UUID_1610839
+AD_combo_gene_notext_UUID_1611155
+AD_combo_gene_notext_UUID_1611480
+AD_combo_gene_notext_UUID_1611879
+AD_combo_gene_notext_UUID_1611486
+AD_combo_gene_notext_UUID_1608227
+AD_combo_gene_notext_UUID_1611547
+AD_combo_gene_notext_UUID_1611457
+AD_combo_gene_notext_UUID_1608115
+AD_combo_gene_notext_UUID_1611869
+AD_combo_gene_notext_UUID_1611855
+AD_combo_gene_notext_UUID_1610249
+AD_combo_gene_notext_UUID_1611203
+AD_combo_gene_notext_UUID_1608510
+AD_combo_gene_notext_UUID_1607796
+AD_combo_gene_notext_UUID_1607880
+AD_combo_gene_notext_UUID_1611895
+AD_combo_gene_notext_UUID_1610840
+AD_combo_gene_notext_UUID_1610492
+AD_combo_gene_notext_UUID_1608488
+AD_combo_gene_notext_UUID_1607815
+AD_combo_gene_notext_UUID_1611319
+AD_combo_gene_notext_UUID_1609334
+AD_combo_gene_notext_UUID_1610502
+AD_combo_gene_notext_UUID_1611655
+AD_combo_gene_notext_UUID_1607725
+AD_combo_gene_notext_UUID_1611615
+AD_combo_gene_notext_UUID_1611803
+AD_combo_gene_notext_UUID_1608387
+AD_combo_gene_notext_UUID_1611511
+AD_combo_gene_notext_UUID_1607981
+AD_combo_gene_notext_UUID_1609097
+AD_combo_gene_notext_UUID_1609375
+AD_combo_gene_notext_UUID_1611731
+AD_combo_gene_notext_UUID_1608968
+AD_combo_gene_notext_UUID_1608026
+AD_combo_gene_notext_UUID_1609804
+AD_combo_gene_notext_UUID_1610013
+AD_combo_gene_notext_UUID_1611327
+AD_combo_gene_notext_UUID_1611025
+AD_combo_gene_notext_UUID_1608605
+AD_combo_gene_notext_UUID_1610071
+AD_combo_gene_notext_UUID_1610936
+AD_combo_gene_notext_UUID_1608082
+AD_combo_gene_notext_UUID_1608458
+AD_combo_gene_notext_UUID_1607877
+AD_combo_gene_notext_UUID_1608677
+AD_combo_gene_notext_UUID_1611144
+AD_combo_gene_notext_UUID_1608952
+AD_combo_gene_notext_UUID_1610286
+AD_combo_gene_notext_UUID_1611293
+AD_combo_gene_notext_UUID_1611593
+AD_combo_gene_notext_UUID_1611378
+AD_combo_gene_notext_UUID_1608948
+AD_combo_gene_notext_UUID_1611166
+AD_combo_gene_notext_UUID_1610479
+AD_combo_gene_notext_UUID_1611357
+AD_combo_gene_notext_UUID_1611163
+AD_combo_gene_notext_UUID_1610972
+AD_combo_gene_notext_UUID_1608540
+AD_combo_gene_notext_UUID_1608031
+AD_combo_gene_notext_UUID_1608934
+AD_combo_gene_notext_UUID_1611342
+AD_combo_gene_notext_UUID_1607825
+AD_combo_gene_notext_UUID_1608527
+AD_combo_gene_notext_UUID_1608452
+AD_combo_gene_notext_UUID_1611309
+AD_combo_gene_notext_UUID_1608367
+AD_combo_gene_notext_UUID_1608271
+AD_combo_gene_notext_UUID_1609660
+AD_combo_gene_notext_UUID_1608900
+AD_combo_gene_notext_UUID_1610697
+AD_combo_gene_notext_UUID_1608014
+AD_combo_gene_notext_UUID_1611830
+AD_combo_gene_notext_UUID_1608140
+AD_combo_gene_notext_UUID_1608209
+AD_combo_gene_notext_UUID_1611167
+AD_combo_gene_notext_UUID_1608139
+AD_combo_gene_notext_UUID_1610677
+AD_combo_gene_notext_UUID_1607833
+AD_combo_gene_notext_UUID_1608043
+AD_combo_gene_notext_UUID_1608127
+AD_combo_gene_notext_UUID_1608131
+AD_combo_gene_notext_UUID_1609871
+AD_combo_gene_notext_UUID_1611808
+AD_combo_gene_notext_UUID_1610009
+AD_combo_gene_notext_UUID_1608124
+AD_combo_gene_notext_UUID_1607841
+AD_combo_gene_notext_UUID_1609214
+AD_combo_gene_notext_UUID_1608202
+AD_combo_gene_notext_UUID_1608138
+AD_combo_gene_notext_UUID_1610787
+AD_combo_gene_notext_UUID_1611116
+AD_combo_gene_notext_UUID_1608126
+AD_combo_gene_notext_UUID_1610023
+AD_combo_gene_notext_UUID_1611107
+AD_combo_gene_notext_UUID_1610160
+AD_combo_gene_notext_UUID_1607793
+AD_combo_gene_notext_UUID_1610209
+AD_combo_gene_notext_UUID_1608567
+AD_combo_gene_notext_UUID_1609373
+AD_combo_gene_notext_UUID_1608740
+AD_combo_gene_notext_UUID_1611833
+AD_combo_gene_notext_UUID_1609105
+AD_combo_gene_notext_UUID_1611701
+AD_combo_gene_notext_UUID_1608847
+AD_combo_gene_notext_UUID_1611838
+AD_combo_gene_notext_UUID_1611175
+AD_combo_gene_notext_UUID_1610845
+AD_combo_gene_notext_UUID_1611807
+AD_combo_gene_notext_UUID_1611652
+AD_combo_gene_notext_UUID_1611231
+AD_combo_gene_notext_UUID_1608266
+AD_combo_gene_notext_UUID_1609533
+AD_combo_gene_notext_UUID_1611114
+AD_combo_gene_notext_UUID_1610881
+AD_combo_gene_notext_UUID_1611132
+AD_combo_gene_notext_UUID_1608009
+AD_combo_gene_notext_UUID_1610872
+AD_combo_gene_notext_UUID_1610730
+AD_combo_gene_notext_UUID_1608095
+AD_combo_gene_notext_UUID_1610833
+AD_combo_gene_notext_UUID_1611050
+AD_combo_gene_notext_UUID_1611291
+AD_combo_gene_notext_UUID_1609459
+AD_combo_gene_notext_UUID_1609030
+AD_combo_gene_notext_UUID_1608331
+AD_combo_gene_notext_UUID_1609448
+AD_combo_gene_notext_UUID_1610213
+AD_combo_gene_notext_UUID_1608824
+AD_combo_gene_notext_UUID_1611424
+AD_combo_gene_notext_UUID_1611481
+AD_combo_gene_notext_UUID_1607687
+AD_combo_gene_notext_UUID_1611221
+AD_combo_gene_notext_UUID_1609554
+AD_combo_gene_notext_UUID_1608467
+AD_combo_gene_notext_UUID_1610856
+AD_combo_gene_notext_UUID_1608168
+AD_combo_gene_notext_UUID_1608169
+AD_combo_gene_notext_UUID_1608474
+AD_combo_gene_notext_UUID_1608392
+AD_combo_gene_notext_UUID_1608338
+AD_combo_gene_notext_UUID_1609451
+AD_combo_gene_notext_UUID_1610847
+AD_combo_gene_notext_UUID_1609042
+AD_combo_gene_notext_UUID_1610823
+AD_combo_gene_notext_UUID_1609592
+AD_combo_gene_notext_UUID_1611643
+AD_combo_gene_notext_UUID_1610853
+AD_combo_gene_notext_UUID_1610077
+AD_combo_gene_notext_UUID_1611335
+AD_combo_gene_notext_UUID_1609599
+AD_combo_gene_notext_UUID_1609153
+AD_combo_gene_notext_UUID_1608320
+AD_combo_gene_notext_UUID_1610773
+AD_combo_gene_notext_UUID_1608235
+AD_combo_gene_notext_UUID_1609764
+AD_combo_gene_notext_UUID_1610804
+AD_combo_gene_notext_UUID_1608290
+AD_combo_gene_notext_UUID_1608693
+AD_combo_gene_notext_UUID_1608614
+AD_combo_gene_notext_UUID_1610850
+AD_combo_gene_notext_UUID_1608580
+AD_combo_gene_notext_UUID_1608199
+AD_combo_gene_notext_UUID_1610748
+AD_combo_gene_notext_UUID_1610806
+AD_combo_gene_notext_UUID_1610848
+AD_combo_gene_notext_UUID_1607732
+AD_combo_gene_notext_UUID_1608846
+AD_combo_gene_notext_UUID_1608302
+AD_combo_gene_notext_UUID_1611160
+AD_combo_gene_notext_UUID_1608293
+AD_combo_gene_notext_UUID_1608218
+AD_combo_gene_notext_UUID_1610873
+AD_combo_gene_notext_UUID_1610862
+AD_combo_gene_notext_UUID_1610876
+AD_combo_gene_notext_UUID_1610963
+AD_combo_gene_notext_UUID_1608348
+AD_combo_gene_notext_UUID_1610879
+AD_combo_gene_notext_UUID_1610869
+AD_combo_gene_notext_UUID_1610165
+AD_combo_gene_notext_UUID_1610884
+AD_combo_gene_notext_UUID_1610708
+AD_combo_gene_notext_UUID_1610250
+AD_combo_gene_notext_UUID_1609953
+AD_combo_gene_notext_UUID_1611193
+AD_combo_gene_notext_UUID_1610608
+AD_combo_gene_notext_UUID_1608638
+AD_combo_gene_notext_UUID_1607768
+AD_combo_gene_notext_UUID_1611848
+AD_combo_gene_notext_UUID_1610925
+AD_combo_gene_notext_UUID_1611788
+AD_combo_gene_notext_UUID_1608257
+AD_combo_gene_notext_UUID_1611284
+AD_combo_gene_notext_UUID_1607982
+AD_combo_gene_notext_UUID_1607921
+AD_combo_gene_notext_UUID_1611600
+AD_combo_gene_notext_UUID_1610455
+AD_combo_gene_notext_UUID_1611103
+AD_combo_gene_notext_UUID_1607952
+AD_combo_gene_notext_UUID_1608685
+AD_combo_gene_notext_UUID_1608932
+AD_combo_gene_notext_UUID_1610878
+AD_combo_gene_notext_UUID_1611636
+AD_combo_gene_notext_UUID_1610880
+AD_combo_gene_notext_UUID_1611302
+AD_combo_gene_notext_UUID_1611332
+AD_combo_gene_notext_UUID_1611122
+AD_combo_gene_notext_UUID_1609857
+AD_combo_gene_notext_UUID_1608149
+AD_combo_gene_notext_UUID_1611479
+AD_combo_gene_notext_UUID_1607987
+AD_combo_gene_notext_UUID_1607836
+AD_combo_gene_notext_UUID_1610885
+AD_combo_gene_notext_UUID_1609698
+AD_combo_gene_notext_UUID_1610769
+AD_combo_gene_notext_UUID_1609516
+AD_combo_gene_notext_UUID_1611157
+AD_combo_gene_notext_UUID_1607861
+AD_combo_gene_notext_UUID_1608161
+AD_combo_gene_notext_UUID_1608941
+AD_combo_gene_notext_UUID_1609523
+AD_combo_gene_notext_UUID_1608371
+AD_combo_gene_notext_UUID_1607929
+AD_combo_gene_notext_UUID_1608631
+AD_combo_gene_notext_UUID_1609218
+AD_combo_gene_notext_UUID_1608892
+AD_combo_gene_notext_UUID_1607888
+AD_combo_gene_notext_UUID_1609613
+AD_combo_gene_notext_UUID_1609216
+AD_combo_gene_notext_UUID_1610443
+AD_combo_gene_notext_UUID_1610714
+AD_combo_gene_notext_UUID_1610736
+AD_combo_gene_notext_UUID_1608545
+AD_combo_gene_notext_UUID_1611345
+AD_combo_gene_notext_UUID_1611268
+AD_combo_gene_notext_UUID_1607882
+AD_combo_gene_notext_UUID_1608346
+AD_combo_gene_notext_UUID_1611152
+AD_combo_gene_notext_UUID_1609312
+AD_combo_gene_notext_UUID_1611380
+AD_combo_gene_notext_UUID_1610866
+AD_combo_gene_notext_UUID_1608630
+AD_combo_gene_notext_UUID_1609708
+AD_combo_gene_notext_UUID_1608184
+AD_combo_gene_notext_UUID_1611106
+AD_combo_gene_notext_UUID_1609781
+AD_combo_gene_notext_UUID_1611379
+AD_combo_gene_notext_UUID_1610882
+AD_combo_gene_notext_UUID_1611448
+AD_combo_gene_notext_UUID_1611387
+AD_combo_gene_notext_UUID_1607960
+AD_combo_gene_notext_UUID_1608627
+AD_combo_gene_notext_UUID_1608755
+AD_combo_gene_notext_UUID_1609980
+AD_combo_gene_notext_UUID_1610951
+AD_combo_gene_notext_UUID_1610898
+AD_combo_gene_notext_UUID_1610580
+AD_combo_gene_notext_UUID_1611513
+AD_combo_gene_notext_UUID_1611287
+AD_combo_gene_notext_UUID_1610771
+AD_combo_gene_notext_UUID_1608236
+AD_combo_gene_notext_UUID_1609975
+AD_combo_gene_notext_UUID_1610162
+AD_combo_gene_notext_UUID_1609623
+AD_combo_gene_notext_UUID_1611812
+AD_combo_gene_notext_UUID_1610265
+AD_combo_gene_notext_UUID_1608239
+AD_combo_gene_notext_UUID_1608394
+AD_combo_gene_notext_UUID_1608273
+AD_combo_gene_notext_UUID_1608003
+AD_combo_gene_notext_UUID_1610199
+AD_combo_gene_notext_UUID_1608554
+AD_combo_gene_notext_UUID_1611843
+AD_combo_gene_notext_UUID_1611337
+AD_combo_gene_notext_UUID_1610849
+AD_combo_gene_notext_UUID_1607844
+AD_combo_gene_notext_UUID_1607822
+AD_combo_gene_notext_UUID_1611393
+AD_combo_gene_notext_UUID_1608802
+AD_combo_gene_notext_UUID_1611723
+AD_combo_gene_notext_UUID_1607681
+AD_combo_gene_notext_UUID_1608674
+AD_combo_gene_notext_UUID_1611823
+AD_combo_gene_notext_UUID_1608519
+AD_combo_gene_notext_UUID_1608129
+AD_combo_gene_notext_UUID_1608264
+AD_combo_gene_notext_UUID_1608739
+AD_combo_gene_notext_UUID_1607807
+AD_combo_gene_notext_UUID_1610507
+AD_combo_gene_notext_UUID_1610825
+AD_combo_gene_notext_UUID_1608471
+AD_combo_gene_notext_UUID_1608615
+AD_combo_gene_notext_UUID_1609629
+AD_combo_gene_notext_UUID_1608591
+AD_combo_gene_notext_UUID_1608469
+AD_combo_gene_notext_UUID_1610700
+AD_combo_gene_notext_UUID_1611136
+AD_combo_gene_notext_UUID_1609327
+AD_combo_gene_notext_UUID_1608190
+AD_combo_gene_notext_UUID_1611346
+AD_combo_gene_notext_UUID_1608756
+AD_combo_gene_notext_UUID_1609921
+AD_combo_gene_notext_UUID_1610993
+AD_combo_gene_notext_UUID_1608167
+AD_combo_gene_notext_UUID_1608166
+AD_combo_gene_notext_UUID_1610854
+AD_combo_gene_notext_UUID_1611072
+AD_combo_gene_notext_UUID_1609972
+AD_combo_gene_notext_UUID_1608806
+AD_combo_gene_notext_UUID_1611475
+AD_combo_gene_notext_UUID_1610466
+AD_combo_gene_notext_UUID_1611818
+AD_combo_gene_notext_UUID_1608571
+AD_combo_gene_notext_UUID_1609840
+AD_combo_gene_notext_UUID_1607744
+AD_combo_gene_notext_UUID_1608410
+AD_combo_gene_notext_UUID_1608632
+AD_combo_gene_notext_UUID_1610968
+AD_combo_gene_notext_UUID_1611169
+AD_combo_gene_notext_UUID_1609833
+AD_combo_gene_notext_UUID_1611893
+AD_combo_gene_notext_UUID_1608424
+AD_combo_gene_notext_UUID_1608886
+AD_combo_gene_notext_UUID_1609221
+AD_combo_gene_notext_UUID_1610821
+AD_combo_gene_notext_UUID_1608521
+AD_combo_gene_notext_UUID_1608559
+AD_combo_gene_notext_UUID_1608787
+AD_combo_gene_notext_UUID_1610987
+AD_combo_gene_notext_UUID_1611420
+AD_combo_gene_notext_UUID_1610820
+AD_combo_gene_notext_UUID_1610817
+AD_combo_gene_notext_UUID_1611654
+AD_combo_gene_notext_UUID_1610792
+AD_combo_gene_notext_UUID_1608971
+AD_combo_gene_notext_UUID_1609817
+AD_combo_gene_notext_UUID_1611374
+AD_combo_gene_notext_UUID_1611806
+AD_combo_gene_notext_UUID_1608191
+AD_combo_gene_notext_UUID_1609256
+AD_combo_gene_notext_UUID_1610639
+AD_combo_gene_notext_UUID_1608087
+AD_combo_gene_notext_UUID_1608657
+AD_combo_gene_notext_UUID_1608143
+AD_combo_gene_notext_UUID_1610941
+AD_combo_gene_notext_UUID_1608639
+AD_combo_gene_notext_UUID_1608132
+AD_combo_gene_notext_UUID_1608076
+AD_combo_gene_notext_UUID_1608496
+AD_combo_gene_notext_UUID_1608439
+AD_combo_gene_notext_UUID_1609286
+AD_combo_gene_notext_UUID_1609507
+AD_combo_gene_notext_UUID_1608741
+AD_combo_gene_notext_UUID_1608066
+AD_combo_gene_notext_UUID_1609751
+AD_combo_gene_notext_UUID_1610124
+AD_combo_gene_notext_UUID_1610719
+AD_combo_gene_notext_UUID_1610788
+AD_combo_gene_notext_UUID_1608077
+AD_combo_gene_notext_UUID_1608864
+AD_combo_gene_notext_UUID_1611249
+AD_combo_gene_notext_UUID_1608155
+AD_combo_gene_notext_UUID_1608732
+AD_combo_gene_notext_UUID_1609569
+AD_combo_gene_notext_UUID_1608501
+AD_combo_gene_notext_UUID_1608905
+AD_combo_gene_notext_UUID_1608502
+AD_combo_gene_notext_UUID_1609823
+AD_combo_gene_notext_UUID_1608091
+AD_combo_gene_notext_UUID_1611754
+AD_combo_gene_notext_UUID_1611517
+AD_combo_gene_notext_UUID_1608362
+AD_combo_gene_notext_UUID_1609926
+AD_combo_gene_notext_UUID_1609793
+AD_combo_gene_notext_UUID_1609144
+AD_combo_gene_notext_UUID_1610723
+AD_combo_gene_notext_UUID_1610478
+AD_combo_gene_notext_UUID_1611594
+AD_combo_gene_notext_UUID_1609837
+AD_combo_gene_notext_UUID_1609379
+AD_combo_gene_notext_UUID_1608133
+AD_combo_gene_notext_UUID_1608611
+AD_combo_gene_notext_UUID_1607955
+AD_combo_gene_notext_UUID_1609888
+AD_combo_gene_notext_UUID_1608697
+AD_combo_gene_notext_UUID_1608165
+AD_combo_gene_notext_UUID_1608347
+AD_combo_gene_notext_UUID_1608002
+AD_combo_gene_notext_UUID_1611503
+AD_combo_gene_notext_UUID_1610423
+AD_combo_gene_notext_UUID_1609611
+AD_combo_gene_notext_UUID_1607908
+AD_combo_gene_notext_UUID_1608120
+AD_combo_gene_notext_UUID_1608659
+AD_combo_gene_notext_UUID_1608988
+AD_combo_gene_notext_UUID_1610377
+AD_combo_gene_notext_UUID_1611057
+AD_combo_gene_notext_UUID_1609415
+AD_combo_gene_notext_UUID_1611001",7/29/2024,Maya,,,,,"follow up with ad gwas once genes are listed
+also listing source at end will provide context ",,,,,,
+Q40,"Are there any specific alleles within the gene CHRM3 associated with increased susceptibility to developing Alzheimer's disease, as determined by significant SMR analysis?","No, based on the blood, liver, and 
 brain samples tested there are no alleles within the gene CHRM3 that are significantly associated with an increased susceptibility to developing Alzheimer's disease.","NDD_SMR_genes_all_update_text_42309
 NDD_SMR_genes_all_update_text_1464887
 NDD_SMR_genes_all_update_text_656801",7/22/2024,Maya,,,,,"follow up with ad gwas once genes are listed
-also listing source at end will provide context ",,,
-Q39,Can you discuss the expression patterns of the SLC3A1 gene and its potential role in neuroprotection against Parkinson's disease?,"The expression patterns of the SLC3A1 gene within in the cerebellum, whole blood, and cortex, suggest that SLC3A1 does not play a significant protective or harmful role in Parkinson's Disease (PD). 
+also listing source at end will provide context ",,,,,,
+Q41,Can you discuss the expression patterns based on SMR calculations of the SLC3A1 gene and its potential role in neuroprotection against Parkinson's disease?,"The expression patterns of the SLC3A1 gene within in the cerebellum, whole blood, and cortex, suggest that SLC3A1 does not play a significant protective or harmful role in Parkinson's Disease (PD). 
 Brain_Cerebellum:
 •Top associated SNP: rs4953085 
 •Multi SNP SMR p value: 0.1266087
@@ -1609,23 +2172,52 @@ The data indicates that SLC3A1 does not play a significant role in neuroprotecti
 NDD_SMR_genes_all_update_text_19808
 NDD_SMR_genes_all_update_text_1706781
 NDD_SMR_genes_all_update_text_1553899
-NDD_SMR_genes_all_update_text_1017060",7/22/2024,Maya,,,,,,,,
-Q40,What is the genomic location of SNP's rs3738435 and rs1804519 in the GRCh38/hg38 build of the human genome and what gene are they located on or near?,"The SNP rs3738435 is located on the gene CHRM3 at position 239907303 in the GRCh38/hg38 build of the human genome.
+NDD_SMR_genes_all_update_text_1017060",7/22/2024,Maya,,,,,,,,,,,
+Q42,What is the genomic location of SNP's rs3738435 and rs1804519 in the GRCh38/hg38 build of the human genome and what gene are they located on or near?,"The SNP rs3738435 is located on the gene CHRM3 at position 239907303 in the GRCh38/hg38 build of the human genome.
 The SNP rs1804519 is not listed in the data so I cannot identify its genomic location. ","AD_combo_gene_notext_UUID_1611832
 PDno23andme_full_gene_notext_3078323",7/22/2024,Maya,,,,,,What is the genomic location of SNP x in the GRCh38/hg38 build of the human genome and what gene is it located on or near?,"The SNP x is located on the gene y at position z in the GRCh38/hg38 build of the human genome.
-",The SNP x is not listed in the data so I cannot identify its genomic location.
-Q41,What SNPs are significantly associated with Parkinson disease?,"Here is a table of the top 10 SNPs that are significantly associated with Parkinsons Disease: 
-SNP        p-value
-rs356203        3.01E-41
-rs356219        3.47E-41
-rs356220        3.92E-41
-rs356215        1.01E-36
-rs356182        9.41E-34
-rs356225        2.51E-32
-rs356221        2.52E-32
-rs356204        2.87E-32
-rs189596        4.29E-32
-rs356200        5.61E-32","PDno23andme_full_gene_notext_1492093
+",The SNP x is not listed in the data so I cannot identify its genomic location.,,,
+Q43,What SNPs are significantly associated with Parkinson disease?,"Here is a table of the top 10 SNPs that are significantly associated with Parkinsons Disease: 
+• rs356203
+•        b value=        0.2398
+•        P-value=        3.01E-41
+•        nearestGene=        SNCA
+• rs356219
+•        b value=        0.2334
+•        P-value=        3.47E-41
+•        nearestGene=        GPRIN3;SNCA
+• rs356220
+•        b value=        0.2326
+•        P-value=        3.92E-41
+•        nearestGene=        GPRIN3;SNCA
+• rs356215
+•        b value=        0.2197
+•        P-value=        1.01E-36
+•        nearestGene=        GPRIN3;SNCA
+• rs356182
+•        b value=        0.2545
+•        P-value=        9.41E-34
+•        nearestGene=        GPRIN3;SNCA
+• rs356225
+•        b value=        0.2043
+•        P-value=        2.51E-32
+•        nearestGene=        GPRIN3;SNCA
+• rs356221
+•        b value=        0.2041
+•        P-value=        2.52E-32
+•        nearestGene=        GPRIN3;SNCA
+• rs356204
+•        b value=        0.2085
+•        P-value=        2.87E-32
+•        nearestGene=        SNCA
+• rs189596
+•        b value=        0.2093
+•        P-value=        4.29E-32
+•        nearestGene=        SNCA
+• rs356200
+•        b value=        0.2084
+•        P-value=        5.61E-32
+•        nearestGene=        SNCA","PDno23andme_full_gene_notext_1492093
 PDno23andme_full_gene_notext_4541022
 PDno23andme_full_gene_notext_3029756
 PDno23andme_full_gene_notext_6349215
@@ -1634,19 +2226,48 @@ PDno23andme_full_gene_notext_153395
 PDno23andme_full_gene_notext_4449871
 PDno23andme_full_gene_notext_6805650
 PDno23andme_full_gene_notext_7042578
-PDno23andme_full_gene_notext_3240570",7/17/2024,Maya,,,,,,,,
-Q42,Tell me about GWAS in Alzheimer's Disease.,"Genome-wide association studies (GWAS) identify risk alleles that are associated with a particular disease. Here are the top 10 most significant risk SNPs in Alzheimer's Disease according to GWAS summary statistics for AD from Bellenguez (2022):
-SNP        p-value
-rs117310449        3.26E-115
-rs144261139        5.17E-111
-rs139644294        1.53E-94
-rs6733839        6.48E-90
-rs537741299        8.59E-84
-rs61679753        2.28E-83
-rs1160983        4.99E-83
-rs111784051        1.01E-82
-rs7254892        7.74E-82
-rs79701229        5.34E-81","AD_combo_gene_notext_UUID_19974366
+PDno23andme_full_gene_notext_3240570",7/29/2024,Maya,,,,,,,,,,,
+Q44,Tell me about GWAS in Alzheimer's Disease.,"Genome-wide association studies (GWAS) identify risk alleles that are associated with a particular disease. Here are the top 10 most significant risk SNPs in Alzheimer's Disease according to GWAS summary statistics for AD from Bellenguez (2022):
+• rs117310449
+•        b value=        0.7701
+•        P-value=        3.26E-115
+•        nearestGene=        TOMM40
+• rs144261139
+•        b value=        0.7545
+•        P-value=        5.17E-111
+•        nearestGene=        NECTIN2
+• rs139644294
+•        b value=        -0.2252
+•        P-value=        1.53E-94
+•        nearestGene=        .
+• rs6733839
+•        b value=        0.1686
+•        P-value=        6.48E-90
+•        nearestGene=        BIN1;CYP27C1
+• rs537741299
+•        b value=        0.8705
+•        P-value=        8.59E-84
+•        nearestGene=        .
+• rs61679753
+•        b value=        -0.5412
+•        P-value=        2.28E-83
+•        nearestGene=        TOMM40
+• rs1160983
+•        b value=        -0.5399
+•        P-value=        4.99E-83
+•        nearestGene=        TOMM40
+• rs111784051
+•        b value=        -0.5545
+•        P-value=        1.01E-82
+•        nearestGene=        TOMM40
+• rs7254892
+•        b value=        -0.5173
+•        P-value=        7.74E-82
+•        nearestGene=        NECTIN2
+• rs79701229
+•        b value=        0.7038
+•        P-value=        5.34E-81
+•        nearestGene=        NECTIN2","AD_combo_gene_notext_UUID_19974366
 AD_combo_gene_notext_UUID_19974311
 AD_combo_gene_notext_UUID_19974435
 AD_combo_gene_notext_UUID_2643372
@@ -1655,9 +2276,429 @@ AD_combo_gene_notext_UUID_19974414
 AD_combo_gene_notext_UUID_19974389
 AD_combo_gene_notext_UUID_19974428
 AD_combo_gene_notext_UUID_19974343
-AD_combo_gene_notext_UUID_19974306",7/17/2024,Maya,,,,,,,,
-Q43,What SNPs have been linked to the progression of Multiple Sclerosis?,"While I do not have any information regarding SNPs and Multiple Sclerosis, I do have information on the various drugs that are associated with treating the disease.  Would you like me to share this information instead? ",`card-ai-389220.card_ai_june_mvp.DrugTargetIndications`,7/22/2024,Maya,,,,,,,,
-Q44,Is there an association between PSMF1 and Parkinson's disease?,"No, there is no significant association between PSMF1 and PD. ","NDD_SMR_genes_all_update_text_1243289
+AD_combo_gene_notext_UUID_19974306",7/17/2024,Maya,,,,,,,,,,,
+Q45,What SNPs have been linked to the progression of Multiple Sclerosis?,"While I do not have any information regarding SNPs and Multiple Sclerosis, I do have information on the various drugs that are associated with treating the disease.  Would you like me to share this information instead? ",`card-ai-389220.card_ai_june_mvp.DrugTargetIndications`,7/22/2024,Maya,,,,,,,,,,,
+Q46,Is there an association between PSMF1 and Parkinson's disease?,"No, there is no significant association between PSMF1 and PD. ","AD_combo_gene_notext_UUID_20101584
+AD_combo_gene_notext_UUID_20101572
+AD_combo_gene_notext_UUID_20101545
+AD_combo_gene_notext_UUID_20101495
+AD_combo_gene_notext_UUID_20101510
+AD_combo_gene_notext_UUID_20101223
+AD_combo_gene_notext_UUID_20101324
+AD_combo_gene_notext_UUID_20101341
+AD_combo_gene_notext_UUID_20101403
+AD_combo_gene_notext_UUID_20101415
+AD_combo_gene_notext_UUID_20101362
+AD_combo_gene_notext_UUID_20101433
+AD_combo_gene_notext_UUID_20101334
+AD_combo_gene_notext_UUID_20101218
+AD_combo_gene_notext_UUID_20101240
+AD_combo_gene_notext_UUID_20101342
+AD_combo_gene_notext_UUID_20101308
+AD_combo_gene_notext_UUID_20101319
+AD_combo_gene_notext_UUID_20101505
+AD_combo_gene_notext_UUID_20101309
+AD_combo_gene_notext_UUID_20101267
+AD_combo_gene_notext_UUID_20101547
+AD_combo_gene_notext_UUID_20101381
+AD_combo_gene_notext_UUID_20101487
+AD_combo_gene_notext_UUID_20101173
+AD_combo_gene_notext_UUID_20101175
+AD_combo_gene_notext_UUID_20101183
+AD_combo_gene_notext_UUID_20101437
+AD_combo_gene_notext_UUID_20101151
+AD_combo_gene_notext_UUID_20101170
+AD_combo_gene_notext_UUID_20101565
+AD_combo_gene_notext_UUID_20101560
+AD_combo_gene_notext_UUID_20101556
+AD_combo_gene_notext_UUID_20101167
+AD_combo_gene_notext_UUID_20101507
+AD_combo_gene_notext_UUID_20101274
+AD_combo_gene_notext_UUID_20101512
+AD_combo_gene_notext_UUID_20101477
+AD_combo_gene_notext_UUID_20101440
+AD_combo_gene_notext_UUID_20101354
+AD_combo_gene_notext_UUID_20101491
+AD_combo_gene_notext_UUID_20101502
+AD_combo_gene_notext_UUID_20101506
+AD_combo_gene_notext_UUID_20101450
+AD_combo_gene_notext_UUID_20101557
+AD_combo_gene_notext_UUID_20101535
+AD_combo_gene_notext_UUID_20101443
+AD_combo_gene_notext_UUID_20101568
+AD_combo_gene_notext_UUID_20101550
+AD_combo_gene_notext_UUID_20101221
+AD_combo_gene_notext_UUID_20101463
+AD_combo_gene_notext_UUID_20101172
+AD_combo_gene_notext_UUID_20101280
+AD_combo_gene_notext_UUID_20101529
+AD_combo_gene_notext_UUID_20101286
+AD_combo_gene_notext_UUID_20101285
+AD_combo_gene_notext_UUID_20101574
+AD_combo_gene_notext_UUID_20101396
+AD_combo_gene_notext_UUID_20101382
+AD_combo_gene_notext_UUID_20101330
+AD_combo_gene_notext_UUID_20101265
+AD_combo_gene_notext_UUID_20101244
+AD_combo_gene_notext_UUID_20101303
+AD_combo_gene_notext_UUID_20101271
+AD_combo_gene_notext_UUID_20101245
+AD_combo_gene_notext_UUID_20101567
+AD_combo_gene_notext_UUID_20101169
+AD_combo_gene_notext_UUID_20101390
+AD_combo_gene_notext_UUID_20101377
+AD_combo_gene_notext_UUID_20101555
+AD_combo_gene_notext_UUID_20101331
+AD_combo_gene_notext_UUID_20101312
+AD_combo_gene_notext_UUID_20101208
+AD_combo_gene_notext_UUID_20101350
+AD_combo_gene_notext_UUID_20101231
+AD_combo_gene_notext_UUID_20101269
+AD_combo_gene_notext_UUID_20101191
+AD_combo_gene_notext_UUID_20101230
+AD_combo_gene_notext_UUID_20101332
+AD_combo_gene_notext_UUID_20101210
+AD_combo_gene_notext_UUID_20101411
+AD_combo_gene_notext_UUID_20101292
+AD_combo_gene_notext_UUID_20101294
+AD_combo_gene_notext_UUID_20101259
+AD_combo_gene_notext_UUID_20101552
+AD_combo_gene_notext_UUID_20101293
+AD_combo_gene_notext_UUID_20101359
+AD_combo_gene_notext_UUID_20101216
+AD_combo_gene_notext_UUID_20101248
+AD_combo_gene_notext_UUID_20101260
+AD_combo_gene_notext_UUID_20101348
+AD_combo_gene_notext_UUID_20101164
+AD_combo_gene_notext_UUID_20101212
+AD_combo_gene_notext_UUID_20101353
+AD_combo_gene_notext_UUID_20101389
+AD_combo_gene_notext_UUID_20101152
+AD_combo_gene_notext_UUID_20101204
+AD_combo_gene_notext_UUID_20101373
+AD_combo_gene_notext_UUID_20101561
+AD_combo_gene_notext_UUID_20101219
+AD_combo_gene_notext_UUID_20101278
+AD_combo_gene_notext_UUID_20101187
+AD_combo_gene_notext_UUID_20101213
+AD_combo_gene_notext_UUID_20101222
+AD_combo_gene_notext_UUID_20101407
+AD_combo_gene_notext_UUID_20101419
+AD_combo_gene_notext_UUID_20101412
+AD_combo_gene_notext_UUID_20101393
+AD_combo_gene_notext_UUID_20101184
+AD_combo_gene_notext_UUID_20101406
+AD_combo_gene_notext_UUID_20101455
+AD_combo_gene_notext_UUID_20101326
+AD_combo_gene_notext_UUID_20101281
+AD_combo_gene_notext_UUID_20101171
+AD_combo_gene_notext_UUID_20101590
+AD_combo_gene_notext_UUID_20101366
+AD_combo_gene_notext_UUID_20101460
+AD_combo_gene_notext_UUID_20101434
+AD_combo_gene_notext_UUID_20101591
+AD_combo_gene_notext_UUID_20101539
+AD_combo_gene_notext_UUID_20101206
+AD_combo_gene_notext_UUID_20101233
+AD_combo_gene_notext_UUID_20101458
+AD_combo_gene_notext_UUID_20101430
+AD_combo_gene_notext_UUID_20101549
+AD_combo_gene_notext_UUID_20101352
+AD_combo_gene_notext_UUID_20101306
+AD_combo_gene_notext_UUID_20101473
+AD_combo_gene_notext_UUID_20101380
+AD_combo_gene_notext_UUID_20101497
+AD_combo_gene_notext_UUID_20101508
+AD_combo_gene_notext_UUID_20101159
+AD_combo_gene_notext_UUID_20101177
+AD_combo_gene_notext_UUID_20101261
+AD_combo_gene_notext_UUID_20101180
+AD_combo_gene_notext_UUID_20101578
+AD_combo_gene_notext_UUID_20101178
+AD_combo_gene_notext_UUID_20101564
+AD_combo_gene_notext_UUID_20101580
+AD_combo_gene_notext_UUID_20101376
+AD_combo_gene_notext_UUID_20101318
+AD_combo_gene_notext_UUID_20101333
+AD_combo_gene_notext_UUID_20101189
+AD_combo_gene_notext_UUID_20101447
+AD_combo_gene_notext_UUID_20101337
+AD_combo_gene_notext_UUID_20101401
+AD_combo_gene_notext_UUID_20101492
+AD_combo_gene_notext_UUID_20101327
+AD_combo_gene_notext_UUID_20101456
+AD_combo_gene_notext_UUID_20101498
+AD_combo_gene_notext_UUID_20101515
+AD_combo_gene_notext_UUID_20101569
+AD_combo_gene_notext_UUID_20101525
+AD_combo_gene_notext_UUID_20101457
+AD_combo_gene_notext_UUID_20101370
+AD_combo_gene_notext_UUID_20101320
+AD_combo_gene_notext_UUID_20101163
+AD_combo_gene_notext_UUID_20101398
+AD_combo_gene_notext_UUID_20101532
+AD_combo_gene_notext_UUID_20101594
+AD_combo_gene_notext_UUID_20101365
+AD_combo_gene_notext_UUID_20101587
+AD_combo_gene_notext_UUID_20101513
+AD_combo_gene_notext_UUID_20101239
+AD_combo_gene_notext_UUID_20101300
+AD_combo_gene_notext_UUID_20101537
+AD_combo_gene_notext_UUID_20101408
+AD_combo_gene_notext_UUID_20101355
+AD_combo_gene_notext_UUID_20101593
+AD_combo_gene_notext_UUID_20101536
+AD_combo_gene_notext_UUID_20101211
+AD_combo_gene_notext_UUID_20101255
+AD_combo_gene_notext_UUID_20101527
+AD_combo_gene_notext_UUID_20101400
+AD_combo_gene_notext_UUID_20101431
+AD_combo_gene_notext_UUID_20101250
+AD_combo_gene_notext_UUID_20101531
+AD_combo_gene_notext_UUID_20101270
+AD_combo_gene_notext_UUID_20101493
+AD_combo_gene_notext_UUID_20101449
+AD_combo_gene_notext_UUID_20101192
+AD_combo_gene_notext_UUID_20101328
+AD_combo_gene_notext_UUID_20101546
+AD_combo_gene_notext_UUID_20101209
+AD_combo_gene_notext_UUID_20101329
+AD_combo_gene_notext_UUID_20101251
+AD_combo_gene_notext_UUID_20101399
+AD_combo_gene_notext_UUID_20101227
+AD_combo_gene_notext_UUID_20101181
+AD_combo_gene_notext_UUID_20101541
+AD_combo_gene_notext_UUID_20101559
+AD_combo_gene_notext_UUID_20101150
+AD_combo_gene_notext_UUID_20101155
+AD_combo_gene_notext_UUID_20101358
+AD_combo_gene_notext_UUID_20101335
+AD_combo_gene_notext_UUID_20101517
+AD_combo_gene_notext_UUID_20101246
+AD_combo_gene_notext_UUID_20101453
+AD_combo_gene_notext_UUID_20101468
+AD_combo_gene_notext_UUID_20101254
+AD_combo_gene_notext_UUID_20101295
+AD_combo_gene_notext_UUID_20101402
+AD_combo_gene_notext_UUID_20101339
+AD_combo_gene_notext_UUID_20101544
+AD_combo_gene_notext_UUID_20101472
+AD_combo_gene_notext_UUID_20101471
+AD_combo_gene_notext_UUID_20101394
+AD_combo_gene_notext_UUID_20101410
+AD_combo_gene_notext_UUID_20101501
+AD_combo_gene_notext_UUID_20101146
+AD_combo_gene_notext_UUID_20101465
+AD_combo_gene_notext_UUID_20101504
+AD_combo_gene_notext_UUID_20101489
+AD_combo_gene_notext_UUID_20101298
+AD_combo_gene_notext_UUID_20101485
+AD_combo_gene_notext_UUID_20101153
+AD_combo_gene_notext_UUID_20101482
+AD_combo_gene_notext_UUID_20101165
+AD_combo_gene_notext_UUID_20101147
+AD_combo_gene_notext_UUID_20101176
+AD_combo_gene_notext_UUID_20101316
+AD_combo_gene_notext_UUID_20101179
+AD_combo_gene_notext_UUID_20101349
+AD_combo_gene_notext_UUID_20101476
+AD_combo_gene_notext_UUID_20101551
+AD_combo_gene_notext_UUID_20101404
+AD_combo_gene_notext_UUID_20101524
+AD_combo_gene_notext_UUID_20101573
+AD_combo_gene_notext_UUID_20101357
+AD_combo_gene_notext_UUID_20101425
+AD_combo_gene_notext_UUID_20101464
+AD_combo_gene_notext_UUID_20101158
+AD_combo_gene_notext_UUID_20101422
+AD_combo_gene_notext_UUID_20101282
+AD_combo_gene_notext_UUID_20101522
+AD_combo_gene_notext_UUID_20101423
+AD_combo_gene_notext_UUID_20101289
+AD_combo_gene_notext_UUID_20101161
+AD_combo_gene_notext_UUID_20101205
+AD_combo_gene_notext_UUID_20101511
+AD_combo_gene_notext_UUID_20101570
+AD_combo_gene_notext_UUID_20101461
+AD_combo_gene_notext_UUID_20101414
+AD_combo_gene_notext_UUID_20101253
+AD_combo_gene_notext_UUID_20101241
+AD_combo_gene_notext_UUID_20101538
+AD_combo_gene_notext_UUID_20101215
+AD_combo_gene_notext_UUID_20101311
+AD_combo_gene_notext_UUID_20101242
+AD_combo_gene_notext_UUID_20101441
+AD_combo_gene_notext_UUID_20101397
+AD_combo_gene_notext_UUID_20101258
+AD_combo_gene_notext_UUID_20101252
+AD_combo_gene_notext_UUID_20101592
+AD_combo_gene_notext_UUID_20101243
+AD_combo_gene_notext_UUID_20101313
+AD_combo_gene_notext_UUID_20101418
+AD_combo_gene_notext_UUID_20101442
+AD_combo_gene_notext_UUID_20101314
+AD_combo_gene_notext_UUID_20101351
+AD_combo_gene_notext_UUID_20101420
+AD_combo_gene_notext_UUID_20101577
+AD_combo_gene_notext_UUID_20101323
+AD_combo_gene_notext_UUID_20101236
+AD_combo_gene_notext_UUID_20101344
+AD_combo_gene_notext_UUID_20101409
+AD_combo_gene_notext_UUID_20101432
+AD_combo_gene_notext_UUID_20101297
+AD_combo_gene_notext_UUID_20101576
+AD_combo_gene_notext_UUID_20101553
+AD_combo_gene_notext_UUID_20101291
+AD_combo_gene_notext_UUID_20101428
+AD_combo_gene_notext_UUID_20101347
+AD_combo_gene_notext_UUID_20101533
+AD_combo_gene_notext_UUID_20101575
+AD_combo_gene_notext_UUID_20101554
+AD_combo_gene_notext_UUID_20101467
+AD_combo_gene_notext_UUID_20101436
+AD_combo_gene_notext_UUID_20101338
+AD_combo_gene_notext_UUID_20101272
+AD_combo_gene_notext_UUID_20101384
+AD_combo_gene_notext_UUID_20101287
+AD_combo_gene_notext_UUID_20101336
+AD_combo_gene_notext_UUID_20101304
+AD_combo_gene_notext_UUID_20101174
+AD_combo_gene_notext_UUID_20101228
+AD_combo_gene_notext_UUID_20101238
+AD_combo_gene_notext_UUID_20101325
+AD_combo_gene_notext_UUID_20101276
+AD_combo_gene_notext_UUID_20101530
+AD_combo_gene_notext_UUID_20101589
+AD_combo_gene_notext_UUID_20101307
+AD_combo_gene_notext_UUID_20101364
+AD_combo_gene_notext_UUID_20101262
+AD_combo_gene_notext_UUID_20101284
+AD_combo_gene_notext_UUID_20101283
+AD_combo_gene_notext_UUID_20101207
+AD_combo_gene_notext_UUID_20101185
+AD_combo_gene_notext_UUID_20101490
+AD_combo_gene_notext_UUID_20101237
+AD_combo_gene_notext_UUID_20101368
+AD_combo_gene_notext_UUID_20101315
+AD_combo_gene_notext_UUID_20101190
+AD_combo_gene_notext_UUID_20101256
+AD_combo_gene_notext_UUID_20101387
+AD_combo_gene_notext_UUID_20101375
+AD_combo_gene_notext_UUID_20101247
+AD_combo_gene_notext_UUID_20101257
+AD_combo_gene_notext_UUID_20101296
+AD_combo_gene_notext_UUID_20101193
+AD_combo_gene_notext_UUID_20101288
+AD_combo_gene_notext_UUID_20101317
+AD_combo_gene_notext_UUID_20101214
+AD_combo_gene_notext_UUID_20101226
+AD_combo_gene_notext_UUID_20101424
+AD_combo_gene_notext_UUID_20101470
+AD_combo_gene_notext_UUID_20101273
+AD_combo_gene_notext_UUID_20101266
+AD_combo_gene_notext_UUID_20101343
+AD_combo_gene_notext_UUID_20101571
+AD_combo_gene_notext_UUID_20101563
+AD_combo_gene_notext_UUID_20101427
+AD_combo_gene_notext_UUID_20101416
+AD_combo_gene_notext_UUID_20101494
+AD_combo_gene_notext_UUID_20101301
+AD_combo_gene_notext_UUID_20101435
+AD_combo_gene_notext_UUID_20101579
+AD_combo_gene_notext_UUID_20101379
+AD_combo_gene_notext_UUID_20101346
+AD_combo_gene_notext_UUID_20101156
+AD_combo_gene_notext_UUID_20101162
+AD_combo_gene_notext_UUID_20101566
+AD_combo_gene_notext_UUID_20101405
+AD_combo_gene_notext_UUID_20101488
+AD_combo_gene_notext_UUID_20101340
+AD_combo_gene_notext_UUID_20101562
+AD_combo_gene_notext_UUID_20101168
+AD_combo_gene_notext_UUID_20101305
+AD_combo_gene_notext_UUID_20101583
+AD_combo_gene_notext_UUID_20101194
+AD_combo_gene_notext_UUID_20101542
+AD_combo_gene_notext_UUID_20101290
+AD_combo_gene_notext_UUID_20101582
+AD_combo_gene_notext_UUID_20101438
+AD_combo_gene_notext_UUID_20101371
+AD_combo_gene_notext_UUID_20101451
+AD_combo_gene_notext_UUID_20101235
+AD_combo_gene_notext_UUID_20101483
+AD_combo_gene_notext_UUID_20101486
+AD_combo_gene_notext_UUID_20101446
+AD_combo_gene_notext_UUID_20101264
+AD_combo_gene_notext_UUID_20101588
+AD_combo_gene_notext_UUID_20101234
+AD_combo_gene_notext_UUID_20101452
+AD_combo_gene_notext_UUID_20101321
+AD_combo_gene_notext_UUID_20101526
+AD_combo_gene_notext_UUID_20101523
+AD_combo_gene_notext_UUID_20101157
+AD_combo_gene_notext_UUID_20101518
+AD_combo_gene_notext_UUID_20101586
+AD_combo_gene_notext_UUID_20101277
+AD_combo_gene_notext_UUID_20101520
+AD_combo_gene_notext_UUID_20101367
+AD_combo_gene_notext_UUID_20101154
+AD_combo_gene_notext_UUID_20101385
+AD_combo_gene_notext_UUID_20101322
+AD_combo_gene_notext_UUID_20101454
+AD_combo_gene_notext_UUID_20101225
+AD_combo_gene_notext_UUID_20101500
+AD_combo_gene_notext_UUID_20101268
+AD_combo_gene_notext_UUID_20101363
+AD_combo_gene_notext_UUID_20101421
+AD_combo_gene_notext_UUID_20101475
+AD_combo_gene_notext_UUID_20101166
+AD_combo_gene_notext_UUID_20101188
+AD_combo_gene_notext_UUID_20101444
+AD_combo_gene_notext_UUID_20101302
+AD_combo_gene_notext_UUID_20101474
+AD_combo_gene_notext_UUID_20101543
+AD_combo_gene_notext_UUID_20101378
+AD_combo_gene_notext_UUID_20101528
+AD_combo_gene_notext_UUID_20101484
+AD_combo_gene_notext_UUID_20101224
+AD_combo_gene_notext_UUID_20101534
+AD_combo_gene_notext_UUID_20101459
+AD_combo_gene_notext_UUID_20101186
+AD_combo_gene_notext_UUID_20101481
+AD_combo_gene_notext_UUID_20101509
+AD_combo_gene_notext_UUID_20101469
+AD_combo_gene_notext_UUID_20101220
+AD_combo_gene_notext_UUID_20101369
+AD_combo_gene_notext_UUID_20101148
+AD_combo_gene_notext_UUID_20101345
+AD_combo_gene_notext_UUID_20101516
+AD_combo_gene_notext_UUID_20101160
+AD_combo_gene_notext_UUID_20101374
+AD_combo_gene_notext_UUID_20101149
+AD_combo_gene_notext_UUID_20101232
+AD_combo_gene_notext_UUID_20101413
+AD_combo_gene_notext_UUID_20101448
+AD_combo_gene_notext_UUID_20101445
+AD_combo_gene_notext_UUID_20101514
+AD_combo_gene_notext_UUID_20101275
+AD_combo_gene_notext_UUID_20101372
+AD_combo_gene_notext_UUID_20101299
+AD_combo_gene_notext_UUID_20101462
+AD_combo_gene_notext_UUID_20101595
+AD_combo_gene_notext_UUID_20101388
+AD_combo_gene_notext_UUID_20101391
+AD_combo_gene_notext_UUID_20101182
+AD_combo_gene_notext_UUID_20101466
+AD_combo_gene_notext_UUID_20101581
+AD_combo_gene_notext_UUID_20101479
+AD_combo_gene_notext_UUID_20101496
+AD_combo_gene_notext_UUID_20101540
+AD_combo_gene_notext_UUID_20101478
+AD_combo_gene_notext_UUID_20101585
+AD_combo_gene_notext_UUID_20101386
+AD_combo_gene_notext_UUID_20101426
+AD_combo_gene_notext_UUID_20101521",7/29/2024,Maya,,,,,,,,,,,
+Q47,"Based on SMR analysis, is there a significant association between PSMF1 and Parkinson's disease?","No, there is no significant association between PSMF1 and PD. ","NDD_SMR_genes_all_update_text_1243289
 NDD_SMR_genes_all_update_text_1169184
 NDD_SMR_genes_all_update_text_1021830
 NDD_SMR_genes_all_update_text_1330012
@@ -1677,8 +2718,8 @@ NDD_SMR_genes_all_update_text_500041
 NDD_SMR_genes_all_update_text_500036
 NDD_SMR_genes_all_update_text_500037
 NDD_SMR_genes_all_update_text_1021831
-NDD_SMR_genes_all_update_text_500038",7/22/2024,Maya,,,,,,,,
-Q45,What types of variants within RAB32 were found to have an effect on Parkinson's disease risk?,"There are no variants within the RAB32 gene found to have an effect on Parkinson's disease risk. Therefore, no distinct types of variants within RAB32 have been identified as influencing the risk of developing PD.","PDno23andme_full_gene_notext_7423787
+NDD_SMR_genes_all_update_text_500038",7/22/2024,Maya,,,,,,,,,,,
+Q48,What types of variants within RAB32 were found to have an effect on Parkinson's disease risk?,"There are no variants within the RAB32 gene found to have an effect on Parkinson's disease risk. Therefore, no distinct types of variants within RAB32 have been identified as influencing the risk of developing PD.","PDno23andme_full_gene_notext_7423787
 PDno23andme_full_gene_notext_2174453
 PDno23andme_full_gene_notext_6751603
 PDno23andme_full_gene_notext_3299696
@@ -1695,23 +2736,84 @@ PDno23andme_full_gene_notext_614411
 PDno23andme_full_gene_notext_2576846
 PDno23andme_full_gene_notext_739125
 PDno23andme_full_gene_notext_5298852
-PDno23andme_full_gene_notext_2898505",7/22/2024,Maya,,,,,,,,
-Q46,Are there any association signals with the gene ADAM10 in Alzheimer's disease?,"Yes, there are three significant signals associated with the gene ADAM10 in Alzheimer's disease. 
+PDno23andme_full_gene_notext_2898505",7/22/2024,Maya,,,,,,,,,,,
+Q49,Are there any association signals with the gene ADAM10 in Alzheimer's disease?,"Yes, there are nineteen SNPs that are significantly associated with the gene ADAM10 in Alzheimer's disease. 
+• rs653765
+•        b value=        -0.0599
+•        P-value=        3.44E-11
+• rs6494035
+•        b value=        -0.0596
+•        P-value=        4.12E-11
+• rs12911832
+•        b value=        -0.0601
+•        P-value=        4.17E-11
+• rs6494036
+•        b value=        -0.0596
+•        P-value=        4.20E-11
+• rs6494037
+•        b value=        -0.0595
+•        P-value=        4.44E-11
+• rs12911961
+•        b value=        -0.0594
+•        P-value=        6.60E-11
+• rs12912003
+•        b value=        -0.0593
+•        P-value=        6.78E-11
+• rs442495
+•        b value=        -0.057
+•        P-value=        8.19E-11
+• rs11854073
+•        b value=        -0.0564
+•        P-value=        1.20E-10
+• rs2555356
+•        b value=        -0.0561
+•        P-value=        1.51E-10","AD_combo_gene_notext_UUID_17447306
+AD_combo_gene_notext_UUID_17447143
+AD_combo_gene_notext_UUID_17446946
+AD_combo_gene_notext_UUID_17447145
+AD_combo_gene_notext_UUID_17447148
+AD_combo_gene_notext_UUID_17446945
+AD_combo_gene_notext_UUID_17446947
+AD_combo_gene_notext_UUID_17447179
+AD_combo_gene_notext_UUID_17446878
+AD_combo_gene_notext_UUID_17447149
+AD_combo_gene_notext_UUID_17447260
+AD_combo_gene_notext_UUID_17446884
+AD_combo_gene_notext_UUID_17447038
+AD_combo_gene_notext_UUID_17446922
+AD_combo_gene_notext_UUID_17446809
+AD_combo_gene_notext_UUID_17446853
+AD_combo_gene_notext_UUID_17446849
+AD_combo_gene_notext_UUID_17446861
+AD_combo_gene_notext_UUID_17446820",7/29/2024,Maya,,,,,,,,,,,
+Q50,Are there any SMR association signals with the gene ADAM10 in Alzheimer's disease?,"Yes, there are three significant signals associated with the gene ADAM10 in Alzheimer's disease. 
 •In the whole brain tissue the most significant SNP is rs2250583 with a multi SNP SMR p value of 2.60E-06 and a p-HEIDI of 0.07790174.
 •In whole blood eQTL data the most significant SNP is rs7161799 and has a multi SNP SMR p value of 1.325576e-06 and a p-HEIDI value of 0.2374332.
 •In the Cortex eQTL data the most significant SNP is rs1427280 which has a multi SNP SMR p value of 2.621155e-06 and a p-HEIDI value of 0.009769548.    ","NDD_SMR_genes_all_update_text_1500785
 NDD_SMR_genes_all_update_text_105563
-NDD_SMR_genes_all_update_text_1109990",7/22/2024,Maya,,,,,,,,
-Q47,How do GBA gene mutations impact the risk of Parkinson's disease?,"Two GBA gene mutations were found to be significantly associated with an increased risk of Parkinson's disease: 
+NDD_SMR_genes_all_update_text_1109990",7/22/2024,Maya,,,,,,,,,,,
+Q51,How do GBA gene mutations impact the risk of Parkinson's disease?,"Two GBA gene mutations were found to be significantly associated with an increased risk of Parkinson's disease: 
 •rs12752133
-P-value = 4.108e-29
-b= 0.7821
+•b value= 0.7821
+•P-value = 4.108e-29
 •rs2230288
-P-vlaue =3.055e-28
-b= 0.7358","PDno23andme_full_gene_notext_7007839
-PDno23andme_full_gene_notext_3083751",7/9/2024,Maya,,,,,,,,
-Q48,What is the relevance of the gene TREM2 in Alzheimer's disease?,"The gene TREM2 is found to be significant in Alzheimer's disease within the cortex. Notably, the top associated snp is rs9394778, which has a p_SMR_multi of 6.308333e-07.",NDD_SMR_genes_all_update_text_1109138,7/22/2024,Maya,,,,,,,,
-Q49,Is there a statistically significant association between any APOE SNPs and Alzheimer's Disease?,"Yes, the APOE gene is widely recognized as a major genetic risk factor for Alzheimer's Disease. Here are the 5 significantly associated SNPS:
+•b value= 0.7358
+•P-vlaue =3.055e-28","PDno23andme_full_gene_notext_7007839
+PDno23andme_full_gene_notext_3083751",7/9/2024,Maya,,,,,,,,,,,
+Q52,What is the relevance of the gene TREM2 in Alzheimer's disease?,"Two TREM2 SNPs were found to be significantly associated with Alzheimer's disease. 
+•rs75932628
+•        b value=        0.8843
+•        P-value=        1.394e-27
+•rs143332484
+•        b value=        0.3346
+•        P-value=        6.035e-19","AD_combo_gene_notext_UUID_8300440
+AD_combo_gene_notext_UUID_8300439
+",7/29/2024,Maya,,,,,,,,,,,
+Q52,What is the relevance of the gene TREM2 in Alzheimer's disease using SMR calculations?,"One TREM2 SNP was found to be significant in Alzheimer's disease in the cortex.
+• rs9394778
+• p SMR multi = 6.308333e-07
+• p heidi= 0.7032683",NDD_SMR_genes_all_update_text_1109138,7/29/2024,Maya,,,,,,,,,,,
+Q53,Is there a statistically significant association between any APOE SNPs and Alzheimer's Disease?,"Yes, the APOE gene is widely recognized as a major genetic risk factor for Alzheimer's Disease. Here are the 5 significantly associated SNPS:
 •rs1081106
 P-value= 7.203e-34
 b= -0.2024
@@ -1731,105 +2833,850 @@ b= 0.9696
 AD_combo_gene_notext_UUID_19908949
 AD_combo_gene_notext_UUID_19908960
 AD_combo_gene_notext_UUID_19908952
-AD_combo_gene_notext_UUID_19908948",7/9/2024,Maya,,,,,,,,
-Q50,Is CCDC93 associated with AD in tibial nerves? ,"In eQTL omic data for the Tibial Nerve, the gene CCDC93, is not found to have a functionally significant role in Alzheimer's Disease.
+AD_combo_gene_notext_UUID_19908948",7/9/2024,Maya,,,,,,,,,,,
+Q54,Is CCDC93 associated with AD in tibial nerves? ,"In eQTL omic data for the Tibial Nerve, the gene CCDC93, is not found to have a functionally significant role in Alzheimer's Disease.
 • rs13429184
 P-SMR Multi = 0.0455
 P- Heidi = 0.640 
 
-",NDD_SMR_genes_all_update_text_1285358,7/9/2024,Maya,,,,,,,,
-Q51,"Based on blood_eQTLgen data, what is the top SNP in SNCA that is associated with Parkinson's disease (PD), and what is its p-value?","SNCA’s top associated SNP, is rs2245801, has a multi SNP SMR p value of 9.761195e-14 and a HEIDI value of 5.974436e-15.",NDD_SMR_genes_all_update_text_1555943,Jun 27,Marzieh,,,,,,,,
-Q52,Has any relationship been reported between EIF2B3 and Alzheimer's Disease (AD)?,"No, based on the omic data from cortex, putamen basal ganglia, nucleus accumbens basal ganglia, whole blood, whole brain, and prefrontal cortex tissues, the gene EIF2B3 is not found to have a functionally significant role in Alzheimer's disease.","NDD_SMR_genes_all_update_text_1104733 NDD_SMR_genes_all_update_text_1582221 NDD_SMR_genes_all_update_text_1714909 NDD_SMR_genes_all_update_text_1490276 NDD_SMR_genes_all_update_text_37340 NDD_SMR_genes_all_update_text_37341  NDD_SMR_genes_all_update_text_1194963
- NDD_SMR_genes_all_update_text_37342 NDD_SMR_genes_all_update_text_1605096 NDD_SMR_genes_all_update_text_1244112 NDD_SMR_genes_all_update_text_652156 NDD_SMR_genes_all_update_text_1389059",6/27/2024 revised July 3th,Marzieh,,,,,,,,
-Q53,What is the target of the drug Sontuzumab?,"The gene target of the drug Sontuzumab is MUC1 (mucin 1, cell surface associated).",DrugGeneTargets_text_11821,Jun 27,Marzieh/Maya,,,,,,,,
-Q54,"What is the genetic target of the antibody drug Bectumomab, and what is its status in clinical trials and FDA approval?","The genetic target of the antibody drug Bectumomab is CD22 (CD22 molecule), which has the Ensembl identifier ENSG00000012124. Bectumomab reached phase 3 clinical trials but is not approved by the FDA for treatment of any disease.",DrugGeneTargets_text_10825,Jun 27,Marzieh,,,,,,,,
-Q55,What are the synonymous names of the drug Flanvotumab?,"Flanvotumab has the associated synonyms 20-D-7S, 20D7S, IMC-20D7S, and IMC20D7S",DrugGeneTargets_text_12843,6/27/2024 revised July 3th,Marzieh,,,,,,,,
-Q56,What are the genetic targets of the drug Naminidil?,"The genetic targets of the drug Naminidil are KCNJ11 (potassium inwardly rectifying channel subfamily J member 11), ABCC8 (ATP-binding cassette subfamily C member 8), ABCC9 (ATP-binding cassette subfamily C member 9), and KCNJ8 (potassium inwardly rectifying channel subfamily J member 8).",DrugGeneTargets_text_12141 DrugGeneTargets_text_12160  DrugGeneTargets_text_12672  DrugGeneTargets_text_12677,6/27/2024 revised July 3th,Marzieh/Maya,,,,,,,,
-Q57,What are the genetic targets of the drug Halothane?,"Halothane has several genetic targets, such as KCNK2, KCNK9, KCNK18, KCNK10, KCNK3, GLRA1, GLRB, GABRA1, GABRB2, GABRG2, GABRB3, GABRA4, GABRG3, GABRQ, GABRA3, GABRP, GABRD, GABRG1, GABRB1, GABRE, GABRA2, GABRA5, and GABRA6","DrugGeneTargets_text_10053  DrugGeneTargets_text_10058 DrugGeneTargets_text_10065 DrugGeneTargets_text_10070
- DrugGeneTargets_text_10075 DrugGeneTargets_text_10082 DrugGeneTargets_text_10088 DrugGeneTargets_text_6712 DrugGeneTargets_text_6794 DrugGeneTargets_text_6872 DrugGeneTargets_text_6951 DrugGeneTargets_text_7030 DrugGeneTargets_text_7108 DrugGeneTargets_text_7184 DrugGeneTargets_text_7260 DrugGeneTargets_text_7340 DrugGeneTargets_text_7416 DrugGeneTargets_text_7492 DrugGeneTargets_text_7568 DrugGeneTargets_text_7649 DrugGeneTargets_text_7725 DrugGeneTargets_text_7806 DrugGeneTargets_text_7884",6/27/2024 revised July 3th,Marzieh,,,,,,,,
-Q58,What is the maximum clinical trial phase for the drug Halothane?,Halothane reached phase 4 clinical trials.,"DrugGeneTargets_text_10053  DrugGeneTargets_text_10058 DrugGeneTargets_text_10065 DrugGeneTargets_text_10070
- DrugGeneTargets_text_10075 DrugGeneTargets_text_10082 DrugGeneTargets_text_10088 DrugGeneTargets_text_6712 DrugGeneTargets_text_6794 DrugGeneTargets_text_6872 DrugGeneTargets_text_6951 DrugGeneTargets_text_7030 DrugGeneTargets_text_7108 DrugGeneTargets_text_7184 DrugGeneTargets_text_7260 DrugGeneTargets_text_7340 DrugGeneTargets_text_7416 DrugGeneTargets_text_7492 DrugGeneTargets_text_7568 DrugGeneTargets_text_7649 DrugGeneTargets_text_7725 DrugGeneTargets_text_7806 DrugGeneTargets_text_7884",6/27/2024 revised July 3th,Marzieh,,,,,,,,
-Q59,"When was Halothane first approved, and has it been withdrawn from use?",Halothane was first approved for use in 1958 and has not been withdrawn from use.,"DrugGeneTargets_text_10053  DrugGeneTargets_text_10058 DrugGeneTargets_text_10065 DrugGeneTargets_text_10070
- DrugGeneTargets_text_10075 DrugGeneTargets_text_10082 DrugGeneTargets_text_10088 DrugGeneTargets_text_6712 DrugGeneTargets_text_6794 DrugGeneTargets_text_6872 DrugGeneTargets_text_6951 DrugGeneTargets_text_7030 DrugGeneTargets_text_7108 DrugGeneTargets_text_7184 DrugGeneTargets_text_7260 DrugGeneTargets_text_7340 DrugGeneTargets_text_7416 DrugGeneTargets_text_7492 DrugGeneTargets_text_7568 DrugGeneTargets_text_7649 DrugGeneTargets_text_7725 DrugGeneTargets_text_7806 DrugGeneTargets_text_7884",6/27/2024 revised July 3th,Marzieh,,,,,,,,
-Q60,"What type of molecule is Halothane, and what is its mechanism of action?","Halothane is a small molecule drug that acts as an opener, a positive allosteric modulator, and a positive modulator.","DrugGeneTargets_text_10053  DrugGeneTargets_text_10058 DrugGeneTargets_text_10065 DrugGeneTargets_text_10070
- DrugGeneTargets_text_10075 DrugGeneTargets_text_10082 DrugGeneTargets_text_10088 DrugGeneTargets_text_6712 DrugGeneTargets_text_6794 DrugGeneTargets_text_6872 DrugGeneTargets_text_6951 DrugGeneTargets_text_7030 DrugGeneTargets_text_7108 DrugGeneTargets_text_7184 DrugGeneTargets_text_7260 DrugGeneTargets_text_7340 DrugGeneTargets_text_7416 DrugGeneTargets_text_7492 DrugGeneTargets_text_7568 DrugGeneTargets_text_7649 DrugGeneTargets_text_7725 DrugGeneTargets_text_7806 DrugGeneTargets_text_7884",6/27/2024 revised July 3th,Marzieh,,,,,,,,
-Q61,Is Halothane associated with any diseases?,"No, based on the data so far, Halothane is not associated with any diseases","DrugGeneTargets_text_10053  DrugGeneTargets_text_10058 DrugGeneTargets_text_10065 DrugGeneTargets_text_10070
- DrugGeneTargets_text_10075 DrugGeneTargets_text_10082 DrugGeneTargets_text_10088 DrugGeneTargets_text_6712 DrugGeneTargets_text_6794 DrugGeneTargets_text_6872 DrugGeneTargets_text_6951 DrugGeneTargets_text_7030 DrugGeneTargets_text_7108 DrugGeneTargets_text_7184 DrugGeneTargets_text_7260 DrugGeneTargets_text_7340 DrugGeneTargets_text_7416 DrugGeneTargets_text_7492 DrugGeneTargets_text_7568 DrugGeneTargets_text_7649 DrugGeneTargets_text_7725 DrugGeneTargets_text_7806 DrugGeneTargets_text_7884",6/27/2024 revised July 3th,Marzieh,,,,,,,,
-Q62,"What is the top-associated SNP of the gene EMID2 in whole brain eQTL omic data for LBD disease, and is it significant?","The top-associated SNP for EMID2 in whole brain eQTL omic data for LBD disease is rs7805075, which has a multi-SNP SMR p-value of 0.8006395 and a HEIDI value of 0.7130096, and is not functionally significant.",NDD_SMR_genes_all_update_text_1629820,6/27/2024 revised July 3th,Marzieh,,,,,,,,
-Q63,Is there any basal ganglia eQTL omic data available for the gene ZNF257 in relation to ALS (Amyotrophic Lateral Sclerosis) disease?,"Yes, there is Basal Ganglia eQTL omic data for the gene ZNF257, which indicates it does not have a functionally significant role in Amyotrophic Lateral Sclerosis.",NDD_SMR_genes_all_update_text_25257,6/27/2024 revised July 3th,Marzieh,,,,,,,,
-Q64,What is the nearest gene to SNP rs12483639?,The nearest gene to SNP rs12483639 is APP.,PDno23andme_full_gene_notext_4687626,July 3th,Marzieh/Maya,,,,,,,,
-Q65,What is the position of rs12483639 in GRCh37 and GRCh38?,The position of this SNP is 27442372 in GRCh37 and 26070056 in GRCh38.,PDno23andme_full_gene_notext_4687626,July 3th,Marzieh,,,,,,,,
-Q66,"When was Fenfluramine approved for use, and has it been withdrawn or not?","Fenfluramine was first approved for use in 2020. Although it reached Phase 4 clinical trials and was approved, it has now been withdrawn from use.",DrugGeneTargets_text_1118 DrugGeneTargets_text_5806 DrugGeneTargets_text_10249,July 3th,Marzieh,,,,,,,,
-Q67,When was Quazepam assigned a United States Adopted Name (USAN) and approved for use by the FDA?,Quazepam was assigned a USAN in 1976 and was approved for use by the FDA in 1985.,DrugTargetsIndication121923_text_964756 DrugTargetsIndication121923_text_964765 DrugTargetsIndication121923_text_964743 DrugTargetsIndication121923_text_964755 DrugTargetsIndication121923_text_964759 DrugTargetsIndication121923_text_964735 DrugTargetsIndication121923_text_964762 DrugTargetsIndication121923_text_964760 DrugTargetsIndication121923_text_964742 DrugTargetsIndication121923_text_964758 DrugTargetsIndication121923_text_964752 DrugTargetsIndication121923_text_964740 DrugTargetsIndication121923_text_964744 DrugTargetsIndication121923_text_964763 DrugTargetsIndication121923_text_964734 DrugTargetsIndication121923_text_964746 DrugTargetsIndication121923_text_964748 DrugTargetsIndication121923_text_964754 DrugTargetsIndication121923_text_964739 DrugTargetsIndication121923_text_964749 DrugTargetsIndication121923_text_964757 DrugTargetsIndication121923_text_964761 DrugTargetsIndication121923_text_964750 DrugTargetsIndication121923_text_964745 DrugTargetsIndication121923_text_964751 DrugTargetsIndication121923_text_964741 DrugTargetsIndication121923_text_964736 DrugTargetsIndication121923_text_964737 DrugTargetsIndication121923_text_964756 DrugTargetsIndication121923_text_964738 DrugTargetsIndication121923_text_964747 DrugTargetsIndication121923_text_964764,July 3th,Marzieh,,,,,,,,
-Q68,"For what condition is Quazepam indicated, and which Experimental Factor Ontology (EFO) and Medical Subject Headings (MeSH) terms are associated with it?","Quazepam is indicated for the treatment of insomnia, associated with the Experimental Factor Ontology (EFO) term EFO:0004698 and the Medical Subject Headings (MeSH) term Sleep Initiation and Maintenance Disorders (D007319).",DrugTargetsIndication121923_text_964756 DrugTargetsIndication121923_text_964765 DrugTargetsIndication121923_text_964743 DrugTargetsIndication121923_text_964755 DrugTargetsIndication121923_text_964759 DrugTargetsIndication121923_text_964735 DrugTargetsIndication121923_text_964762 DrugTargetsIndication121923_text_964760 DrugTargetsIndication121923_text_964742 DrugTargetsIndication121923_text_964758 DrugTargetsIndication121923_text_964752 DrugTargetsIndication121923_text_964740 DrugTargetsIndication121923_text_964744 DrugTargetsIndication121923_text_964763 DrugTargetsIndication121923_text_964734 DrugTargetsIndication121923_text_964746 DrugTargetsIndication121923_text_964748 DrugTargetsIndication121923_text_964754 DrugTargetsIndication121923_text_964739 DrugTargetsIndication121923_text_964749 DrugTargetsIndication121923_text_964757 DrugTargetsIndication121923_text_964761 DrugTargetsIndication121923_text_964750 DrugTargetsIndication121923_text_964745 DrugTargetsIndication121923_text_964751 DrugTargetsIndication121923_text_964741 DrugTargetsIndication121923_text_964736 DrugTargetsIndication121923_text_964737 DrugTargetsIndication121923_text_964756 DrugTargetsIndication121923_text_964738 DrugTargetsIndication121923_text_964747 DrugTargetsIndication121923_text_964764,July 3th,Marzieh,,,,,,,,
-Q69,What are the trade names and synonyms associated with Quazepam?,"The trade name of this drug is Doral, and its synonyms are NSC-309702, Quazepam, Quazepam civ, SCH 16134, and SCH-16134.",DrugTargetsIndication121923_text_964756 DrugTargetsIndication121923_text_964765 DrugTargetsIndication121923_text_964743 DrugTargetsIndication121923_text_964755 DrugTargetsIndication121923_text_964759 DrugTargetsIndication121923_text_964735 DrugTargetsIndication121923_text_964762 DrugTargetsIndication121923_text_964760 DrugTargetsIndication121923_text_964742 DrugTargetsIndication121923_text_964758 DrugTargetsIndication121923_text_964752 DrugTargetsIndication121923_text_964740 DrugTargetsIndication121923_text_964744 DrugTargetsIndication121923_text_964763 DrugTargetsIndication121923_text_964734 DrugTargetsIndication121923_text_964746 DrugTargetsIndication121923_text_964748 DrugTargetsIndication121923_text_964754 DrugTargetsIndication121923_text_964739 DrugTargetsIndication121923_text_964749 DrugTargetsIndication121923_text_964757 DrugTargetsIndication121923_text_964761 DrugTargetsIndication121923_text_964750 DrugTargetsIndication121923_text_964745 DrugTargetsIndication121923_text_964751 DrugTargetsIndication121923_text_964741 DrugTargetsIndication121923_text_964736 DrugTargetsIndication121923_text_964737 DrugTargetsIndication121923_text_964756 DrugTargetsIndication121923_text_964738 DrugTargetsIndication121923_text_964747 DrugTargetsIndication121923_text_964764,July 3th,Marzieh,,,,,,,,
-Q70,Is Pritumumab approved by the FDA for the treatment of any disease?,"No, Pritumumab is not approved by the FDA for the treatment of any disease.",DrugGeneTargets_text_13746,July 3th,Marzieh,,,,,,,,
-Q71,How many investigational indications does Iratumumab have?,Iratumumab has 3 investigational indications but is not approved by the FDA for the treatment of any disease.,DrugGeneTargets_text_13104,July 3th,Marzieh/Maya,,,,,,,,
-Q72,When was Sonidegib Phosphate assigned a United States assigned name (USAN)?,Sonidegib Phosphate was assigned a United States assigned name (USAN) in 2013.,DrugTargetsIndication121923_text_1072620 DrugTargetsIndication121923_text_1072622 DrugTargetsIndication121923_text_1072621,July 3th,Marzieh,,,,,,,,
-Q73,,,,,,,,,,,,,
-Q74,,,,,,,,,,,,,
-Q75,,,,,,,,,,,,,
-Q76,,,,,,,,,,,,,
-Q77,,,,,,,,,,,,,
-Q78,,,,,,,,,,,,,
-Q79,,,,,,,,,,,,,
-Q80,,,,,,,,,,,,,
-Q81,,,,,,,,,,,,,
-Q82,,,,,,,,,,,,,
-Q83,,,,,,,,,,,,,
-Q84,,,,,,,,,,,,,
-Q85,,,,,,,,,,,,,
-Q86,,,,,,,,,,,,,
-Q87,,,,,,,,,,,,,
-Q88,,,,,,,,,,,,,
-Q89,,,,,,,,,,,,,
-Q90,,,,,,,,,,,,,
-Q91,,,,,,,,,,,,,
-Q92,,,,,,,,,,,,,
-Q93,,,,,,,,,,,,,
-Q94,,,,,,,,,,,,,
-Q95,,,,,,,,,,,,,
-Q96,,,,,,,,,,,,,
-Q97,,,,,,,,,,,,,
-Q98,,,,,,,,,,,,,
-Q99,,,,,,,,,,,,,
-Q100,,,,,,,,,,,,,
-Q101,,,,,,,,,,,,,
-Q102,,,,,,,,,,,,,
-Q103,,,,,,,,,,,,,
-Q104,,,,,,,,,,,,,
-Q105,,,,,,,,,,,,,
-Q106,,,,,,,,,,,,,
-Q107,,,,,,,,,,,,,
-Q108,,,,,,,,,,,,,
-Q109,,,,,,,,,,,,,
-Q110,,,,,,,,,,,,,
-Q111,,,,,,,,,,,,,
-Q112,,,,,,,,,,,,,
-Q113,,,,,,,,,,,,,
-Q114,,,,,,,,,,,,,
-Q115,,,,,,,,,,,,,
-Q116,,,,,,,,,,,,,
-Q117,,,,,,,,,,,,,
-Q118,,,,,,,,,,,,,
-Q119,,,,,,,,,,,,,
-Q120,,,,,,,,,,,,,
-Q121,,,,,,,,,,,,,
-Q122,,,,,,,,,,,,,
-Q123,,,,,,,,,,,,,
-Q124,,,,,,,,,,,,,
-Q125,,,,,,,,,,,,,
-Q126,,,,,,,,,,,,,
-Q127,,,,,,,,,,,,,
-Q128,,,,,,,,,,,,,
-Q129,,,,,,,,,,,,,
-Q130,,,,,,,,,,,,,
-Q131,,,,,,,,,,,,,
-Q132,,,,,,,,,,,,,
-Q133,,,,,,,,,,,,,
-Q134,,,,,,,,,,,,,
-Q135,,,,,,,,,,,,,
-Q136,,,,,,,,,,,,,
-Q137,,,,,,,,,,,,,
-Q138,,,,,,,,,,,,,
-Q139,,,,,,,,,,,,,
+",NDD_SMR_genes_all_update_text_1285358,7/9/2024,Maya,,,,,,,,,,,
+Q55,"Based on blood_eQTLgen data, what is the top SNP in SNCA that is associated with Parkinson's disease (PD), and what is its adjusted SMR p-value?","SNCA’s top associated SNP, is rs2245801, has a multi SNP SMR p value of 9.761195e-14 and a HEIDI value of 5.974436e-15.",NDD_SMR_genes_all_update_text_1555943,Jun 27,Marzieh,,,,,,,,,,,
+Q56,Has any relationship been reported between EIF2B3 and Alzheimer's Disease (AD)?,"No, the gene EIF2B3 is not found to have a significant relationship in Alzheimer's disease.","AD_combo_gene_notext_UUID_336642
+AD_combo_gene_notext_UUID_336813
+AD_combo_gene_notext_UUID_336380
+AD_combo_gene_notext_UUID_336437
+AD_combo_gene_notext_UUID_336213
+AD_combo_gene_notext_UUID_336577
+AD_combo_gene_notext_UUID_336298
+AD_combo_gene_notext_UUID_336698
+AD_combo_gene_notext_UUID_336906
+AD_combo_gene_notext_UUID_336209
+AD_combo_gene_notext_UUID_336852
+AD_combo_gene_notext_UUID_337045
+AD_combo_gene_notext_UUID_336860
+AD_combo_gene_notext_UUID_337152
+AD_combo_gene_notext_UUID_336821
+AD_combo_gene_notext_UUID_336699
+AD_combo_gene_notext_UUID_337049
+AD_combo_gene_notext_UUID_336665
+AD_combo_gene_notext_UUID_336938
+AD_combo_gene_notext_UUID_336460
+AD_combo_gene_notext_UUID_337079
+AD_combo_gene_notext_UUID_337078
+AD_combo_gene_notext_UUID_337114
+AD_combo_gene_notext_UUID_337023
+AD_combo_gene_notext_UUID_336357
+AD_combo_gene_notext_UUID_337133
+AD_combo_gene_notext_UUID_337018
+AD_combo_gene_notext_UUID_337123
+AD_combo_gene_notext_UUID_336874
+AD_combo_gene_notext_UUID_336226
+AD_combo_gene_notext_UUID_337076
+AD_combo_gene_notext_UUID_336764
+AD_combo_gene_notext_UUID_336470
+AD_combo_gene_notext_UUID_336960
+AD_combo_gene_notext_UUID_336366
+AD_combo_gene_notext_UUID_336556
+AD_combo_gene_notext_UUID_336242
+AD_combo_gene_notext_UUID_336565
+AD_combo_gene_notext_UUID_336457
+AD_combo_gene_notext_UUID_336822
+AD_combo_gene_notext_UUID_336394
+AD_combo_gene_notext_UUID_336517
+AD_combo_gene_notext_UUID_336915
+AD_combo_gene_notext_UUID_336949
+AD_combo_gene_notext_UUID_336543
+AD_combo_gene_notext_UUID_336995
+AD_combo_gene_notext_UUID_336315
+AD_combo_gene_notext_UUID_336542
+AD_combo_gene_notext_UUID_336717
+AD_combo_gene_notext_UUID_336667
+AD_combo_gene_notext_UUID_336859
+AD_combo_gene_notext_UUID_337031
+AD_combo_gene_notext_UUID_336673
+AD_combo_gene_notext_UUID_336319
+AD_combo_gene_notext_UUID_336473
+AD_combo_gene_notext_UUID_337113
+AD_combo_gene_notext_UUID_337057
+AD_combo_gene_notext_UUID_336392
+AD_combo_gene_notext_UUID_336661
+AD_combo_gene_notext_UUID_336391
+AD_combo_gene_notext_UUID_336322
+AD_combo_gene_notext_UUID_336638
+AD_combo_gene_notext_UUID_337098
+AD_combo_gene_notext_UUID_336787
+AD_combo_gene_notext_UUID_336448
+AD_combo_gene_notext_UUID_336263
+AD_combo_gene_notext_UUID_337083
+AD_combo_gene_notext_UUID_336741
+AD_combo_gene_notext_UUID_336967
+AD_combo_gene_notext_UUID_336442
+AD_combo_gene_notext_UUID_336472
+AD_combo_gene_notext_UUID_336918
+AD_combo_gene_notext_UUID_336408
+AD_combo_gene_notext_UUID_336689
+AD_combo_gene_notext_UUID_336267
+AD_combo_gene_notext_UUID_336412
+AD_combo_gene_notext_UUID_336935
+AD_combo_gene_notext_UUID_337027
+AD_combo_gene_notext_UUID_336720
+AD_combo_gene_notext_UUID_336605
+AD_combo_gene_notext_UUID_336831
+AD_combo_gene_notext_UUID_336703
+AD_combo_gene_notext_UUID_336297
+AD_combo_gene_notext_UUID_337089
+AD_combo_gene_notext_UUID_336791
+AD_combo_gene_notext_UUID_337046
+AD_combo_gene_notext_UUID_336512
+AD_combo_gene_notext_UUID_337047
+AD_combo_gene_notext_UUID_336296
+AD_combo_gene_notext_UUID_336400
+AD_combo_gene_notext_UUID_336982
+AD_combo_gene_notext_UUID_336876
+AD_combo_gene_notext_UUID_336568
+AD_combo_gene_notext_UUID_337090
+AD_combo_gene_notext_UUID_337063
+AD_combo_gene_notext_UUID_337112
+AD_combo_gene_notext_UUID_336507
+AD_combo_gene_notext_UUID_336240
+AD_combo_gene_notext_UUID_336576
+AD_combo_gene_notext_UUID_337118
+AD_combo_gene_notext_UUID_337108
+AD_combo_gene_notext_UUID_336688
+AD_combo_gene_notext_UUID_336611
+AD_combo_gene_notext_UUID_336434
+AD_combo_gene_notext_UUID_336321
+AD_combo_gene_notext_UUID_336644
+AD_combo_gene_notext_UUID_337039
+AD_combo_gene_notext_UUID_336753
+AD_combo_gene_notext_UUID_337072
+AD_combo_gene_notext_UUID_337149
+AD_combo_gene_notext_UUID_337000
+AD_combo_gene_notext_UUID_336374
+AD_combo_gene_notext_UUID_336870
+AD_combo_gene_notext_UUID_336402
+AD_combo_gene_notext_UUID_336693
+AD_combo_gene_notext_UUID_337025
+AD_combo_gene_notext_UUID_336992
+AD_combo_gene_notext_UUID_336669
+AD_combo_gene_notext_UUID_336643
+AD_combo_gene_notext_UUID_336940
+AD_combo_gene_notext_UUID_336344
+AD_combo_gene_notext_UUID_337001
+AD_combo_gene_notext_UUID_336592
+AD_combo_gene_notext_UUID_336748
+AD_combo_gene_notext_UUID_337095
+AD_combo_gene_notext_UUID_336236
+AD_combo_gene_notext_UUID_336913
+AD_combo_gene_notext_UUID_336260
+AD_combo_gene_notext_UUID_336740
+AD_combo_gene_notext_UUID_336534
+AD_combo_gene_notext_UUID_336541
+AD_combo_gene_notext_UUID_336768
+AD_combo_gene_notext_UUID_336612
+AD_combo_gene_notext_UUID_336878
+AD_combo_gene_notext_UUID_336757
+AD_combo_gene_notext_UUID_337019
+AD_combo_gene_notext_UUID_336433
+AD_combo_gene_notext_UUID_336594
+AD_combo_gene_notext_UUID_336469
+AD_combo_gene_notext_UUID_337071
+AD_combo_gene_notext_UUID_336346
+AD_combo_gene_notext_UUID_336690
+AD_combo_gene_notext_UUID_336837
+AD_combo_gene_notext_UUID_336948
+AD_combo_gene_notext_UUID_336608
+AD_combo_gene_notext_UUID_336540
+AD_combo_gene_notext_UUID_336630
+AD_combo_gene_notext_UUID_336547
+AD_combo_gene_notext_UUID_336509
+AD_combo_gene_notext_UUID_336562
+AD_combo_gene_notext_UUID_336571
+AD_combo_gene_notext_UUID_336513
+AD_combo_gene_notext_UUID_336485
+AD_combo_gene_notext_UUID_336224
+AD_combo_gene_notext_UUID_336423
+AD_combo_gene_notext_UUID_336892
+AD_combo_gene_notext_UUID_336385
+AD_combo_gene_notext_UUID_336291
+AD_combo_gene_notext_UUID_336439
+AD_combo_gene_notext_UUID_336481
+AD_combo_gene_notext_UUID_336386
+AD_combo_gene_notext_UUID_336500
+AD_combo_gene_notext_UUID_336566
+AD_combo_gene_notext_UUID_336758
+AD_combo_gene_notext_UUID_336249
+AD_combo_gene_notext_UUID_336554
+AD_combo_gene_notext_UUID_336928
+AD_combo_gene_notext_UUID_336218
+AD_combo_gene_notext_UUID_336890
+AD_combo_gene_notext_UUID_336782
+AD_combo_gene_notext_UUID_336817
+AD_combo_gene_notext_UUID_337074
+AD_combo_gene_notext_UUID_336257
+AD_combo_gene_notext_UUID_337105
+AD_combo_gene_notext_UUID_336572
+AD_combo_gene_notext_UUID_336334
+AD_combo_gene_notext_UUID_336774
+AD_combo_gene_notext_UUID_336911
+AD_combo_gene_notext_UUID_336617
+AD_combo_gene_notext_UUID_336596
+AD_combo_gene_notext_UUID_336432
+AD_combo_gene_notext_UUID_336521
+AD_combo_gene_notext_UUID_336328
+AD_combo_gene_notext_UUID_336205
+AD_combo_gene_notext_UUID_336381
+AD_combo_gene_notext_UUID_336546
+AD_combo_gene_notext_UUID_337128
+AD_combo_gene_notext_UUID_336452
+AD_combo_gene_notext_UUID_336453
+AD_combo_gene_notext_UUID_336445
+AD_combo_gene_notext_UUID_336250
+AD_combo_gene_notext_UUID_336235
+AD_combo_gene_notext_UUID_336219
+AD_combo_gene_notext_UUID_336529
+AD_combo_gene_notext_UUID_336373
+AD_combo_gene_notext_UUID_336510
+AD_combo_gene_notext_UUID_336755
+AD_combo_gene_notext_UUID_336780
+AD_combo_gene_notext_UUID_336545
+AD_combo_gene_notext_UUID_336716
+AD_combo_gene_notext_UUID_336675
+AD_combo_gene_notext_UUID_336399
+AD_combo_gene_notext_UUID_336908
+AD_combo_gene_notext_UUID_336494
+AD_combo_gene_notext_UUID_336486
+AD_combo_gene_notext_UUID_336970
+AD_combo_gene_notext_UUID_336271
+AD_combo_gene_notext_UUID_336505
+AD_combo_gene_notext_UUID_336278
+AD_combo_gene_notext_UUID_336388
+AD_combo_gene_notext_UUID_336361
+AD_combo_gene_notext_UUID_336903
+AD_combo_gene_notext_UUID_336446
+AD_combo_gene_notext_UUID_336745
+AD_combo_gene_notext_UUID_336280
+AD_combo_gene_notext_UUID_336281
+AD_combo_gene_notext_UUID_336266
+AD_combo_gene_notext_UUID_336522
+AD_combo_gene_notext_UUID_337066
+AD_combo_gene_notext_UUID_336329
+AD_combo_gene_notext_UUID_336243
+AD_combo_gene_notext_UUID_336752
+AD_combo_gene_notext_UUID_336786
+AD_combo_gene_notext_UUID_336800
+AD_combo_gene_notext_UUID_336704
+AD_combo_gene_notext_UUID_336662
+AD_combo_gene_notext_UUID_336616
+AD_combo_gene_notext_UUID_336217
+AD_combo_gene_notext_UUID_336426
+AD_combo_gene_notext_UUID_336742
+AD_combo_gene_notext_UUID_336816
+AD_combo_gene_notext_UUID_336739
+AD_combo_gene_notext_UUID_336290
+AD_combo_gene_notext_UUID_336320
+AD_combo_gene_notext_UUID_336648
+AD_combo_gene_notext_UUID_336234
+AD_combo_gene_notext_UUID_336941
+AD_combo_gene_notext_UUID_337044
+AD_combo_gene_notext_UUID_336701
+AD_combo_gene_notext_UUID_336664
+AD_combo_gene_notext_UUID_336674
+AD_combo_gene_notext_UUID_336833
+AD_combo_gene_notext_UUID_336828
+AD_combo_gene_notext_UUID_336807
+AD_combo_gene_notext_UUID_336499
+AD_combo_gene_notext_UUID_336427
+AD_combo_gene_notext_UUID_336520
+AD_combo_gene_notext_UUID_337013
+AD_combo_gene_notext_UUID_336449
+AD_combo_gene_notext_UUID_336769
+AD_combo_gene_notext_UUID_336922
+AD_combo_gene_notext_UUID_336526
+AD_combo_gene_notext_UUID_336696
+AD_combo_gene_notext_UUID_336798
+AD_combo_gene_notext_UUID_336801
+AD_combo_gene_notext_UUID_336843
+AD_combo_gene_notext_UUID_336684
+AD_combo_gene_notext_UUID_336936
+AD_combo_gene_notext_UUID_336244
+AD_combo_gene_notext_UUID_336365
+AD_combo_gene_notext_UUID_336680
+AD_combo_gene_notext_UUID_337034
+AD_combo_gene_notext_UUID_336920
+AD_combo_gene_notext_UUID_336649
+AD_combo_gene_notext_UUID_336355
+AD_combo_gene_notext_UUID_336614
+AD_combo_gene_notext_UUID_336371
+AD_combo_gene_notext_UUID_336370
+AD_combo_gene_notext_UUID_336327
+AD_combo_gene_notext_UUID_336255
+AD_combo_gene_notext_UUID_336585
+AD_combo_gene_notext_UUID_337138
+AD_combo_gene_notext_UUID_336248
+AD_combo_gene_notext_UUID_336401
+AD_combo_gene_notext_UUID_336559
+AD_combo_gene_notext_UUID_336588
+AD_combo_gene_notext_UUID_336552
+AD_combo_gene_notext_UUID_336454
+AD_combo_gene_notext_UUID_336835
+AD_combo_gene_notext_UUID_336558
+AD_combo_gene_notext_UUID_336252
+AD_combo_gene_notext_UUID_336489
+AD_combo_gene_notext_UUID_337147
+AD_combo_gene_notext_UUID_336307
+AD_combo_gene_notext_UUID_336830
+AD_combo_gene_notext_UUID_336863
+AD_combo_gene_notext_UUID_336259
+AD_combo_gene_notext_UUID_336407
+AD_combo_gene_notext_UUID_336954
+AD_combo_gene_notext_UUID_336767
+AD_combo_gene_notext_UUID_336678
+AD_combo_gene_notext_UUID_336279
+AD_combo_gene_notext_UUID_336274
+AD_combo_gene_notext_UUID_336953
+AD_combo_gene_notext_UUID_336461
+AD_combo_gene_notext_UUID_336848
+AD_combo_gene_notext_UUID_336375
+AD_combo_gene_notext_UUID_336422
+AD_combo_gene_notext_UUID_336294
+AD_combo_gene_notext_UUID_336610
+AD_combo_gene_notext_UUID_336282
+AD_combo_gene_notext_UUID_336411
+AD_combo_gene_notext_UUID_336569
+AD_combo_gene_notext_UUID_336387
+AD_combo_gene_notext_UUID_336265
+AD_combo_gene_notext_UUID_336993
+AD_combo_gene_notext_UUID_336206
+AD_combo_gene_notext_UUID_336551
+AD_combo_gene_notext_UUID_336270
+AD_combo_gene_notext_UUID_336550
+AD_combo_gene_notext_UUID_336393
+AD_combo_gene_notext_UUID_336466
+AD_combo_gene_notext_UUID_336883
+AD_combo_gene_notext_UUID_336836
+AD_combo_gene_notext_UUID_336288
+AD_combo_gene_notext_UUID_336733
+AD_combo_gene_notext_UUID_336491
+AD_combo_gene_notext_UUID_336734
+AD_combo_gene_notext_UUID_336519
+AD_combo_gene_notext_UUID_337009
+AD_combo_gene_notext_UUID_336363
+AD_combo_gene_notext_UUID_336198
+AD_combo_gene_notext_UUID_336293
+AD_combo_gene_notext_UUID_336313
+AD_combo_gene_notext_UUID_336666
+AD_combo_gene_notext_UUID_336567
+AD_combo_gene_notext_UUID_336555
+AD_combo_gene_notext_UUID_336276
+AD_combo_gene_notext_UUID_336927
+AD_combo_gene_notext_UUID_336301
+AD_combo_gene_notext_UUID_336233
+AD_combo_gene_notext_UUID_336444
+AD_combo_gene_notext_UUID_336458
+AD_combo_gene_notext_UUID_336511
+AD_combo_gene_notext_UUID_336503
+AD_combo_gene_notext_UUID_336506
+AD_combo_gene_notext_UUID_336435
+AD_combo_gene_notext_UUID_336441
+AD_combo_gene_notext_UUID_336725
+AD_combo_gene_notext_UUID_336578
+AD_combo_gene_notext_UUID_336364
+AD_combo_gene_notext_UUID_337070
+AD_combo_gene_notext_UUID_336514
+AD_combo_gene_notext_UUID_336428
+AD_combo_gene_notext_UUID_336518
+AD_combo_gene_notext_UUID_336337
+AD_combo_gene_notext_UUID_336275
+AD_combo_gene_notext_UUID_337004
+AD_combo_gene_notext_UUID_336637
+AD_combo_gene_notext_UUID_336447
+AD_combo_gene_notext_UUID_336985
+AD_combo_gene_notext_UUID_336342
+AD_combo_gene_notext_UUID_336372
+AD_combo_gene_notext_UUID_336241
+AD_combo_gene_notext_UUID_336349
+AD_combo_gene_notext_UUID_336340
+AD_combo_gene_notext_UUID_336952
+AD_combo_gene_notext_UUID_336573
+AD_combo_gene_notext_UUID_336268
+AD_combo_gene_notext_UUID_337041
+AD_combo_gene_notext_UUID_336904
+AD_combo_gene_notext_UUID_336498
+AD_combo_gene_notext_UUID_337051
+AD_combo_gene_notext_UUID_337050
+AD_combo_gene_notext_UUID_336584
+AD_combo_gene_notext_UUID_336324
+AD_combo_gene_notext_UUID_337119
+AD_combo_gene_notext_UUID_336225
+AD_combo_gene_notext_UUID_337124
+AD_combo_gene_notext_UUID_337131
+AD_combo_gene_notext_UUID_336261
+AD_combo_gene_notext_UUID_336314
+AD_combo_gene_notext_UUID_337097
+AD_combo_gene_notext_UUID_337053
+AD_combo_gene_notext_UUID_337055
+AD_combo_gene_notext_UUID_337132
+AD_combo_gene_notext_UUID_336287
+AD_combo_gene_notext_UUID_337092
+AD_combo_gene_notext_UUID_337037
+AD_combo_gene_notext_UUID_336950
+AD_combo_gene_notext_UUID_337067
+AD_combo_gene_notext_UUID_336353
+AD_combo_gene_notext_UUID_336539
+AD_combo_gene_notext_UUID_337042
+AD_combo_gene_notext_UUID_336530
+AD_combo_gene_notext_UUID_337060
+AD_combo_gene_notext_UUID_336544
+AD_combo_gene_notext_UUID_337073
+AD_combo_gene_notext_UUID_336923
+AD_combo_gene_notext_UUID_337061
+AD_combo_gene_notext_UUID_337106
+AD_combo_gene_notext_UUID_336977
+AD_combo_gene_notext_UUID_337129
+AD_combo_gene_notext_UUID_337107
+AD_combo_gene_notext_UUID_337139
+AD_combo_gene_notext_UUID_337130
+AD_combo_gene_notext_UUID_336615
+AD_combo_gene_notext_UUID_337111
+AD_combo_gene_notext_UUID_337136
+AD_combo_gene_notext_UUID_337082
+AD_combo_gene_notext_UUID_337059
+AD_combo_gene_notext_UUID_337065
+AD_combo_gene_notext_UUID_337056
+AD_combo_gene_notext_UUID_337091
+AD_combo_gene_notext_UUID_337077
+AD_combo_gene_notext_UUID_336972
+AD_combo_gene_notext_UUID_337103
+AD_combo_gene_notext_UUID_336983
+AD_combo_gene_notext_UUID_336955
+AD_combo_gene_notext_UUID_336647
+AD_combo_gene_notext_UUID_336932
+AD_combo_gene_notext_UUID_336899
+AD_combo_gene_notext_UUID_336958
+AD_combo_gene_notext_UUID_336283
+AD_combo_gene_notext_UUID_336984
+AD_combo_gene_notext_UUID_336937
+AD_combo_gene_notext_UUID_336345
+AD_combo_gene_notext_UUID_336390
+AD_combo_gene_notext_UUID_337100
+AD_combo_gene_notext_UUID_337127
+AD_combo_gene_notext_UUID_336994
+AD_combo_gene_notext_UUID_336528
+AD_combo_gene_notext_UUID_336998
+AD_combo_gene_notext_UUID_336942
+AD_combo_gene_notext_UUID_336981
+AD_combo_gene_notext_UUID_336943
+AD_combo_gene_notext_UUID_336700
+AD_combo_gene_notext_UUID_336926
+AD_combo_gene_notext_UUID_336377
+AD_combo_gene_notext_UUID_336924
+AD_combo_gene_notext_UUID_337036
+AD_combo_gene_notext_UUID_336916
+AD_combo_gene_notext_UUID_336946
+AD_combo_gene_notext_UUID_336975
+AD_combo_gene_notext_UUID_336910
+AD_combo_gene_notext_UUID_336933
+AD_combo_gene_notext_UUID_337085
+AD_combo_gene_notext_UUID_336548
+AD_combo_gene_notext_UUID_336719
+AD_combo_gene_notext_UUID_336996
+AD_combo_gene_notext_UUID_336560
+AD_combo_gene_notext_UUID_336973
+AD_combo_gene_notext_UUID_336582
+AD_combo_gene_notext_UUID_337094
+AD_combo_gene_notext_UUID_336564
+AD_combo_gene_notext_UUID_336921
+AD_combo_gene_notext_UUID_336875
+AD_combo_gene_notext_UUID_336796
+AD_combo_gene_notext_UUID_336262
+AD_combo_gene_notext_UUID_336959
+AD_combo_gene_notext_UUID_336871
+AD_combo_gene_notext_UUID_336230
+AD_combo_gene_notext_UUID_336619
+AD_combo_gene_notext_UUID_336987
+AD_combo_gene_notext_UUID_337110
+AD_combo_gene_notext_UUID_336405
+AD_combo_gene_notext_UUID_337029
+AD_combo_gene_notext_UUID_337080
+AD_combo_gene_notext_UUID_336806
+AD_combo_gene_notext_UUID_336825
+AD_combo_gene_notext_UUID_336430
+AD_combo_gene_notext_UUID_336838
+AD_combo_gene_notext_UUID_336919
+AD_combo_gene_notext_UUID_336310
+AD_combo_gene_notext_UUID_336655
+AD_combo_gene_notext_UUID_336744
+AD_combo_gene_notext_UUID_336804
+AD_combo_gene_notext_UUID_336961
+AD_combo_gene_notext_UUID_336809
+AD_combo_gene_notext_UUID_336238
+AD_combo_gene_notext_UUID_336795
+AD_combo_gene_notext_UUID_336292
+AD_combo_gene_notext_UUID_336483
+AD_combo_gene_notext_UUID_336812
+AD_combo_gene_notext_UUID_336826
+AD_combo_gene_notext_UUID_336326
+AD_combo_gene_notext_UUID_336856
+AD_combo_gene_notext_UUID_336763
+AD_combo_gene_notext_UUID_337135
+AD_combo_gene_notext_UUID_337142
+AD_combo_gene_notext_UUID_336951
+AD_combo_gene_notext_UUID_336873
+AD_combo_gene_notext_UUID_336849
+AD_combo_gene_notext_UUID_336633
+AD_combo_gene_notext_UUID_336590
+AD_combo_gene_notext_UUID_336759
+AD_combo_gene_notext_UUID_336718
+AD_combo_gene_notext_UUID_336847
+AD_combo_gene_notext_UUID_336819
+AD_combo_gene_notext_UUID_336352
+AD_combo_gene_notext_UUID_336747
+AD_combo_gene_notext_UUID_336756
+AD_combo_gene_notext_UUID_336790
+AD_combo_gene_notext_UUID_337003
+AD_combo_gene_notext_UUID_336397
+AD_combo_gene_notext_UUID_337088
+AD_combo_gene_notext_UUID_336857
+AD_combo_gene_notext_UUID_336792
+AD_combo_gene_notext_UUID_336761
+AD_combo_gene_notext_UUID_336488",7/29/2024,Maya,,,,,,,,,,,
+Q57,Has any SMR relationship been reported between EIF2B3 and Alzheimer's Disease (AD)?,"No, based on the omic data from cortex, putamen basal ganglia, nucleus accumbens basal ganglia, whole blood, whole brain, and prefrontal cortex tissues, the gene EIF2B3 is not found to have a functionally significant role in Alzheimer's disease.","NDD_SMR_genes_all_update_text_1104733 NDD_SMR_genes_all_update_text_1582221 NDD_SMR_genes_all_update_text_1714909 NDD_SMR_genes_all_update_text_1490276 NDD_SMR_genes_all_update_text_37340 NDD_SMR_genes_all_update_text_37341  NDD_SMR_genes_all_update_text_1194963
+NDD_SMR_genes_all_update_text_37342 NDD_SMR_genes_all_update_text_1605096 NDD_SMR_genes_all_update_text_1244112 NDD_SMR_genes_all_update_text_652156 NDD_SMR_genes_all_update_text_1389059",6/27/2024 revised July 3th,Marzieh,,,,,,,,,,,
+Q58,What is the target of the drug Sontuzumab?,"The gene target of the drug Sontuzumab is MUC1 (mucin 1, cell surface associated).",DrugGeneTargets_text_11821,Jun 27,Marzieh/Maya,,,,,,,,,,,
+Q59,"What is the genetic target of the antibody drug Bectumomab, and what is its status in clinical trials and FDA approval?","The genetic target of the antibody drug Bectumomab is CD22 (CD22 molecule), which has the Ensembl identifier ENSG00000012124. Bectumomab reached phase 3 clinical trials but is not approved by the FDA for treatment of any disease.",DrugGeneTargets_text_10825,Jun 27,Marzieh,,,,,,,,,,,
+Q60,What are the synonymous names of the drug Flanvotumab?,"Flanvotumab has the associated synonyms 20-D-7S, 20D7S, IMC-20D7S, and IMC20D7S",DrugGeneTargets_text_12843,6/27/2024 revised July 3th,Marzieh,,,,,,,,,,,
+Q61,What are the genetic targets of the drug Naminidil?,"The genetic targets of the drug Naminidil are KCNJ11 (potassium inwardly rectifying channel subfamily J member 11), ABCC8 (ATP-binding cassette subfamily C member 8), ABCC9 (ATP-binding cassette subfamily C member 9), and KCNJ8 (potassium inwardly rectifying channel subfamily J member 8).",DrugGeneTargets_text_12141 DrugGeneTargets_text_12160  DrugGeneTargets_text_12672  DrugGeneTargets_text_12677,6/27/2024 revised July 3th,Marzieh/Maya,,,,,,,,,,,
+Q62,What are the genetic targets of the drug Halothane?,"Halothane has several genetic targets, such as KCNK2, KCNK9, KCNK18, KCNK10, KCNK3, GLRA1, GLRB, GABRA1, GABRB2, GABRG2, GABRB3, GABRA4, GABRG3, GABRQ, GABRA3, GABRP, GABRD, GABRG1, GABRB1, GABRE, GABRA2, GABRA5, and GABRA6","DrugGeneTargets_text_10053  DrugGeneTargets_text_10058 DrugGeneTargets_text_10065 DrugGeneTargets_text_10070
+ DrugGeneTargets_text_10075 DrugGeneTargets_text_10082 DrugGeneTargets_text_10088 DrugGeneTargets_text_6712 DrugGeneTargets_text_6794 DrugGeneTargets_text_6872 DrugGeneTargets_text_6951 DrugGeneTargets_text_7030 DrugGeneTargets_text_7108 DrugGeneTargets_text_7184 DrugGeneTargets_text_7260 DrugGeneTargets_text_7340 DrugGeneTargets_text_7416 DrugGeneTargets_text_7492 DrugGeneTargets_text_7568 DrugGeneTargets_text_7649 DrugGeneTargets_text_7725 DrugGeneTargets_text_7806 DrugGeneTargets_text_7884",6/27/2024 revised July 3th,Marzieh,,,,,,,,,,,
+Q63,What is the maximum clinical trial phase for the drug Halothane?,Halothane reached phase 4 clinical trials.,"DrugGeneTargets_text_10053  DrugGeneTargets_text_10058 DrugGeneTargets_text_10065 DrugGeneTargets_text_10070
+ DrugGeneTargets_text_10075 DrugGeneTargets_text_10082 DrugGeneTargets_text_10088 DrugGeneTargets_text_6712 DrugGeneTargets_text_6794 DrugGeneTargets_text_6872 DrugGeneTargets_text_6951 DrugGeneTargets_text_7030 DrugGeneTargets_text_7108 DrugGeneTargets_text_7184 DrugGeneTargets_text_7260 DrugGeneTargets_text_7340 DrugGeneTargets_text_7416 DrugGeneTargets_text_7492 DrugGeneTargets_text_7568 DrugGeneTargets_text_7649 DrugGeneTargets_text_7725 DrugGeneTargets_text_7806 DrugGeneTargets_text_7884",6/27/2024 revised July 3th,Marzieh,,,,,,,,,,,
+Q64,"When was Halothane first approved, and has it been withdrawn from use?",Halothane was first approved for use in 1958 and has not been withdrawn from use.,"DrugGeneTargets_text_10053  DrugGeneTargets_text_10058 DrugGeneTargets_text_10065 DrugGeneTargets_text_10070
+ DrugGeneTargets_text_10075 DrugGeneTargets_text_10082 DrugGeneTargets_text_10088 DrugGeneTargets_text_6712 DrugGeneTargets_text_6794 DrugGeneTargets_text_6872 DrugGeneTargets_text_6951 DrugGeneTargets_text_7030 DrugGeneTargets_text_7108 DrugGeneTargets_text_7184 DrugGeneTargets_text_7260 DrugGeneTargets_text_7340 DrugGeneTargets_text_7416 DrugGeneTargets_text_7492 DrugGeneTargets_text_7568 DrugGeneTargets_text_7649 DrugGeneTargets_text_7725 DrugGeneTargets_text_7806 DrugGeneTargets_text_7884",6/27/2024 revised July 3th,Marzieh,,,,,,,,,,,
+Q65,"What type of molecule is Halothane, and what is its mechanism of action?","Halothane is a small molecule drug that acts as an opener, a positive allosteric modulator, and a positive modulator.","DrugGeneTargets_text_10053  DrugGeneTargets_text_10058 DrugGeneTargets_text_10065 DrugGeneTargets_text_10070
+ DrugGeneTargets_text_10075 DrugGeneTargets_text_10082 DrugGeneTargets_text_10088 DrugGeneTargets_text_6712 DrugGeneTargets_text_6794 DrugGeneTargets_text_6872 DrugGeneTargets_text_6951 DrugGeneTargets_text_7030 DrugGeneTargets_text_7108 DrugGeneTargets_text_7184 DrugGeneTargets_text_7260 DrugGeneTargets_text_7340 DrugGeneTargets_text_7416 DrugGeneTargets_text_7492 DrugGeneTargets_text_7568 DrugGeneTargets_text_7649 DrugGeneTargets_text_7725 DrugGeneTargets_text_7806 DrugGeneTargets_text_7884",6/27/2024 revised July 3th,Marzieh,,,,,,,,,,,
+Q66,Is Halothane associated with any diseases?,"No, based on the data so far, Halothane is not associated with any diseases","DrugGeneTargets_text_10053  DrugGeneTargets_text_10058 DrugGeneTargets_text_10065 DrugGeneTargets_text_10070
+ DrugGeneTargets_text_10075 DrugGeneTargets_text_10082 DrugGeneTargets_text_10088 DrugGeneTargets_text_6712 DrugGeneTargets_text_6794 DrugGeneTargets_text_6872 DrugGeneTargets_text_6951 DrugGeneTargets_text_7030 DrugGeneTargets_text_7108 DrugGeneTargets_text_7184 DrugGeneTargets_text_7260 DrugGeneTargets_text_7340 DrugGeneTargets_text_7416 DrugGeneTargets_text_7492 DrugGeneTargets_text_7568 DrugGeneTargets_text_7649 DrugGeneTargets_text_7725 DrugGeneTargets_text_7806 DrugGeneTargets_text_7884",6/27/2024 revised July 3th,Marzieh,,,,,,,,,,,
+Q67,What is the top-associated SNP of the gene EMID2 in whole brain eQTL omic data for LBD disease?,"The top-associated SNP for EMID2 in whole brain eQTL omic data for LBD disease is rs7805075, which has a multi-SNP SMR p-value of 0.8006395 and a HEIDI value of 0.7130096, and is not functionally significant.",NDD_SMR_genes_all_update_text_1629820,6/27/2024 revised July 3th,Marzieh,,,,,,,,,,,
+Q68,Is there any basal ganglia eQTL omic data available for the gene ZNF257 in relation to ALS (Amyotrophic Lateral Sclerosis) disease?,"Yes, there is Basal Ganglia eQTL omic data for the gene ZNF257, which indicates it does not have a functionally significant role in Amyotrophic Lateral Sclerosis.",NDD_SMR_genes_all_update_text_25257,6/27/2024 revised July 3th,Marzieh,,,,,,,,,,,
+Q69,What is the nearest gene to SNP rs12483639?,The nearest gene to SNP rs12483639 is APP.,PDno23andme_full_gene_notext_4687626,July 3th,Marzieh/Maya,,,,,,,,,,,
+Q70,What is the position of rs12483639 in GRCh37 and GRCh38?,The position of this SNP is 27442372 in GRCh37 and 26070056 in GRCh38.,"PDno23andme_full_gene_notext_4687626
+AD_combo_gene_notext_UUID_20681288",7/29/2024,Marzieh/Maya,,,,,,,,,,,
+Q71,"When was Fenfluramine approved for use, and has it been withdrawn or not?",Fenfluramine was first approved for use in 2020 but has since been withdrawn from use.,DrugGeneTargets_text_1118 DrugGeneTargets_text_5806 DrugGeneTargets_text_10249,7/29/2024,Marzieh/Maya,,,,,,,,,,,
+Q72,When was Quazepam assigned a United States Adopted Name (USAN) and approved for use by the FDA?,Quazepam was assigned a USAN in 1976 and was approved for use by the FDA in 1985.,DrugTargetsIndication121923_text_964756 DrugTargetsIndication121923_text_964765 DrugTargetsIndication121923_text_964743 DrugTargetsIndication121923_text_964755 DrugTargetsIndication121923_text_964759 DrugTargetsIndication121923_text_964735 DrugTargetsIndication121923_text_964762 DrugTargetsIndication121923_text_964760 DrugTargetsIndication121923_text_964742 DrugTargetsIndication121923_text_964758 DrugTargetsIndication121923_text_964752 DrugTargetsIndication121923_text_964740 DrugTargetsIndication121923_text_964744 DrugTargetsIndication121923_text_964763 DrugTargetsIndication121923_text_964734 DrugTargetsIndication121923_text_964746 DrugTargetsIndication121923_text_964748 DrugTargetsIndication121923_text_964754 DrugTargetsIndication121923_text_964739 DrugTargetsIndication121923_text_964749 DrugTargetsIndication121923_text_964757 DrugTargetsIndication121923_text_964761 DrugTargetsIndication121923_text_964750 DrugTargetsIndication121923_text_964745 DrugTargetsIndication121923_text_964751 DrugTargetsIndication121923_text_964741 DrugTargetsIndication121923_text_964736 DrugTargetsIndication121923_text_964737 DrugTargetsIndication121923_text_964756 DrugTargetsIndication121923_text_964738 DrugTargetsIndication121923_text_964747 DrugTargetsIndication121923_text_964764,July 3th,Marzieh,,,,,,,,,,,
+Q73,"For what condition is Quazepam indicated, and which Experimental Factor Ontology (EFO) and Medical Subject Headings (MeSH) terms are associated with it?","Quazepam is indicated for the treatment of insomnia, associated with the Experimental Factor Ontology (EFO) term EFO:0004698 and the Medical Subject Headings (MeSH) term Sleep Initiation and Maintenance Disorders (D007319).",DrugTargetsIndication121923_text_964756 DrugTargetsIndication121923_text_964765 DrugTargetsIndication121923_text_964743 DrugTargetsIndication121923_text_964755 DrugTargetsIndication121923_text_964759 DrugTargetsIndication121923_text_964735 DrugTargetsIndication121923_text_964762 DrugTargetsIndication121923_text_964760 DrugTargetsIndication121923_text_964742 DrugTargetsIndication121923_text_964758 DrugTargetsIndication121923_text_964752 DrugTargetsIndication121923_text_964740 DrugTargetsIndication121923_text_964744 DrugTargetsIndication121923_text_964763 DrugTargetsIndication121923_text_964734 DrugTargetsIndication121923_text_964746 DrugTargetsIndication121923_text_964748 DrugTargetsIndication121923_text_964754 DrugTargetsIndication121923_text_964739 DrugTargetsIndication121923_text_964749 DrugTargetsIndication121923_text_964757 DrugTargetsIndication121923_text_964761 DrugTargetsIndication121923_text_964750 DrugTargetsIndication121923_text_964745 DrugTargetsIndication121923_text_964751 DrugTargetsIndication121923_text_964741 DrugTargetsIndication121923_text_964736 DrugTargetsIndication121923_text_964737 DrugTargetsIndication121923_text_964756 DrugTargetsIndication121923_text_964738 DrugTargetsIndication121923_text_964747 DrugTargetsIndication121923_text_964764,July 3th,Marzieh,,,,,,,,,,,
+Q74,What are the trade names and synonyms associated with Quazepam?,"The trade name of this drug is Doral, and its synonyms are NSC-309702, Quazepam, Quazepam civ, SCH 16134, and SCH-16134.",DrugTargetsIndication121923_text_964756 DrugTargetsIndication121923_text_964765 DrugTargetsIndication121923_text_964743 DrugTargetsIndication121923_text_964755 DrugTargetsIndication121923_text_964759 DrugTargetsIndication121923_text_964735 DrugTargetsIndication121923_text_964762 DrugTargetsIndication121923_text_964760 DrugTargetsIndication121923_text_964742 DrugTargetsIndication121923_text_964758 DrugTargetsIndication121923_text_964752 DrugTargetsIndication121923_text_964740 DrugTargetsIndication121923_text_964744 DrugTargetsIndication121923_text_964763 DrugTargetsIndication121923_text_964734 DrugTargetsIndication121923_text_964746 DrugTargetsIndication121923_text_964748 DrugTargetsIndication121923_text_964754 DrugTargetsIndication121923_text_964739 DrugTargetsIndication121923_text_964749 DrugTargetsIndication121923_text_964757 DrugTargetsIndication121923_text_964761 DrugTargetsIndication121923_text_964750 DrugTargetsIndication121923_text_964745 DrugTargetsIndication121923_text_964751 DrugTargetsIndication121923_text_964741 DrugTargetsIndication121923_text_964736 DrugTargetsIndication121923_text_964737 DrugTargetsIndication121923_text_964756 DrugTargetsIndication121923_text_964738 DrugTargetsIndication121923_text_964747 DrugTargetsIndication121923_text_964764,July 3th,Marzieh,,,,,,,,,,,
+Q75,Is Pritumumab approved by the FDA for the treatment of any disease?,"No, Pritumumab is not approved by the FDA for the treatment of any disease.",DrugGeneTargets_text_13746,July 3th,Marzieh,,,,,,,,,,,
+Q76,How many investigational indications does Iratumumab have?,Iratumumab has 3 investigational indications but is not approved by the FDA for the treatment of any disease.,DrugGeneTargets_text_13104,July 3th,Marzieh/Maya,,,,,,,,,,,
+Q77,When was Sonidegib Phosphate assigned a United States assigned name (USAN)?,Sonidegib Phosphate was assigned a United States assigned name (USAN) in 2013.,DrugTargetsIndication121923_text_1072620 DrugTargetsIndication121923_text_1072622 DrugTargetsIndication121923_text_1072621,July 3th,Marzieh,,,,,,,,,,,
+Q78,Can you describe the association between the SNCA gene and Parkinson's disease?,"The gene SNCA has 218 SNPs that are significantly associated with Parkinson's disease, here are the top 10: 
+• rs356203        
+•        b value=        0.2398
+•        P-value=        3.01E-41
+• rs356204        
+•        b value=        0.2085
+•        P-value=        2.87E-32
+• rs189596        
+•        b value=        0.2093
+•        P-value=        4.29E-32
+• rs356200        
+•        b value=        0.2084
+•        P-value=        5.61E-32
+• rs356168        
+•        b value=        0.2089
+•        P-value=        8.41E-32
+• rs2736990        
+•        b value=        0.2089
+•        P-value=        1.08E-31
+• rs1372518        
+•        b value=        -0.2334
+•        P-value=        5.35E-29
+• rs1372519        
+•        b value=        -0.2279
+•        P-value=        6.05E-28
+• rs1372520        
+•        b value=        -0.2267
+•        P-value=        1.19E-27
+• rs990085        
+•        b value=        -0.2321
+•        P-value=        2.25E-27","PDno23andme_full_gene_notext_1492093
+PDno23andme_full_gene_notext_6805650
+PDno23andme_full_gene_notext_7042578
+PDno23andme_full_gene_notext_3240570
+PDno23andme_full_gene_notext_2591502
+PDno23andme_full_gene_notext_5819926
+PDno23andme_full_gene_notext_2683188
+PDno23andme_full_gene_notext_4965940
+PDno23andme_full_gene_notext_4221061
+PDno23andme_full_gene_notext_1776190
+PDno23andme_full_gene_notext_5233185
+PDno23andme_full_gene_notext_6922072
+PDno23andme_full_gene_notext_3740399
+PDno23andme_full_gene_notext_7549829
+PDno23andme_full_gene_notext_3511837
+PDno23andme_full_gene_notext_5450418
+PDno23andme_full_gene_notext_3411033
+PDno23andme_full_gene_notext_1336881
+PDno23andme_full_gene_notext_723828
+PDno23andme_full_gene_notext_3615409
+PDno23andme_full_gene_notext_4404188
+PDno23andme_full_gene_notext_3686644
+PDno23andme_full_gene_notext_7165858
+PDno23andme_full_gene_notext_6858182
+PDno23andme_full_gene_notext_6139131
+PDno23andme_full_gene_notext_5469680
+PDno23andme_full_gene_notext_7671019
+PDno23andme_full_gene_notext_1891942
+PDno23andme_full_gene_notext_3945878
+PDno23andme_full_gene_notext_5114632
+PDno23andme_full_gene_notext_5792625
+PDno23andme_full_gene_notext_4244890
+PDno23andme_full_gene_notext_5699697
+PDno23andme_full_gene_notext_2138953
+PDno23andme_full_gene_notext_1458962
+PDno23andme_full_gene_notext_3155638
+PDno23andme_full_gene_notext_1141587
+PDno23andme_full_gene_notext_2108200
+PDno23andme_full_gene_notext_1610459
+PDno23andme_full_gene_notext_6073657
+PDno23andme_full_gene_notext_4967358
+PDno23andme_full_gene_notext_3586376
+PDno23andme_full_gene_notext_4186646
+PDno23andme_full_gene_notext_6634203
+PDno23andme_full_gene_notext_5980492
+PDno23andme_full_gene_notext_754910
+PDno23andme_full_gene_notext_2129391
+PDno23andme_full_gene_notext_2898081
+PDno23andme_full_gene_notext_2058618
+PDno23andme_full_gene_notext_1185479
+PDno23andme_full_gene_notext_3083469
+PDno23andme_full_gene_notext_5894039
+PDno23andme_full_gene_notext_6763690
+PDno23andme_full_gene_notext_6248628
+PDno23andme_full_gene_notext_3234342
+PDno23andme_full_gene_notext_3340733
+PDno23andme_full_gene_notext_5788290
+PDno23andme_full_gene_notext_912478
+PDno23andme_full_gene_notext_566908
+PDno23andme_full_gene_notext_7632805
+PDno23andme_full_gene_notext_7098783
+PDno23andme_full_gene_notext_5064348
+PDno23andme_full_gene_notext_1596560
+PDno23andme_full_gene_notext_7552804
+PDno23andme_full_gene_notext_5732064
+PDno23andme_full_gene_notext_4096142
+PDno23andme_full_gene_notext_2559478
+PDno23andme_full_gene_notext_248194
+PDno23andme_full_gene_notext_5219548
+PDno23andme_full_gene_notext_6055755
+PDno23andme_full_gene_notext_2434106
+PDno23andme_full_gene_notext_634001
+PDno23andme_full_gene_notext_981056
+PDno23andme_full_gene_notext_5963569
+PDno23andme_full_gene_notext_3502315
+PDno23andme_full_gene_notext_1864400
+PDno23andme_full_gene_notext_4828268
+PDno23andme_full_gene_notext_5731359
+PDno23andme_full_gene_notext_7208332
+PDno23andme_full_gene_notext_5635473
+PDno23andme_full_gene_notext_5488337
+PDno23andme_full_gene_notext_2924847
+PDno23andme_full_gene_notext_601914
+PDno23andme_full_gene_notext_2754296
+PDno23andme_full_gene_notext_4620113
+PDno23andme_full_gene_notext_4942372
+PDno23andme_full_gene_notext_4354202
+PDno23andme_full_gene_notext_6271047
+PDno23andme_full_gene_notext_182797
+PDno23andme_full_gene_notext_3009514
+PDno23andme_full_gene_notext_1626528
+PDno23andme_full_gene_notext_207585
+PDno23andme_full_gene_notext_5649369
+PDno23andme_full_gene_notext_5545002
+PDno23andme_full_gene_notext_1992866
+PDno23andme_full_gene_notext_1006993
+PDno23andme_full_gene_notext_3161418
+PDno23andme_full_gene_notext_6919182
+PDno23andme_full_gene_notext_1316234
+PDno23andme_full_gene_notext_1149710
+PDno23andme_full_gene_notext_3567663
+PDno23andme_full_gene_notext_6938716
+PDno23andme_full_gene_notext_2236779
+PDno23andme_full_gene_notext_3700367
+PDno23andme_full_gene_notext_1922551
+PDno23andme_full_gene_notext_4705107
+PDno23andme_full_gene_notext_7462100
+PDno23andme_full_gene_notext_2794178
+PDno23andme_full_gene_notext_4820576
+PDno23andme_full_gene_notext_5311124
+PDno23andme_full_gene_notext_5045149
+PDno23andme_full_gene_notext_2985421
+PDno23andme_full_gene_notext_1029104
+PDno23andme_full_gene_notext_201927
+PDno23andme_full_gene_notext_4957143
+PDno23andme_full_gene_notext_3373040
+PDno23andme_full_gene_notext_149885
+PDno23andme_full_gene_notext_4926331
+PDno23andme_full_gene_notext_3362781
+PDno23andme_full_gene_notext_5222506
+PDno23andme_full_gene_notext_6447647
+PDno23andme_full_gene_notext_575618
+PDno23andme_full_gene_notext_270859
+PDno23andme_full_gene_notext_759560
+PDno23andme_full_gene_notext_4830172
+PDno23andme_full_gene_notext_54325
+PDno23andme_full_gene_notext_2287661
+PDno23andme_full_gene_notext_7174594
+PDno23andme_full_gene_notext_4499852
+PDno23andme_full_gene_notext_3033563
+PDno23andme_full_gene_notext_3377310
+PDno23andme_full_gene_notext_5891586
+PDno23andme_full_gene_notext_6443329
+PDno23andme_full_gene_notext_2006830
+PDno23andme_full_gene_notext_4432820
+PDno23andme_full_gene_notext_4275596
+PDno23andme_full_gene_notext_4703416
+PDno23andme_full_gene_notext_3341654
+PDno23andme_full_gene_notext_2270096
+PDno23andme_full_gene_notext_4068602
+PDno23andme_full_gene_notext_2323766
+PDno23andme_full_gene_notext_7472287
+PDno23andme_full_gene_notext_6132985
+PDno23andme_full_gene_notext_4448730
+PDno23andme_full_gene_notext_6186797
+PDno23andme_full_gene_notext_3412198
+PDno23andme_full_gene_notext_3797845
+PDno23andme_full_gene_notext_3922394
+PDno23andme_full_gene_notext_625911
+PDno23andme_full_gene_notext_5404279
+PDno23andme_full_gene_notext_6705975
+PDno23andme_full_gene_notext_2439296
+PDno23andme_full_gene_notext_3307812
+PDno23andme_full_gene_notext_1517619
+PDno23andme_full_gene_notext_3451038
+PDno23andme_full_gene_notext_1351675
+PDno23andme_full_gene_notext_746909
+PDno23andme_full_gene_notext_5303607
+PDno23andme_full_gene_notext_6638156
+PDno23andme_full_gene_notext_3616937
+PDno23andme_full_gene_notext_3872692
+PDno23andme_full_gene_notext_1902475
+PDno23andme_full_gene_notext_2735905
+PDno23andme_full_gene_notext_2511278
+PDno23andme_full_gene_notext_6874555
+PDno23andme_full_gene_notext_7458107
+PDno23andme_full_gene_notext_2751323
+PDno23andme_full_gene_notext_729904
+PDno23andme_full_gene_notext_2459080
+PDno23andme_full_gene_notext_6527320
+PDno23andme_full_gene_notext_1158538
+PDno23andme_full_gene_notext_6731021
+PDno23andme_full_gene_notext_452250
+PDno23andme_full_gene_notext_4411182
+PDno23andme_full_gene_notext_3490709
+PDno23andme_full_gene_notext_2412673
+PDno23andme_full_gene_notext_2915505
+PDno23andme_full_gene_notext_1290821
+PDno23andme_full_gene_notext_2931296
+PDno23andme_full_gene_notext_6158117
+PDno23andme_full_gene_notext_149675
+PDno23andme_full_gene_notext_4974861
+PDno23andme_full_gene_notext_2788253
+PDno23andme_full_gene_notext_3116556
+PDno23andme_full_gene_notext_3386184
+PDno23andme_full_gene_notext_3992725
+PDno23andme_full_gene_notext_5253781
+PDno23andme_full_gene_notext_6917557
+PDno23andme_full_gene_notext_5601715
+PDno23andme_full_gene_notext_2439217
+PDno23andme_full_gene_notext_6805110
+PDno23andme_full_gene_notext_6366979
+PDno23andme_full_gene_notext_5562638
+PDno23andme_full_gene_notext_2744957
+PDno23andme_full_gene_notext_2915037
+PDno23andme_full_gene_notext_1553385
+PDno23andme_full_gene_notext_7442171
+PDno23andme_full_gene_notext_2357321
+PDno23andme_full_gene_notext_7182535
+PDno23andme_full_gene_notext_6568546
+PDno23andme_full_gene_notext_1373016
+PDno23andme_full_gene_notext_5746066
+PDno23andme_full_gene_notext_679880
+PDno23andme_full_gene_notext_4255719
+PDno23andme_full_gene_notext_3214763
+PDno23andme_full_gene_notext_5732271
+PDno23andme_full_gene_notext_6831032
+PDno23andme_full_gene_notext_2261620
+PDno23andme_full_gene_notext_2006269
+PDno23andme_full_gene_notext_4477476
+PDno23andme_full_gene_notext_1945781
+PDno23andme_full_gene_notext_3347265
+PDno23andme_full_gene_notext_140491
+PDno23andme_full_gene_notext_2494451
+PDno23andme_full_gene_notext_7478
+PDno23andme_full_gene_notext_4544624
+PDno23andme_full_gene_notext_1221032
+PDno23andme_full_gene_notext_701322",7/30/2024,Maya,,,,,,,,,,,
+Q79,Which tissues express genes with SNPs that are associated with PD? ,"Out of the 22 tissues tested, 21 expressed genes with SNPs that are significantly associated with Parkinson's Disease (PD). The tissue expressing genes with the highest number of significant SNPs was the whole brain, with 220 significant SNPs. The spinal cord had the highest proportion of significant SNPs relative to the total SNPs, with a proportional significance of 0.002.",All rows in PDno23andme_full_gene_notext,7/30/2024,Maya,,,,,,,,,,,
+Q80,What is the patent number associated with Sonidegib Phosphate?,"There are 3 patent numbers associated with the drug Sonidegib Phosphate; 8178563, 10266523, and 8063043.","DrugTargetsIndication121923_text_1072620 
+DrugTargetsIndication121923_text_1072622 
+DrugTargetsIndication121923_text_1072621 ",7/30/2024,Marzieh/Maya,,,,,,,,,,,
+Q81,,,,,,,,,,,,,,,,
+Q82,,,,,,,,,,,,,,,,
+Q83,,,,,,,,,,,,,,,,
+Q84,,,,,,,,,,,,,,,,
+Q85,,,,,,,,,,,,,,,,
+Q86,,,,,,,,,,,,,,,,
+Q87,,,,,,,,,,,,,,,,
+Q88,,,,,,,,,,,,,,,,
+Q89,,,,,,,,,,,,,,,,
+Q90,,,,,,,,,,,,,,,,
+Q91,,,,,,,,,,,,,,,,
+Q92,,,,,,,,,,,,,,,,
+Q93,,,,,,,,,,,,,,,,
+Q94,,,,,,,,,,,,,,,,
+Q95,,,,,,,,,,,,,,,,
+Q96,,,,,,,,,,,,,,,,
+Q97,,,,,,,,,,,,,,,,
+Q98,,,,,,,,,,,,,,,,
+Q99,,,,,,,,,,,,,,,,
+Q100,,,,,,,,,,,,,,,,
+Q101,,,,,,,,,,,,,,,,
+Q102,,,,,,,,,,,,,,,,
+Q103,,,,,,,,,,,,,,,,
+Q104,,,,,,,,,,,,,,,,
+Q105,,,,,,,,,,,,,,,,
+Q106,,,,,,,,,,,,,,,,
+Q107,,,,,,,,,,,,,,,,
+Q108,,,,,,,,,,,,,,,,
+Q109,,,,,,,,,,,,,,,,
+Q110,,,,,,,,,,,,,,,,
+Q111,,,,,,,,,,,,,,,,
+Q112,,,,,,,,,,,,,,,,
+Q113,,,,,,,,,,,,,,,,
+Q114,,,,,,,,,,,,,,,,
+Q115,,,,,,,,,,,,,,,,
+Q116,,,,,,,,,,,,,,,,
+Q117,,,,,,,,,,,,,,,,
+Q118,,,,,,,,,,,,,,,,
+Q119,,,,,,,,,,,,,,,,
+Q120,,,,,,,,,,,,,,,,
+Q121,,,,,,,,,,,,,,,,
+Q122,,,,,,,,,,,,,,,,
+Q123,,,,,,,,,,,,,,,,
+Q124,,,,,,,,,,,,,,,,
+Q125,,,,,,,,,,,,,,,,
+Q126,,,,,,,,,,,,,,,,
+Q127,,,,,,,,,,,,,,,,
+Q128,,,,,,,,,,,,,,,,
+Q129,,,,,,,,,,,,,,,,
+Q130,,,,,,,,,,,,,,,,
+Q131,,,,,,,,,,,,,,,,
+Q132,,,,,,,,,,,,,,,,
+Q133,,,,,,,,,,,,,,,,
+Q134,,,,,,,,,,,,,,,,
+Q135,,,,,,,,,,,,,,,,
+Q136,,,,,,,,,,,,,,,,
+Q137,,,,,,,,,,,,,,,,
+Q138,,,,,,,,,,,,,,,,
+Q139,,,,,,,,,,,,,,,,

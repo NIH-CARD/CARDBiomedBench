@@ -1,5 +1,5 @@
 import os
-from scripts.utils import load_config
+from scripts.scripts_utils import load_config
 
 # Load configuration
 CONFIG = load_config()

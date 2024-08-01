@@ -1,4 +1,7 @@
 pandas
+numpy
+seaborn
+matplotlib
 tqdm
 argparse
 openai

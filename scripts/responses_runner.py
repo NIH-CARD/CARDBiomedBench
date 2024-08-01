@@ -1,7 +1,7 @@
 import argparse
 from scripts import MODELS_DICT, NUM_WORKERS
-from scripts.utils import load_dataset, save_dataset
-from scripts.collect_responses.utils import get_all_model_responses
+from scripts.scripts_utils import load_dataset, save_dataset
+from scripts.collect_responses.collect_responses_utils import get_all_model_responses
 
 def main():
     parser = argparse.ArgumentParser(description="Get LLM results on a QA benchmark.")

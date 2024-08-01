@@ -1,8 +1,16 @@
 import pandas as pd
 from tqdm import tqdm
+from typing import Callable
 from concurrent.futures import ThreadPoolExecutor, as_completed
 
-def query_model_retries(query: str, query_instance: object, retries: int) -> str:
+def check_model_response(response: str) -> bool:
+    ''''''
+    if "Error in" not in response:
+        return response
+    else:
+        return None
+
+def query_model_retries(query: str, query_instance: object, query_checker: Callable[[str], bool], retries: int) -> str:
     """
     Query the model with retries in case of failure.
 
@@ -17,14 +25,15 @@ def query_model_retries(query: str, query_instance: object, retries: int) -> str
     retry_count = 0
     while retry_count < retries:
         response = query_instance.query(query)
-        if "Error in" not in response:
+        response = query_checker(response)
+        if response:
             return response
         else:
             retry_count += 1
             print(f"Error querying model. Retry {retry_count}/{retries}")
     return f"ERROR: Failed after {retries} retries."
 
-def collect_model_responses(model: str, queries: list, model_dict: dict, retries: int=3, max_workers: int=1) -> list:
+def collect_model_responses(model: str, queries: list, query_checker: Callable[[str], bool], model_dict: dict, max_workers: int, retries: int) -> list:
     """
     Collect responses from a specific model for a list of queries in parallel.
 
@@ -42,7 +51,7 @@ def collect_model_responses(model: str, queries: list, model_dict: dict, retries
     responses = [None] * len(queries)
 
     with ThreadPoolExecutor(max_workers=max_workers) as executor:
-        future_to_index = {executor.submit(query_model_retries, query, query_instance, retries): i for i, query in enumerate(queries)}
+        future_to_index = {executor.submit(query_model_retries, query, query_instance, query_checker, retries): i for i, query in enumerate(queries)}
         for future in tqdm(as_completed(future_to_index), total=len(queries), desc=f"Processing {model}"):
             index = future_to_index[future]
             try:
@@ -70,7 +79,7 @@ def get_all_model_responses(data: pd.DataFrame, model_dict: dict, max_workers: i
     for model in model_dict:
         data[f'{model}_response'] = ''
     for model in model_dict:
-        responses = collect_model_responses(model, data[query_col].tolist(), model_dict, retries, max_workers)
+        responses = collect_model_responses(model, data[query_col].tolist(), check_model_response, model_dict, max_workers, retries)
         data[f'{model}_response'] = responses
 
     return data

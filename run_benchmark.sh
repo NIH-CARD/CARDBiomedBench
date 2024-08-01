@@ -21,8 +21,8 @@ LOCAL_SCORED_PATH="$RESULTS_DIR$SCORED_FILE_NAME"
 # Run response_runner.py to collect results from the benchmark file
 python3 -m scripts.responses_runner --local_qa_path $LOCAL_BENCHMARK_PATH --local_res_path $LOCAL_RES_PATH
 
-# Run grade_res.py to score the generated results
+# Run metrics_runner.py to score the generated results
 python3 -m scripts.metrics_runner --local_res_path $LOCAL_RES_PATH --local_scored_path $LOCAL_SCORED_PATH
 
-# Run print_metrics.py to calculate statistics based on the scored results
-# TODO python3 print_metrics.py --local_scored_path $LOCAL_SCORED_PATH --local_metrics_path $LOCAL_METRICS_PATH
+# Run graphs_runner.py to create graphs of the scored results
+python3 -m scripts.graphs_runner --local_scored_path $LOCAL_SCORED_PATH
