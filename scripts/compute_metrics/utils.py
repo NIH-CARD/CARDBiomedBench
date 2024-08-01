@@ -2,7 +2,7 @@ import pandas as pd
 from scripts.collect_responses.utils import collect_model_responses
 from .prompts import biomedical_grading_prompt
 
-def get_all_model_LLMEVAL(data: pd.DataFrame, grading_model: str, model_dict: dict, query_col: str='question', gold_col: str='answer', response_col: str='response', retries: int=3, max_workers: int=10) -> pd.DataFrame:
+def get_all_model_LLMEVAL(data: pd.DataFrame, grading_model: str, model_dict: dict, max_workers: int, query_col: str='question', gold_col: str='answer', response_col: str='response', retries: int=3) -> pd.DataFrame:
     """
     Grade responses from multiple LLMs with a specific prompt & GPT-4o for each query in the dataset, with retry on failure.
 

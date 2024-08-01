@@ -24,7 +24,7 @@ def query_model_retries(query: str, query_instance: object, retries: int) -> str
             print(f"Error querying model. Retry {retry_count}/{retries}")
     return f"ERROR: Failed after {retries} retries."
 
-def collect_model_responses(model: str, queries: list, model_dict: dict, retries: int=3, max_workers: int=10) -> list:
+def collect_model_responses(model: str, queries: list, model_dict: dict, retries: int=3, max_workers: int=1) -> list:
     """
     Collect responses from a specific model for a list of queries in parallel.
 
@@ -53,7 +53,7 @@ def collect_model_responses(model: str, queries: list, model_dict: dict, retries
 
     return responses
 
-def get_all_model_responses(data: pd.DataFrame, model_dict: dict, query_col: str='question', retries: int=3, max_workers: int=10) -> pd.DataFrame:
+def get_all_model_responses(data: pd.DataFrame, model_dict: dict, max_workers: int, query_col: str='question', retries: int=3) -> pd.DataFrame:
     """
     Get responses from multiple LLMs for each query in the dataset, with retry on failure.
 
@@ -69,7 +69,6 @@ def get_all_model_responses(data: pd.DataFrame, model_dict: dict, query_col: str
     """
     for model in model_dict:
         data[f'{model}_response'] = ''
-
     for model in model_dict:
         responses = collect_model_responses(model, data[query_col].tolist(), model_dict, retries, max_workers)
         data[f'{model}_response'] = responses

@@ -2,7 +2,7 @@ import argparse
 import re
 import pandas as pd
 from tqdm import tqdm
-from scripts import MODELS_DICT, METRICS_DICT
+from scripts import MODELS_DICT, METRICS_DICT, NUM_WORKERS
 from scripts.utils import load_dataset, save_responses
 from scripts.compute_metrics.utils import get_all_model_LLMEVAL
 
@@ -21,11 +21,10 @@ def main():
         return
 
     if "LLMEVAL" in METRICS_DICT:
-        data = get_all_model_LLMEVAL(data, 'gpt-4o', MODELS_DICT)
+        data = get_all_model_LLMEVAL(data, grading_model='gpt-4o', model_dict=MODELS_DICT, max_workers=NUM_WORKERS)
 
     save_responses(local_scored_path, data)
     print(f"Responses scored and saved to {local_scored_path}.")
-
 
 if __name__ == "__main__":
     main()

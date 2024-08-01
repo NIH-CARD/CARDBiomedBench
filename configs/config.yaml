@@ -9,3 +9,6 @@ models:
 metrics:
   LLMEVAL:
     use: true
+
+parallelism:
+  workers: null
