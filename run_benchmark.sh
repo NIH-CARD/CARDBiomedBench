@@ -18,6 +18,24 @@ LOCAL_BENCHMARK_PATH="$BENCHMARK_DIR$BENCHMARK_FILE_NAME"
 LOCAL_RES_PATH="$RESULTS_DIR$RES_FILE_NAME"
 LOCAL_SCORED_PATH="$RESULTS_DIR$SCORED_FILE_NAME"
 
+# Check if virtualenv is installed
+if ! command -v virtualenv &> /dev/null
+then
+    echo "virtualenv could not be found, installing it..."
+    pip install virtualenv
+fi
+
+# Create a virtual environment named eval-virtual-env
+virtualenv eval-virtual-env
+
+# Activate the virtual environment
+source eval-virtual-env/bin/activate
+
+# Install required packages
+pip install -r requirements.txt
+
+echo "Setup complete. To activate the virtual environment, run 'source eval-virtual-env/bin/activate'"
+
 # Run response_runner.py to collect results from the benchmark file
 python3 -m scripts.responses_runner --local_qa_path $LOCAL_BENCHMARK_PATH --local_res_path $LOCAL_RES_PATH
 
