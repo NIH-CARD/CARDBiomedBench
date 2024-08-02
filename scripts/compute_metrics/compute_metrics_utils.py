@@ -16,7 +16,7 @@ def check_LLMEVAL_response(response: str) -> float:
     match = re.search(r"[-+]?[0-9]*\.?[0-9]+", response)
     if match:
         number = float(match.group(0))
-        if number in [-1, 0.0, 0.5, 1.0, 1.5, 2.0, 2.5, 3.0]:
+        if number in [-1.0, 0.0, 0.5, 1.0, 1.5, 2.0, 2.5, 3.0]:
             return number
     return None
 

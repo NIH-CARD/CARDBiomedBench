@@ -13,6 +13,9 @@ def plot_metric_boxplot(data: pd.DataFrame, metric: str, models: dict, title: st
     plt.axhline(y=0, color='k', linestyle=':', linewidth=2)
 
     melted_data = pd.DataFrame()
+    idk_data = pd.DataFrame()
+    idk_counts = {}
+
     for model in models:
         col_name = f'{model}_{metric}'
         if col_name in data.columns:
@@ -21,30 +24,41 @@ def plot_metric_boxplot(data: pd.DataFrame, metric: str, models: dict, title: st
             model_data.rename(columns={col_name: metric}, inplace=True)
             
             if metric == 'LLMEVAL':
+                idk_count = (model_data[metric] == -1).sum()
+                idk_counts[model] = idk_count
+                
+                # Separate -1 values for the strip plot
+                idk_model_data = model_data[model_data[metric] == -1]
+                idk_data = pd.concat([idk_data, idk_model_data], axis=0)
+                
+                # Exclude -1 values for the box plot
                 model_data = model_data[model_data[metric] != -1]
-
-            ci_lower, ci_upper = np.percentile(model_data[metric], [2.5, 97.5])
-            model_data = model_data[(model_data[metric] >= ci_lower) & (model_data[metric] <= ci_upper)]
-            
+            else:
+                idk_counts[model] = 0
+                
             melted_data = pd.concat([melted_data, model_data], axis=0)
+        else:
+            idk_counts[model] = 0  # Ensure every model has a count entry
+            melted_data = pd.concat([melted_data, pd.DataFrame({metric: [np.nan], 'Model': model})], axis=0)
     
-   # melted_data['Model'] = melted_data['Model'].map(MODEL_NAME_MAPPING)
-
-    ax = sns.boxplot(
+    # Set the x-axis ticks and labels before plotting
+    ax = plt.gca()
+    ax.set_xticks(range(len(models)))
+    ax.set_xticklabels(models.keys(), rotation=0, fontsize=20, ha='center')
+    
+    sns.boxplot(
         x='Model', 
         y=metric, 
         data=melted_data, 
-        palette=colors, 
+        palette=colors[:len(models)], 
         linewidth=2,
         hue='Model',
         dodge=False,
+        ax=ax,
         legend=False
     )
     
-    if ax.legend_ is not None:
-        ax.legend_.remove()
-    
-    ax = sns.stripplot(
+    sns.stripplot(
         x='Model', 
         y=metric, 
         data=melted_data, 
@@ -53,18 +67,38 @@ def plot_metric_boxplot(data: pd.DataFrame, metric: str, models: dict, title: st
         edgecolor='black', 
         color='white', 
         linewidth=1, 
-        alpha=0.3
+        alpha=0.3,
+        ax=ax
     )
     
-    plt.xticks(rotation=0, fontsize=20, ha='center')
-    plt.yticks(fontsize=20)
+    # Plot the -1 values as dots in the -1 zone
+    sns.stripplot(
+        x='Model', 
+        y=metric, 
+        data=idk_data, 
+        jitter=.35, 
+        size=8, 
+        edgecolor='black', 
+        color='red', 
+        linewidth=1, 
+        alpha=0.7,
+        ax=ax
+    )
+
+    for model in models:
+        if metric == 'LLMEVAL':
+            count = idk_counts.get(model, 0)
+            model_index = list(models.keys()).index(model)
+            plt.text(model_index, -1.2, f'(IDK={count})', ha='center', va='center', fontsize=16, color='red')
+
+    plt.yticks(list(plt.yticks()[0]) + [-1], fontsize=20)
     plt.xlabel("Model", fontsize=22, fontweight='bold')
     plt.ylabel(metric, fontsize=22, fontweight='bold')
     plt.title(title, fontsize=24)
     
     if metric == "LLMEVAL":
-        plt.ylim(0, 3.0)
-        plt.yticks(np.arange(0, 3.5, 0.5))
+        plt.ylim(-1.5, 3.0)
+        plt.yticks(np.arange(-1, 3.5, 0.5))
 
     plt.tight_layout()
     plt.savefig(f'{save_path}/{title}')

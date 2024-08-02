@@ -34,7 +34,7 @@ def query_model_retries(query: str, query_instance: object, query_checker: Calla
     while retry_count < retries:
         response = query_instance.query(query)
         response = query_checker(response)
-        if response:
+        if response is not None:
             return response
         else:
             retry_count += 1
