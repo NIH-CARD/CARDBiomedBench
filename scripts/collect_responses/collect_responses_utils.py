@@ -1,7 +1,40 @@
+import time
 import pandas as pd
 from tqdm import tqdm
 from typing import Callable
 from concurrent.futures import ThreadPoolExecutor, as_completed
+from scripts import SYSTEM_PROMPT, MODELS_DICT
+from .gpt4o_query import GPT4OQuery
+from .gemini_query import GeminiQuery
+from .huggingface_query import HuggingFaceQuery
+
+def initialize_model(model: str):
+    """
+    Initialize the model client and create an instance of the query class for the specified model.
+    """
+    if model in MODELS_DICT:
+        if model == 'gpt-4o':
+            MODELS_DICT[model]['query_instance'] = GPT4OQuery(SYSTEM_PROMPT)
+        elif model == 'gemini-1.5-pro':
+            MODELS_DICT[model]['query_instance'] = GeminiQuery(SYSTEM_PROMPT)
+        elif model == 'gemma-2-2b-it':
+            MODELS_DICT[model]['query_instance'] = HuggingFaceQuery(SYSTEM_PROMPT, 'google/gemma-2-2b-it')
+        
+        print(f"{model} initialized successfully.")
+    else:
+        print(f"Model {model} not found in MODELS_DICT.")
+
+def delete_model(model: str):
+    """
+    Delete the model instance and release any resources.
+    """
+    if model in MODELS_DICT and MODELS_DICT[model]['query_instance'] is not None:
+        query_instance = MODELS_DICT[model]['query_instance']
+        query_instance.delete()
+        MODELS_DICT[model]['query_instance'] = None
+        print(f"{model} deleted successfully.")
+    else:
+        print(f"Model {model} is not initialized or not found in MODELS_DICT.")
 
 def check_model_response(response: str) -> bool:
     """
@@ -18,7 +51,7 @@ def check_model_response(response: str) -> bool:
     else:
         return None
 
-def query_model_retries(query: str, query_instance: object, query_checker: Callable[[str], bool], retries: int) -> str:
+def query_model_retries(query: str, query_instance: object, query_checker: Callable[[str], bool], retries: int, initial_delay: int) -> str:
     """
     Query the model with retries in case of failure.
 
@@ -31,6 +64,7 @@ def query_model_retries(query: str, query_instance: object, query_checker: Calla
     - str: The response from the model or an error message.
     """
     retry_count = 0
+    delay = initial_delay
     while retry_count < retries:
         response = query_instance.query(query)
         response = query_checker(response)
@@ -39,9 +73,11 @@ def query_model_retries(query: str, query_instance: object, query_checker: Calla
         else:
             retry_count += 1
             print(f"Error querying model. Retry {retry_count}/{retries}")
+            time.sleep(delay)
+            delay *= 2
     return f"ERROR: Failed getting response for {query} after {retries} retries."
 
-def collect_model_responses(model: str, queries: list, query_checker: Callable[[str], bool], model_dict: dict, max_workers: int, retries: int) -> list:
+def collect_model_responses(model: str, queries: list, query_checker: Callable[[str], bool], model_dict: dict, max_workers: int, retries: int, initial_delay: int) -> list:
     """
     Collect responses from a specific model for a list of queries in parallel.
 
@@ -59,7 +95,7 @@ def collect_model_responses(model: str, queries: list, query_checker: Callable[[
     responses = [None] * len(queries)
 
     with ThreadPoolExecutor(max_workers=max_workers) as executor:
-        future_to_index = {executor.submit(query_model_retries, query, query_instance, query_checker, retries): i for i, query in enumerate(queries)}
+        future_to_index = {executor.submit(query_model_retries, query, query_instance, query_checker, retries, initial_delay): i for i, query in enumerate(queries)}
         for future in tqdm(as_completed(future_to_index), total=len(queries), desc=f"Running queries on {model}"):
             index = future_to_index[future]
             try:
@@ -70,7 +106,7 @@ def collect_model_responses(model: str, queries: list, query_checker: Callable[[
 
     return responses
 
-def get_all_model_responses(data: pd.DataFrame, model_dict: dict, max_workers: int, query_col: str='question', retries: int=3) -> pd.DataFrame:
+def get_all_model_responses(data: pd.DataFrame, model_dict: dict, max_workers: int, query_col: str='question', retries: int=3, initial_delay: int=1) -> pd.DataFrame:
     """
     Get responses from multiple LLMs for each query in the dataset, with retry on failure.
 
@@ -87,7 +123,9 @@ def get_all_model_responses(data: pd.DataFrame, model_dict: dict, max_workers: i
     for model in model_dict:
         data[f'{model}_response'] = ''
     for model in model_dict:
-        responses = collect_model_responses(model, data[query_col].tolist(), check_model_response, model_dict, max_workers, retries)
+        initialize_model(model)
+        responses = collect_model_responses(model, data[query_col].tolist(), check_model_response, model_dict, max_workers, retries, initial_delay)
         data[f'{model}_response'] = responses
+        delete_model(model)
 
     return data

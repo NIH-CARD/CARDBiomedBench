@@ -1,4 +1,5 @@
 import os
+import gc
 from dotenv import load_dotenv
 from openai import OpenAI
 
@@ -49,3 +50,22 @@ class GPT4OQuery:
         except Exception as e:
             error_message = f"Error in GPT-4o response: {e}"
             return error_message
+    
+    def delete(self):
+        """
+        Delete the client to free up memory.
+        """
+        try:
+            if self.client is not None:
+                del self.client
+
+            # Explicitly delete other attributes if necessary
+            for attr in ['system_prompt']:
+                if hasattr(self, attr):
+                    delattr(self, attr)
+
+            # Clear any remaining references
+            gc.collect()
+            print(f"GPT-4o client and attributes deleted successfully.")
+        except Exception as e:
+            print(f"Error during deletion of GPT-4o client: {e}")

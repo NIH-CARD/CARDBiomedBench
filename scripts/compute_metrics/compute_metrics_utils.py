@@ -20,7 +20,7 @@ def check_LLMEVAL_response(response: str) -> float:
             return number
     return None
 
-def get_all_model_LLMEVAL(data: pd.DataFrame, grading_model: str, model_dict: dict, max_workers: int, query_col: str='question', gold_col: str='answer', response_col: str='response', retries: int=3) -> pd.DataFrame:
+def get_all_model_LLMEVAL(data: pd.DataFrame, grading_model: str, model_dict: dict, max_workers: int, query_col: str='question', gold_col: str='answer', response_col: str='response', retries: int=3, initial_delay: int=1) -> pd.DataFrame:
     """
     Grade responses from multiple LLMs with a specific prompt & GPT-4o for each query in the dataset, with retry on failure.
 
@@ -44,7 +44,7 @@ def get_all_model_LLMEVAL(data: pd.DataFrame, grading_model: str, model_dict: di
             biomedical_grading_prompt(row[query_col], row[gold_col], row[f'{model}_{response_col}'])
             for _, row in data.iterrows()
         ]
-        responses = collect_model_responses(grading_model, grading_prompts, check_LLMEVAL_response, model_dict, max_workers, retries)
+        responses = collect_model_responses(grading_model, grading_prompts, check_LLMEVAL_response, model_dict, max_workers, retries, initial_delay)
         data[f'{model}_LLMEVAL'] = responses
 
     return data

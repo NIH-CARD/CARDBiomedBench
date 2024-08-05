@@ -20,7 +20,7 @@ def main():
     # TODO DELETE
     data = data[['uuid', 'question', 'answer']]
     data.dropna(inplace=True)
-    data = data[:10]
+    data = data[:5]
     # TODO DELETE
 
     data = get_all_model_responses(data, model_dict=MODELS_DICT, max_workers=NUM_WORKERS)

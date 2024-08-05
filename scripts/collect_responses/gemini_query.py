@@ -1,4 +1,5 @@
 import os
+import gc
 from dotenv import load_dotenv
 import google.generativeai as genai
 
@@ -46,3 +47,22 @@ class GeminiQuery:
         except Exception as e:
             error_message = f"Error in Gemini-1.5-Pro response: {e}"
             return error_message
+    
+    def delete(self):
+        """
+        Delete the model to free up memory.
+        """
+        try:
+            if self.model is not None:
+                del self.model
+
+            # Explicitly delete other attributes if necessary
+            for attr in ['system_prompt']:
+                if hasattr(self, attr):
+                    delattr(self, attr)
+
+            # Clear any remaining references
+            gc.collect()
+            print(f"Gemini-1.5-Pro model and attributes deleted successfully.")
+        except Exception as e:
+            print(f"Error during deletion of Gemini-1.5-Pro model: {e}")

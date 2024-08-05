@@ -8,3 +8,5 @@ openai
 google-generativeai
 pyyaml
 python-dotenv
+torch
+transformers
