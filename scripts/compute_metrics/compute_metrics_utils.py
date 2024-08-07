@@ -1,7 +1,7 @@
 import pandas as pd
 import re
 from .prompts import biomedical_grading_prompt
-from scripts.collect_responses.collect_responses_utils import collect_model_responses
+from scripts.collect_responses.collect_responses_utils import collect_model_responses, initialize_model
 
 def check_LLMEVAL_response(response: str) -> float:
     """
@@ -44,7 +44,9 @@ def get_all_model_LLMEVAL(data: pd.DataFrame, grading_model: str, model_dict: di
             biomedical_grading_prompt(row[query_col], row[gold_col], row[f'{model}_{response_col}'])
             for _, row in data.iterrows()
         ]
-        responses = collect_model_responses(grading_model, grading_prompts, check_LLMEVAL_response, model_dict, max_workers, retries, initial_delay)
+        query_instance = initialize_model(grading_model)
+        responses = collect_model_responses(grading_model, query_instance, grading_prompts, check_LLMEVAL_response, model_dict, max_workers, retries, initial_delay)
+        query_instance.delete()
         data[f'{model}_LLMEVAL'] = responses
 
     return data
