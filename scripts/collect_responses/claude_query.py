@@ -4,14 +4,14 @@ import time
 from dotenv import load_dotenv
 import anthropic
 
-class AnthropicQuery:
+class ClaudeQuery:
     def __init__(self, system_prompt, model_name):
         self.system_prompt = system_prompt
         self.model_name = model_name
-        self.model = self.initialize_anthropic_model()
+        self.model = self.initialize_claude_model()
 
     @staticmethod
-    def initialize_anthropic_model():
+    def initialize_claude_model():
         """
         Initialize an anthropic model.
 
@@ -26,12 +26,12 @@ class AnthropicQuery:
             else:
                 print("Anthropic API key not found in environment variables.")
         except Exception as e:
-            print(f"Error initializing Anthropic model: {e}")
+            print(f"Error initializing Claude model: {e}")
         return None
 
     def query(self, query: str) -> str:
         """
-        Query the Anthropic API.
+        Query the Claude API.
 
         Parameters:
         - query (str): The input query string.

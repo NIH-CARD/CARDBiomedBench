@@ -6,7 +6,7 @@ from concurrent.futures import ThreadPoolExecutor, as_completed
 from scripts import SYSTEM_PROMPT, MODELS_DICT
 from .gpt4o_query import GPT4OQuery
 from .gemini_query import GeminiQuery
-from .claude_query import AnthropicQuery
+from .claude_query import ClaudeQuery
 from .huggingface_query import HuggingFaceQuery
 
 def initialize_model(model: str):
@@ -18,7 +18,7 @@ def initialize_model(model: str):
     elif model == 'gemini-1.5-pro':
         return GeminiQuery(SYSTEM_PROMPT, 'gemini-1.5-pro')
     elif model =='claude-3.5-sonnet':
-        return AnthropicQuery(SYSTEM_PROMPT, 'claude-3-5-sonnet-20240620')
+        return ClaudeQuery(SYSTEM_PROMPT, 'claude-3-5-sonnet-20240620')
     elif model == 'gemma-2-2b-it':
         return HuggingFaceQuery(SYSTEM_PROMPT, 'google/gemma-2-2b-it') 
     else:
