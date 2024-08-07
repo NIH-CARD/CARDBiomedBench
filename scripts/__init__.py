@@ -12,6 +12,9 @@ MODELS_DICT = {name: details for name, details in CONFIG.get('models', {}).items
 for model in MODELS_DICT:
     MODELS_DICT[model]['query_instance'] = None
 
+# Retrieve grading model
+GRADING_MODEL = CONFIG.get('grading_model', '')
+
 # Load metrics and filter out those not to be used
 METRICS_DICT = {name: details for name, details in CONFIG.get('metrics', {}).items() if details.get('use', False)}
 
