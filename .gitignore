@@ -1,5 +1,6 @@
 # Repository Specific
 results/*
+test.py
 
 # Byte-compiled / optimized / DLL files
 __pycache__
