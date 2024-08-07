@@ -18,7 +18,7 @@ def main():
         return
 
     if "LLMEVAL" in METRICS_DICT:
-        data = get_all_model_LLMEVAL(data, grading_model='gpt-4o', model_dict=MODELS_DICT, max_workers=NUM_WORKERS)
+        data = get_all_model_LLMEVAL(data, grading_model=GRADING_MODEL, model_dict=MODELS_DICT, max_workers=NUM_WORKERS)
 
     save_dataset(local_scored_path, data)
     print(f"Responses scored and saved to {local_scored_path}.")
