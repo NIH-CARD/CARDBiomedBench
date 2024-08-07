@@ -17,4 +17,4 @@ metrics:
     use: true
 
 parallelism:
-  workers: 4
+  workers: 1

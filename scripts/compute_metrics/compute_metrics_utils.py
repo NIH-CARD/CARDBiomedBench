@@ -3,7 +3,7 @@ import re
 from .prompts import biomedical_grading_prompt
 from scripts.collect_responses.collect_responses_utils import collect_model_responses, initialize_model
 
-def check_LLMEVAL_response(response: str) -> float:
+def check_LLMEVAL_response(response: str) -> tuple:
     """
     Check the LLMEVAL evaluation response for a valid score.
 
@@ -17,8 +17,8 @@ def check_LLMEVAL_response(response: str) -> float:
     if match:
         number = float(match.group(0))
         if number in [-1.0, 0.0, 0.5, 1.0, 1.5, 2.0, 2.5, 3.0]:
-            return number
-    return None
+            return number, True
+    return None, False
 
 def get_all_model_LLMEVAL(data: pd.DataFrame, grading_model: str, model_dict: dict, max_workers: int, query_col: str='question', gold_col: str='answer', response_col: str='response', retries: int=3, initial_delay: int=1) -> pd.DataFrame:
     """

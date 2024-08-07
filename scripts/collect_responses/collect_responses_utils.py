@@ -29,11 +29,10 @@ def delete_model(model: str):
         query_instance = MODELS_DICT[model]['query_instance']
         query_instance.delete()
         MODELS_DICT[model]['query_instance'] = None
-        print(f"{model} deleted successfully.")
     else:
         print(f"Model {model} is not initialized or not found in MODELS_DICT.")
 
-def check_model_response(response: str) -> bool:
+def check_model_response(response: str) -> tuple:
     """
     Checks that a model response to a query was valid and not an error returned by the query instance.
 
@@ -44,9 +43,9 @@ def check_model_response(response: str) -> bool:
     - str response if valid, else None
     """
     if "Error in" not in response:
-        return response
+        return response, True
     else:
-        return None
+        return response, False
 
 def query_model_retries(query: str, query_instance: object, query_checker: Callable[[str], bool], retries: int, initial_delay: int) -> str:
     """
@@ -64,15 +63,15 @@ def query_model_retries(query: str, query_instance: object, query_checker: Calla
     delay = initial_delay
     while retry_count < retries:
         response = query_instance.query(query)
-        response = query_checker(response)
-        if response is not None:
+        response, valid = query_checker(response)
+        if valid:
             return response
         else:
             retry_count += 1
             print(f"Error querying model. Retry {retry_count}/{retries}")
             time.sleep(delay)
             delay *= 2
-    return f"ERROR: Failed getting response for {query} after {retries} retries."
+    return f"ERROR: Failed getting response for {query} after {retries} retries. Error: {response}"
 
 def collect_model_responses(model: str, query_instance: object, queries: list, query_checker: Callable[[str], bool], model_dict: dict, max_workers: int, retries: int, initial_delay: int) -> list:
     """

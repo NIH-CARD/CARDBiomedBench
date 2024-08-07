@@ -1,5 +1,6 @@
 import os
 import gc
+import time
 from dotenv import load_dotenv
 import google.generativeai as genai
 
@@ -38,6 +39,7 @@ class GeminiQuery:
         Returns:
         - str: The response content from the API or an error message.
         """
+        time.sleep(10)
         try:
             chat = self.model.start_chat(
                 history=[{"role": "user", "parts": [self.system_prompt]}]
