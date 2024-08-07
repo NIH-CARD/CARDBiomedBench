@@ -6,6 +6,7 @@ from concurrent.futures import ThreadPoolExecutor, as_completed
 from scripts import SYSTEM_PROMPT, MODELS_DICT
 from .gpt4o_query import GPT4OQuery
 from .gemini_query import GeminiQuery
+from .claude_query import AnthropicQuery
 from .huggingface_query import HuggingFaceQuery
 
 def initialize_model(model: str):
@@ -13,11 +14,13 @@ def initialize_model(model: str):
     Initialize the model client and create an instance of the query class for the specified model.
     """
     if model == 'gpt-4o':
-        return GPT4OQuery(SYSTEM_PROMPT)
+        return GPT4OQuery(SYSTEM_PROMPT, 'gpt-4o')
     elif model == 'gemini-1.5-pro':
-        return GeminiQuery(SYSTEM_PROMPT)
+        return GeminiQuery(SYSTEM_PROMPT, 'gemini-1.5-pro')
+    elif model =='claude-3.5-sonnet':
+        return AnthropicQuery(SYSTEM_PROMPT, 'claude-3-5-sonnet-20240620')
     elif model == 'gemma-2-2b-it':
-        return HuggingFaceQuery(SYSTEM_PROMPT, 'google/gemma-2-2b-it')   
+        return HuggingFaceQuery(SYSTEM_PROMPT, 'google/gemma-2-2b-it') 
     else:
         return None
 
@@ -101,7 +104,7 @@ def collect_model_responses(model: str, query_instance: object, queries: list, q
 
     return responses
 
-def get_all_model_responses(data: pd.DataFrame, model_dict: dict, max_workers: int, query_col: str='question', retries: int=3, initial_delay: int=1) -> pd.DataFrame:
+def get_all_model_responses(data: pd.DataFrame, model_dict: dict, max_workers: int, query_col: str='question', retries: int=3, initial_delay: int=2) -> pd.DataFrame:
     """
     Get responses from multiple LLMs for each query in the dataset, with retry on failure.
 

@@ -6,7 +6,9 @@ models:
   gpt-4o:
     use: false
   gemini-1.5-pro:
-    use: true
+    use: false
+  claude-3.5-sonnet:
+    use: false
   gemma-2-2b-it:
     use: false
 

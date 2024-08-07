@@ -5,12 +5,13 @@ from dotenv import load_dotenv
 import google.generativeai as genai
 
 class GeminiQuery:
-    def __init__(self, system_prompt):
-        self.model = self.initialize_gemini_model()
+    def __init__(self, system_prompt, model_name):
         self.system_prompt = system_prompt
+        self.model_name = model_name
+        self.model = self.initialize_gemini_model()
 
     @staticmethod
-    def initialize_gemini_model():
+    def initialize_gemini_model(self):
         """
         Initialize the Gemini model.
 
@@ -22,7 +23,7 @@ class GeminiQuery:
             google_api_key = os.environ["GOOGLE_API_KEY"]
             if google_api_key:
                 genai.configure(api_key=google_api_key)
-                return genai.GenerativeModel(model_name="gemini-1.5-pro")
+                return genai.GenerativeModel(model_name=self.model_name)
             else:
                 print("Google API key not found in environment variables.")
         except Exception as e:
@@ -47,7 +48,7 @@ class GeminiQuery:
             response = chat.send_message(query)
             return response.text
         except Exception as e:
-            error_message = f"Error in Gemini-1.5-Pro response: {e}"
+            error_message = f"Error in {self.model_name} response: {e}"
             return error_message
     
     def delete(self):
@@ -58,13 +59,11 @@ class GeminiQuery:
             if self.model is not None:
                 del self.model
 
-            # Explicitly delete other attributes if necessary
-            for attr in ['system_prompt']:
+            for attr in ['system_prompt', 'model_name']:
                 if hasattr(self, attr):
                     delattr(self, attr)
 
-            # Clear any remaining references
             gc.collect()
-            print(f"Gemini-1.5-Pro model and attributes deleted successfully.")
+            print(f"{self.model_name} model and attributes deleted successfully.")
         except Exception as e:
-            print(f"Error during deletion of Gemini-1.5-Pro model: {e}")
+            print(f"Error during deletion of {self.model_name} model: {e}")

@@ -10,3 +10,4 @@ pyyaml
 python-dotenv
 torch
 transformers
+anthropic

@@ -1,36 +1,37 @@
 import os
 import gc
+import time
 from dotenv import load_dotenv
-from openai import OpenAI
+import anthropic
 
-class GPT4OQuery:
+class AnthropicQuery:
     def __init__(self, system_prompt, model_name):
-        self.client = self.initialize_openai_client()
         self.system_prompt = system_prompt
         self.model_name = model_name
+        self.model = self.initialize_anthropic_model()
 
     @staticmethod
-    def initialize_openai_client():
+    def initialize_anthropic_model():
         """
-        Initialize the OpenAI client.
+        Initialize an anthropic model.
 
         Returns:
-        - OpenAI: Initialized OpenAI client.
+        - anthropic.Anthropic: Initialized anthropic model.
         """
         try:
             load_dotenv(os.path.join(os.path.dirname(__file__), '../../configs/.env'))
-            openai_api_key = os.environ.get("OPENAI_API_KEY")
-            if (openai_api_key):
-                return OpenAI(api_key=openai_api_key)
+            anthropic_api_key = os.environ.get("ANTHROPIC_API_KEY")
+            if anthropic_api_key:
+                return anthropic.Anthropic(api_key=anthropic_api_key)
             else:
-                print("OpenAI API key not found in environment variables.")
+                print("Anthropic API key not found in environment variables.")
         except Exception as e:
-            print(f"Error initializing OpenAI client: {e}")
+            print(f"Error initializing Anthropic model: {e}")
         return None
 
     def query(self, query: str) -> str:
         """
-        Query the OpenAI API with GPT-4o.
+        Query the Anthropic API.
 
         Parameters:
         - query (str): The input query string.
@@ -39,32 +40,32 @@ class GPT4OQuery:
         - str: The response content from the API or an error message.
         """
         try:
-            chat_completion = self.client.chat.completions.create(
+            message = self.model.messages.create(
                 model=self.model_name,
+                max_tokens=1024,
                 messages=[
-                    {"role": "system", "content": self.system_prompt},
+                    {"role": "user", "content": self.system_prompt},
                     {"role": "user", "content": query}
                 ]
             )
-            response = chat_completion.choices[0].message.content
-            return response
+            return message.content
         except Exception as e:
             error_message = f"Error in {self.model_name} response: {e}"
             return error_message
-    
+
     def delete(self):
         """
-        Delete the client to free up memory.
+        Delete the model to free up memory.
         """
         try:
-            if self.client is not None:
-                del self.client
+            if self.model is not None:
+                del self.model
 
             for attr in ['system_prompt', 'model_name']:
                 if hasattr(self, attr):
                     delattr(self, attr)
 
             gc.collect()
-            print(f"{self.model_name} client and attributes deleted successfully.")
+            print(f"{self.model_name} model and attributes deleted successfully.")
         except Exception as e:
-            print(f"Error during deletion of {self.model_name} client: {e}")
+            print(f"Error during deletion of {self.model_name} model: {e}")
