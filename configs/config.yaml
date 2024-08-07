@@ -6,9 +6,11 @@ models:
   gpt-4o:
     use: false
   gemini-1.5-pro:
-    use: false
-  gemma-2-2b-it:
     use: true
+  gemma-2-2b-it:
+    use: false
+
+grading_model: gpt-4o
 
 metrics:
   LLMEVAL:
