@@ -12,17 +12,14 @@ def initialize_model(model: str):
     """
     Initialize the model client and create an instance of the query class for the specified model.
     """
-    if model in MODELS_DICT:
-        if model == 'gpt-4o':
-            MODELS_DICT[model]['query_instance'] = GPT4OQuery(SYSTEM_PROMPT)
-        elif model == 'gemini-1.5-pro':
-            MODELS_DICT[model]['query_instance'] = GeminiQuery(SYSTEM_PROMPT)
-        elif model == 'gemma-2-2b-it':
-            MODELS_DICT[model]['query_instance'] = HuggingFaceQuery(SYSTEM_PROMPT, 'google/gemma-2-2b-it')
-        
-        print(f"{model} initialized successfully.")
+    if model == 'gpt-4o':
+        return GPT4OQuery(SYSTEM_PROMPT)
+    elif model == 'gemini-1.5-pro':
+        return GeminiQuery(SYSTEM_PROMPT)
+    elif model == 'gemma-2-2b-it':
+        return HuggingFaceQuery(SYSTEM_PROMPT, 'google/gemma-2-2b-it')   
     else:
-        print(f"Model {model} not found in MODELS_DICT.")
+        return None
 
 def delete_model(model: str):
     """
@@ -77,7 +74,7 @@ def query_model_retries(query: str, query_instance: object, query_checker: Calla
             delay *= 2
     return f"ERROR: Failed getting response for {query} after {retries} retries."
 
-def collect_model_responses(model: str, queries: list, query_checker: Callable[[str], bool], model_dict: dict, max_workers: int, retries: int, initial_delay: int) -> list:
+def collect_model_responses(model: str, query_instance: object, queries: list, query_checker: Callable[[str], bool], model_dict: dict, max_workers: int, retries: int, initial_delay: int) -> list:
     """
     Collect responses from a specific model for a list of queries in parallel.
 
@@ -91,7 +88,6 @@ def collect_model_responses(model: str, queries: list, query_checker: Callable[[
     Returns:
     - list: List of responses from the model.
     """
-    query_instance = model_dict[model]['query_instance']
     responses = [None] * len(queries)
 
     with ThreadPoolExecutor(max_workers=max_workers) as executor:
@@ -123,8 +119,8 @@ def get_all_model_responses(data: pd.DataFrame, model_dict: dict, max_workers: i
     for model in model_dict:
         data[f'{model}_response'] = ''
     for model in model_dict:
-        initialize_model(model)
-        responses = collect_model_responses(model, data[query_col].tolist(), check_model_response, model_dict, max_workers, retries, initial_delay)
+        MODELS_DICT[model]['query_instance'] = initialize_model(model)
+        responses = collect_model_responses(model, MODELS_DICT[model]['query_instance'], data[query_col].tolist(), check_model_response, model_dict, max_workers, retries, initial_delay)
         data[f'{model}_response'] = responses
         delete_model(model)
 
