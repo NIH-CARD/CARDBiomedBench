@@ -42,12 +42,12 @@ class ClaudeQuery:
             message = self.model.messages.create(
                 model=self.model_name,
                 max_tokens=1024,
+                system=self.system_prompt,
                 messages=[
-                    {"role": "user", "content": self.system_prompt},
-                    {"role": "user", "content": query}
+                    {"role": "user", "content": query},
                 ]
             )
-            return message.content
+            return message.content[0].text
         except Exception as e:
             error_message = f"Error in {self.model_name} response: {e}"
             return error_message
@@ -65,6 +65,5 @@ class ClaudeQuery:
                     delattr(self, attr)
 
             gc.collect()
-            print(f"{self.model_name} model and attributes deleted successfully.")
         except Exception as e:
             print(f"Error during deletion of {self.model_name} model: {e}")

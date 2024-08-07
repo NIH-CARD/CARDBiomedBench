@@ -64,6 +64,5 @@ class GeminiQuery:
                     delattr(self, attr)
 
             gc.collect()
-            print(f"{self.model_name} model and attributes deleted successfully.")
         except Exception as e:
             print(f"Error during deletion of {self.model_name} model: {e}")

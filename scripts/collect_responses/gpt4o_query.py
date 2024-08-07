@@ -65,6 +65,5 @@ class GPT4OQuery:
                     delattr(self, attr)
 
             gc.collect()
-            print(f"{self.model_name} client and attributes deleted successfully.")
         except Exception as e:
             print(f"Error during deletion of {self.model_name} client: {e}")
