@@ -1,5 +1,5 @@
 import argparse
-from scripts import MODELS_DICT, METRICS_DICT, NUM_WORKERS
+from scripts import MODELS_DICT, METRICS_DICT, NUM_WORKERS, GRADING_MODEL
 from scripts.scripts_utils import load_dataset, save_dataset
 from scripts.compute_metrics.compute_metrics_utils import get_all_model_LLMEVAL
 
