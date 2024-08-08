@@ -3,11 +3,10 @@ numpy
 seaborn
 matplotlib
 tqdm
-argparse
 openai
 google-generativeai
 pyyaml
 python-dotenv
-torch
+pytorch
 transformers
 anthropic
