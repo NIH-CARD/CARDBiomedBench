@@ -1,5 +1,6 @@
-from transformers import AutoModelForCausalLM, AutoTokenizer
+from transformers import AutoModelForCausalLM, AutoTokenizer, TRANSFORMERS_CACHE
 from dotenv import load_dotenv
+import shutil
 import torch
 import os
 import gc
@@ -64,6 +65,9 @@ class HuggingFaceQuery:
                 if hasattr(self, attr):
                     delattr(self, attr)
 
+            # Clear huggingface cache
+            shutil.rmtree(TRANSFORMERS_CACHE)
+            
             # Clear any remaining references
             gc.collect()
         except Exception as e:
