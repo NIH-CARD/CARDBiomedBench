@@ -3,7 +3,7 @@ import gc
 from dotenv import load_dotenv
 from openai import OpenAI
 
-class GPT4OQuery:
+class GPTQuery:
     def __init__(self, system_prompt, model_name, max_tokens):
         self.client = self.initialize_openai_client()
         self.system_prompt = system_prompt
