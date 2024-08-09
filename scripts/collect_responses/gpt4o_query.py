@@ -4,10 +4,11 @@ from dotenv import load_dotenv
 from openai import OpenAI
 
 class GPT4OQuery:
-    def __init__(self, system_prompt, model_name):
+    def __init__(self, system_prompt, model_name, max_tokens):
         self.client = self.initialize_openai_client()
         self.system_prompt = system_prompt
         self.model_name = model_name
+        self.max_tokens = max_tokens
 
     @staticmethod
     def initialize_openai_client():
@@ -41,6 +42,7 @@ class GPT4OQuery:
         try:
             chat_completion = self.client.chat.completions.create(
                 model=self.model_name,
+                max_tokens=self.max_tokens,
                 messages=[
                     {"role": "system", "content": self.system_prompt},
                     {"role": "user", "content": query}

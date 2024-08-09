@@ -6,9 +6,10 @@ import os
 import gc
 
 class HuggingFaceQuery:
-    def __init__(self, system_prompt, model_name):
+    def __init__(self, system_prompt, model_name, max_tokens):
         self.system_prompt = system_prompt
         self.model_name = model_name
+        self.max_tokens = max_tokens
         self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
         self.model, self.tokenizer = self._initialize_model_and_tokenizer()
 
@@ -40,7 +41,7 @@ class HuggingFaceQuery:
             inputs = self.tokenizer(input_text, return_tensors="pt").to(self.device)
 
             with torch.no_grad():
-                outputs = self.model.generate(**inputs, max_new_tokens=512, num_return_sequences=1)
+                outputs = self.model.generate(**inputs, max_new_tokens=self.max_tokens, num_return_sequences=1)
             
             generated_text = self.tokenizer.decode(outputs[0], skip_special_tokens=True)
             return generated_text.strip()

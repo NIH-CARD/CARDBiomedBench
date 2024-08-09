@@ -4,9 +4,10 @@ from dotenv import load_dotenv
 import anthropic
 
 class ClaudeQuery:
-    def __init__(self, system_prompt, model_name):
+    def __init__(self, system_prompt, model_name, max_tokens):
         self.system_prompt = system_prompt
         self.model_name = model_name
+        self.max_tokens = max_tokens
         self.model = self.initialize_claude_model()
 
     @staticmethod
@@ -41,7 +42,7 @@ class ClaudeQuery:
         try:
             message = self.model.messages.create(
                 model=self.model_name,
-                max_tokens=1024,
+                max_tokens=self.max_tokens,
                 system=self.system_prompt,
                 messages=[
                     {"role": "user", "content": query},

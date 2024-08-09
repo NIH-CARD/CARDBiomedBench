@@ -5,9 +5,10 @@ from dotenv import load_dotenv
 import google.generativeai as genai
 
 class GeminiQuery:
-    def __init__(self, system_prompt, model_name):
+    def __init__(self, system_prompt, model_name, max_tokens):
         self.system_prompt = system_prompt
         self.model_name = model_name
+        self.max_tokens = max_tokens
         self.model = self.initialize_gemini_model()
 
     def initialize_gemini_model(self):
@@ -39,12 +40,15 @@ class GeminiQuery:
         Returns:
         - str: The response content from the API or an error message.
         """
-        time.sleep(10)
+        time.sleep(3)
         try:
             chat = self.model.start_chat(
                 history=[{"role": "user", "parts": [self.system_prompt]}]
             )
-            response = chat.send_message(query)
+            response = chat.send_message(
+                query, 
+                generation_config=genai.GenerationConfig(max_output_tokens=self.max_tokens)
+            )
             return response.text
         except Exception as e:
             error_message = f"Error in {self.model_name} response: {e}"

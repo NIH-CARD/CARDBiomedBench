@@ -4,17 +4,19 @@ system_prompt: "You are a highly knowledgeable and experienced expert in the hea
 
 models:
   gpt-4o:
-    use: false
+    use: true
   gemini-1.5-pro:
-    use: false
+    use: true
   claude-3.5-sonnet:
-    use: false
+    use: true
   perplexity-llama-3.1-sonar-large-128k-chat:
     use: true
   gemma-2-2b-it:
     use: false
 
 grading_model: gpt-4o
+
+max_new_tokens: 512
 
 metrics:
   LLMEVAL:

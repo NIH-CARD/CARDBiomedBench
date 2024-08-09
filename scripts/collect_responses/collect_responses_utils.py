@@ -3,7 +3,7 @@ import pandas as pd
 from tqdm import tqdm
 from typing import Callable
 from concurrent.futures import ThreadPoolExecutor, as_completed
-from scripts import SYSTEM_PROMPT, MODELS_DICT
+from scripts import SYSTEM_PROMPT, MODELS_DICT, MAX_NEW_TOKENS
 from .gpt4o_query import GPT4OQuery
 from .gemini_query import GeminiQuery
 from .claude_query import ClaudeQuery
@@ -15,15 +15,15 @@ def initialize_model(model: str):
     Initialize the model client and create an instance of the query class for the specified model.
     """
     if model == 'gpt-4o':
-        return GPT4OQuery(SYSTEM_PROMPT, 'gpt-4o')
+        return GPT4OQuery(SYSTEM_PROMPT, 'gpt-4o', max_tokens=MAX_NEW_TOKENS)
     elif model == 'gemini-1.5-pro':
-        return GeminiQuery(SYSTEM_PROMPT, 'gemini-1.5-pro')
+        return GeminiQuery(SYSTEM_PROMPT, 'gemini-1.5-pro', max_tokens=MAX_NEW_TOKENS)
     elif model =='claude-3.5-sonnet':
-        return ClaudeQuery(SYSTEM_PROMPT, 'claude-3-5-sonnet-20240620')
+        return ClaudeQuery(SYSTEM_PROMPT, 'claude-3-5-sonnet-20240620', max_tokens=MAX_NEW_TOKENS)
     elif model == 'perplexity-llama-3.1-sonar-large-128k-chat':
-        return PerplexityQuery(SYSTEM_PROMPT, 'llama-3.1-sonar-large-128k-chat')
+        return PerplexityQuery(SYSTEM_PROMPT, 'llama-3.1-sonar-large-128k-chat', max_tokens=MAX_NEW_TOKENS)
     elif model == 'gemma-2-2b-it':
-        return HuggingFaceQuery(SYSTEM_PROMPT, 'google/gemma-2-2b-it') 
+        return HuggingFaceQuery(SYSTEM_PROMPT, 'google/gemma-2-2b-it', max_tokens=MAX_NEW_TOKENS) 
     else:
         return None
 

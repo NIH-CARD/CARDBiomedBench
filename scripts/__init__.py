@@ -21,3 +21,6 @@ METRICS_DICT = {name: details for name, details in CONFIG.get('metrics', {}).ite
 # Set number of workers for any parallel tasks
 PARALLELISM_CONFIG = CONFIG.get('parallelism', {})
 NUM_WORKERS = PARALLELISM_CONFIG.get('workers') or os.cpu_count()
+
+# Set max new tokens for models
+MAX_NEW_TOKENS = CONFIG.get('max_new_tokens', 512)
