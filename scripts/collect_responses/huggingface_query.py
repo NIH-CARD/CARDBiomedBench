@@ -65,7 +65,7 @@ class HuggingFaceQuery:
                 if hasattr(self, attr):
                     delattr(self, attr)
 
-            # Clear huggingface cache
+            # Clear huggingface models cache
             shutil.rmtree(TRANSFORMERS_CACHE)
             
             # Clear any remaining references
