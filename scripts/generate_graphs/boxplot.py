@@ -94,7 +94,7 @@ def plot_metric_boxplot(data: pd.DataFrame, metric: str, models: dict, title: st
     plt.yticks(list(plt.yticks()[0]) + [-1], fontsize=20)
     plt.xlabel("Model", fontsize=22, fontweight='bold')
     plt.ylabel(metric, fontsize=22, fontweight='bold')
-    plt.title(title, fontsize=24)
+    plt.title(f"{title} (n = {len(data)})", fontsize=24)
     
     if metric == "LLMEVAL":
         plt.ylim(-1.5, 3.0)

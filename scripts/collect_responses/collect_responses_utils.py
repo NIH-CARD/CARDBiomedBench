@@ -7,6 +7,7 @@ from scripts import SYSTEM_PROMPT, MODELS_DICT
 from .gpt4o_query import GPT4OQuery
 from .gemini_query import GeminiQuery
 from .claude_query import ClaudeQuery
+from .perplexity_query import PerplexityQuery
 from .huggingface_query import HuggingFaceQuery
 
 def initialize_model(model: str):
@@ -19,6 +20,8 @@ def initialize_model(model: str):
         return GeminiQuery(SYSTEM_PROMPT, 'gemini-1.5-pro')
     elif model =='claude-3.5-sonnet':
         return ClaudeQuery(SYSTEM_PROMPT, 'claude-3-5-sonnet-20240620')
+    elif model == 'perplexity-llama-3.1-sonar-large-128k-chat':
+        return PerplexityQuery(SYSTEM_PROMPT, 'llama-3.1-sonar-large-128k-chat')
     elif model == 'gemma-2-2b-it':
         return HuggingFaceQuery(SYSTEM_PROMPT, 'google/gemma-2-2b-it') 
     else:

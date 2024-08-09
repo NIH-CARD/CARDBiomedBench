@@ -10,3 +10,4 @@ python-dotenv
 pytorch
 transformers
 anthropic
+requests
