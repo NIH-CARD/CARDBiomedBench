@@ -10,7 +10,6 @@ class GeminiQuery:
         self.model_name = model_name
         self.model = self.initialize_gemini_model()
 
-    @staticmethod
     def initialize_gemini_model(self):
         """
         Initialize the Gemini model.
