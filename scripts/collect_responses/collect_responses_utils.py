@@ -112,7 +112,7 @@ def collect_model_responses(model: str, query_instance: object, queries: list, q
 
     return responses
 
-def get_all_model_responses(data: pd.DataFrame, model_dict: dict, max_workers: int, local_res_dir: str, query_col: str='question', retries: int=3, initial_delay: int=2) -> pd.DataFrame:
+def get_all_model_responses(data: pd.DataFrame, model_dict: dict, max_workers: int, res_dir: str, query_col: str='question', retries: int=3, initial_delay: int=2) -> pd.DataFrame:
     """
     Get responses from multiple LLMs for each query in the dataset, save intermediate results after each model.
 
@@ -135,7 +135,7 @@ def get_all_model_responses(data: pd.DataFrame, model_dict: dict, max_workers: i
         data[f'{model}_response'] = responses
         delete_model(model)
 
-        save_dataset(f'{local_res_dir}/{model}_responses.csv', data)
+        save_dataset(f'{res_dir}/{model}_responses.csv', data)
         data.drop(columns=[f'{model}_response'], inplace=True)
 
     return data

@@ -1,7 +1,7 @@
 import os
 import pandas as pd
 
-def merge_model_responses(local_res_dir: str, output_csv: str, merge_on: str='uuid', question_col: str='question', answer_col: str='answer') -> pd.DataFrame:
+def merge_model_responses(res_dir: str, output_csv: str, merge_on: str='uuid', question_col: str='question', answer_col: str='answer') -> pd.DataFrame:
     """
     Merge all individual model response CSV files in a directory into a single DataFrame, merging on a specific column.
     The question and answer columns are included only once in the final DataFrame.
@@ -18,14 +18,14 @@ def merge_model_responses(local_res_dir: str, output_csv: str, merge_on: str='uu
     """
 
     # List all CSV files in the directory
-    csv_files = [f for f in os.listdir(local_res_dir) if f.endswith('_responses.csv')]
+    csv_files = [f for f in os.listdir(res_dir) if f.endswith('_responses.csv')]
     
     # Initialize an empty DataFrame
     merged_df = pd.DataFrame()
 
     # Iterate over all the CSV files and merge them
     for i, csv_file in enumerate(csv_files):
-        file_path = os.path.join(local_res_dir, csv_file)
+        file_path = os.path.join(res_dir, csv_file)
         model_df = pd.read_csv(file_path)
 
         if i == 0:

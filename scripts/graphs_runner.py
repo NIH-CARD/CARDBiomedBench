@@ -6,16 +6,16 @@ from scripts.generate_graphs.generate_graphs_utils import merge_model_responses
 
 def main():
     parser = argparse.ArgumentParser(description="Create graphs and tables on the benchmark results.")
-    parser.add_argument('--local_res_dir', type=str, required=True, help='Directory to the local res CSV files')
-    parser.add_argument('--local_scored_path', type=str, required=True, help='Path to the compiled results file')
+    parser.add_argument('--res_dir', type=str, required=True, help='Directory to the res CSV files')
+    parser.add_argument('--scored_path', type=str, required=True, help='Path to the compiled results file')
     args = parser.parse_args()
 
-    local_res_dir = args.local_res_dir
-    local_scored_path = args.local_scored_path
+    res_dir = args.res_dir
+    scored_path = args.scored_path
 
-    merge_model_responses(local_res_dir, local_scored_path)
+    merge_model_responses(res_dir, scored_path)
     
-    data = load_dataset(local_scored_path)
+    data = load_dataset(scored_path)
     if data.empty:
         print("No data to process. Exiting.")
         return
