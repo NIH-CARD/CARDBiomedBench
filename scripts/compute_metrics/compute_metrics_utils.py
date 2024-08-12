@@ -1,6 +1,7 @@
 import pandas as pd
 import re
 from .prompts import biomedical_grading_prompt
+from scripts.scripts_utils import load_dataset, save_dataset
 from scripts.collect_responses.collect_responses_utils import collect_model_responses, initialize_model
 
 def check_LLMEVAL_response(response: str) -> tuple:
@@ -20,7 +21,7 @@ def check_LLMEVAL_response(response: str) -> tuple:
             return number, True
     return None, False
 
-def get_all_model_LLMEVAL(data: pd.DataFrame, grading_model: str, model_dict: dict, max_workers: int, query_col: str='question', gold_col: str='answer', response_col: str='response', retries: int=3, initial_delay: int=1) -> pd.DataFrame:
+def get_all_model_LLMEVAL(local_res_dir: str, grading_model: str, model_dict: dict, max_workers: int, query_col: str='question', gold_col: str='answer', response_col: str='response', retries: int=3, initial_delay: int=1) -> pd.DataFrame:
     """
     Grade responses from multiple LLMs with a specific prompt & GPT-4o for each query in the dataset, with retry on failure.
 
@@ -36,17 +37,16 @@ def get_all_model_LLMEVAL(data: pd.DataFrame, grading_model: str, model_dict: di
     Returns:
     - pd.DataFrame: The DataFrame with added or updated response columns for each model.
     """
-    for model in model_dict:
-        data[f'{model}_LLMEVAL'] = 0.0
 
     for model in model_dict:
+        data = load_dataset(f'{local_res_dir}/{model}_responses.csv')
+        data[f'{model}_LLMEVAL'] = 0.0
         grading_prompts = [
             biomedical_grading_prompt(row[query_col], row[gold_col], row[f'{model}_{response_col}'])
             for _, row in data.iterrows()
         ]
         query_instance = initialize_model(grading_model)
-        responses = collect_model_responses(grading_model, query_instance, grading_prompts, check_LLMEVAL_response, model_dict, max_workers, retries, initial_delay)
+        responses = collect_model_responses(grading_model, query_instance, grading_prompts, check_LLMEVAL_response, max_workers, retries, initial_delay)
         query_instance.delete()
         data[f'{model}_LLMEVAL'] = responses
-
-    return data
+        save_dataset(f'{local_res_dir}/{model}_responses.csv', data)

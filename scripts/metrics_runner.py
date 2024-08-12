@@ -1,27 +1,17 @@
 import argparse
 from scripts import MODELS_DICT, METRICS_DICT, NUM_WORKERS, GRADING_MODEL
-from scripts.scripts_utils import load_dataset, save_dataset
 from scripts.compute_metrics.compute_metrics_utils import get_all_model_LLMEVAL
 
 def main():
     parser = argparse.ArgumentParser(description="Grade responses on the QA benchmark.")
-    parser.add_argument('--local_res_path', type=str, required=True, help='Local path to the results CSV file')
-    parser.add_argument('--local_scored_path', type=str, required=True, help='Local path to the scored CSV file')
+    parser.add_argument('--local_res_dir', type=str, required=True, help='Directory to the local res CSV files')
     args = parser.parse_args()
 
-    local_res_path = args.local_res_path
-    local_scored_path = args.local_scored_path
-
-    data = load_dataset(local_res_path)
-    if data.empty:
-        print("No data to process. Exiting.")
-        return
+    local_res_dir = args.local_res_dir
 
     if "LLMEVAL" in METRICS_DICT:
-        data = get_all_model_LLMEVAL(data, grading_model=GRADING_MODEL, model_dict=MODELS_DICT, max_workers=NUM_WORKERS)
+        get_all_model_LLMEVAL(local_res_dir, grading_model=GRADING_MODEL, model_dict=MODELS_DICT, max_workers=NUM_WORKERS)
 
-    save_dataset(local_scored_path, data)
-    print(f"Responses scored and saved to {local_scored_path}.")
 
 if __name__ == "__main__":
     main()

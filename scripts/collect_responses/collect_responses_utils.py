@@ -4,6 +4,7 @@ from tqdm import tqdm
 from typing import Callable
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from scripts import SYSTEM_PROMPT, MODELS_DICT, MAX_NEW_TOKENS
+from scripts.scripts_utils import save_dataset
 from .gpt_query import GPTQuery
 from .gemini_query import GeminiQuery
 from .claude_query import ClaudeQuery
@@ -83,7 +84,7 @@ def query_model_retries(query: str, query_instance: object, query_checker: Calla
             delay *= 2
     return f"ERROR: Failed getting response for {query} after {retries} retries. Error: {response}"
 
-def collect_model_responses(model: str, query_instance: object, queries: list, query_checker: Callable[[str], bool], model_dict: dict, max_workers: int, retries: int, initial_delay: int) -> list:
+def collect_model_responses(model: str, query_instance: object, queries: list, query_checker: Callable[[str], bool], max_workers: int, retries: int, initial_delay: int) -> list:
     """
     Collect responses from a specific model for a list of queries in parallel.
 
@@ -111,13 +112,14 @@ def collect_model_responses(model: str, query_instance: object, queries: list, q
 
     return responses
 
-def get_all_model_responses(data: pd.DataFrame, model_dict: dict, max_workers: int, query_col: str='question', retries: int=3, initial_delay: int=2) -> pd.DataFrame:
+def get_all_model_responses(data: pd.DataFrame, model_dict: dict, max_workers: int, local_res_dir: str, query_col: str='question', retries: int=3, initial_delay: int=2) -> pd.DataFrame:
     """
-    Get responses from multiple LLMs for each query in the dataset, with retry on failure.
+    Get responses from multiple LLMs for each query in the dataset, save intermediate results after each model.
 
     Parameters:
     - data (pd.DataFrame): The DataFrame containing queries.
     - model_dict (dict): Dictionary containing model instances.
+    - local_res_dir (str): Directory to save intermediate results.
     - query_col (str): The column name containing the queries.
     - retries (int): Number of retries for each API call in case of failure.
     - max_workers (int): Maximum number of threads to use for parallel processing.
@@ -125,12 +127,15 @@ def get_all_model_responses(data: pd.DataFrame, model_dict: dict, max_workers: i
     Returns:
     - pd.DataFrame: The DataFrame with added or updated response columns for each model.
     """
+    
     for model in model_dict:
         data[f'{model}_response'] = ''
-    for model in model_dict:
         MODELS_DICT[model]['query_instance'] = initialize_model(model)
-        responses = collect_model_responses(model, MODELS_DICT[model]['query_instance'], data[query_col].tolist(), check_model_response, model_dict, max_workers, retries, initial_delay)
+        responses = collect_model_responses(model, MODELS_DICT[model]['query_instance'], data[query_col].tolist(), check_model_response, max_workers, retries, initial_delay)
         data[f'{model}_response'] = responses
         delete_model(model)
+
+        save_dataset(f'{local_res_dir}/{model}_responses.csv', data)
+        data.drop(columns=[f'{model}_response'], inplace=True)
 
     return data

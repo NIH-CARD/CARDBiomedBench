@@ -39,7 +39,7 @@ def load_dataset(filepath: str) -> pd.DataFrame:
         print(f"Error loading dataset: {e}")
         return pd.DataFrame()
 
-def save_dataset(filepath: str, responses: pd.DataFrame):
+def save_dataset(filepath: str, data: pd.DataFrame):
     """
     Save responses to a CSV file using pandas.
 
@@ -48,6 +48,6 @@ def save_dataset(filepath: str, responses: pd.DataFrame):
     - responses (pd.DataFrame): DataFrame containing the responses.
     """
     try:
-        responses.to_csv(filepath, index=False)
+        data.to_csv(filepath, index=False)
     except Exception as e:
         print(f"Error saving responses: {e}")
