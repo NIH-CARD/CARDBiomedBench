@@ -7,7 +7,7 @@ def merge_model_responses(res_dir: str, output_csv: str, merge_on: str='uuid', q
     The question and answer columns are included only once in the final DataFrame.
 
     Parameters:
-    - local_res_dir (str): Directory containing the saved response CSVs.
+    - res_dir (str): Directory containing the saved response CSVs.
     - output_csv (str): The file path to save the merged CSV.
     - merge_on (str): The column name to merge on (default is 'uuid').
     - question_col (str): The column name for the question (default is 'question').
