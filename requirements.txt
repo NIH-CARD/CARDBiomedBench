@@ -11,3 +11,5 @@ pytorch
 transformers
 anthropic
 requests
+grpcio
+accelerate

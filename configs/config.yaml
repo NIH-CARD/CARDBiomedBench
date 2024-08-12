@@ -10,14 +10,18 @@ cache_directory: ../.cache/huggingface
 
 models:
   gpt-4o:
-    use: true
+    use: false
   gemini-1.5-pro:
-    use: true
+    use: false
   claude-3.5-sonnet:
-    use: true
+    use: false
   perplexity-llama-3.1-sonar-large-128k-chat:
-    use: true
+    use: false
   gemma-2-2b-it:
+    use: true
+  gemma-2-9b-it:
+    use: false
+  gemma-2-27b-it:
     use: false
 
 metrics:

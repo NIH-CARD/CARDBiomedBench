@@ -24,6 +24,10 @@ def initialize_model(model: str):
         return PerplexityQuery(SYSTEM_PROMPT, 'llama-3.1-sonar-large-128k-chat', max_tokens=MAX_NEW_TOKENS)
     elif model == 'gemma-2-2b-it':
         return HuggingFaceQuery(SYSTEM_PROMPT, 'google/gemma-2-2b-it', max_tokens=MAX_NEW_TOKENS) 
+    elif model == 'gemma-2-9b-it':
+        return HuggingFaceQuery(SYSTEM_PROMPT, 'google/gemma-2-9b-it', max_tokens=MAX_NEW_TOKENS) 
+    elif model == 'gemma-2-27b-it':
+        return HuggingFaceQuery(SYSTEM_PROMPT, 'google/gemma-2-27b-it', max_tokens=MAX_NEW_TOKENS) 
     else:
         return None
 

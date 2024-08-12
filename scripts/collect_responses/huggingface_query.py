@@ -6,17 +6,22 @@ import os
 import gc
 
 class HuggingFaceQuery:
-    def __init__(self, system_prompt, model_name, max_tokens):
+    def __init__(self, system_prompt, model_name, max_tokens, torch_dtype=torch.float16):
         self.system_prompt = system_prompt
         self.model_name = model_name
         self.max_tokens = max_tokens
         self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+        self.torch_dtype = torch_dtype
         self.model, self.tokenizer = self._initialize_model_and_tokenizer()
 
     def _initialize_model_and_tokenizer(self):
         try:
             load_dotenv(os.path.join(os.path.dirname(__file__), '../../configs/.env'))
-            model = AutoModelForCausalLM.from_pretrained(self.model_name).to(self.device)
+            model = AutoModelForCausalLM.from_pretrained(
+                self.model_name,
+                torch_dtype=self.torch_dtype,
+                device_map="auto" if torch.cuda.is_available() else None
+            )
             tokenizer = AutoTokenizer.from_pretrained(self.model_name)
             return model, tokenizer
         except Exception as e:
@@ -31,7 +36,7 @@ class HuggingFaceQuery:
         - query (str): The input query string.
 
         Returns:
-        - str: The generated text or an error message.
+        - str: The generated text (response) or an error message.
         """
         try:
             if self.model is None or self.tokenizer is None:
@@ -41,10 +46,19 @@ class HuggingFaceQuery:
             inputs = self.tokenizer(input_text, return_tensors="pt").to(self.device)
 
             with torch.no_grad():
-                outputs = self.model.generate(**inputs, max_new_tokens=self.max_tokens, num_return_sequences=1)
+                outputs = self.model.generate(
+                    **inputs,
+                    max_new_tokens=self.max_tokens,
+                    num_return_sequences=1,
+                    pad_token_id=self.tokenizer.eos_token_id
+                )
             
             generated_text = self.tokenizer.decode(outputs[0], skip_special_tokens=True)
-            return generated_text.strip()
+
+            # Remove the input text from the generated text
+            response_text = generated_text[len(input_text):].strip()
+
+            return response_text
         except Exception as e:
             error_message = f"Error in {self.model_name} response: {e}"
             return error_message
@@ -71,7 +85,7 @@ class HuggingFaceQuery:
                 del self.tokenizer
 
             # Explicitly delete other attributes if necessary
-            for attr in ['system_prompt', 'model_name', 'device']:
+            for attr in ['system_prompt', 'model_name', 'device', 'torch_dtype']:
                 if hasattr(self, attr):
                     delattr(self, attr)
 
