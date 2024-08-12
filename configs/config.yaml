@@ -2,6 +2,12 @@ benchmark_filename: CARDBench.csv
 
 system_prompt: "You are a highly knowledgeable and experienced expert in the healthcare and biomedical field, possessing extensive medical knowledge and practical expertise."
 
+max_new_tokens: 512
+
+grading_model: gpt-4o
+
+cache_directory: ../.cache/huggingface
+
 models:
   gpt-4o:
     use: true
@@ -13,10 +19,6 @@ models:
     use: true
   gemma-2-2b-it:
     use: false
-
-grading_model: gpt-4o
-
-max_new_tokens: 512
 
 metrics:
   LLMEVAL:

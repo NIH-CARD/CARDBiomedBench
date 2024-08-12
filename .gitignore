@@ -2,6 +2,7 @@
 results/*
 test.py
 slurm*
+.cache
 
 # Byte-compiled / optimized / DLL files
 __pycache__

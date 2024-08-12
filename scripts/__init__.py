@@ -24,3 +24,7 @@ NUM_WORKERS = PARALLELISM_CONFIG.get('workers') or os.cpu_count()
 
 # Set max new tokens for models
 MAX_NEW_TOKENS = CONFIG.get('max_new_tokens', 512)
+
+# Set the local .cache directory for huggingface models
+HF_HOME = CONFIG['cache_directory']
+os.environ['HF_HOME'] = os.path.abspath(os.path.join(os.path.dirname(__file__), '../.cache/huggingface'))
