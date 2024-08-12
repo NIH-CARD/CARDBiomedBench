@@ -23,6 +23,5 @@ def main():
     if "LLMEVAL" in METRICS_DICT:
         plot_metric_boxplot(data, "LLMEVAL", MODELS_DICT, "CARDBench LLMEVAL", "results/")
 
-
 if __name__ == "__main__":
     main()
