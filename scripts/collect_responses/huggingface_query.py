@@ -49,6 +49,15 @@ class HuggingFaceQuery:
             error_message = f"Error in {self.model_name} response: {e}"
             return error_message
 
+    def is_on_gpu(self):
+        """
+        Check if the model and inputs are on the GPU.
+
+        Returns:
+        - bool: True if the model is on GPU, otherwise False.
+        """
+        return next(self.model.parameters()).is_cuda
+
     def delete(self):
         """
         Delete the model and tokenizer to free up memory.
