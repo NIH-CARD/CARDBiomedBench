@@ -1,4 +1,5 @@
 from transformers import AutoModelForCausalLM, AutoTokenizer, TRANSFORMERS_CACHE
+from accelerate import Accelerator
 from dotenv import load_dotenv
 import shutil
 import torch
@@ -10,8 +11,8 @@ class HuggingFaceQuery:
         self.system_prompt = system_prompt
         self.model_name = model_name
         self.max_tokens = max_tokens
-        self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
         self.torch_dtype = torch_dtype
+        self.accelerator = Accelerator()
         self.model, self.tokenizer = self._initialize_model_and_tokenizer()
 
     def _initialize_model_and_tokenizer(self):
@@ -19,10 +20,12 @@ class HuggingFaceQuery:
             load_dotenv(os.path.join(os.path.dirname(__file__), '../../configs/.env'))
             model = AutoModelForCausalLM.from_pretrained(
                 self.model_name,
-                torch_dtype=self.torch_dtype,
-                device_map="auto" if torch.cuda.is_available() else None
+                torch_dtype=self.torch_dtype
             )
             tokenizer = AutoTokenizer.from_pretrained(self.model_name)
+            
+            # Prepare the model for distributed training
+            model = self.accelerator.prepare(model)
             return model, tokenizer
         except Exception as e:
             print(f"Error initializing model and tokenizer for {self.model_name}: {e}")
@@ -43,10 +46,10 @@ class HuggingFaceQuery:
                 return "Model or tokenizer not initialized."
             
             input_text = self.system_prompt + query
-            inputs = self.tokenizer(input_text, return_tensors="pt").to(self.device)
+            inputs = self.tokenizer(input_text, return_tensors="pt").to(self.accelerator.device)
 
             with torch.no_grad():
-                outputs = self.model.generate(
+                outputs = self.accelerator.unwrap_model(self.model).generate(
                     **inputs,
                     max_new_tokens=self.max_tokens,
                     num_return_sequences=1,
@@ -85,7 +88,7 @@ class HuggingFaceQuery:
                 del self.tokenizer
 
             # Explicitly delete other attributes if necessary
-            for attr in ['system_prompt', 'model_name', 'device', 'torch_dtype']:
+            for attr in ['system_prompt', 'model_name', 'accelerator', 'torch_dtype']:
                 if hasattr(self, attr):
                     delattr(self, attr)
 
