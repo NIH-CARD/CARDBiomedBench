@@ -6,7 +6,7 @@ import os
 import gc
 
 class HuggingFaceQuery:
-    def __init__(self, system_prompt, model_name, max_tokens, torch_dtype=torch.float16):
+    def __init__(self, system_prompt, model_name, max_tokens, torch_dtype=torch.bfloat16):
         self.system_prompt = system_prompt
         self.model_name = model_name
         self.max_tokens = max_tokens
@@ -52,7 +52,7 @@ class HuggingFaceQuery:
                     num_return_sequences=1,
                     pad_token_id=self.tokenizer.eos_token_id
                 )
-            
+            print(outputs[0])
             generated_text = self.tokenizer.decode(outputs[0], skip_special_tokens=True)
 
             # Remove the input text from the generated text
