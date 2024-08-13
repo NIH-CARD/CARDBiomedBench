@@ -27,7 +27,6 @@ def merge_model_responses(res_dir: str, output_csv: str, merge_on: str='uuid', q
     for i, csv_file in enumerate(csv_files):
         file_path = os.path.join(res_dir, csv_file)
         model_df = pd.read_csv(file_path)
-
         if i == 0:
             # On the first merge, include all columns
             merged_df = model_df
@@ -39,5 +38,4 @@ def merge_model_responses(res_dir: str, output_csv: str, merge_on: str='uuid', q
     # Save the final merged DataFrame
     merged_df.to_csv(output_csv, index=False)
     print(f"All responses merged and saved to {output_csv}.")
-
     return merged_df
