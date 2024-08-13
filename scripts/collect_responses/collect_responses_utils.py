@@ -29,6 +29,12 @@ def initialize_model(model: str):
         return HuggingFaceQuery(SYSTEM_PROMPT, 'google/gemma-2-9b-it', max_tokens=MAX_NEW_TOKENS) 
     elif model == 'gemma-2-27b-it':
         return HuggingFaceQuery(SYSTEM_PROMPT, 'google/gemma-2-27b-it', max_tokens=MAX_NEW_TOKENS) 
+    elif model == 'llama-3.1-8b-it':
+        return HuggingFaceQuery(SYSTEM_PROMPT, 'meta-llama/Meta-Llama-3.1-8B-Instruct', max_tokens=MAX_NEW_TOKENS)
+    elif model == 'llama-3.1-70b-it':
+        return HuggingFaceQuery(SYSTEM_PROMPT, 'meta-llama/Meta-Llama-3.1-70B-Instruct', max_tokens=MAX_NEW_TOKENS)
+    elif model == 'llama-3.1-405b-it':
+        return HuggingFaceQuery(SYSTEM_PROMPT, 'meta-llama/Meta-Llama-3.1-405B-Instruct', max_tokens=MAX_NEW_TOKENS)
     else:
         return None
 

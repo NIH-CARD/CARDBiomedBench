@@ -18,10 +18,16 @@ models:
   perplexity-llama-3.1-sonar-large-128k-chat:
     use: false
   gemma-2-2b-it:
-    use: true
+    use: false
   gemma-2-9b-it:
     use: false
   gemma-2-27b-it:
+    use: false
+  llama-3.1-8b-it:
+    use: false
+  llama-3.1-70b-it:
+    use: false
+  llama-3.1-405b-it:
     use: false
 
 metrics:
