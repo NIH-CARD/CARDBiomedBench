@@ -52,7 +52,6 @@ class HuggingFaceQuery:
                     num_return_sequences=1,
                     pad_token_id=self.tokenizer.eos_token_id
                 )
-            print(outputs[0])
             generated_text = self.tokenizer.decode(outputs[0], skip_special_tokens=True)
 
             # Remove the input text from the generated text
