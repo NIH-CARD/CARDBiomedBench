@@ -1,7 +1,7 @@
 import os
 import pandas as pd
 
-def merge_model_responses(res_dir: str, output_csv: str, merge_on: str='uuid', question_col: str='question', answer_col: str='answer') -> pd.DataFrame:
+def merge_model_responses(res_dir: str, output_csv: str, merge_on: str='uuid', question_col: str='question', answer_col: str='answer', category_col: str='bio_category') -> pd.DataFrame:
     """
     Merge all individual model response CSV files in a directory into a single DataFrame, merging on a specific column.
     The question and answer columns are included only once in the final DataFrame.
@@ -32,7 +32,7 @@ def merge_model_responses(res_dir: str, output_csv: str, merge_on: str='uuid', q
             merged_df = model_df
         else:
             # On subsequent merges, drop the question and answer columns to avoid duplication
-            model_df = model_df.drop(columns=[question_col, answer_col])
+            model_df = model_df.drop(columns=[question_col, answer_col, category_col])
             merged_df = pd.merge(merged_df, model_df, on=merge_on, how='outer')
 
     # Save the final merged DataFrame

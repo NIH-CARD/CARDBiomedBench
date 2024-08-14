@@ -2,6 +2,7 @@ import argparse
 from scripts import MODELS_DICT, METRICS_DICT
 from scripts.scripts_utils import load_dataset
 from scripts.generate_graphs.boxplot import plot_metric_boxplot
+from scripts.generate_graphs.heatmap import plot_metric_heatmap, plot_idk_heatmap
 from scripts.generate_graphs.generate_graphs_utils import merge_model_responses
 
 def main():
@@ -22,6 +23,8 @@ def main():
     
     if "LLMEVAL" in METRICS_DICT:
         plot_metric_boxplot(data, "LLMEVAL", MODELS_DICT, "CARDBench LLMEVAL", "results/")
+        plot_metric_heatmap(data, "LLMEVAL", MODELS_DICT, "bio_category", "CARDBench LLMEVAL by Bio Category", "results/")
+        plot_idk_heatmap(data, "LLMEVAL", MODELS_DICT, "bio_category", "CARDBench IDK by Bio Category", "results/")
 
 if __name__ == "__main__":
     main()
