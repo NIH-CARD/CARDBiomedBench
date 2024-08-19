@@ -2,6 +2,8 @@ import pandas as pd
 import numpy as np
 import seaborn as sns
 import matplotlib.pyplot as plt
+from scripts.generate_graphs.wandb_logging import wandb_boxplot
+
 
 def plot_metric_boxplot(data: pd.DataFrame, metric: str, models: dict, title: str, save_path: str):
     """Create a box and whisker plot to visualize performance for a single metric."""
@@ -40,7 +42,6 @@ def plot_metric_boxplot(data: pd.DataFrame, metric: str, models: dict, title: st
         else:
             idk_counts[model] = 0  # Ensure every model has a count entry
             melted_data = pd.concat([melted_data, pd.DataFrame({metric: [np.nan], 'Model': model})], axis=0)
-    
     # Set the x-axis ticks and labels before plotting
     ax = plt.gca()
     ax.set_xticks(range(len(models)))
@@ -101,5 +102,10 @@ def plot_metric_boxplot(data: pd.DataFrame, metric: str, models: dict, title: st
         plt.yticks(np.arange(-1, 3.5, 0.5))
 
     plt.tight_layout()
+
+    # Also log to wandb
+    wandb_boxplot(data,plt)
+    
+    
     plt.savefig(f'{save_path}/{title}')
     plt.close()
