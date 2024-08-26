@@ -10,7 +10,7 @@ cache_directory: ../.cache/huggingface
 
 run_scripts:
   run_responses: false
-  run_metrics: false
+  run_metrics: true
   run_graphs: true
 
 models:
@@ -37,8 +37,8 @@ models:
 
 metrics:
   LLMEVAL:
-    use: true
-  BLEU_ROUGE:
+    use: false
+  BLEU_ROUGE_BERT:
     use: true
 
 parallelism:

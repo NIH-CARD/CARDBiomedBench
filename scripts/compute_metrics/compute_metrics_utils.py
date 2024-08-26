@@ -52,26 +52,26 @@ def get_all_model_LLMEVAL(res_dir: str, grading_model: str, model_dict: dict, ma
         data[f'{model}_LLMEVAL'] = responses
         save_dataset(f'{res_dir}/{model}_responses.csv', data)
 
-def get_all_model_BLEU_ROUGE(res_dir: str, model_dict: dict, gold_col: str='answer', response_col: str='response') -> None:
+def get_all_model_BLEU_ROUGE_BERT(res_dir: str, model_dict: dict, gold_col: str='answer', response_col: str='response') -> None:
     """
-    Compute BLEU and ROUGE scores for each model's responses and save the results back to CSV files.
+    Compute BLEU, ROUGE, BERT scores for each model's responses and save the results back to CSV files.
 
     Parameters:
     - res_dir (str): Directory containing the response CSV files for each model.
     - model_names (list[str]): List of model names to evaluate.
     - answer_col (str): The column name containing the reference answers.
     """
-    # Load BLEU and ROUGE evaluators once
+    # Load BLEU, ROUGE, and BERT evaluators once
     bleu = load('bleu')
     rouge = load('rouge')
+    bertscore = load("bertscore")
 
     for model in model_dict:
         # Load the dataset for the current model
         data = load_dataset(f'{res_dir}/{model}_responses.csv')
 
-        # Initialize columns for BLEU and ROUGE scores
-        data[f'{model}_BLEU'] = 0.0
-        for metric in ['ROUGE1', 'ROUGE2', 'ROUGEL']:
+        # Initialize columns for BLEU, ROUGE, and BERT scores
+        for metric in ['BLEU', 'ROUGE1', 'ROUGE2', 'ROUGEL', 'BERTprec', 'BERTrec', 'BERTf1']:
             data[f'{model}_{metric}'] = 0.0
 
         # Compute scores for each model response
@@ -87,6 +87,11 @@ def get_all_model_BLEU_ROUGE(res_dir: str, model_dict: dict, gold_col: str='answ
             rouge_score = rouge.compute(predictions=[model_response], references=[answer])
             for metric in ['rouge1', 'rouge2', 'rougeL']:
                 data.at[index, f'{model}_{metric.upper()}'] = rouge_score[metric]
+            
+            # Compute BERT scores
+            bertscore_result = bertscore.compute(predictions=[model_response], references=[answer], lang="en")
+            for metric in ['precision', 'recall', 'f1']:
+                data.at[index, f'{model}_BERT{metric}'] = bertscore_result[metric]
 
         # Save the updated dataset back to the CSV file
         save_dataset(f'{res_dir}/{model}_responses.csv', data)
