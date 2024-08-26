@@ -22,9 +22,9 @@ def main():
         return
     
     if "LLMEVAL" in METRICS_DICT:
-        plot_metric_boxplot(data, "LLMEVAL", MODELS_DICT, "CARDBench LLMEVAL", "results/")
-        plot_metric_heatmap(data, "LLMEVAL", MODELS_DICT, "bio_category", "CARDBench LLMEVAL by Bio Category", "results/")
-        plot_idk_heatmap(data, "LLMEVAL", MODELS_DICT, "bio_category", "CARDBench IDK by Bio Category", "results/")
+        plot_metric_boxplot(data, "LLMEVAL", MODELS_DICT, "CARDBioBench LLMEVAL", "results/")
+        plot_metric_heatmap(data, "LLMEVAL", MODELS_DICT, "bio_category", "CARDBioBench LLMEVAL by Bio Category", "results/")
+        plot_idk_heatmap(data, "LLMEVAL", MODELS_DICT, "bio_category", "CARDBioBench IDK by Bio Category", "results/")
 
 if __name__ == "__main__":
     main()
