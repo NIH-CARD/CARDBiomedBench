@@ -1,7 +1,7 @@
 import argparse
 from scripts import MODELS_DICT, METRICS_DICT
 from scripts.scripts_utils import load_dataset
-from scripts.generate_graphs.boxplot import plot_metric_boxplot
+from scripts.generate_graphs.boxplot import plot_llmeval_boxplot, plot_metric_boxplot
 from scripts.generate_graphs.heatmap import plot_metric_heatmap, plot_idk_heatmap
 from scripts.generate_graphs.generate_graphs_utils import merge_model_responses
 
@@ -22,9 +22,14 @@ def main():
         return
     
     if "LLMEVAL" in METRICS_DICT:
-        plot_metric_boxplot(data, "LLMEVAL", MODELS_DICT, "CARDBioBench LLMEVAL", "results/")
-        plot_metric_heatmap(data, "LLMEVAL", MODELS_DICT, "bio_category", "CARDBioBench LLMEVAL by Bio Category", "results/")
-        plot_idk_heatmap(data, "LLMEVAL", MODELS_DICT, "bio_category", "CARDBioBench IDK by Bio Category", "results/")
+        plot_llmeval_boxplot(data, MODELS_DICT, "CARDBioBench LLMEVAL Boxplot", "results/")
+        plot_metric_heatmap(data, "LLMEVAL", MODELS_DICT, "bio_category", "CARDBioBench LLMEVAL Bio Heatmap", "results/")
+        plot_idk_heatmap(data, "LLMEVAL", MODELS_DICT, "bio_category", "CARDBioBench IDK Bio Heatmap", "results/")
+    if "BLEU_ROUGE" in METRICS_DICT:
+        plot_metric_boxplot(data, "bleu", MODELS_DICT, "CARDBioBench BLEU Boxplot", "results/")
+        plot_metric_boxplot(data, "rouge1", MODELS_DICT, "CARDBioBench ROUGE1 Boxplot", "results/")
+        plot_metric_boxplot(data, "rouge2", MODELS_DICT, "CARDBioBench ROUGE2 Boxplot", "results/")
+        plot_metric_boxplot(data, "rougeL", MODELS_DICT, "CARDBioBench ROUGEL Boxplot", "results/")
 
 if __name__ == "__main__":
     main()

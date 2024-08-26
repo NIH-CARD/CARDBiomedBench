@@ -13,3 +13,5 @@ anthropic
 requests
 grpcio
 accelerate
+evaluate
+rouge-score

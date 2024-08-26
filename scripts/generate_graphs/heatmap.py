@@ -112,5 +112,5 @@ def plot_idk_heatmap(data: pd.DataFrame, metric: str, models: dict, category: st
     plt.yticks(fontsize=14)
     
     plt.tight_layout()
-    plt.savefig(f'{save_path}/{title}_idk.png')
+    plt.savefig(f'{save_path}/{title}.png')
     plt.close()
