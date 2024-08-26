@@ -1,5 +1,6 @@
 import pandas as pd
 import re
+from evaluate import load
 from .prompts import biomedical_grading_prompt
 from scripts.scripts_utils import load_dataset, save_dataset
 from scripts.collect_responses.collect_responses_utils import collect_model_responses, initialize_model
@@ -49,4 +50,43 @@ def get_all_model_LLMEVAL(res_dir: str, grading_model: str, model_dict: dict, ma
         responses = collect_model_responses(grading_model, query_instance, grading_prompts, check_LLMEVAL_response, max_workers, retries, initial_delay)
         query_instance.delete()
         data[f'{model}_LLMEVAL'] = responses
+        save_dataset(f'{res_dir}/{model}_responses.csv', data)
+
+def get_all_model_BLEU_ROUGE(res_dir: str, model_dict: dict, gold_col: str='answer', response_col: str='response') -> None:
+    """
+    Compute BLEU and ROUGE scores for each model's responses and save the results back to CSV files.
+
+    Parameters:
+    - res_dir (str): Directory containing the response CSV files for each model.
+    - model_names (list[str]): List of model names to evaluate.
+    - answer_col (str): The column name containing the reference answers.
+    """
+    # Load BLEU and ROUGE evaluators once
+    bleu = load('bleu')
+    rouge = load('rouge')
+
+    for model in model_dict:
+        # Load the dataset for the current model
+        data = load_dataset(f'{res_dir}/{model}_responses.csv')
+
+        # Initialize columns for BLEU and ROUGE scores
+        data[f'{model}_bleu'] = 0.0
+        for metric in ['rouge1', 'rouge2', 'rougeL']:
+            data[f'{model}_{metric}'] = 0.0
+
+        # Compute scores for each model response
+        for index, row in data.iterrows():
+            answer = row[gold_col]
+            model_response = row[f'{model}_{response_col}']
+
+            # Compute BLEU score
+            bleu_score = bleu.compute(predictions=[model_response], references=[[answer]])
+            data.at[index, f'{model}_bleu'] = bleu_score['bleu']
+
+            # Compute ROUGE scores
+            rouge_score = rouge.compute(predictions=[model_response], references=[answer])
+            for metric in ['rouge1', 'rouge2', 'rougeL']:
+                data.at[index, f'{model}_{metric}'] = rouge_score[metric]
+
+        # Save the updated dataset back to the CSV file
         save_dataset(f'{res_dir}/{model}_responses.csv', data)

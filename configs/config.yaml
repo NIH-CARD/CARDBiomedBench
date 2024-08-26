@@ -1,4 +1,4 @@
-benchmark_filename: CARDBench.csv
+benchmark_filename: CARDBioBench.csv
 
 system_prompt: "You are a highly knowledgeable and experienced expert in the healthcare and biomedical field, possessing extensive medical knowledge and practical expertise."
 
@@ -15,7 +15,7 @@ run_scripts:
 
 models:
   gpt-4o:
-    use: false
+    use: true
   gemini-1.5-pro:
     use: false
   claude-3.5-sonnet:
@@ -37,6 +37,8 @@ models:
 
 metrics:
   LLMEVAL:
+    use: true
+  BLEU_ROUGE:
     use: true
 
 parallelism:
