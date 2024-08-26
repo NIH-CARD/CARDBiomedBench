@@ -59,7 +59,7 @@ def plot_llmeval_boxplot(data: pd.DataFrame, models: dict, title: str, save_path
         x='Model', 
         y=metric, 
         data=melted_data, 
-        jitter=.35, 
+        jitter=True, 
         size=8, 
         edgecolor='black', 
         color='white', 
@@ -68,26 +68,26 @@ def plot_llmeval_boxplot(data: pd.DataFrame, models: dict, title: str, save_path
         ax=ax
     )
     
-    sns.stripplot(
-        x='Model', 
-        y=metric, 
-        data=idk_data, 
-        jitter=.35, 
-        size=8, 
-        edgecolor='black', 
-        color='red', 
-        linewidth=1, 
-        alpha=0.7,
-        ax=ax
-    )
+    # sns.stripplot(
+    #     x='Model', 
+    #     y=metric, 
+    #     data=idk_data, 
+    #     jitter=True, 
+    #     size=8, 
+    #     edgecolor='black', 
+    #     color='red', 
+    #     linewidth=1, 
+    #     alpha=0.7,
+    #     ax=ax
+    # )
 
     for model in models:
         count = idk_counts.get(model, 0)
         model_index = list(models.keys()).index(model)
-        plt.text(model_index, -1.2, f'(IDK={count})', ha='center', va='center', fontsize=16, color='red')
+        plt.text(model_index, -0.35, f'(IDK={count})', ha='center', va='center', fontsize=16, color='red')
         
-    plt.ylim(-1.5, 3.0)
-    plt.yticks(np.arange(-1, 3.5, 0.5))
+    plt.ylim(-.1, 3.1)
+    plt.yticks(np.arange(0, 3.5, 0.5))
 
     plt.xlabel("Model", fontsize=22, fontweight='bold')
     plt.ylabel(metric, fontsize=22, fontweight='bold')
@@ -139,7 +139,7 @@ def plot_metric_boxplot(data: pd.DataFrame, metric: str, models: dict, title: st
         x='Model', 
         y=metric, 
         data=melted_data, 
-        jitter=.35, 
+        jitter=True, 
         size=8, 
         edgecolor='black', 
         color='white', 
@@ -148,7 +148,7 @@ def plot_metric_boxplot(data: pd.DataFrame, metric: str, models: dict, title: st
         ax=ax
     )
 
-    plt.ylim(-0.1, 1.1)
+    plt.ylim(-0.05, 1.05)
     plt.yticks(np.arange(0, 1.1, 0.1))
 
     plt.xlabel("Model", fontsize=22, fontweight='bold')

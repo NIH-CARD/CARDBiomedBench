@@ -70,8 +70,8 @@ def get_all_model_BLEU_ROUGE(res_dir: str, model_dict: dict, gold_col: str='answ
         data = load_dataset(f'{res_dir}/{model}_responses.csv')
 
         # Initialize columns for BLEU and ROUGE scores
-        data[f'{model}_bleu'] = 0.0
-        for metric in ['rouge1', 'rouge2', 'rougeL']:
+        data[f'{model}_BLEU'] = 0.0
+        for metric in ['ROUGE1', 'ROUGE2', 'ROUGEL']:
             data[f'{model}_{metric}'] = 0.0
 
         # Compute scores for each model response
@@ -81,12 +81,12 @@ def get_all_model_BLEU_ROUGE(res_dir: str, model_dict: dict, gold_col: str='answ
 
             # Compute BLEU score
             bleu_score = bleu.compute(predictions=[model_response], references=[[answer]])
-            data.at[index, f'{model}_bleu'] = bleu_score['bleu']
+            data.at[index, f'{model}_BLEU'] = bleu_score['bleu']
 
             # Compute ROUGE scores
             rouge_score = rouge.compute(predictions=[model_response], references=[answer])
             for metric in ['rouge1', 'rouge2', 'rougeL']:
-                data.at[index, f'{model}_{metric}'] = rouge_score[metric]
+                data.at[index, f'{model}_{metric.upper()}'] = rouge_score[metric]
 
         # Save the updated dataset back to the CSV file
         save_dataset(f'{res_dir}/{model}_responses.csv', data)

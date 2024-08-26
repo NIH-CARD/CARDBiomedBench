@@ -26,10 +26,10 @@ def main():
         plot_metric_heatmap(data, "LLMEVAL", MODELS_DICT, "bio_category", "CARDBioBench LLMEVAL Bio Heatmap", "results/")
         plot_idk_heatmap(data, "LLMEVAL", MODELS_DICT, "bio_category", "CARDBioBench IDK Bio Heatmap", "results/")
     if "BLEU_ROUGE" in METRICS_DICT:
-        plot_metric_boxplot(data, "bleu", MODELS_DICT, "CARDBioBench BLEU Boxplot", "results/")
-        plot_metric_boxplot(data, "rouge1", MODELS_DICT, "CARDBioBench ROUGE1 Boxplot", "results/")
-        plot_metric_boxplot(data, "rouge2", MODELS_DICT, "CARDBioBench ROUGE2 Boxplot", "results/")
-        plot_metric_boxplot(data, "rougeL", MODELS_DICT, "CARDBioBench ROUGEL Boxplot", "results/")
+        plot_metric_boxplot(data, "BLEU", MODELS_DICT, "CARDBioBench BLEU Boxplot", "results/")
+        plot_metric_boxplot(data, "ROUGE1", MODELS_DICT, "CARDBioBench ROUGE1 Boxplot", "results/")
+        plot_metric_boxplot(data, "ROUGE2", MODELS_DICT, "CARDBioBench ROUGE2 Boxplot", "results/")
+        plot_metric_boxplot(data, "ROUGEL", MODELS_DICT, "CARDBioBench ROUGEL Boxplot", "results/")
 
 if __name__ == "__main__":
     main()
