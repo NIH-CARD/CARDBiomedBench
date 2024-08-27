@@ -54,7 +54,7 @@ def get_all_model_LLMEVAL(res_dir: str, grading_model: str, model_dict: dict, ma
 
 def get_all_model_BLEU_ROUGE_BERT(res_dir: str, model_dict: dict, gold_col: str='answer', response_col: str='response') -> None:
     """
-    Compute BLEU, ROUGE, BERT scores for each model's responses and save the results back to CSV files.
+    Compute BLEU, ROUGE, BERTScore for each model's responses and save the results back to CSV files.
 
     Parameters:
     - res_dir (str): Directory containing the response CSV files for each model.
@@ -70,8 +70,8 @@ def get_all_model_BLEU_ROUGE_BERT(res_dir: str, model_dict: dict, gold_col: str=
         # Load the dataset for the current model
         data = load_dataset(f'{res_dir}/{model}_responses.csv')
 
-        # Initialize columns for BLEU, ROUGE, and BERT scores
-        for metric in ['BLEU', 'ROUGE1', 'ROUGE2', 'ROUGEL', 'BERTprecision', 'BERTrecall', 'BERTf1']:
+        # Initialize columns for BLEU, ROUGE, and BERTScore
+        for metric in ['BLEU', 'ROUGE1', 'ROUGE2', 'ROUGEL', 'BERTScore']:
             data[f'{model}_{metric}'] = 0.0
 
         # Compute scores for each model response
@@ -90,8 +90,7 @@ def get_all_model_BLEU_ROUGE_BERT(res_dir: str, model_dict: dict, gold_col: str=
             
             # Compute BERT scores
             bertscore_result = bertscore.compute(predictions=[model_response], references=[answer], lang="en")
-            for metric in ['precision', 'recall', 'f1']:
-                data.at[index, f'{model}_BERT{metric}'] = bertscore_result[metric]
+            data.at[index, f'{model}_BERTScore'] = bertscore_result['f1']
 
         # Save the updated dataset back to the CSV file
         save_dataset(f'{res_dir}/{model}_responses.csv', data)

@@ -29,11 +29,10 @@ def main():
         plot_idk_heatmap(data, "LLMEVAL", MODELS_DICT, "bio_category", "CARDBioBench IDK Bio Heatmap", "results/")
         metrics_list += ["LLMEVAL"]
     if "BLEU_ROUGE_BERT" in METRICS_DICT:
-        BRB_list = ['BLEU', 'ROUGE1', 'ROUGE2', 'ROUGEL', 'BERTprecision', 'BERTrecall', 'BERTf1']
-        for metric in BRB_list:
+        nlp_metrics = ['BLEU', 'ROUGE1', 'ROUGE2', 'ROUGEL', 'BERTScore']
+        for metric in nlp_metrics:
             plot_metric_boxplot(data, metric, MODELS_DICT, f"CARDBioBench {metric} Boxplot", "results/")
-        metrics_list += BRB_list
-    metrics_list = ["LLMEVAL", "BLEU", "ROUGEL", "BERTf1"] # TODO Delete??
+        metrics_list += nlp_metrics
     performance_table = create_performance_table(data, metrics_list, MODELS_DICT)
     style_dataframe(performance_table, "CARDBioBench All Metrics", "results/")
 

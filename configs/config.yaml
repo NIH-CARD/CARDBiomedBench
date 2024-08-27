@@ -10,18 +10,18 @@ cache_directory: ../.cache/huggingface
 
 run_scripts:
   run_responses: false
-  run_metrics: true
+  run_metrics: false
   run_graphs: true
 
 models:
   gpt-4o:
     use: true
   gemini-1.5-pro:
-    use: false
+    use: true
   claude-3.5-sonnet:
-    use: false
+    use: true
   perplexity-llama-3.1-sonar-large-128k-chat:
-    use: false
+    use: true
   gemma-2-2b-it:
     use: true
   gemma-2-9b-it:
@@ -36,8 +36,8 @@ models:
     use: false
 
 metrics:
-  LLMEVAL:
-    use: false
+  BioScore:
+    use: true
   BLEU_ROUGE_BERT:
     use: true
 
