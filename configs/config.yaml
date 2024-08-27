@@ -1,6 +1,6 @@
 benchmark_filename: CARDBioBench.csv
 
-system_prompt: "You are a highly knowledgeable and experienced expert in the healthcare and biomedical field, possessing extensive medical knowledge and practical expertise."
+system_prompt: "You are a highly knowledgeable and experienced expert in the healthcare and biomedical field, possessing extensive medical knowledge and practical expertise. If you do not know the answer to a question, explicitly state that you do not know."
 
 max_new_tokens: 512
 
@@ -9,9 +9,9 @@ grading_model: gpt-4o
 cache_directory: ../.cache/huggingface
 
 run_scripts:
-  run_responses: false
+  run_responses: true
   run_metrics: false
-  run_graphs: true
+  run_graphs: false
 
 models:
   gpt-4o:
@@ -23,20 +23,20 @@ models:
   perplexity-llama-3.1-sonar-large-128k-chat:
     use: true
   gemma-2-2b-it:
-    use: true
+    use: false
   gemma-2-9b-it:
-    use: true
+    use: false
   gemma-2-27b-it:
-    use: true
+    use: false
   llama-3.1-8b-it:
-    use: true
+    use: false
   llama-3.1-70b-it:
-    use: true
+    use: false
   llama-3.1-405b-it:
     use: false
 
 metrics:
-  BioScore:
+  LLMEVAL:
     use: true
   BLEU_ROUGE_BERT:
     use: true

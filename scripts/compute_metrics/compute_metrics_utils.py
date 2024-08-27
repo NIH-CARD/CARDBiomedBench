@@ -49,7 +49,7 @@ def get_all_model_LLMEVAL(res_dir: str, grading_model: str, model_dict: dict, ma
         query_instance = initialize_model(grading_model)
         responses = collect_model_responses(grading_model, query_instance, grading_prompts, check_LLMEVAL_response, max_workers, retries, initial_delay)
         query_instance.delete()
-        data[f'{model}_LLMEVAL'] = responses
+        data[f'{model}_LLMEVAL'] = responses / 3.0
         save_dataset(f'{res_dir}/{model}_responses.csv', data)
 
 def get_all_model_BLEU_ROUGE_BERT(res_dir: str, model_dict: dict, gold_col: str='answer', response_col: str='response') -> None:
