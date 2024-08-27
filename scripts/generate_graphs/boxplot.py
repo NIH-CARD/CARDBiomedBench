@@ -67,24 +67,12 @@ def plot_llmeval_boxplot(data: pd.DataFrame, models: dict, title: str, save_path
         alpha=0.3,
         ax=ax
     )
-    
-    # sns.stripplot(
-    #     x='Model', 
-    #     y=metric, 
-    #     data=idk_data, 
-    #     jitter=True, 
-    #     size=8, 
-    #     edgecolor='black', 
-    #     color='red', 
-    #     linewidth=1, 
-    #     alpha=0.7,
-    #     ax=ax
-    # )
 
     for model in models:
         count = idk_counts.get(model, 0)
         model_index = list(models.keys()).index(model)
-        plt.text(model_index, -0.35, f'(IDK={count})', ha='center', va='center', fontsize=16, color='red')
+        percent = (count / len(data)) * 100
+        plt.text(model_index, -0.35, f'({percent:.2f}%)', ha='center', va='center', fontsize=16, color='red')
         
     plt.ylim(-.1, 3.1)
     plt.yticks(np.arange(0, 3.5, 0.5))
