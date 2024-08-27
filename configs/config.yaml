@@ -20,7 +20,7 @@ models:
     use: true
   claude-3.5-sonnet:
     use: true
-  perplexity-llama-3.1-sonar-large-128k-chat:
+  perplexity-sonar-huge:
     use: true
   gemma-2-2b-it:
     use: false

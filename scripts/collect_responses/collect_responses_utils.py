@@ -21,8 +21,8 @@ def initialize_model(model: str):
         return GeminiQuery(SYSTEM_PROMPT, 'gemini-1.5-pro', max_tokens=MAX_NEW_TOKENS)
     elif model =='claude-3.5-sonnet':
         return ClaudeQuery(SYSTEM_PROMPT, 'claude-3-5-sonnet-20240620', max_tokens=MAX_NEW_TOKENS)
-    elif model == 'perplexity-llama-3.1-sonar-large-128k-chat':
-        return PerplexityQuery(SYSTEM_PROMPT, 'llama-3.1-sonar-large-128k-chat', max_tokens=MAX_NEW_TOKENS)
+    elif model == 'perplexity-sonar-huge':
+        return PerplexityQuery(SYSTEM_PROMPT, 'llama-3.1-sonar-huge-128k-online', max_tokens=MAX_NEW_TOKENS)
     elif model == 'gemma-2-2b-it':
         return HuggingFaceQuery(SYSTEM_PROMPT, 'google/gemma-2-2b-it', max_tokens=MAX_NEW_TOKENS) 
     elif model == 'gemma-2-9b-it':
