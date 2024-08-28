@@ -14,7 +14,6 @@ def plot_BioScore_boxplot(data: pd.DataFrame, models: dict, title: str, save_pat
     plt.axhline(y=0, color='k', linestyle=':', linewidth=2)
 
     melted_data = pd.DataFrame()
-    idk_data = pd.DataFrame()
     idk_counts = {}
 
     for model in models:
@@ -26,10 +25,6 @@ def plot_BioScore_boxplot(data: pd.DataFrame, models: dict, title: str, save_pat
             
             idk_count = (model_data[metric] == -1).sum()
             idk_counts[model] = idk_count
-                
-            # Separate -1 values for the strip plot
-            idk_model_data = model_data[model_data[metric] == -1]
-            idk_data = pd.concat([idk_data, idk_model_data], axis=0)
                 
             # Exclude -1 values for the box plot
             model_data = model_data[model_data[metric] != -1]
@@ -55,6 +50,7 @@ def plot_BioScore_boxplot(data: pd.DataFrame, models: dict, title: str, save_pat
         legend=False
     )
     
+    # Plot the stripplot for the BioScore metric
     sns.stripplot(
         x='Model', 
         y=metric, 
@@ -126,6 +122,7 @@ def plot_metric_boxplot(data: pd.DataFrame, metric: str, models: dict, title: st
         legend=False
     )
     
+    # Plot the stripplot for the given metric
     sns.stripplot(
         x='Model', 
         y=metric, 
