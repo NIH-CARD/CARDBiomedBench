@@ -24,7 +24,7 @@ def main():
     
     metrics_list = []
     if "BioScore" in METRICS_DICT:
-        plot_BioScore_boxplot(data, MODELS_DICT, "BioScore Boxplot", "results/")
+        plot_BioScore_boxplot(data, "BioScore", MODELS_DICT, "BioScore Boxplot", "results/")
         plot_metric_heatmap(data, "BioScore", MODELS_DICT, "bio_category", "BioScore Bio Heatmap", "results/")
         plot_idk_heatmap(data, "BioScore", MODELS_DICT, "bio_category", "IDK Bio Heatmap", "results/")
         metrics_list += ["BioScore"]
