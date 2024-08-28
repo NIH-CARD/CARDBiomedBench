@@ -5,6 +5,7 @@ from scripts.generate_graphs.boxplot import plot_metric_boxplot
 from scripts.generate_graphs.heatmap import plot_metric_heatmap, plot_idk_heatmap
 from scripts.generate_graphs.table import create_performance_table, style_dataframe
 from scripts.generate_graphs.pie import plot_category_pie_chart
+from scripts.generate_graphs.histogram import plot_token_histograms
 from scripts.generate_graphs.generate_graphs_utils import merge_model_responses
 
 def main():
@@ -24,7 +25,9 @@ def main():
         return
     
     # Dataset distribution visualizations
-    plot_category_pie_chart(data, "bio_category", "Bio Category Pie", "results/")
+    plot_category_pie_chart(data, category="bio_category", title="Bio Category Pie", save_path="results/")
+    plot_token_histograms(data, text_col="question", color='dodgerblue', title="Question", save_path="results/")
+    plot_token_histograms(data, text_col="answer", color='deeppink', title="Answer", save_path="results/")
 
     # Metric visualizations
     metrics_list = []
