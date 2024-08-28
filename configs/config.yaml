@@ -36,7 +36,7 @@ models:
     use: false
 
 metrics:
-  LLMEVAL:
+  BioScore:
     use: true
   BLEU_ROUGE_BERT:
     use: true

@@ -5,12 +5,12 @@ from .prompts import biomedical_grading_prompt
 from scripts.scripts_utils import load_dataset, save_dataset
 from scripts.collect_responses.collect_responses_utils import collect_model_responses, initialize_model
 
-def check_LLMEVAL_response(response: str) -> tuple:
+def check_BioScore_response(response: str) -> tuple:
     """
-    Check the LLMEVAL evaluation response for a valid score.
+    Check the BioScore evaluation response for a valid score.
 
     Parameters:
-    - response (str): The response from LLMEVAL evaluation.
+    - response (str): The response from BioScore evaluation.
 
     Returns:
     - float: The valid score extracted from the response, or None if no valid score is found.
@@ -18,11 +18,13 @@ def check_LLMEVAL_response(response: str) -> tuple:
     match = re.search(r"[-+]?[0-9]*\.?[0-9]+", response)
     if match:
         number = float(match.group(0))
-        if number in [-1.0, 0.0, 0.5, 1.0, 1.5, 2.0, 2.5, 3.0]:
+        if number in [0.0, 0.5, 1.0, 1.5, 2.0, 2.5, 3.0]:
+            return number / 3.0, True
+        if number == -1:
             return number, True
     return None, False
 
-def get_all_model_LLMEVAL(res_dir: str, grading_model: str, model_dict: dict, max_workers: int, query_col: str='question', gold_col: str='answer', response_col: str='response', retries: int=3, initial_delay: int=1) -> pd.DataFrame:
+def get_all_model_BioScore(res_dir: str, grading_model: str, model_dict: dict, max_workers: int, query_col: str='question', gold_col: str='answer', response_col: str='response', retries: int=3, initial_delay: int=1) -> pd.DataFrame:
     """
     Grade responses from multiple LLMs with a specific prompt & GPT-4o for each query in the dataset, with retry on failure.
 
@@ -41,15 +43,15 @@ def get_all_model_LLMEVAL(res_dir: str, grading_model: str, model_dict: dict, ma
 
     for model in model_dict:
         data = load_dataset(f'{res_dir}/{model}_responses.csv')
-        data[f'{model}_LLMEVAL'] = 0.0
+        data[f'{model}_BioScore'] = 0.0
         grading_prompts = [
             biomedical_grading_prompt(row[query_col], row[gold_col], row[f'{model}_{response_col}'])
             for _, row in data.iterrows()
         ]
         query_instance = initialize_model(grading_model)
-        responses = collect_model_responses(grading_model, query_instance, grading_prompts, check_LLMEVAL_response, max_workers, retries, initial_delay)
+        responses = collect_model_responses(grading_model, query_instance, grading_prompts, check_BioScore_response, max_workers, retries, initial_delay)
         query_instance.delete()
-        data[f'{model}_LLMEVAL'] = responses / 3.0
+        data[f'{model}_BioScore'] = responses
         save_dataset(f'{res_dir}/{model}_responses.csv', data)
 
 def get_all_model_BLEU_ROUGE_BERT(res_dir: str, model_dict: dict, gold_col: str='answer', response_col: str='response') -> None:

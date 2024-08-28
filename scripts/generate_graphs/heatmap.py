@@ -33,16 +33,10 @@ def plot_metric_heatmap(data: pd.DataFrame, metric: str, models: dict, category:
     
     # Ensure that all models have the same set of categories
     heatmap_data = heatmap_data.reindex(sorted(heatmap_data.index.unique()), fill_value=np.nan)
-    
-        # Conditionally set the y-axis scale for LLMEVAL metric
-    if metric == "LLMEVAL":
-        vmax = 3.0
-    else:
-        vmax = 1.0
 
     # Increase figure size for larger boxes
     plt.figure(figsize=(len(models) * 2, len(heatmap_data) * 1.2))
-    ax = sns.heatmap(heatmap_data, annot=True, cmap=custom_cmap, linewidths=5, square=True, fmt=".2f", annot_kws={"size": 14}, cbar_kws={'shrink': .75}, vmax=vmax)
+    ax = sns.heatmap(heatmap_data, annot=True, cmap=custom_cmap, linewidths=5, square=True, fmt=".2f", annot_kws={"size": 14}, cbar_kws={'shrink': .75}, vmin=0.0, vmax=1.0)
     
     
     # Remove axis labels

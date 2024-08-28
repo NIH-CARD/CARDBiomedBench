@@ -16,7 +16,7 @@ def biomedical_grading_prompt(question: str, gold_res: str, pred_res: str) -> st
         "Scoring Instructions for Evaluating Analyst Responses\n"
         "Objective: The goal is to evaluate the performance of an analyst's response to a question compared to a gold standard response.\n"
         "Scoring Criteria:\n"
-        "Exact or Equal Match: Award 3 points if the analyst's response exactly matches the gold standard response or gives an equally as accurate one.\n"
+        "Exact or Equal Match: Award 3 points if the analyst's response exactly matches the gold standard response or gives an equally accurate one.\n"
         "Close Match: Award 2 points if the analyst's response is very close to the gold standard response but may contain minor inaccuracies or omissions.\n"
         "Partial Match: Award 1 point if the analyst's response partially matches the gold standard response, but significant information is missing or inaccurate.\n"
         "Irrelevant Information Penalty (Harmless): Deduct 0.5 points if the analyst's response includes irrelevant but relatively harmless information.\n"

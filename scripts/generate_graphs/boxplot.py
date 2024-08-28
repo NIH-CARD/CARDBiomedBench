@@ -3,9 +3,9 @@ import numpy as np
 import seaborn as sns
 import matplotlib.pyplot as plt
 
-def plot_llmeval_boxplot(data: pd.DataFrame, models: dict, title: str, save_path: str):
-    """Create a box and whisker plot to visualize performance for the LLMEVAL metric, handling -1 values separately."""
-    metric = 'LLMEVAL'
+def plot_BioScore_boxplot(data: pd.DataFrame, models: dict, title: str, save_path: str):
+    """Create a box and whisker plot to visualize performance for the BioScore metric, handling -1 values separately."""
+    metric = 'BioScore'
     colors = ['#ADD8E6', '#FFB6C1', '#DDA0DD', '#87CEEB', '#FF69B4', '#BA55D3']
     sns.set_style("whitegrid")
     sns.set_context("talk")
@@ -42,7 +42,7 @@ def plot_llmeval_boxplot(data: pd.DataFrame, models: dict, title: str, save_path
     ax.set_xticks(range(len(models)))
     ax.set_xticklabels(models.keys(), rotation=0, fontsize=20, ha='center')
     
-    # Plot the boxplot for LLMEVAL metric
+    # Plot the boxplot for BioScore metric
     sns.boxplot(
         x='Model', 
         y=metric, 
@@ -72,10 +72,13 @@ def plot_llmeval_boxplot(data: pd.DataFrame, models: dict, title: str, save_path
         count = idk_counts.get(model, 0)
         model_index = list(models.keys()).index(model)
         percent = (count / len(data)) * 100
-        plt.text(model_index, -0.35, f'({percent:.2f}%)', ha='center', va='center', fontsize=16, color='red')
+        plt.text(model_index, -0.125, f'({percent:.2f}%)', ha='center', va='center', fontsize=16, color='red')
         
-    plt.ylim(-.1, 3.1)
-    plt.yticks(np.arange(0, 3.5, 0.5))
+    yticks = [0.0, 0.5, 1.0, 1.5, 2.0, 2.5, 3.0]
+    yticks = [yt / 3.0 for yt in yticks]
+    
+    plt.ylim(-0.05, max(yticks) + 0.05)
+    plt.yticks(yticks, [f'{yt:.2f}' for yt in yticks])
 
     plt.xlabel("Model", fontsize=22, fontweight='bold')
     plt.ylabel(metric, fontsize=22, fontweight='bold')
@@ -86,7 +89,7 @@ def plot_llmeval_boxplot(data: pd.DataFrame, models: dict, title: str, save_path
     plt.close()
 
 def plot_metric_boxplot(data: pd.DataFrame, metric: str, models: dict, title: str, save_path: str):
-    """Create a box and whisker plot to visualize performance for any metric other than LLMEVAL."""
+    """Create a box and whisker plot to visualize performance for any metric other than BioScore."""
     colors = ['#ADD8E6', '#FFB6C1', '#DDA0DD', '#87CEEB', '#FF69B4', '#BA55D3']
     sns.set_style("whitegrid")
     sns.set_context("talk")
