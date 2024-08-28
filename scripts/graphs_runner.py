@@ -4,6 +4,7 @@ from scripts.scripts_utils import load_dataset
 from scripts.generate_graphs.boxplot import plot_metric_boxplot
 from scripts.generate_graphs.heatmap import plot_metric_heatmap, plot_idk_heatmap
 from scripts.generate_graphs.table import create_performance_table, style_dataframe
+from scripts.generate_graphs.pie import plot_category_pie_chart
 from scripts.generate_graphs.generate_graphs_utils import merge_model_responses
 
 def main():
@@ -22,6 +23,10 @@ def main():
         print("No data to process. Exiting.")
         return
     
+    # Dataset distribution visualizations
+    plot_category_pie_chart(data, "bio_category", "Bio Category Pie", "results/")
+
+    # Metric visualizations
     metrics_list = []
     if "BioScore" in METRICS_DICT:
         plot_metric_boxplot(data, "BioScore", MODELS_DICT, "BioScore Boxplot", "results/")
