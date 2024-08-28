@@ -38,7 +38,6 @@ def plot_metric_heatmap(data: pd.DataFrame, metric: str, models: dict, category:
     plt.figure(figsize=(len(models) * 2, len(heatmap_data) * 1.2))
     ax = sns.heatmap(heatmap_data, annot=True, cmap=custom_cmap, linewidths=5, square=True, fmt=".2f", annot_kws={"size": 14}, cbar_kws={'shrink': .75}, vmin=0.0, vmax=1.0)
     
-    
     # Remove axis labels
     ax.set_xlabel('')
     ax.set_ylabel('')
@@ -50,7 +49,6 @@ def plot_metric_heatmap(data: pd.DataFrame, metric: str, models: dict, category:
     plt.tight_layout()
     plt.savefig(f'{save_path}/{title}.png')
     plt.close()
-
 
 def plot_idk_heatmap(data: pd.DataFrame, metric: str, models: dict, category: str, title: str, save_path: str):
     """Create a heatmap to visualize the percentages of -1 values across models."""
