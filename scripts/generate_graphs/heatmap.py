@@ -4,7 +4,7 @@ import seaborn as sns
 import matplotlib.pyplot as plt
 from matplotlib.colors import LinearSegmentedColormap
 
-def plot_metric_heatmap(data: pd.DataFrame, metric: str, models: dict, category: str, title: str, save_path: str):
+def plot_metric_heatmap(data: pd.DataFrame, metric: str, models: dict, model_order: list, category: str, title: str, save_path: str):
     """Create a heatmap to visualize average performance for a single metric across categories, filtering out -1 values."""
     sns.set_theme(style="white")
     
@@ -14,6 +14,9 @@ def plot_metric_heatmap(data: pd.DataFrame, metric: str, models: dict, category:
     # Initialize a DataFrame to store average performance per category per model
     heatmap_data = pd.DataFrame()
     
+    # Get the new order of models and reorder the models dictionary
+    models = {model: models[model] for model in model_order}
+
     for model in models:
         col_name = f'{model}_{metric}'
         if col_name in data.columns:
@@ -50,7 +53,7 @@ def plot_metric_heatmap(data: pd.DataFrame, metric: str, models: dict, category:
     plt.savefig(f'{save_path}/{title}.png')
     plt.close()
 
-def plot_idk_heatmap(data: pd.DataFrame, metric: str, models: dict, category: str, title: str, save_path: str):
+def plot_idk_heatmap(data: pd.DataFrame, metric: str, models: dict, model_order: list, category: str, title: str, save_path: str):
     """Create a heatmap to visualize the percentages of -1 values across models."""
     sns.set_theme(style="white")
 
@@ -59,6 +62,9 @@ def plot_idk_heatmap(data: pd.DataFrame, metric: str, models: dict, category: st
     
     # Initialize a DataFrame to store percentages of -1 values per category per model
     heatmap_data = pd.DataFrame()
+
+    # Get the new order of models and reorder the models dictionary
+    models = {model: models[model] for model in model_order}
 
     # Get all unique categories to ensure they are present in the heatmap
     all_categories = set()

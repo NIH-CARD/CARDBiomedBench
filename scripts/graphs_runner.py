@@ -6,7 +6,7 @@ from scripts.generate_graphs.heatmap import plot_metric_heatmap, plot_idk_heatma
 from scripts.generate_graphs.table import create_performance_table, style_dataframe
 from scripts.generate_graphs.pie import plot_category_pie_chart
 from scripts.generate_graphs.histogram import plot_token_histograms
-from scripts.generate_graphs.generate_graphs_utils import merge_model_responses
+from scripts.generate_graphs.generate_graphs_utils import merge_model_responses, get_model_order
 
 def main():
     parser = argparse.ArgumentParser(description="Create graphs and tables on the benchmark results.")
@@ -26,15 +26,16 @@ def main():
     
     # Dataset distribution visualizations
     plot_category_pie_chart(data, category="bio_category", title="Bio Category Pie", save_path="results/")
-    plot_token_histograms(data, text_col="question", color='dodgerblue', title="Question", save_path="results/")
-    plot_token_histograms(data, text_col="answer", color='deeppink', title="Answer", save_path="results/")
+    plot_token_histograms(data, text_col="question", color="dodgerblue", title="Question", save_path="results/")
+    plot_token_histograms(data, text_col="answer", color="deeppink", title="Answer", save_path="results/")
 
     # Metric visualizations
     metrics_list = []
     if "BioScore" in METRICS_DICT:
-        plot_metric_boxplot(data, "BioScore", MODELS_DICT, "BioScore Boxplot", "results/")
-        plot_metric_heatmap(data, "BioScore", MODELS_DICT, "bio_category", "BioScore Bio Heatmap", "results/")
-        plot_idk_heatmap(data, "BioScore", MODELS_DICT, "bio_category", "IDK Bio Heatmap", "results/")
+        bioscore_model_order = get_model_order(data, "BioScore", MODELS_DICT)
+        plot_metric_boxplot(data, "BioScore", MODELS_DICT, bioscore_model_order, "BioScore Boxplot", "results/")
+        plot_metric_heatmap(data, "BioScore", MODELS_DICT, bioscore_model_order, "bio_category", "BioScore Bio Heatmap", "results/")
+        plot_idk_heatmap(data, "BioScore", MODELS_DICT, bioscore_model_order, "bio_category", "IDK Bio Heatmap", "results/")
         metrics_list += ["BioScore"]
     if "BLEU_ROUGE_BERT" in METRICS_DICT:
         nlp_metrics = ['BLEU', 'ROUGE1', 'ROUGE2', 'ROUGEL', 'BERTScore']

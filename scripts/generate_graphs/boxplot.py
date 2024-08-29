@@ -3,35 +3,7 @@ import numpy as np
 import seaborn as sns
 import matplotlib.pyplot as plt
 
-def get_model_order(data: pd.DataFrame, metric: str, models: dict) -> list:
-    """Get the order of models based on the median first, then IDK %, then spread (IQR) of the metric values."""
-    model_stats = []
-    
-    for model in models:
-        col_name = f'{model}_{metric}'
-        if col_name in data.columns:
-            model_data = data[col_name].copy()
-            idk_count = (model_data == -1).sum()
-            total_count = len(model_data)
-            idk_rate = idk_count / total_count
-            
-            if metric == "BioScore":
-                model_data = model_data[model_data != -1]  # Exclude -1 values for BioScore
-            
-            median_val = model_data.median()
-            spread_val = model_data.quantile(0.75) - model_data.quantile(0.25)  # IQR for spread
-            
-            model_stats.append((model, median_val, idk_rate, spread_val))
-    
-    # Sort by median (descending), then by IDK rate (ascending), then by spread (ascending)
-    model_stats_sorted = sorted(model_stats, key=lambda x: (-x[1], x[2], x[3]))
-
-    # Extract the sorted model names
-    sorted_models = [model[0] for model in model_stats_sorted]
-    
-    return sorted_models
-
-def plot_metric_boxplot(data: pd.DataFrame, metric: str, models: dict, title: str, save_path: str):
+def plot_metric_boxplot(data: pd.DataFrame, metric: str, models: dict, model_order: list, title: str, save_path: str):
     """Create a box and whisker plot to visualize performance for the BioScore metric, handling -1 values separately."""
     colors = ['#ADD8E6', '#FFB6C1', '#DDA0DD', '#87CEEB', '#FF69B4', '#BA55D3']
     sns.set_style("whitegrid")
@@ -44,8 +16,7 @@ def plot_metric_boxplot(data: pd.DataFrame, metric: str, models: dict, title: st
     idk_counts = {}
 
     # Get the new order of models and reorder the models dictionary
-    ordered_model_names = get_model_order(data, metric, models)
-    models = {model: models[model] for model in ordered_model_names}
+    models = {model: models[model] for model in model_order}
 
     for model in models:
         col_name = f'{model}_{metric}'
