@@ -52,8 +52,7 @@ def create_performance_table(data: pd.DataFrame, metrics: list, models: dict) ->
     return performance_table
 
 def style_dataframe(df: pd.DataFrame, title: str, save_path: str):
-    # Set up the aesthetics for the plot
-    sns.set_theme(style="whitegrid", font="DejaVu Sans")  # Use Seaborn to set a good font and style
+    sns.set_theme(style="whitegrid", font="DejaVu Sans")
 
     # Format the DataFrame
     styled_df = df.style.format("{:.4f}") \
