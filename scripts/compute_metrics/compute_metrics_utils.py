@@ -53,6 +53,7 @@ def get_all_model_BioScore(res_dir: str, grading_model: str, model_dict: dict, m
         query_instance.delete()
         data[f'{model}_BioScore'] = responses
         save_dataset(f'{res_dir}/{model}_responses.csv', data)
+        print(f"BioScore computed and saved for {model} to {res_dir}/{model}_responses.csv")
 
 def get_all_model_BLEU_ROUGE_BERT(res_dir: str, model_dict: dict, gold_col: str='answer', response_col: str='response') -> None:
     """
@@ -96,3 +97,4 @@ def get_all_model_BLEU_ROUGE_BERT(res_dir: str, model_dict: dict, gold_col: str=
 
         # Save the updated dataset back to the CSV file
         save_dataset(f'{res_dir}/{model}_responses.csv', data)
+        print(f"BLEU/ROUGE/BERTScore computed and saved for {model} to {res_dir}/{model}_responses.csv")

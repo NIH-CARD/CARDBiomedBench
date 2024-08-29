@@ -40,7 +40,8 @@ def main():
     if "BLEU_ROUGE_BERT" in METRICS_DICT:
         nlp_metrics = ['BLEU', 'ROUGE1', 'ROUGE2', 'ROUGEL', 'BERTScore']
         for metric in nlp_metrics:
-            plot_metric_boxplot(data, metric, MODELS_DICT, f"{metric} Boxplot", "results/")
+            nlp_model_order = get_model_order(data, metric, MODELS_DICT)
+            plot_metric_boxplot(data, metric, MODELS_DICT, nlp_model_order, f"{metric} Boxplot", "results/")
         metrics_list += nlp_metrics
     performance_table = create_performance_table(data, metrics_list, MODELS_DICT)
     style_dataframe(performance_table, "All Metrics", "results/")
