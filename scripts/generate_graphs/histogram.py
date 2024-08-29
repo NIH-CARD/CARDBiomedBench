@@ -26,6 +26,10 @@ def plot_token_histograms(data: pd.DataFrame, text_col: str, color: str, title: 
     # Compute token counts for the given column
     data['token_count'] = data[text_col].apply(lambda x: count_tokens_tiktoken(x))
     
+    # Print median token count
+    median_token_count = data['token_count'].median()
+    print(f"Median token count for {title}: {median_token_count}")
+
     # Determine the maximum token count and calculate the step size
     max_token_count = data['token_count'].max()
     step_size = math.ceil(max_token_count / 10 / 10) * 10
@@ -33,6 +37,9 @@ def plot_token_histograms(data: pd.DataFrame, text_col: str, color: str, title: 
     # Plot the histogram with percentage on y-axis
     plt.figure(figsize=(10, 4), dpi=100)
     sns.histplot(data['token_count'], color=color, kde=True, stat='percent')
+    
+    # Add a vertical dashed line at the median
+    plt.axvline(median_token_count, color='black', linestyle='--', label=f'Median: {median_token_count:.0f}')
     
     plt.title(f'{title} Token Counts')
     plt.xlabel('Token Count')
