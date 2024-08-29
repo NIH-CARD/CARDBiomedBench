@@ -4,7 +4,7 @@ import seaborn as sns
 import matplotlib.pyplot as plt
 
 def get_model_order(data: pd.DataFrame, metric: str, models: dict) -> list:
-    """Get the order of models based on the median first, then spread (IQR), and then IDK % of the metric values."""
+    """Get the order of models based on the median first, then IDK %, then spread (IQR) of the metric values."""
     model_stats = []
     
     for model in models:
@@ -21,9 +21,9 @@ def get_model_order(data: pd.DataFrame, metric: str, models: dict) -> list:
             median_val = model_data.median()
             spread_val = model_data.quantile(0.75) - model_data.quantile(0.25)  # IQR for spread
             
-            model_stats.append((model, median_val, spread_val, idk_rate))
+            model_stats.append((model, median_val, idk_rate, spread_val))
     
-    # Sort by median (descending), then by spread (ascending), then by IDK rate (ascending)
+    # Sort by median (descending), then by IDK rate (ascending), then by spread (ascending)
     model_stats_sorted = sorted(model_stats, key=lambda x: (-x[1], x[2], x[3]))
 
     # Extract the sorted model names
