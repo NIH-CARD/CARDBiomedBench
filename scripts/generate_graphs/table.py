@@ -4,7 +4,7 @@ import scipy.stats as stats
 import matplotlib.pyplot as plt
 
 def create_performance_table(data: pd.DataFrame, metrics: list, models: dict) -> pd.DataFrame:
-    """Create a table with columns: model | metric1 mean, metric1 95% CI | metric2 mean, metric2 95% CI ..."""
+    """Create a table with columns: model | metric1 (mean ± 95% CI) | metric2 (mean ± 95% CI) | AR (± 95% CI) ..."""
     
     performance_rows = []
     
@@ -15,20 +15,35 @@ def create_performance_table(data: pd.DataFrame, metrics: list, models: dict) ->
             col_name = f'{model}_{metric}'
             
             if col_name in data.columns:
-                # Filter out -1 values
+                # Filter out -1 values for the metric
                 metric_data = data[data[col_name] != -1][col_name]
                 
-                # Calculate mean and 95% confidence interval
+                # Calculate mean and 95% confidence interval for the metric
                 mean_val = metric_data.mean()
                 ci_low, ci_high = stats.t.interval(0.95, len(metric_data)-1, loc=mean_val, scale=stats.sem(metric_data))
                 
-                # Store the values in the row
-                row[f'{metric} Mean'] = mean_val
-                row[f'{metric} 95% CI'] = f'{ci_low:.2f}, {ci_high:.2f}'
+                # Combine mean and 95% CI into one string
+                row[f'{metric} (95% CI)'] = f'{mean_val:.2f} ({ci_low:.2f}, {ci_high:.2f})'
+                
             else:
-                row[f'{metric} Mean'] = 'N/A'
-                row[f'{metric} 95% CI'] = 'N/A'
+                row[f'{metric} (95% CI)'] = 'N/A'
         
+        # Calculate AR (Abstention Rate) and its CI
+        bio_col_name = f'{model}_BioScore'
+        if bio_col_name in data.columns:
+            total_count = len(data[bio_col_name])
+            ar_count = (data[bio_col_name] == -1).sum()
+            ar_rate = ar_count / total_count
+            
+            # Calculate AR 95% confidence interval using binomial proportion CI
+            ci_low, ci_high = stats.binom.interval(0.95, total_count, ar_rate, loc=0)
+            ar_ci_low = ci_low / total_count
+            ar_ci_high = ci_high / total_count
+            
+            # Combine AR rate and 95% CI into one string
+            row['AR (95% CI)'] = f'{ar_rate:.2f} ({ar_ci_low:.2f}, {ar_ci_high:.2f})'
+        else:
+            row['AR (95% CI)'] = 'N/A'
         performance_rows.append(row)
     
     # Convert the list of rows into a DataFrame
@@ -51,7 +66,7 @@ def style_dataframe(df: pd.DataFrame, title: str, save_path: str):
                          }])
 
     # Create a figure and axis
-    fig, ax = plt.subplots(figsize=(len(df.columns) * 2, len(df) * 0.25 + 1))  # Adjust size based on number of rows
+    fig, ax = plt.subplots(figsize=(len(df.columns) * 2.5, len(df) * 0.25 + 0.5))  # Adjust size based on number of rows
 
     # Hide axes
     ax.axis('off')

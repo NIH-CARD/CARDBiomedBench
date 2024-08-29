@@ -38,10 +38,10 @@ def main():
         plot_idk_heatmap(data, "BioScore", MODELS_DICT, bioscore_model_order, "bio_category", "IDK Bio Heatmap", "results/")
         metrics_list += ["BioScore"]
     if "BLEU_ROUGE_BERT" in METRICS_DICT:
-        nlp_metrics = ['BLEU', 'ROUGE1', 'ROUGE2', 'ROUGEL', 'BERTScore']
+        nlp_metrics = ['BLEU', 'ROUGEL', 'BERTScore']
         for metric in nlp_metrics:
             nlp_model_order = get_model_order(data, metric, MODELS_DICT)
-            plot_metric_boxplot(data, metric, MODELS_DICT, nlp_model_order, f"{metric} Boxplot", "results/")
+            plot_metric_boxplot(data, metric, MODELS_DICT, bioscore_model_order, f"{metric} Boxplot", "results/")
         metrics_list += nlp_metrics
     performance_table = create_performance_table(data, metrics_list, MODELS_DICT)
     style_dataframe(performance_table, "All Metrics", "results/")
