@@ -20,7 +20,12 @@ def create_performance_table(data: pd.DataFrame, metrics: list, models: dict) ->
                 
                 # Calculate mean and 95% confidence interval for the metric
                 mean_val = metric_data.mean()
-                ci_low, ci_high = stats.t.interval(0.95, len(metric_data)-1, loc=mean_val, scale=stats.sem(metric_data))
+                std_err = stats.sem(metric_data)
+                
+                # Use Z-distribution for large n
+                z_value = stats.norm.ppf(0.975)  # 95% confidence
+                ci_low = mean_val - z_value * std_err
+                ci_high = mean_val + z_value * std_err
                 
                 # Combine mean and 95% CI into one string
                 row[f'{metric} (95% CI)'] = f'{mean_val:.2f} ({ci_low:.2f}, {ci_high:.2f})'
