@@ -74,7 +74,7 @@ def get_all_model_BLEU_ROUGE_BERT(res_dir: str, model_dict: dict, gold_col: str=
         data = load_dataset(f'{res_dir}/{model}_responses.csv')
 
         # Initialize columns for BLEU, ROUGE, and BERTScore
-        for metric in ['BLEU', 'ROUGEL', 'BERTScore']:
+        for metric in ['BLEU', 'ROUGE2', 'ROUGEL', 'BERTScore']:
             data[f'{model}_{metric}'] = 0.0
 
         # Compute scores for each model response
@@ -88,7 +88,8 @@ def get_all_model_BLEU_ROUGE_BERT(res_dir: str, model_dict: dict, gold_col: str=
 
             # Compute ROUGEL score
             rouge_score = rouge.compute(predictions=[model_response], references=[answer])
-            data.at[index, f'{model}_{metric.upper()}'] = rouge_score['rougeL']
+            for metric in ['rouge2', 'rougeL']:
+                data.at[index, f'{model}_{metric.upper()}'] = rouge_score['rougeL']
             
             # Compute BERTScore
             bertscore_result = bertscore.compute(predictions=[model_response], references=[answer], lang="en")

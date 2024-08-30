@@ -35,10 +35,10 @@ def main():
         bioscore_model_order = get_model_order(data, "BioScore", MODELS_DICT)
         plot_metric_boxplot(data, "BioScore", MODELS_DICT, bioscore_model_order, "BioScore Boxplot", "results/")
         plot_metric_heatmap(data, "BioScore", MODELS_DICT, bioscore_model_order, "bio_category", "BioScore Bio Heatmap", "results/")
-        plot_idk_heatmap(data, "BioScore", MODELS_DICT, bioscore_model_order, "bio_category", "IDK Bio Heatmap", "results/")
+        plot_idk_heatmap(data, "BioScore", MODELS_DICT, bioscore_model_order, "bio_category", "Abstention Rate Bio Heatmap", "results/")
         metrics_list += ["BioScore"]
     if "BLEU_ROUGE_BERT" in METRICS_DICT:
-        nlp_metrics = ['BLEU', 'ROUGEL', 'BERTScore']
+        nlp_metrics = ['BLEU', 'ROUGE2', 'ROUGEL', 'BERTScore']
         for metric in nlp_metrics:
             nlp_model_order = get_model_order(data, metric, MODELS_DICT)
             plot_metric_boxplot(data, metric, MODELS_DICT, bioscore_model_order, f"{metric} Boxplot", "results/")

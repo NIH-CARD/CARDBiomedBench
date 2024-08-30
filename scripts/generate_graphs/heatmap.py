@@ -105,7 +105,7 @@ def plot_idk_heatmap(data: pd.DataFrame, metric: str, models: dict, model_order:
     ax.set_xlabel('')
     ax.set_ylabel('')
     
-    plt.title(f"{title} (Percentage of IDK)", fontsize=18)
+    plt.title(f"{title} (AR %)", fontsize=18)
     plt.xticks(rotation=45, ha='right', fontsize=14)
     plt.yticks(fontsize=14)
     

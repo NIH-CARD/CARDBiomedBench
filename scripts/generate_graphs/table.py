@@ -25,25 +25,25 @@ def create_performance_table(data: pd.DataFrame, metrics: list, models: dict) ->
                 # Combine mean and 95% CI into one string
                 row[f'{metric} (95% CI)'] = f'{mean_val:.2f} ({ci_low:.2f}, {ci_high:.2f})'
                 
+                # Calculate AR (Abstention Rate) and its CI
+                bio_col_name = f'{model}_BioScore'
+                if bio_col_name in data.columns:
+                    total_count = len(data[bio_col_name])
+                    ar_count = (data[bio_col_name] == -1).sum()
+                    ar_rate = ar_count / total_count
+                    
+                    # Calculate AR 95% confidence interval using binomial proportion CI
+                    ci_low, ci_high = stats.binom.interval(0.95, total_count, ar_rate, loc=0)
+                    ar_ci_low = ci_low / total_count
+                    ar_ci_high = ci_high / total_count
+                    
+                    # Combine AR rate and 95% CI into one string
+                    row['AR (95% CI)'] = f'{ar_rate:.2f} ({ar_ci_low:.2f}, {ar_ci_high:.2f})'
+                else:
+                    row['AR (95% CI)'] = 'N/A'
             else:
                 row[f'{metric} (95% CI)'] = 'N/A'
         
-        # Calculate AR (Abstention Rate) and its CI
-        bio_col_name = f'{model}_BioScore'
-        if bio_col_name in data.columns:
-            total_count = len(data[bio_col_name])
-            ar_count = (data[bio_col_name] == -1).sum()
-            ar_rate = ar_count / total_count
-            
-            # Calculate AR 95% confidence interval using binomial proportion CI
-            ci_low, ci_high = stats.binom.interval(0.95, total_count, ar_rate, loc=0)
-            ar_ci_low = ci_low / total_count
-            ar_ci_high = ci_high / total_count
-            
-            # Combine AR rate and 95% CI into one string
-            row['AR (95% CI)'] = f'{ar_rate:.2f} ({ar_ci_low:.2f}, {ar_ci_high:.2f})'
-        else:
-            row['AR (95% CI)'] = 'N/A'
         performance_rows.append(row)
     
     # Convert the list of rows into a DataFrame
