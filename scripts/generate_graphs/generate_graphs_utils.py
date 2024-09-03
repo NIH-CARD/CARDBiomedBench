@@ -1,4 +1,5 @@
 import os
+import tiktoken
 import pandas as pd
 
 def merge_model_responses(res_dir: str, output_csv: str, merge_on: str='uuid', question_col: str='question', answer_col: str='answer', category_col: str='bio_category') -> pd.DataFrame:
@@ -67,3 +68,26 @@ def get_model_order(data: pd.DataFrame, metric: str, models: dict) -> list:
     sorted_models = [model[0] for model in model_stats_sorted]
     
     return sorted_models
+
+def count_tokens_tiktoken(string: str, model: str = "gpt-4o") -> int:
+    """Returns the number of tokens in a text string using the appropriate encoding for a given model."""
+    try:
+        # Get the encoding for the specified model
+        encoding = tiktoken.encoding_for_model(model)
+    except KeyError:
+        # If the model is not recognized, default to cl100k_base encoding
+        print("Warning: model not found. Using cl100k_base encoding.")
+        encoding = tiktoken.get_encoding("cl100k_base")
+    
+    # Encode the string and return the number of tokens
+    num_tokens = len(encoding.encode(string))
+    return num_tokens
+
+def get_token_counts(data: pd.DataFrame, models: dict) -> pd.DataFrame:
+    """Add a token_count column for question, answer, and each model_response column in the DataFrame."""
+    for col in ['question', 'answer']:
+        data[f'{col}_token_count'] = data[col].apply(lambda x: count_tokens_tiktoken(x))
+    for model in models:
+        col = f'{model}_response'
+        data[f'{model}_response_token_count'] = data[col].apply(lambda x: count_tokens_tiktoken(x))
+    return data

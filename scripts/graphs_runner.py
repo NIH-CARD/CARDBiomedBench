@@ -6,7 +6,8 @@ from scripts.generate_graphs.heatmap import plot_metric_heatmap, plot_idk_heatma
 from scripts.generate_graphs.table import create_performance_table, style_dataframe
 from scripts.generate_graphs.pie import plot_category_pie_chart
 from scripts.generate_graphs.histogram import plot_token_histograms
-from scripts.generate_graphs.generate_graphs_utils import merge_model_responses, get_model_order
+from scripts.generate_graphs.statistics import statistics_txt
+from scripts.generate_graphs.generate_graphs_utils import merge_model_responses, get_model_order, get_token_counts
 
 def main():
     parser = argparse.ArgumentParser(description="Create graphs and tables on the benchmark results.")
@@ -24,6 +25,12 @@ def main():
         print("No data to process. Exiting.")
         return
     
+    # Compute and add token count columns for question, answer, and each model_response
+    data = get_token_counts(data, MODELS_DICT)
+
+    # Dataset statistics txt file
+    statistics_txt(data, models=MODELS_DICT, title="statistics", save_path="results/")
+
     # Dataset distribution visualizations
     plot_category_pie_chart(data, category="bio_category", title="Bio Category Pie", save_path="results/")
     plot_token_histograms(data, text_col="question", color="dodgerblue", title="Question", save_path="results/")

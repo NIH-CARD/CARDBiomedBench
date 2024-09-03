@@ -48,7 +48,7 @@ def get_all_model_BioScore(res_dir: str, grading_model: str, model_dict: dict, m
             biomedical_grading_prompt(row[query_col], row[gold_col], row[f'{model}_{response_col}'])
             for _, row in data.iterrows()
         ]
-        query_instance = initialize_model(grading_model)
+        query_instance = initialize_model(grading_model, system_prompt="")
         responses = collect_model_responses(grading_model, query_instance, grading_prompts, check_BioScore_response, max_workers, retries, initial_delay)
         query_instance.delete()
         data[f'{model}_BioScore'] = responses

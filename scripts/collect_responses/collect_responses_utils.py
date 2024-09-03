@@ -11,30 +11,30 @@ from .claude_query import ClaudeQuery
 from .perplexity_query import PerplexityQuery
 from .huggingface_query import HuggingFaceQuery
 
-def initialize_model(model: str):
+def initialize_model(model: str, system_prompt: str):
     """
     Initialize the model client and create an instance of the query class for the specified model.
     """
     if model == 'gpt-4o':
-        return GPTQuery(SYSTEM_PROMPT, 'gpt-4o', max_tokens=MAX_NEW_TOKENS)
+        return GPTQuery(system_prompt, 'gpt-4o', max_tokens=MAX_NEW_TOKENS)
     elif model == 'gemini-1.5-pro':
-        return GeminiQuery(SYSTEM_PROMPT, 'gemini-1.5-pro', max_tokens=MAX_NEW_TOKENS)
+        return GeminiQuery(system_prompt, 'gemini-1.5-pro', max_tokens=MAX_NEW_TOKENS)
     elif model =='claude-3.5-sonnet':
-        return ClaudeQuery(SYSTEM_PROMPT, 'claude-3-5-sonnet-20240620', max_tokens=MAX_NEW_TOKENS)
+        return ClaudeQuery(system_prompt, 'claude-3-5-sonnet-20240620', max_tokens=MAX_NEW_TOKENS)
     elif model == 'perplexity-sonar-huge':
-        return PerplexityQuery(SYSTEM_PROMPT, 'llama-3.1-sonar-huge-128k-online', max_tokens=MAX_NEW_TOKENS)
+        return PerplexityQuery(system_prompt, 'llama-3.1-sonar-huge-128k-online', max_tokens=MAX_NEW_TOKENS)
     elif model == 'gemma-2-2b-it':
-        return HuggingFaceQuery(SYSTEM_PROMPT, 'google/gemma-2-2b-it', max_tokens=MAX_NEW_TOKENS) 
+        return HuggingFaceQuery(system_prompt, 'google/gemma-2-2b-it', max_tokens=MAX_NEW_TOKENS) 
     elif model == 'gemma-2-9b-it':
-        return HuggingFaceQuery(SYSTEM_PROMPT, 'google/gemma-2-9b-it', max_tokens=MAX_NEW_TOKENS) 
+        return HuggingFaceQuery(system_prompt, 'google/gemma-2-9b-it', max_tokens=MAX_NEW_TOKENS) 
     elif model == 'gemma-2-27b-it':
-        return HuggingFaceQuery(SYSTEM_PROMPT, 'google/gemma-2-27b-it', max_tokens=MAX_NEW_TOKENS) 
+        return HuggingFaceQuery(system_prompt, 'google/gemma-2-27b-it', max_tokens=MAX_NEW_TOKENS) 
     elif model == 'llama-3.1-8b-it':
-        return HuggingFaceQuery(SYSTEM_PROMPT, 'meta-llama/Meta-Llama-3.1-8B-Instruct', max_tokens=MAX_NEW_TOKENS)
+        return HuggingFaceQuery(system_prompt, 'meta-llama/Meta-Llama-3.1-8B-Instruct', max_tokens=MAX_NEW_TOKENS)
     elif model == 'llama-3.1-70b-it':
-        return HuggingFaceQuery(SYSTEM_PROMPT, 'meta-llama/Meta-Llama-3.1-70B-Instruct', max_tokens=MAX_NEW_TOKENS)
+        return HuggingFaceQuery(system_prompt, 'meta-llama/Meta-Llama-3.1-70B-Instruct', max_tokens=MAX_NEW_TOKENS)
     elif model == 'llama-3.1-405b-it':
-        return HuggingFaceQuery(SYSTEM_PROMPT, 'meta-llama/Meta-Llama-3.1-405B-Instruct', max_tokens=MAX_NEW_TOKENS)
+        return HuggingFaceQuery(system_prompt, 'meta-llama/Meta-Llama-3.1-405B-Instruct', max_tokens=MAX_NEW_TOKENS)
     else:
         return None
 
@@ -136,7 +136,7 @@ def get_all_model_responses(data: pd.DataFrame, model_dict: dict, max_workers: i
     
     for model in model_dict:
         data[f'{model}_response'] = ''
-        MODELS_DICT[model]['query_instance'] = initialize_model(model)
+        MODELS_DICT[model]['query_instance'] = initialize_model(model, SYSTEM_PROMPT)
         responses = collect_model_responses(model, MODELS_DICT[model]['query_instance'], data[query_col].tolist(), check_model_response, max_workers, retries, initial_delay)
         data[f'{model}_response'] = responses
         delete_model(model)
