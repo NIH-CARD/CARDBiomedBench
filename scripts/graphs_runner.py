@@ -7,6 +7,7 @@ from scripts.generate_graphs.table import create_performance_table, style_datafr
 from scripts.generate_graphs.pie import plot_category_pie_chart
 from scripts.generate_graphs.histogram import plot_token_histograms
 from scripts.generate_graphs.statistics import statistics_txt
+from scripts.generate_graphs.scatter import plot_scatterplot
 from scripts.generate_graphs.generate_graphs_utils import merge_model_responses, get_model_order, get_token_counts
 
 def main():
@@ -43,6 +44,7 @@ def main():
         plot_metric_boxplot(data, "BioScore", MODELS_DICT, bioscore_model_order, "BioScore Boxplot", "results/")
         plot_metric_heatmap(data, "BioScore", MODELS_DICT, bioscore_model_order, "bio_category", "BioScore Bio Heatmap", "results/")
         plot_idk_heatmap(data, "BioScore", MODELS_DICT, bioscore_model_order, "bio_category", "Abstention Rate Bio Heatmap", "results/")
+        plot_scatterplot(data, "response_token_count", "BioScore", MODELS_DICT, "Mean Token Count by BioScore Stdv", "results/")
         metrics_list += ["BioScore"]
     if "BLEU_ROUGE_BERT" in METRICS_DICT:
         nlp_metrics = ['BLEU', 'ROUGE2', 'ROUGEL', 'BERTScore']

@@ -5,17 +5,7 @@ import pandas as pd
 def merge_model_responses(res_dir: str, output_csv: str, merge_on: str='uuid', question_col: str='question', answer_col: str='answer', category_col: str='bio_category') -> pd.DataFrame:
     """
     Merge all individual model response CSV files in a directory into a single DataFrame, merging on a specific column.
-    The question and answer columns are included only once in the final DataFrame.
-
-    Parameters:
-    - res_dir (str): Directory containing the saved response CSVs.
-    - output_csv (str): The file path to save the merged CSV.
-    - merge_on (str): The column name to merge on (default is 'uuid').
-    - question_col (str): The column name for the question (default is 'question').
-    - answer_col (str): The column name for the answer (default is 'answer').
-
-    Returns:
-    - pd.DataFrame: The merged DataFrame containing all model responses.
+    The question answer, and category columns are included only once in the final DataFrame.
     """
 
     # List all CSV files in the directory
