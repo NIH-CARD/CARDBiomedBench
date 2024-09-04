@@ -1,5 +1,5 @@
 import argparse
-from scripts import MODELS_DICT, METRICS_DICT, NUM_WORKERS, GRADING_MODEL
+from scripts import MODELS_DICT, METRICS_DICT, GRADING_MODEL
 from scripts.compute_metrics.compute_metrics_utils import get_all_model_BioScore, get_all_model_BLEU_ROUGE_BERT
 
 def main():
@@ -10,7 +10,7 @@ def main():
     res_dir = args.res_dir
 
     if "BioScore" in METRICS_DICT:
-        get_all_model_BioScore(res_dir, grading_model=GRADING_MODEL, model_dict=MODELS_DICT, max_workers=NUM_WORKERS)
+        get_all_model_BioScore(res_dir, grading_model=GRADING_MODEL, model_dict=MODELS_DICT)
     if "BLEU_ROUGE_BERT" in METRICS_DICT:
         get_all_model_BLEU_ROUGE_BERT(res_dir, model_dict=MODELS_DICT)
 

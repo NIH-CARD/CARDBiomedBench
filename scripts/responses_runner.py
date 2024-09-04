@@ -1,5 +1,5 @@
 import argparse
-from scripts import MODELS_DICT, NUM_WORKERS
+from scripts import MODELS_DICT
 from scripts.scripts_utils import load_dataset
 from scripts.collect_responses.collect_responses_utils import get_all_model_responses
 
@@ -16,14 +16,18 @@ def main():
     if data.empty:
         print("No data to process. Exiting.")
         return
+    else:
+        print("****Q/A Dataset loaded****")
     
     # TODO DELETE
     data = data[['uuid', 'question', 'answer', 'bio_category']]
     data.dropna(inplace=True)
+    data = data[:2]
     # TODO DELETE
 
-    data = get_all_model_responses(data, model_dict=MODELS_DICT, max_workers=NUM_WORKERS, res_dir=res_dir)
-    print(f"Responses collected and saved to {res_dir}.")
+    print("****Getting model responses****")
+    data = get_all_model_responses(data, model_dict=MODELS_DICT, res_dir=res_dir)
+    print(f"****Responses collected and saved to {res_dir}.****")
 
 if __name__ == "__main__":
     main()

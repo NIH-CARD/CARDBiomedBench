@@ -9,9 +9,9 @@ grading_model: gpt-4o
 cache_directory: ../.cache/huggingface
 
 run_scripts:
-  run_responses: true
+  run_responses: false
   run_metrics: false
-  run_graphs: false
+  run_graphs: true
 
 models:
   gpt-4o:
@@ -22,16 +22,10 @@ models:
     use: true
   perplexity-sonar-huge:
     use: true
-  gemma-2-2b-it:
-    use: false
-  gemma-2-9b-it:
-    use: false
   gemma-2-27b-it:
-    use: false
-  llama-3.1-8b-it:
-    use: false
+    use: true
   llama-3.1-70b-it:
-    use: false
+    use: true
   llama-3.1-405b-it:
     use: false
 
@@ -40,6 +34,3 @@ metrics:
     use: true
   BLEU_ROUGE_BERT:
     use: true
-
-parallelism:
-  workers: 1

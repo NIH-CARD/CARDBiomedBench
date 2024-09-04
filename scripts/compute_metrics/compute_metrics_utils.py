@@ -3,18 +3,13 @@ import re
 from evaluate import load
 from .prompts import biomedical_grading_prompt
 from scripts.scripts_utils import load_dataset, save_dataset
-from scripts.collect_responses.collect_responses_utils import collect_model_responses, initialize_model
+from scripts.collect_responses.collect_responses_utils import collect_single_model_responses, initialize_model
+import warnings
+
+warnings.filterwarnings("ignore", category=FutureWarning, module='transformers')
 
 def check_BioScore_response(response: str) -> tuple:
-    """
-    Check the BioScore evaluation response for a valid score.
-
-    Parameters:
-    - response (str): The response from BioScore evaluation.
-
-    Returns:
-    - float: The valid score extracted from the response, or None if no valid score is found.
-    """
+    """Check the BioScore evaluation response for a valid score."""
     match = re.search(r"[-+]?[0-9]*\.?[0-9]+", response)
     if match:
         number = float(match.group(0))
@@ -24,22 +19,8 @@ def check_BioScore_response(response: str) -> tuple:
             return number, True
     return None, False
 
-def get_all_model_BioScore(res_dir: str, grading_model: str, model_dict: dict, max_workers: int, query_col: str='question', gold_col: str='answer', response_col: str='response', retries: int=3, initial_delay: int=1) -> pd.DataFrame:
-    """
-    Grade responses from multiple LLMs with a specific prompt & GPT-4o for each query in the dataset, with retry on failure.
-
-    Parameters:
-    - data (pd.DataFrame): The DataFrame containing questions, gold responses, and model responses.
-    - model_dict (dict): Dictionary containing model instances.
-    - query_col (str): The column name containing the queries.
-    - gold_col (str): The column name containing the gold responses.
-    - response_col (str): The column name containing the model responses.
-    - retries (int): Number of retries for each API call in case of failure.
-    - max_workers (int): Maximum number of threads to use for parallel processing.
-
-    Returns:
-    - pd.DataFrame: The DataFrame with added or updated response columns for each model.
-    """
+def get_all_model_BioScore(res_dir: str, grading_model: str, model_dict: dict, query_col: str='question', gold_col: str='answer', response_col: str='response', retries: int=3, initial_delay: int=1) -> pd.DataFrame:
+    """Grade responses from multiple LLMs with a specific prompt & GPT-4o for each query in the dataset, with retry on failure."""
 
     for model in model_dict:
         data = load_dataset(f'{res_dir}/{model}_responses.csv')
@@ -49,21 +30,15 @@ def get_all_model_BioScore(res_dir: str, grading_model: str, model_dict: dict, m
             for _, row in data.iterrows()
         ]
         query_instance = initialize_model(grading_model, system_prompt="")
-        responses = collect_model_responses(grading_model, query_instance, grading_prompts, check_BioScore_response, max_workers, retries, initial_delay)
+        responses = collect_single_model_responses(grading_model, query_instance, grading_prompts, check_BioScore_response, retries, initial_delay)
         query_instance.delete()
         data[f'{model}_BioScore'] = responses
         save_dataset(f'{res_dir}/{model}_responses.csv', data)
         print(f"BioScore computed and saved for {model} to {res_dir}/{model}_responses.csv")
 
 def get_all_model_BLEU_ROUGE_BERT(res_dir: str, model_dict: dict, gold_col: str='answer', response_col: str='response') -> None:
-    """
-    Compute BLEU, ROUGE, BERTScore for each model's responses and save the results back to CSV files.
+    """Compute BLEU, ROUGE, BERTScore for each model's responses and save the results back to CSV files."""
 
-    Parameters:
-    - res_dir (str): Directory containing the response CSV files for each model.
-    - model_names (list[str]): List of model names to evaluate.
-    - answer_col (str): The column name containing the reference answers.
-    """
     # Load BLEU, ROUGE, and BERT evaluators once
     bleu = load('bleu')
     rouge = load('rouge')
@@ -89,12 +64,12 @@ def get_all_model_BLEU_ROUGE_BERT(res_dir: str, model_dict: dict, gold_col: str=
             # Compute ROUGEL score
             rouge_score = rouge.compute(predictions=[model_response], references=[answer])
             for metric in ['rouge2', 'rougeL']:
-                data.at[index, f'{model}_{metric.upper()}'] = rouge_score['rougeL']
+                data.at[index, f'{model}_{metric.upper()}'] = rouge_score[metric]
             
             # Compute BERTScore
             bertscore_result = bertscore.compute(predictions=[model_response], references=[answer], lang="en")
             data.at[index, f'{model}_BERTScore'] = bertscore_result['f1']
 
         # Save the updated dataset back to the CSV file
-        save_dataset(f'{res_dir}/{model}_responses.csv', data)
-        print(f"BLEU/ROUGE/BERTScore computed and saved for {model} to {res_dir}/{model}_responses.csv")
+        save_dataset(f'{res_dir}{model}_responses.csv', data)
+        print(f"BLEU/ROUGE/BERTScore computed and saved for {model} to {res_dir}{model}_responses.csv")
