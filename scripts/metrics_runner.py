@@ -1,6 +1,7 @@
 import argparse
 from scripts import MODELS_DICT, METRICS_DICT, GRADING_MODEL
-from scripts.compute_metrics.compute_metrics_utils import get_all_model_BioScore, get_all_model_BLEU_ROUGE_BERT
+from scripts.compute_metrics.BleuRougeBert import get_all_model_BLEU_ROUGE_BERT
+from scripts.compute_metrics.compute_metrics_utils import get_all_model_BioScore
 
 def main():
     parser = argparse.ArgumentParser(description="Grade responses on the QA benchmark.")
