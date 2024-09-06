@@ -22,7 +22,7 @@ def main():
     # TODO DELETE
     data = data[['uuid', 'question', 'answer', 'bio_category']]
     data.dropna(inplace=True)
-    data = data[:2]
+    # data = data[:2]
     # TODO DELETE
 
     print("****Getting model responses****")
