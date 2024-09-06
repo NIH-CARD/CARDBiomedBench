@@ -1,5 +1,6 @@
 # Repository Specific
 results/*
+temp/*
 test.py
 slurm*
 .cache
