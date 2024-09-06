@@ -22,12 +22,11 @@ def main():
     # TODO DELETE
     data = data[['uuid', 'question', 'answer', 'bio_category']]
     data.dropna(inplace=True)
-    # data = data[:2]
     # TODO DELETE
 
     print("****Getting model responses****")
     data = get_all_model_responses(data, model_dict=MODELS_DICT, res_dir=res_dir)
-    print(f"****Responses collected and saved to {res_dir}.****")
+    print(f"****Responses collected and saved to {res_dir}****")
 
 if __name__ == "__main__":
     main()
