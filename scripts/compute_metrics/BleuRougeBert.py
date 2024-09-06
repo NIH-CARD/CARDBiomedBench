@@ -26,14 +26,14 @@ def get_all_model_BLEU_ROUGE_BERT(res_dir: str, model_dict: dict, gold_col: str=
             answer = row[gold_col]
             model_response = row[f'{model}_{response_col}']
 
-            # Compute BLEU score with try-except block
+            # Compute BLEU score, default to 0 on failure
             try:
                 bleu_score = bleu.compute(predictions=[model_response], references=[[answer]])
                 data.at[index, f'{model}_BLEU'] = bleu_score['bleu']
             except Exception:
                 data.at[index, f'{model}_BLEU'] = 0.0
 
-            # Compute ROUGE score with try-except block
+            # Compute ROUGE score, default to 0 on failure
             try:
                 rouge_score = rouge.compute(predictions=[model_response], references=[answer])
                 for metric in ['rouge2', 'rougeL']:
@@ -42,7 +42,7 @@ def get_all_model_BLEU_ROUGE_BERT(res_dir: str, model_dict: dict, gold_col: str=
                 for metric in ['rouge2', 'rougeL']:
                     data.at[index, f'{model}_{metric.upper()}'] = 0.0
 
-            # Compute BERTScore with try-except block
+            # Compute BERTScore, default to 0 on failure
             try:
                 bertscore_result = bertscore.compute(predictions=[model_response], references=[answer], lang="en")
                 data.at[index, f'{model}_BERTScore'] = bertscore_result['f1']
