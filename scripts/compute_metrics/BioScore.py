@@ -1,9 +1,14 @@
+import os
 import pandas as pd
 import re
 import json
 from .prompts import biomedical_grading_prompt
 from scripts.scripts_utils import load_dataset, save_dataset
-from scripts.collect_responses.collect_responses_utils import collect_single_model_responses, initialize_model
+from scripts.collect_responses.collect_responses_utils import initialize_model
+
+# Define the new cache subdirectory for batch queries
+CACHE_DIR = ".cache/batch_queries"
+os.makedirs(CACHE_DIR, exist_ok=True)
 
 def check_BioScore_response(response: str) -> tuple:
     """Check the BioScore evaluation response for a valid score."""
@@ -16,31 +21,76 @@ def check_BioScore_response(response: str) -> tuple:
             return number, True
     return None, False
 
-def process_batch_results(batch_result_path: str) -> dict:
-    """Load and process the batch results from the .jsonl file."""
-    bioscore_results = {}
-
-    # Read the .jsonl file line by line
-    with open(batch_result_path, 'r') as f:
-        for line in f:
-            result = json.loads(line)
-            custom_id = result.get("custom_id")  # This is now the uuid
-            response_content = result.get("response", {}).get("body", {}).get("choices", [{}])[0].get("message", {}).get("content", "")
-            
-            # Check the response using check_BioScore_response
-            bioscore, valid = check_BioScore_response(response_content)
-            
-            if valid:
-                bioscore_results[custom_id] = bioscore
-            else:
-                print(f"Invalid response for {custom_id}: {response_content}")
+def process_batch_results(batch_result_path: str, batch_file_path: str, grading_model) -> dict:
+    """
+    Load and process the batch results from the .jsonl file. Cache the results using the query found in the original batch file.
     
+    Parameters:
+    - batch_result_path (str): The path to the file containing the batch results.
+    - batch_file_path (str): The path to the original batch file.
+    - grading_model (GPTQuery): The grading model instance with cache support.
+
+    Returns:
+    - dict: A dictionary with the bioscore results mapped by custom_id.
+    """
+    bioscore_results = {}
+    cache = grading_model.cache
+
+    # Load the original batch queries from the batch file
+    batch_queries = {}
+    with open(batch_file_path, 'r') as batch_file:
+        for line in batch_file:
+            batch_request = json.loads(line)
+            custom_id = batch_request.get('custom_id')
+            if custom_id:
+                query = batch_request.get("body", {}).get("messages", [{}])[0].get("content", "")
+                batch_queries[custom_id] = query
+
+    # Read and process the batch results
+    with open(batch_result_path, 'r') as result_file:
+        for line in result_file:
+            result = json.loads(line)
+            custom_id = result.get("custom_id")  # Use this to map back to the original query
+            response_content = result.get("response", {}).get("body", {}).get("choices", [{}])[0].get("message", {}).get("content", "")
+
+            if custom_id in batch_queries:
+                original_query = batch_queries[custom_id]
+
+                # Generate the cache key using the original query
+                cache_key = grading_model.get_cache_key(original_query)
+                
+                # Cache the response if it isn't already cached
+                if cache_key not in cache:
+                    grading_model.cache[cache_key] = response_content
+
+                # Check the response and extract the BioScore
+                bioscore, valid = check_BioScore_response(response_content)
+                if valid:
+                    bioscore_results[custom_id] = bioscore
+                else:
+                    print(f"Invalid response for {custom_id}: {response_content}")
+            else:
+                print(f"Custom ID {custom_id} not found in batch queries.")
+
+    # Save the updated cache
+    grading_model.save_cache()
+
     return bioscore_results
 
-def generate_batch_file(grading_prompts, batch_file_path, grading_model, uuids):
-    """Generate a .jsonl batch file with grading prompts for batch querying."""
-    with open(batch_file_path, 'w') as f:
-        for i, (prompt, uuid) in enumerate(zip(grading_prompts, uuids)):
+
+def generate_batch_file(grading_prompts, batch_file_path, grading_model, uuids) -> bool:
+    """Generate a .jsonl batch file with grading prompts for batch querying, excluding cached responses.
+    
+    Returns True if a new batch file is created, False otherwise.
+    """
+    cache = grading_model.cache
+    new_batch_requests = []
+
+    # Only include prompts that are not in the cache
+    for prompt, uuid in zip(grading_prompts, uuids):
+        cache_key = grading_model.get_cache_key(prompt)
+        
+        if cache_key not in cache:
             batch_request = {
                 "custom_id": str(uuid),
                 "method": "POST",
@@ -53,7 +103,65 @@ def generate_batch_file(grading_prompts, batch_file_path, grading_model, uuids):
                     "max_tokens": 1024
                 }
             }
-            f.write(json.dumps(batch_request) + '\n')
+            new_batch_requests.append(batch_request)
+        else:
+            print(f"Skipping query for {uuid} as it is already in the cache.")
+
+    # Delete any old batch file for the model
+    if os.path.exists(batch_file_path):
+        os.remove(batch_file_path)
+
+    # If there are new requests, write them to the batch file
+    if new_batch_requests:
+        with open(batch_file_path, 'w') as f:
+            for request in new_batch_requests:
+                f.write(json.dumps(request) + '\n')
+        return True
+    else:
+        print("All queries are already cached. No new batch file created.")
+        return False
+
+
+
+def map_bioscore_results_to_dataframe(data: pd.DataFrame, bioscore_results: dict, grading_model, model: str, query_col: str, gold_col: str, response_col: str) -> pd.DataFrame:
+    """
+    Map the BioScore results to the DataFrame. If the result is not in bioscore_results, 
+    check if it exists in the cache and retrieve it if valid.
+
+    Parameters:
+    - data (pd.DataFrame): The DataFrame containing the model responses.
+    - bioscore_results (dict): The dictionary with BioScore results mapped by uuid.
+    - grading_model (GPTQuery): The grading model instance with cache support.
+    - model (str): The model name to map BioScore results for.
+    - query_col (str): The column name for the query text in the DataFrame.
+    - gold_col (str): The column name for the gold answer text in the DataFrame.
+    - response_col (str): The column name for the model response in the DataFrame.
+
+    Returns:
+    - pd.DataFrame: The DataFrame with BioScore results mapped for the specific model.
+    """
+    for i, row in data.iterrows():
+        uuid = row['uuid']
+        if str(uuid) in bioscore_results:
+            # If the result is in bioscore_results, use it
+            data.at[i, f'{model}_BioScore'] = bioscore_results[str(uuid)]
+        else:
+            # Check the cache for the response if it's not in bioscore_results
+            cache_key = grading_model.get_cache_key(
+                biomedical_grading_prompt(row[query_col], row[gold_col], row[f'{model}_{response_col}'])
+            )
+            if cache_key in grading_model.cache:
+                cached_response = grading_model.cache[cache_key]
+                bioscore, valid = check_BioScore_response(cached_response)
+                if valid:
+                    data.at[i, f'{model}_BioScore'] = bioscore
+                else:
+                    print(f"Invalid cached response for uuid {uuid}")
+            else:
+                print(f"No BioScore found for uuid {uuid}")
+    
+    return data
+
 
 def get_all_model_BioScore(res_dir: str, model_dict: dict, query_col: str='question', gold_col: str='answer', response_col: str='response') -> pd.DataFrame:
     """Grade responses from multiple LLMs with a specific prompt & GPT-4o for each query in the dataset, with retry on failure."""
@@ -61,6 +169,7 @@ def get_all_model_BioScore(res_dir: str, model_dict: dict, query_col: str='quest
     grading_model = initialize_model("gpt-4o", system_prompt="")
 
     # Create all .jsonl batch files
+    batch_ids = {}
     for model in model_dict:
         # Load the results file for the specific model
         data = load_dataset(f'{res_dir}/{model}_responses.csv')
@@ -74,20 +183,18 @@ def get_all_model_BioScore(res_dir: str, model_dict: dict, query_col: str='quest
         # Get the uuids
         uuids = data['uuid'].tolist()
 
-        # Generate the .jsonl batch file for this model
-        batch_file_path = f"temp/{model}_grading_batch.jsonl"
-        generate_batch_file(bioscore_grading_prompts, batch_file_path, grading_model, uuids)
+        # Generate the .jsonl batch file for this model and check if a new file was created
+        batch_file_path = f"{CACHE_DIR}/{model}_grading_batch.jsonl"
+        batch_file_created = generate_batch_file(bioscore_grading_prompts, batch_file_path, grading_model, uuids)
 
-    # Submit each batch and process the responses
-    batch_ids = {}
-    for model in model_dict:
-        cur_batch_file = f"temp/{model}_grading_batch.jsonl"
-        print(f"Submitting BioScore grading for {model} to gpt-4o batch API...")
-
-        # Submit the batch and store the batch ID
-        batch_id = grading_model.submit_batch_query(cur_batch_file)
-        batch_ids[model] = batch_id
-        print(f"Batch ID {batch_id} submitted for {model}")
+        # Submit batch only if a new batch file was created
+        if batch_file_created:
+            print(f"Submitting BioScore grading for {model} to gpt-4o batch API...")
+            batch_id = grading_model.submit_batch_query(batch_file_path)
+            batch_ids[model] = batch_id
+            print(f"Batch ID {batch_id} submitted for {model}")
+        else:
+            print(f"No new batch file created for {model}. Skipping submission.")
 
     # Poll for batch completion and retrieve results
     for model, batch_id in batch_ids.items():
@@ -97,28 +204,24 @@ def get_all_model_BioScore(res_dir: str, model_dict: dict, query_col: str='quest
         batch_results = grading_model.poll_batch_status(batch_id)
 
         # Save the batch results to a JSONL file
-        batch_result_path = f"temp/{model}_grading_batch_results.jsonl"
+        batch_query_path = f"{CACHE_DIR}/{model}_grading_batch.jsonl"
+        batch_result_path = f"{CACHE_DIR}/{model}_grading_batch_results.jsonl"
         with open(batch_result_path, 'w') as f:
             f.write(batch_results)
         print(f"Batch results saved for {model} to {batch_result_path}")
 
         # Process the results and validate them using check_BioScore_response
-        bioscore_results = process_batch_results(batch_result_path)
+        bioscore_results = process_batch_results(batch_result_path, batch_query_path, grading_model)
 
         # Load the original dataframe for this model
-        data = load_dataset(f'{res_dir}/{model}_responses.csv')
+        data = load_dataset(f'{res_dir}{model}_responses.csv')
 
-        # Map the results to the dataframe using the custom_id
-        for i, row in data.iterrows():
-            uuid = row['uuid']
-            if str(uuid) in bioscore_results:
-                data.at[i, f'{model}_BioScore'] = bioscore_results[str(uuid)]
-            else:
-                print(f"No BioScore found for uuid {uuid}")
+        # Map the results to the dataframe
+        data = map_bioscore_results_to_dataframe(data, bioscore_results, grading_model, model, query_col, gold_col, response_col)
 
         # Save the updated dataframe
-        save_dataset(f'{res_dir}/{model}_responses.csv', data)
-        print(f"BioScore computed and saved for {model} to {res_dir}/{model}_responses.csv")
+        save_dataset(f'{res_dir}{model}_responses.csv', data)
+        print(f"BioScore computed and saved for {model} to {res_dir}{model}_responses.csv")
 
     print("All batches submitted and results processed.")
     grading_model.delete()
