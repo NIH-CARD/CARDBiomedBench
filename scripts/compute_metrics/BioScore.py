@@ -197,27 +197,27 @@ def get_all_model_BioScore(res_dir: str, model_dict: dict, query_col: str='quest
         else:
             print(f"No new batch file created for {model}. Skipping submission.")
 
-    # Poll for batch completion and retrieve results
-    for model, batch_id in batch_ids.items():
-        print(f"Polling BioScore batch results for {model} with batch ID {batch_id}...")
+        # Poll for batch completion and retrieve results
+        if model in batch_ids:
+            print(f"Polling BioScore batch results for {model} with batch ID {batch_ids[model]}...")
+            batch_results = grading_model.poll_batch_status(batch_ids[model])
 
-        # Poll the batch and retrieve the results
-        batch_results = grading_model.poll_batch_status(batch_id)
+            # Save the batch results to a JSONL file
+            batch_result_path = f"{CACHE_DIR}/{model}_grading_batch_results.jsonl"
+            with open(batch_result_path, 'w') as f:
+                f.write(batch_results)
+            print(f"Batch results saved for {model} to {batch_result_path}")
 
-        # Save the batch results to a JSONL file
-        batch_query_path = f"{CACHE_DIR}/{model}_grading_batch.jsonl"
-        batch_result_path = f"{CACHE_DIR}/{model}_grading_batch_results.jsonl"
-        with open(batch_result_path, 'w') as f:
-            f.write(batch_results)
-        print(f"Batch results saved for {model} to {batch_result_path}")
-
-        # Process the results and validate them using check_BioScore_response
-        bioscore_results = process_batch_results(batch_result_path, batch_query_path, grading_model)
+            # Process the results and validate them using check_BioScore_response
+            bioscore_results = process_batch_results(batch_result_path, batch_file_path, grading_model)
+        else:
+            # If no new batch was created, check only the cached results
+            bioscore_results = {}
 
         # Load the original dataframe for this model
         data = load_dataset(f'{res_dir}{model}_responses.csv')
 
-        # Map the results to the dataframe
+        # Map the results to the dataframe (this runs regardless of whether a new batch was created or not)
         data = map_bioscore_results_to_dataframe(data, bioscore_results, grading_model, model, query_col, gold_col, response_col)
 
         # Save the updated dataframe
