@@ -105,8 +105,6 @@ def generate_batch_file(grading_prompts, batch_file_path, grading_model, uuids) 
                 }
             }
             new_batch_requests.append(batch_request)
-        else:
-            print(f"Skipping query for {uuid} as it is already in the cache.")
 
     # Delete any old batch file for the model
     if os.path.exists(batch_file_path):
