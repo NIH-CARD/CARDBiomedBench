@@ -1,13 +1,13 @@
-uuid,question,answer,source,Date,Responder ,SQL Category,bio_category,Notes,Template #s,Template Questions ,,,,,
-Q1,Is TUBB a druggable gene?,"There are currently 20 approved drugs which target TUBB, indicating that it is a druggable gene.  ",DrugGeneTargets_v1_974                                                                                                                                                                                                                                                                                              DrugGeneTargets_v1_6261                                                                                                                                                                                                                                                                                             DrugGeneTargets_v1_4166                                                                                                                                                                                                                                                                                            DrugGeneTargets_v1_3175                                                                                                                                                                                                                                                                                           DrugGeneTargets_v1_5604                                                                                                                                                                                                                                                                                         DrugGeneTargets_v1_3353                                                                                                                                                                                                                                                                                          DrugGeneTargets_v1_6364                                                                                                                                                                                                                                                                                         DrugGeneTargets_v1_4743                                                                                                                                                                                                                                                                                          DrugGeneTargets_v1_2339                                                                                                                                                                                                                                                                                           DrugGeneTargets_v1_762                                                                                                                                                                                                                                                                                              DrugGeneTargets_v1_2013                                                                                                                                                                                                                                                                                          DrugGeneTargets_v1_1267                                                                                                                                                                                                                                                                                         DrugGeneTargets_v1_2177                                                                                                                                                                                                                                                                                            DrugGeneTargets_v1_5140                                                                                                                                                                                                                                                                                             DrugGeneTargets_v1_2330                                                                                                                                                                                                                                                                                           DrugGeneTargets_v1_5756                                                                                                                                                                                                                                                                                         DrugGeneTargets_v1_5757                                                                                                                                                                                                                                                                                        DrugGeneTargets_v1_1084                                                                                                                                                                                                                                                                                        DrugGeneTargets_v1_1085                                                                                                                                                                                                                                                                                           DrugGeneTargets_v1_560                                                                                                                                                                                                                                                                                               DrugGeneTargets_v1_561                                                                                                                                                                                                                                                                                            DrugGeneTargets_v1_4157                                                                                                                                                                                                                                                                                         DrugGeneTargets_v1_4158                                                                                                                                                                                                                                                                                        DrugGeneTargets_v1_2794                                                                                                                                                                                                                                                                                       DrugGeneTargets_v1_2795                                                                                                                                                                                                                                                                                           DrugGeneTargets_v1_1871                                                                                                                                                                                                                                                                                              DrugGeneTargets_v1_1872,7/17/2024,Maya,Select; Count,Drug meta,,,Is [approvedSymbol] a druggable gene?,"There are currently {number_of_approved_drugs} approved drugs which target {approvedSymbol}, indicating that it is a druggable gene.","There are currently no approved drugs targeting {approvedSymbol}, but there are {number_of_potential_targets (not approved yet)} potential targets indicating that it may be a druggable gene.","There are currently no approved drugs or potential targets for {approvedSymbol}, suggesting that it is not currently considered a druggable gene.","There was one approved drug that targeted {approvedSymbol} but it has been withdrawn, suggesting complications in its druggability.","There were {number_of_withdrawn_drugs} drugs that targeted {approvedSymbol} but they have been withdrawn, suggesting complications in its druggability."
-Q2,What are the allele frequencies of variant rs12206095 in PD?,"In the largest European genome-wide meta-analysis of Parkinson's disease from Nalls (2019), single nucleotide polymorphism rs12206095 has an alternate allele (A) frequency of 0.0317, and a reference allele (G) frequency of 0.9683.",PDno23andme_full_gene_notext_198,7/22/2024,Maya,Select; Calculation,Snp disease relations ,,,What are the allele frequencies of variant x in y?,,,,,
-Q3,What are the allele frequencies of variant rs61769339 in AD?,"In GWAS summary statistics for AD from Bellenguez (2022), single nucleotide polymorphism rs61769339 has an alternate allele (A) frequency of 0.1105 and reference
-allele (G) frequency of 0.8895.",AD_combo_gene_notext_UUID_7,7/22/2024,Maya,Select; Calculation,Snp disease relations ,,,,,,,,
+uuid,question,answer,source,Date,Responder ,SQL_Category,Bio_Category,Notes,Template #s,Template Questions ,,,,,
+Q1,Is TUBB a druggable gene?,"There are currently 20 approved drugs which target TUBB, indicating that it is a druggable gene.  ",DrugGeneTargets_v1_974                                                                                                                                                                                                                                                                                              DrugGeneTargets_v1_6261                                                                                                                                                                                                                                                                                             DrugGeneTargets_v1_4166                                                                                                                                                                                                                                                                                            DrugGeneTargets_v1_3175                                                                                                                                                                                                                                                                                           DrugGeneTargets_v1_5604                                                                                                                                                                                                                                                                                         DrugGeneTargets_v1_3353                                                                                                                                                                                                                                                                                          DrugGeneTargets_v1_6364                                                                                                                                                                                                                                                                                         DrugGeneTargets_v1_4743                                                                                                                                                                                                                                                                                          DrugGeneTargets_v1_2339                                                                                                                                                                                                                                                                                           DrugGeneTargets_v1_762                                                                                                                                                                                                                                                                                              DrugGeneTargets_v1_2013                                                                                                                                                                                                                                                                                          DrugGeneTargets_v1_1267                                                                                                                                                                                                                                                                                         DrugGeneTargets_v1_2177                                                                                                                                                                                                                                                                                            DrugGeneTargets_v1_5140                                                                                                                                                                                                                                                                                             DrugGeneTargets_v1_2330                                                                                                                                                                                                                                                                                           DrugGeneTargets_v1_5756                                                                                                                                                                                                                                                                                         DrugGeneTargets_v1_5757                                                                                                                                                                                                                                                                                        DrugGeneTargets_v1_1084                                                                                                                                                                                                                                                                                        DrugGeneTargets_v1_1085                                                                                                                                                                                                                                                                                           DrugGeneTargets_v1_560                                                                                                                                                                                                                                                                                               DrugGeneTargets_v1_561                                                                                                                                                                                                                                                                                            DrugGeneTargets_v1_4157                                                                                                                                                                                                                                                                                         DrugGeneTargets_v1_4158                                                                                                                                                                                                                                                                                        DrugGeneTargets_v1_2794                                                                                                                                                                                                                                                                                       DrugGeneTargets_v1_2795                                                                                                                                                                                                                                                                                           DrugGeneTargets_v1_1871                                                                                                                                                                                                                                                                                              DrugGeneTargets_v1_1872,7/17/2024,Maya,Multi-Filter; Aggregate,Drug Meta,,,Is [approvedSymbol] a druggable gene?,"There are currently {number_of_approved_drugs} approved drugs which target {approvedSymbol}, indicating that it is a druggable gene.","There are currently no approved drugs targeting {approvedSymbol}, but there are {number_of_potential_targets (not approved yet)} potential targets indicating that it may be a druggable gene.","There are currently no approved drugs or potential targets for {approvedSymbol}, suggesting that it is not currently considered a druggable gene.","There was one approved drug that targeted {approvedSymbol} but it has been withdrawn, suggesting complications in its druggability.","There were {number_of_withdrawn_drugs} drugs that targeted {approvedSymbol} but they have been withdrawn, suggesting complications in its druggability."
+Q2,What are the allele frequencies of variant rs12206095 in PD?,"In the largest European genome-wide meta-analysis of Parkinson's disease from Nalls (2019), single nucleotide polymorphism rs12206095 has an alternate allele (A) frequency of 0.0317, and a reference allele (G) frequency of 0.9683.",PDno23andme_full_gene_notext_198,7/22/2024,Maya,Select; Calculation,SNP Disease Relations ,,,What are the allele frequencies of variant x in y?,,,,,
+Q3,What are the allele frequencies of variant rs61769339 in AD?,"According to the largest European genome-wide meta-analysis of Alzheimer's disease (Bellenguez, 2022), single nucleotide polymorphism rs61769339 has an alternate allele (A) frequency of 0.1105 and reference
+allele (G) frequency of 0.8895.",AD_combo_gene_notext_UUID_7,7/22/2024,Maya,Select; Calculation,SNP Disease Relations ,,,,,,,,
 Q4,What drugs target the gene ACACA? ,"There are no FDA approved drugs targeting the gene ACACA. However the following drugs are currently in various clinical trial stages: Firsocostat,
 Pf-05175157, Clesacostat, and Olumacostat Glasaretil. ","DrugGeneTargets_v1_2565
 DrugGeneTargets_v1_1425
 DrugGeneTargets_v1_2356
-DrugGeneTargets_v1_2233",8/7/2024,Maya,Select; Group By,Drug Gene relations,,,What drugs target the gene x? ,,,,,
+DrugGeneTargets_v1_2233",8/7/2024,Maya,Multi-Filter; Join,Drug Gene Relations,,,What drugs target the gene x? ,,,,,
 Q5,Is Rotigotine approved to treat AD?,"Rotigotine has not been approved by the FDA as a treatment for Alzheimer's disease (AD), but it is currently undergoing evaluation in clinical trials for this purpose.","DrugTargetsIndication121923_text_201120
 DrugTargetsIndication121923_text_200835
 DrugTargetsIndication121923_text_201210
@@ -133,7 +133,7 @@ DrugTargetsIndication121923_text_201260
 DrugTargetsIndication121923_text_201040
 DrugTargetsIndication121923_text_200940
 DrugTargetsIndication121923_text_200995
-DrugTargetsIndication121923_text_201240",7/22/2024,Maya,,Drug Disease relations; Drug meta,,,Is x approved to treat y?,,,,,
+DrugTargetsIndication121923_text_201240",7/22/2024,Maya,Multi-Filter,Drug Disease Relations; Drug Meta,,,Is x approved to treat y?,,,,,
 Q6,What genes does Rotigotine target when it's used to treat AD?,"Rotigotine has not been approved by the FDA as a treatment for Alzheimer's disease (AD), but it is currently undergoing evaluation in clinical trials for this purpose. However, the proposed gene targets are DRD2, DRD3, and DRD4.","DrugTargetsIndication121923_text_201120
 DrugTargetsIndication121923_text_200835
 DrugTargetsIndication121923_text_201210
@@ -259,7 +259,7 @@ DrugTargetsIndication121923_text_201260
 DrugTargetsIndication121923_text_201040
 DrugTargetsIndication121923_text_200940
 DrugTargetsIndication121923_text_200995
-DrugTargetsIndication121923_text_201240",7/22/2024,Maya,,Drug Disease relations; Drug Gene relations,,,What genes does x target when it's used to treat y?,,,,,
+DrugTargetsIndication121923_text_201240",7/22/2024,Maya,Multi-Filter; Join,Drug Disease Relations; Drug Gene Relations,,,What genes does x target when it's used to treat y?,,,,,
 Q7,What are the approved uses for Rotigotine?,Rotigotine has been approved to treat Parkinson Disease and Restless Legs Syndrome. ,"DrugTargetsIndication121923_text_200751
 DrugTargetsIndication121923_text_200846
 DrugTargetsIndication121923_text_200941
@@ -511,10 +511,10 @@ DrugTargetsIndication121923_text_200727
 DrugTargetsIndication121923_text_200966
 DrugTargetsIndication121923_text_200762
 DrugTargetsIndication121923_text_201272
-DrugTargetsIndication121923_text_201282",7/22/2024,Maya,,Drug meta,,,What are the approved uses for x?,x has been approved by the FDA to treat [comma sep list with and]. ,The drug x has not been approved by the FDA for treatment of any disease but has reached phase y clinical trials.,,,
-Q8,Is Rg-7841 approved by the FDA for any disease treatment?,The drug Rg-7841 is not approved by the FDA for treatment of any disease but has reached phase 1 clinical trials.,DrugGeneTargets_v1_831                                                         DrugGeneTargets_v1_832,7/22/2024,Maya ,,Drug meta,,,Is x approved by the FDA for any disease treatment?,,,,,
-Q9,Is Vinblastine Sulfate approved by the FDA and if so when was it?,"Yes, the drug Vinblastine Sulfate was first FDA approved for use in 1965.",DrugGeneTargets_v1_6261,7/22/2024,Maya,,Drug meta,,,Is x approved by the FDA and if so when was it?,,,,,
-Q10,Are there any CR1 SNPs that have a statistically significant association with Alzheimer's Disease?,"Yes, the CR1 gene has 47 SNPs that were found to be significantly associated with an increased risk of Alzheimer's disease. Here are the top SNPs according to the largest European genome-wide meta-analysis of Alzheimer's disease (Bellenguez, 2022):
+DrugTargetsIndication121923_text_201282",7/22/2024,Maya,Multi-Filter; Join,Drug Meta,,,What are the approved uses for x?,x has been approved by the FDA to treat [comma sep list with and]. ,The drug x has not been approved by the FDA for treatment of any disease but has reached phase y clinical trials.,,,
+Q8,Is Rg-7841 approved by the FDA for any disease treatment?,The drug Rg-7841 is not approved by the FDA for treatment of any disease but has reached phase 1 clinical trials.,DrugGeneTargets_v1_831                                                         DrugGeneTargets_v1_832,7/22/2024,Maya ,Select; Aggregate,Drug Meta,,,Is x approved by the FDA for any disease treatment?,,,,,
+Q9,Is Vinblastine Sulfate approved by the FDA and if so when was it?,"Yes, the drug Vinblastine Sulfate was first FDA approved for use in 1965.",DrugGeneTargets_v1_6261,7/22/2024,Maya,Multi-Filter,Drug Meta,,,Is x approved by the FDA and if so when was it?,,,,,
+Q10,Are there any CR1 SNPs that have a statistically significant association with Alzheimer's Disease?,"Yes, the CR1 gene has 47 SNPs that were found to be statistically significant in Alzheimer's Disease. Here are the top SNPs according to the largest European genome-wide meta-analysis of Alzheimer's disease (Bellenguez, 2022):
 • rs6656401 (GWAS P-value: 2.84E-33; b value: 0.1253)
 • rs679515 (GWAS P-value: 5.15E-33; b value: 0.1244)
 • rs4562624 (GWAS P-value: 1.11E-32; b value: 0.124)
@@ -571,7 +571,7 @@ AD_combo_gene_notext_UUID_1352803
 AD_combo_gene_notext_UUID_1352823
 AD_combo_gene_notext_UUID_1352621
 AD_combo_gene_notext_UUID_1352601
-AD_combo_gene_notext_UUID_1352600",8/21/2024,Maya/Mary,,Snp disease relations; Gene disease relations ,,,Are there any x SNPs that have a statistically significant association with y?,Yes there are (count significant) SNPs that's have a significant association with y. Here are the top 5:  snp tissue pvalue effect size ,"No, based on the (list tissue samples comma separated with second to last one separated by , and ) samples tested there are no alleles within the gene x that are significantly associated with Y.",,,
+AD_combo_gene_notext_UUID_1352600",8/21/2024,Maya/Mary,Multi-Filter; Threshold; Join,SNP Disease Relations; Gene Disease Relations ,,,Are there any x SNPs that have a statistically significant association with y?,Yes there are (count significant) SNPs that's have a significant association with y. Here are the top 5:  snp tissue pvalue effect size ,"No, based on the (list tissue samples comma separated with second to last one separated by , and ) samples tested there are no alleles within the gene x that are significantly associated with Y.",,,
 Q11,Are there any CR1 SNPs that have a statistically significant adjusted SMR p-value in association with Alzheimer's Disease and what tissues are they significant in?,"Yes, the CR1 gene has 4 SNPs that are statistically significant in Alzheimer's Disease in tissues. Here are the SNPs along with their adjusted SMR p-values:
 • rs679515
     • Prefrontal cortex: Adjusted SMR multi-SNP P-value: 1.08E-12; HEIDI: 0.0028
@@ -594,8 +594,8 @@ NDD_SMR_genes_all_update_text_24520
 NDD_SMR_genes_all_update_text_1195476
 NDD_SMR_genes_all_update_text_1605472
 NDD_SMR_genes_all_update_text_1389608
-NDD_SMR_genes_all_update_text_1244290",8/21/2024,Maya/Mary,,SMR Snp disease relations; SMR Gene disease relations ,,,Are there any x SNPs that have a statistically significant association with y?,Yes there are (count significant) SNPs that's have a significant association with y. Here are the top 5:  snp tissue pvalue effect size ,"No, based on the (list tissue samples comma separated with second to last one separated by , and ) samples tested there are no alleles within the gene x that are significantly associated with Y.",,,
-Q12,what other names are there for the drug Vinblastine Sulfate?,"Some additional names for Vinblastine Sulfate are 29060-LE, 29060LE, Alkaban-aq, NSC-49842, Vinblastine sulfate, Vinblastine sulphate, Vinblastini sulfas, Vincaleukoblastine sulfate, Vlb monosulfate, Velban, Velbe, and Vinblast,lederle.",DrugGeneTargets_v1_6261,7/22/2024,Maya,,Drug meta,,,what other names are there for the drug x?,,,,,
+NDD_SMR_genes_all_update_text_1244290",8/21/2024,Maya/Mary,Multi-Filter; Threshold; Join; Calculation,SMR SNP Disease Relations; SMR Gene Disease Relations ,,,Are there any x SNPs that have a statistically significant association with y?,Yes there are (count significant) SNPs that's have a significant association with y. Here are the top 5:  snp tissue pvalue effect size ,"No, based on the (list tissue samples comma separated with second to last one separated by , and ) samples tested there are no alleles within the gene x that are significantly associated with Y.",,,
+Q12,what other names are there for the drug Vinblastine Sulfate?,"Some additional names for Vinblastine Sulfate are 29060-LE, 29060LE, Alkaban-aq, NSC-49842, Vinblastine sulfate, Vinblastine sulphate, Vinblastini sulfas, Vincaleukoblastine sulfate, Vlb monosulfate, Velban, Velbe, and Vinblast,lederle.",DrugGeneTargets_v1_6261,7/22/2024,Maya,Select; Join; Aggregate,Drug Meta,,,what other names are there for the drug x?,,,,,
 Q13,Is ANGPTL8 significantly associated with any neurological diseases?,"No, based on the research conducted on the following neurological diseases, the gene ANGPTL8 is not found to be significantly associated with:
 Alzheimer's Disease (AD)
 Frontotemporal Dementia (FTD)
@@ -607,17 +607,17 @@ NDD_SMR_genes_all_update_text_1151716
 NDD_SMR_genes_all_update_text_1114471
 NDD_SMR_genes_all_update_text_1126904
 NDD_SMR_genes_all_update_text_1139723
-NDD_SMR_genes_all_update_text_1138430",7/22/2024,Maya/Marzieh,,Gene disease relations ,,,Is x significantly associated with any neurological diseases?,,,,,
-Q14,What mechanism type does the drug Testosterone Enanthate use? ,The drug Testosterone Enanthate is an agonist. ,DrugGeneTargets_v1_5959,7/22/2024,Maya,,Pharmacology ,,,What mechanism type does the drug x use? ,,,,,
-Q15,When was Escitalopram approved by the FDA?,The drug Escitalopram was first FDA approved for use in 2002.,DrugGeneTargets_v1_767,7/22/2024,Maya,,Drug meta,,,,,,,,
-Q16,What cell therapies have been approved by the FDA to treat prostate cancer? ,Sipuleucel-T is the only cell therapy approved to treat prostate cancer.,DrugGeneTargets_v1_2303,8/9/2024,Maya,,Pharmacology; Drug Disease relations; Drug meta,,,,,,,,
-Q17,What gene does the drug Ocaliva target?,Ocaliva targets the gene NR1H4.,DrugGeneTargets_v2_3863,8/27/2024,Maya/Mary,,Drug Gene relations,,,What gene does the drug x target?,,,,,
+NDD_SMR_genes_all_update_text_1138430",7/22/2024,Maya/Marzieh,Multi-Filter; Threshold; Aggregate,Gene Disease Relations ,,,Is x significantly associated with any neurological diseases?,,,,,
+Q14,What mechanism type does the drug Testosterone Enanthate use? ,The drug Testosterone Enanthate is an agonist. ,DrugGeneTargets_v1_5959,7/22/2024,Maya,Select; Data Retrieval,Pharmacology ,,,What mechanism type does the drug x use? ,,,,,
+Q15,When was Escitalopram approved by the FDA?,The drug Escitalopram was first FDA approved for use in 2002.,DrugGeneTargets_v1_767,7/22/2024,Maya,Select; Data Retrieval,Drug Meta,,,,,,,,
+Q16,What cell therapies have been approved by the FDA to treat prostate cancer? ,Sipuleucel-T is the only cell therapy approved to treat prostate cancer.,DrugGeneTargets_v1_2303,8/9/2024,Maya,Multi-Filter; Join,Pharmacology; Drug Disease Relations; Drug Meta,,,,,,,,
+Q17,What gene does the drug Ocaliva target?,Ocaliva targets the gene NR1H4.,DrugGeneTargets_v2_3863,8/27/2024,Maya/Mary,Select; Data Retrieval,Drug Gene Relations,,,What gene does the drug x target?,,,,,
 Q18,For which condition is Sonidegib Phosphate indicated according to the Experimental Factor Ontology (EFO) and Medical Subject Headings (MeSH)?,"Sonidegib Phosphate is indicated for the treatment of basal cell carcinoma, according to EFO (EFO:0004193) and MeSH (Carcinoma, Basal Cell, D002280).","DrugTargetsIndication121923_text_1072620 
 DrugTargetsIndication121923_text_1072622 
-DrugTargetsIndication121923_text_1072621",July 3th,Marzieh,,Drug Disease relations,,,,,,,,
+DrugTargetsIndication121923_text_1072621",July 3th,Marzieh,Multi-Filter; Join,Drug Disease Relations,,,,,,,,
 Q19,What SNP is most significantly associated with AD in Caudate Basal Ganglia?,"The most significantly associated SNP with Alzheimer's Disease in the Caudate Basal Ganglia is rs2288911, located in the APOC2 gene, with a multi SMR p value of 1.951e-10
-and a p HEIDI value of 2.226e-07.",NDD_SMR_genes_all_update_text_1268425,07/29/2024,Maya,,Tissue; SMR Snp disease relations ,,,What SNP is most significantly associated with AD in x?,,,,,
-Q20,How do the SMR associations between rs10256524 and Alzheimer's disease or Parkinson's disease risk differ across different brain tissues?,"Here are the associations between rs10256524 and Alzheimer's disease or Parkinson's in different brain tissues:
+and a p HEIDI value of 2.226e-07.",NDD_SMR_genes_all_update_text_1268425,07/29/2024,Maya,Multi-Filter; Threshold; Sorting; Join,Tissue; SMR SNP Disease Relations ,,,What SNP is most significantly associated with AD in x?,,,,,
+Q20,How do the SMR functional associations between rs10256524 and Alzheimer's disease or Parkinson's disease risk differ across different brain tissues?,"Here are the associations between rs10256524 and Alzheimer's disease or Parkinson's in different brain tissues:
 Parkinson's Disease:
 • In the Amygdala, rs10256524 exhibits a functionally significant association (Adjusted SMR multi-SNP P-value: 2.34e-06, HEIDI: 0.018).
 • Similarly, in the Frontal Cortex BA9, rs10256524 shows a functionally significant association (Adjusted SMR multi-SNP P-value: 4.74e-07, HEIDI: 0.013).
@@ -626,10 +626,10 @@ Alzheimer's Disease:
 NDD_SMR_genes_all_update_text_1155910
 NDD_SMR_genes_all_update_text_1603159
 NDD_SMR_genes_all_update_text_1597657
-",08/21/2024,Maya,,Tissue; SMR Snp disease relations ,,,,,,,,
+",08/21/2024,Maya,Multi-Filter; Threshold Filter; Join; Comparative Analysis,Tissue; SMR SNP Disease Relations ,,,,,,,,
 Q21,"How many synonym names does Sonidegib Phosphate have, and what are they?","Sonidegib Phosphate has 3 synonym names: Erismodegib phosphate, Sonidegib diphosphate, and Sonidegib phosphate.","DrugTargetsIndication121923_text_1072620 
 DrugTargetsIndication121923_text_1072622 
-DrugTargetsIndication121923_text_1072621",July 3th,Marzieh,,Drug meta,,,,,,,,
+DrugTargetsIndication121923_text_1072621",July 3th,Marzieh,Select; Aggregation; Data Retrieval,Drug Meta,,,,,,,,
 Q22,What is Aplenzin?,"Aplenzin, also known generically as bupropion hydrobromide, is used to treat major depressive disorder. It is a small molecule drug that acts as an inhibitor. ","DrugTargetsIndication121923_text_434167
 DrugTargetsIndication121923_text_434188
 DrugTargetsIndication121923_text_434177
@@ -725,12 +725,12 @@ DrugTargetsIndication121923_text_434211
 DrugTargetsIndication121923_text_434190
 DrugTargetsIndication121923_text_434186
 DrugTargetsIndication121923_text_434209
-DrugTargetsIndication121923_text_434154",08/27/2024,Mary/Maya,,Drug meta; Pharmacology,,,,,,,,
+DrugTargetsIndication121923_text_434154",08/27/2024,Mary/Maya,Select; Data Retrieval,Drug Meta; Pharmacology,,,,,,,,
 Q23,Is there a black box warning for the drug Brentuximab Vedotin? ,"Yes, the drug Brentuximab Vedotin has a black box warning from the FDA.","DrugGeneTargets_v1_1084
-DrugGeneTargets_v1_1085",08/09/2024,Maya,,Drug meta,,,,,,,,
+DrugGeneTargets_v1_1085",08/09/2024,Maya,Select,Drug Meta,,,,,,,,
 Q24,Are there any oligonucleotide therapies that are in phase 2 clinical trials?,"Yes, there are 16 oligonucleotide therapies that have a maximum clinical trial phase of 2:
-Imetelstat Sodium, Vupanorsen, Bamosiran, Olpasiran, Suvodirsen, Sepofarsen, Aganirsen, Cenersen Sodium, Volanesorsen Sodium, Sapablursen, Prexigebersen, Cenersen, Cofirasersen, Gataparsen, Apatorsen, Danvatirsen. ",DrugGeneTargets_v1_403                                                                                                                                                                                                                                                                                               DrugGeneTargets_v1_2325                                                                                                                                                                                                                                                                                          DrugGeneTargets_v1_2326                                                                                                                                                                                                                                                                                             DrugGeneTargets_v1_453                                                                                                                                                                                                                                                                                            DrugGeneTargets_v1_3555                                                                                                                                                                                                                                                                                        DrugGeneTargets_v1_1833                                                                                                                                                                                                                                                                                           DrugGeneTargets_v1_1360                                                                                                                                                                                                                                                                                          DrugGeneTargets_v1_4843                                                                                                                                                                                                                                                                                          DrugGeneTargets_v1_444                                                                                                                                                                                                                                                                                           DrugGeneTargets_v1_3223                                                                                                                                                                                                                                                                                         DrugGeneTargets_v1_5289                                                                                                                                                                                                                                                                                            DrugGeneTargets_v1_6066                                                                                                                                                                                                                                                                                           DrugGeneTargets_v1_2734                                                                                                                                                                                                                                                                                                                                    DrugGeneTargets_v1_1778                                                                                                                                                                                                                                                                                        DrugGeneTargets_v1_3583                                                                                                                                                                                                                                                                                           DrugGeneTargets_v1_1706                                                                                                                                                                                                                                                                                         DrugGeneTargets_v1_4959,08/06/2024,Mary/Maya,,Drug meta; Pharmacology,,,,,,,,
-Q25,What is the effect size of rs112485576 in Parkinson's disease?,"The effect size, or beta, of rs112485576 is -0.1871 according to the largest European genome-wide meta-analysis of Parkinson's disease (Nalls et al., 2019).",PDno23andme_full_gene_notext_1635378,07/22/2024,Mary/Maya,,Snp disease relations ,,,What is the effect size of x in Parkinson's disease?,,,,,
+Imetelstat Sodium, Vupanorsen, Bamosiran, Olpasiran, Suvodirsen, Sepofarsen, Aganirsen, Cenersen Sodium, Volanesorsen Sodium, Sapablursen, Prexigebersen, Cenersen, Cofirasersen, Gataparsen, Apatorsen, Danvatirsen. ",DrugGeneTargets_v1_403                                                                                                                                                                                                                                                                                               DrugGeneTargets_v1_2325                                                                                                                                                                                                                                                                                          DrugGeneTargets_v1_2326                                                                                                                                                                                                                                                                                             DrugGeneTargets_v1_453                                                                                                                                                                                                                                                                                            DrugGeneTargets_v1_3555                                                                                                                                                                                                                                                                                        DrugGeneTargets_v1_1833                                                                                                                                                                                                                                                                                           DrugGeneTargets_v1_1360                                                                                                                                                                                                                                                                                          DrugGeneTargets_v1_4843                                                                                                                                                                                                                                                                                          DrugGeneTargets_v1_444                                                                                                                                                                                                                                                                                           DrugGeneTargets_v1_3223                                                                                                                                                                                                                                                                                         DrugGeneTargets_v1_5289                                                                                                                                                                                                                                                                                            DrugGeneTargets_v1_6066                                                                                                                                                                                                                                                                                           DrugGeneTargets_v1_2734                                                                                                                                                                                                                                                                                                                                    DrugGeneTargets_v1_1778                                                                                                                                                                                                                                                                                        DrugGeneTargets_v1_3583                                                                                                                                                                                                                                                                                           DrugGeneTargets_v1_1706                                                                                                                                                                                                                                                                                         DrugGeneTargets_v1_4959,08/06/2024,Mary/Maya,Multi-Filter,Drug Meta; Pharmacology,,,,,,,,
+Q25,What is the effect size of rs112485576 in Parkinson's disease?,"The effect size, or beta, of rs112485576 is -0.1871 according to the largest European genome-wide meta-analysis of Parkinson's disease (Nalls et al., 2019).",PDno23andme_full_gene_notext_1635378,07/22/2024,Mary/Maya,Select; Data Retrieval,SNP Disease Relations ,,,What is the effect size of x in Parkinson's disease?,,,,,
 Q26,How many SNPs are genome-wide significant in chr10 for Parkinson's disease?,"There are 4 SNPs that are genome-wide significant (p-value < 5E-8) within chr10 in the largest European genome-wide meta-analysis of Parkinson's disease (Nalls et al., 2019):
 • rs118117788 (GWAS P-value: 1.33E-09)
 • rs144814361 (GWAS P-value: 9.07E-11)
@@ -738,7 +738,7 @@ Q26,How many SNPs are genome-wide significant in chr10 for Parkinson's disease?,
 • rs188789342 (GWAS P-value: 8.49E-10)","PDno23andme_full_gene_notext_1145950
 PDno23andme_full_gene_notext_4158122
 PDno23andme_full_gene_notext_933245
-PDno23andme_full_gene_notext_4171570",07/22/2024,Mary/Marzieh,,Snp disease relations; Genomic location ,,,,,,,,
+PDno23andme_full_gene_notext_4171570",07/22/2024,Mary/Marzieh,Multi-Filter; Threshold; Aggregate,SNP Disease Relations; Genomic Location ,,,,,,,,
 Q27,When was Donepezil approved to treat Alzheimer's disease?,The drug Donepezil was approved to treat Alzheimer's disease in 1996. ,"DrugTargetsIndication121923_text_993824
 DrugTargetsIndication121923_text_993944
 DrugTargetsIndication121923_text_993884
@@ -753,7 +753,7 @@ DrugTargetsIndication121923_text_993848
 DrugTargetsIndication121923_text_993812
 DrugTargetsIndication121923_text_993872
 DrugTargetsIndication121923_text_993956
-DrugTargetsIndication121923_text_993932",7/22/2024,Maya,,Drug Disease relations; Drug meta,,,,,,,,
+DrugTargetsIndication121923_text_993932",7/22/2024,Maya,Multi-Filter; Data Retrieval,Drug Disease Relations; Drug Meta,,,,,,,,
 Q28,What drugs are approved to treat AD? ,"There are two drugs that are approved to treat Alzheimer's disease:
 • Donepezil Hydrochloride, which was approved in 1996
 •Memantine Hydrochloride, which was approved in 2003
@@ -827,15 +827,15 @@ DrugTargetsIndication121923_text_455008
 DrugTargetsIndication121923_text_455526
 DrugTargetsIndication121923_text_455582
 DrugTargetsIndication121923_text_455624
-DrugTargetsIndication121923_text_455764",7/22/2024,Maya,,Drug Disease relations; Drug meta,More but only listed two in table,,,,,,,
-Q29,What SNP is most significantly associated with PSP in spinal cord tissue?,"The most significantly associated SNP with Progressive supranuclear palsy in Spinal Cord eQTL omic data is rs8070723, located in the LRRC37A2 gene, with a multi SNP SMR p value of 2.163e-11 and a HEIDI value of 1.775e-07.",NDD_SMR_genes_all_update_text_30484,7/22/2024,Maya,,Tissue; SMR Snp disease relations ,,,,,,,,
+DrugTargetsIndication121923_text_455764",7/22/2024,Maya,Select; Aggregate,Drug Disease Relations; Drug Meta,More but only listed two in table,,,,,,,
+Q29,What SNP is most significantly associated with PSP in spinal cord tissue?,"The most significantly associated SNP with Progressive supranuclear palsy in Spinal Cord eQTL omic data is rs8070723, located in the LRRC37A2 gene, with a multi SNP SMR p value of 2.163e-11 and a HEIDI value of 1.775e-07.",NDD_SMR_genes_all_update_text_30484,7/22/2024,Maya,Multi-Filter; Threshold; Sorting; Join,Tissue; SMR SNP Disease Relations ,,,,,,,,
 Q30,Is the gene GRIA4 targeted by multiple different approved drugs to treat PD?,"Yes, the gene GRIA4 is targeted by two drugs for the treatment of PD:
 •Topiramate
-•Perampanel",DrugGeneTargets_v1_1592                                                                           DrugGeneTargets_v1_2165,8/13/2024,Maya,,Drug Gene relations; Drug Disease relations; Drug meta,,,,,,,,
-Q31,Has the FDA approved any drugs targeting the gene APOE for the treatment of neurodegenerative diseases?,"No, as of now, the FDA hasn't approved any drugs targeting the gene APOE for the treatment of neurodegenerative diseases.",`card-ai-389220.card_ai_june_mvp.DrugTargetIndications`,7/22/2024,Maya,,Drug Gene relations; Drug Disease relations; Drug meta,,,,,,,,
-Q32,What is the top SNP in blood for Lewy Body Dementia?,"The top SNP when analyzing whole blood in Lewy Body Dementia is rs17561351, located in the PVRL2 gene, with a multi SNP SMR p value of 2.638e-25 and a p Heidi of 2.172e-14",NDD_SMR_genes_all_update_text_1550598,7/22/2024,Mary/Maya,,Tissue; SMR Snp disease relations ,,,What is the top SNP in x for y?,,,,,
+•Perampanel",DrugGeneTargets_v1_1592                                                                           DrugGeneTargets_v1_2165,8/13/2024,Maya,Multi-Filter; Join; Aggregate,Drug Gene Relations; Drug Disease Relations; Drug Meta,,,,,,,,
+Q31,Has the FDA approved any drugs targeting the gene APOE for the treatment of neurodegenerative diseases?,"No, as of now, the FDA hasn't approved any drugs targeting the gene APOE for the treatment of neurodegenerative diseases.",`card-ai-389220.card_ai_june_mvp.DrugTargetIndications`,7/22/2024,Maya,Multi-Filter; Aggregate; Join,Drug Gene Relations; Drug Disease Relations; Drug Meta,,,,,,,,
+Q32,What is the top SNP in blood for Lewy Body Dementia?,"The top SNP when analyzing whole blood in Lewy Body Dementia is rs17561351, located in the PVRL2 gene, with a multi SNP SMR p value of 2.638e-25 and a p Heidi of 2.172e-14",NDD_SMR_genes_all_update_text_1550598,7/22/2024,Mary/Maya,Multi-Filter; Threshold; Sorting; Join,Tissue; SMR SNP Disease Relations ,,,What is the top SNP in x for y?,,,,,
 Q33,What is the allele frequency of the SNP rs2075650 in the context of Parkinson's disease?,"In the largest European genome-wide meta-analysis of Parkinson's disease from Nalls (2019), single nucleotide polymorphism rs2075650 has an alternate allele (G) frequency of 0.131 and reference
-allele (A) frequency of 0.869.",PDno23andme_full_gene_notext_378423,7/22/2024,Maya,,Snp disease relations ,,,,,,,,
+allele (A) frequency of 0.869.",PDno23andme_full_gene_notext_378423,7/22/2024,Maya,Select; Calculation,SNP Disease Relations ,,,,,,,,
 Q34,What are the names of the genes that are targeted by the drug Levodopa in the treatment of Parkinson's disease?,"In the context of Parkinson's disease, the drug Levodopa targets the gene dopamine receptor D3.","DrugTargetsIndication121923_text_205011
 DrugTargetsIndication121923_text_205086
 DrugTargetsIndication121923_text_204911
@@ -845,12 +845,12 @@ DrugTargetsIndication121923_text_205061
 DrugTargetsIndication121923_text_205036
 DrugTargetsIndication121923_text_204886
 DrugTargetsIndication121923_text_204936
-DrugTargetsIndication121923_text_204986",8/22/2024,Maya,,Drug Gene relations; Drug Disease relations,,,,,,,,
-Q35,Is the SNP rs12032182 significant in AD? ,"No, according to the GWAS summary statistics for AD from Bellenguez (2022), the SNP rs12032182 has a p-value of 0.4058 and therefore is not significant in AD. ",AD_combo_gene_notext_UUID_32322,7/29/2024,Maya,,Snp disease relations ,,,,,,,,
+DrugTargetsIndication121923_text_204986",8/22/2024,Maya,Multi-Filter; Aggregate; Join,Drug Gene Relations; Drug Disease Relations,,,,,,,,
+Q35,Is the SNP rs12032182 significant in AD? ,"No, according to the largest European genome-wide meta-analysis of Alzheimer's disease (Bellenguez, 2022), the SNP rs12032182 has a p-value of 0.4058 and therefore is not significant in AD. ",AD_combo_gene_notext_UUID_32322,7/29/2024,Maya,Select; Threshold,SNP Disease Relations ,,,,,,,,
 Q36,What is the genomic location of SNP rs12032182 ,"The SNP rs12032182 is located on chromosome 1:
 • Genomic Build GrCh37/HG19: base pair position 4431315
 • Genomic Build GrCh38: base pair position 4371255","AD_combo_gene_notext_UUID_32322
-PDno23andme_full_gene_notext_6154340",7/22/2024,Maya,,Genomic location,,,What is the genomic location of SNP x?,"The SNP x is located on chromosome y:
+PDno23andme_full_gene_notext_6154340",7/22/2024,Maya,Select; Join; Data Retrieval; Comparative Analysis,Genomic Location,,,What is the genomic location of SNP x?,"The SNP x is located on chromosome y:
 • Genomic Build GrCh37/HG19: base pair position z
 • Genomic Build GrCh38: base pair position q",,,,
 Q37,Which genes are targeted by the drug Dasatinib in the treatment of Alzheimer's disease?,"The drug Dasatinib has not been approved by the FDA as a treatment for Alzheimer's disease (AD), but it is currently undergoing evaluation in clinical trials for this purpose. However, there are 15 proposed gene targets: KIT, BCR, ABL1, PDGFRB, SRC, FRK, YES1, BLK, SRMS, LCK, LYN, FYN, EPHA2, FGR, and HCK.","DrugTargetsIndication121923_text_731956
@@ -1236,11 +1236,11 @@ DrugTargetsIndication121923_text_715498
 DrugTargetsIndication121923_text_718384
 DrugTargetsIndication121923_text_727198
 DrugTargetsIndication121923_text_735154
-DrugTargetsIndication121923_text_739522",7/22/2024,Maya,,Drug Gene relations; Drug Disease relations,,,,,,,,
+DrugTargetsIndication121923_text_739522",7/22/2024,Maya,Multi-Filter; Aggregate; Join,Drug Gene Relations; Drug Disease Relations,,,,,,,,
 Q38,how many mechanisms of action does the drug Brentuximab Vedotin have? ,"The drug Brentuximab Vedotin has two mechanisms of action: Tumor necrosis factor receptor superfamily member 8 inhibitor and         
 Tubulin inhibitor.","DrugGeneTargets_v1_1084
-DrugGeneTargets_v1_1085",08/09/2024,Maya,,Pharmacology,,,,,,,,
-Q39,Are there any specific alleles within the gene CHRM3 associated with increased susceptibility to developing Alzheimer's disease?,"No, there are no alleles within the gene CHRM3 that are significantly associated with an increased susceptibility to developing Alzheimer's disease based on AD GWAS data.","AD_combo_gene_notext_UUID_1610513
+DrugGeneTargets_v1_1085",08/09/2024,Maya,Select; Aggregate,Pharmacology,,,,,,,,
+Q39,Are there any specific alleles within the gene CHRM3 associated with increased susceptibility to developing Alzheimer's disease?,"No, there are no alleles within the gene CHRM3 that are significantly associated with an increased susceptibility to developing Alzheimer's disease based on the largest European genome-wide meta-analysis of Alzheimer's disease (Bellenguez, 2022).","AD_combo_gene_notext_UUID_1610513
 AD_combo_gene_notext_UUID_1611098
 AD_combo_gene_notext_UUID_1607682
 AD_combo_gene_notext_UUID_1611062
@@ -1739,12 +1739,12 @@ AD_combo_gene_notext_UUID_1608988
 AD_combo_gene_notext_UUID_1610377
 AD_combo_gene_notext_UUID_1611057
 AD_combo_gene_notext_UUID_1609415
-AD_combo_gene_notext_UUID_1611001",7/29/2024,Maya,,Snp disease relations; Gene disease relations ,"follow up with ad gwas once genes are listed
+AD_combo_gene_notext_UUID_1611001",7/29/2024,Maya,Select; Threshold; Aggregate,SNP Disease Relations; Gene Disease Relations ,"follow up with ad gwas once genes are listed
 also listing source at end will provide context ",,,,,,,
 Q40,"Are there any specific alleles within the gene CHRM3 associated with increased susceptibility to developing Alzheimer's disease, as determined by significant SMR analysis?","No, based on the blood, liver, and 
 brain samples tested there are no alleles within the gene CHRM3 that are significantly associated with an increased susceptibility to developing Alzheimer's disease.","NDD_SMR_genes_all_update_text_42309
 NDD_SMR_genes_all_update_text_1464887
-NDD_SMR_genes_all_update_text_656801",7/22/2024,Maya,,SMR Snp disease relations; SMR Gene disease relations ,"follow up with ad gwas once genes are listed
+NDD_SMR_genes_all_update_text_656801",7/22/2024,Maya,Select; Threshold; Aggregate; Join; Calculation,SMR SNP Disease Relations; SMR Gene Disease Relations ,"follow up with ad gwas once genes are listed
 also listing source at end will provide context ",,,,,,,
 Q41,Can you discuss the expression patterns based on SMR calculations of the NSF gene and its potential role in neuroprotection against Parkinson's disease?,"The expression patterns of the NSF gene within the prefrontal cortex and whole blood suggest that NSF does play a significant protective role in Parkinson's Disease (PD). 
 
@@ -1758,7 +1758,7 @@ Prefrontal Cortex eQTL
 •Adjusted SMR multi-SNP P-value: 4.66e-08
 •HEIDI: 5.7680e-05
 ","NDD_SMR_genes_all_update_text_1242289
-NDD_SMR_genes_all_update_text_1564795",8/23/2024,Maya,,SMR Snp disease relations; SMR Gene disease relations ,,,Can you discuss the expression patterns based on SMR calculations of the {Gene} gene and its potential role in neuroprotection against {Disease_name}?,The expression patterns of the {Gene} gene within in the {Omic_tissue} tissues of this dataset suggests that {Gene} does not play a significant protective or harmful role in {Disease_name} ({Disease}). ,"The expression patterns of the {Gene} gene within the {Omic_tissue} suggest that {Gene} does play a significant protective role in {Disease_name} ({Disease}). 
+NDD_SMR_genes_all_update_text_1564795",8/23/2024,Maya,Multi-Filter; Threshold; Join; Calculation; Aggregate,SMR SNP Disease Relations; SMR Gene Disease Relations ,,,Can you discuss the expression patterns based on SMR calculations of the {Gene} gene and its potential role in neuroprotection against {Disease_name}?,The expression patterns of the {Gene} gene within in the {Omic_tissue} tissues of this dataset suggests that {Gene} does not play a significant protective or harmful role in {Disease_name} ({Disease}). ,"The expression patterns of the {Gene} gene within the {Omic_tissue} suggest that {Gene} does play a significant protective role in {Disease_name} ({Disease}). 
 
 {Omic_tissue}:
 •Top associated SNP: {topSNP}
@@ -1771,9 +1771,9 @@ Q42,What is the genomic location of SNP's rs3738435 and rs566586173 in the GRCh3
 The SNP rs566586173 is located on the gene ERC1 at position 1468612 in the GRCh38/hg38 build of the human genome.
 ","AD_combo_gene_notext_UUID_1611832
 PDno23andme_full_gene_notext_3078323
-AD_combo_gene_notext_UUID_14740261",8/2/2024,Maya,,Genomic location ,,,What is the genomic location of SNP x in the GRCh38/hg38 build of the human genome and what gene is it located on or near?,"The SNP x is located on the gene y at position z in the GRCh38/hg38 build of the human genome.
+AD_combo_gene_notext_UUID_14740261",8/2/2024,Maya,Select; Join; Data Retrieval; Comparative Analysis,Genomic Location ,,,What is the genomic location of SNP x in the GRCh38/hg38 build of the human genome and what gene is it located on or near?,"The SNP x is located on the gene y at position z in the GRCh38/hg38 build of the human genome.
 ",The genomic location of SNP X is unknown.,,,
-Q43,What SNPs are significantly associated with Parkinson disease?,"Yes, there are 3,410 SNPs that are significantly associated with an increased risk of Parkinson's Disease. Here are the top 10 SNPs according to the largest European genome-wide meta-analysis of Parkinson's disease (Nalls et al., 2019):
+Q43,What SNPs are significantly associated with Parkinson disease?,"There are 3,410 SNPs that are significantly associated with an increased risk of Parkinson's Disease. Here are the top 10 SNPs according to the largest European genome-wide meta-analysis of Parkinson's disease (Nalls et al., 2019):
 
 • rs356203 (GWAS P-value: 3.01E-41; b value: 0.2398; nearest gene: SNCA)
 • rs356219 (GWAS P-value: 3.47E-41; b value: 0.2334; nearest gene: GPRIN3;SNCA)
@@ -1793,7 +1793,7 @@ PDno23andme_full_gene_notext_153395
 PDno23andme_full_gene_notext_4449871
 PDno23andme_full_gene_notext_6805650
 PDno23andme_full_gene_notext_7042578
-PDno23andme_full_gene_notext_3240570",7/29/2024,Maya,,Snp disease relations ,,,,,,,,
+PDno23andme_full_gene_notext_3240570",7/29/2024,Maya,Threshold; Sorting; Aggregate,SNP Disease Relations ,,,,,,,,
 Q44,Tell me about GWAS in Alzheimer's Disease.,"A Genome-wide association study (GWAS) identifys risk alleles that are associated with a particular disease. According to the largest European meta-GWAS of Alzheimer's disease (Bellenguez, 2022), there are 5,625 SNPs that were found to be significantly associated with an increased risk of Alzheimer's disease.  Here are the top 10 SNPs:
 
 • rs117310449 (GWAS P-value: 3.26E-115; b value: 0.7701; nearest gene: TOMM40)
@@ -1814,7 +1814,7 @@ AD_combo_gene_notext_UUID_19974414
 AD_combo_gene_notext_UUID_19974389
 AD_combo_gene_notext_UUID_19974428
 AD_combo_gene_notext_UUID_19974343
-AD_combo_gene_notext_UUID_19974306",8/23/2024,Maya,,Snp disease relations ,,,,,,,,
+AD_combo_gene_notext_UUID_19974306",8/23/2024,Maya,Threshold; Sorting; Aggregate,SNP Disease Relations ,,,,,,,,
 Q45,Is there an association between PSMF1 and Parkinson's disease?,"No, there is no significant association between PSMF1 and PD. ","PDno23andme_full_gene_notext_2456415
 PDno23andme_full_gene_notext_2952100
 PDno23andme_full_gene_notext_2926365
@@ -1960,7 +1960,7 @@ PDno23andme_full_gene_notext_6393852
 PDno23andme_full_gene_notext_542464
 PDno23andme_full_gene_notext_5599679
 PDno23andme_full_gene_notext_3647764
-PDno23andme_full_gene_notext_1032014",8/13/2024,Maya,,Gene disease relations ,,,,,,,,
+PDno23andme_full_gene_notext_1032014",8/13/2024,Maya,Select; Threshold,Gene Disease Relations ,,,,,,,,
 Q46,"Based on SMR analysis, is there a significant association between PSMF1 and Parkinson's disease?","No, there is no significant association between PSMF1 and PD. ","NDD_SMR_genes_all_update_text_1243289
 NDD_SMR_genes_all_update_text_1169184
 NDD_SMR_genes_all_update_text_1021830
@@ -1981,8 +1981,8 @@ NDD_SMR_genes_all_update_text_500041
 NDD_SMR_genes_all_update_text_500036
 NDD_SMR_genes_all_update_text_500037
 NDD_SMR_genes_all_update_text_1021831
-NDD_SMR_genes_all_update_text_500038",7/22/2024,Maya,,SMR Gene disease relations ,,,,,,,,
-Q47,What types of variants within RAB32 were found to have an effect on Parkinson's disease risk?,"There are no variants within the RAB32 gene found to have an effect on Parkinson's disease risk. Therefore, no distinct types of variants within RAB32 have been identified as influencing the risk of developing PD.","PDno23andme_full_gene_notext_7423787
+NDD_SMR_genes_all_update_text_500038",7/22/2024,Maya,Select; Threshold; Join; Calculation,SMR Gene Disease Relations ,,,,,,,,
+Q47,What variants within RAB32 were found to have an effect on Parkinson's disease risk?,There are no variants within the RAB32 gene found to have an effect on Parkinson's disease risk. ,"PDno23andme_full_gene_notext_7423787
 PDno23andme_full_gene_notext_2174453
 PDno23andme_full_gene_notext_6751603
 PDno23andme_full_gene_notext_3299696
@@ -1999,7 +1999,7 @@ PDno23andme_full_gene_notext_614411
 PDno23andme_full_gene_notext_2576846
 PDno23andme_full_gene_notext_739125
 PDno23andme_full_gene_notext_5298852
-PDno23andme_full_gene_notext_2898505",7/22/2024,Maya,,Snp disease relations; Gene disease relations ,,,,,,,,
+PDno23andme_full_gene_notext_2898505",9/9/2024,Maya,Select; Threshold,SNP Disease Relations; Gene Disease Relations ,,,,,,,,
 Q48,Are there any association signals with the gene ADAM10 in Alzheimer's disease?,"Yes, there are 19 SNPs that are significantly associated with the gene ADAM10 in Alzheimer's disease. Here are the top 10 SNPs in the largest European genome-wide meta-analysis of Alzheimer's disease (Bellenguez, 2022):
 
 • rs653765 (GWAS P-value: 3.44E-11; b value: -0.0599)
@@ -2029,7 +2029,7 @@ AD_combo_gene_notext_UUID_17446809
 AD_combo_gene_notext_UUID_17446853
 AD_combo_gene_notext_UUID_17446849
 AD_combo_gene_notext_UUID_17446861
-AD_combo_gene_notext_UUID_17446820",8/23/2024,Maya,,Snp disease relations; Gene disease relations ,,,,,,,,
+AD_combo_gene_notext_UUID_17446820",8/23/2024,Maya,Select; Threshold,SNP Disease Relations; Gene Disease Relations ,,,,,,,,
 Q49,Are there any SMR association signals with the gene ADAM10 in Alzheimer's disease?,"Yes, there are 3 significant SMR association signals with the gene ADAM10 in Alzheimer's disease across different tissues. Here are the SNPs and their adjusted SMR p-values:
 • rs2250583
     • Whole brain tissue: Adjusted SMR multi-SNP P-value: 2.60E-06; HEIDI: 0.0779
@@ -2040,20 +2040,20 @@ Q49,Are there any SMR association signals with the gene ADAM10 in Alzheimer's di
 • rs1427280
     • Cortex eQTL data: Adjusted SMR multi-SNP P-value: 2.62E-06; HEIDI: 0.0098","NDD_SMR_genes_all_update_text_1500785
 NDD_SMR_genes_all_update_text_105563
-NDD_SMR_genes_all_update_text_1109990",8/23/2024,Maya,,SMR Snp disease relations; SMR Gene disease relations ,,,,,,,,
+NDD_SMR_genes_all_update_text_1109990",8/23/2024,Maya,Multi-Filter; Threshold; Join; Calculation,SMR SNP Disease Relations; SMR Gene Disease Relations ,,,,,,,,
 Q50,Do GBA gene mutations increase the risk of Parkinson's disease?,"2 GBA gene mutations were found to be significantly associated with an increased risk of Parkinson's disease according to the largest European genome-wide meta-analysis of Parkinson's disease (Nalls et al., 2019):
 
  • rs12752133 (GWAS P-value: 4.11E-29; b value: 0.7821)
  • rs2230288 (GWAS P-value: 3.06E-28; b value: 0.7358)","PDno23andme_full_gene_notext_7007839
-PDno23andme_full_gene_notext_3083751",8/23/2024,Maya,,Snp disease relations; Gene disease relations ,,,,,,,,
+PDno23andme_full_gene_notext_3083751",8/23/2024,Maya,Multi-Filter; Threshold,SNP Disease Relations; Gene Disease Relations ,,,,,,,,
 Q51,What is the relevance of the gene TREM2 in Alzheimer's disease?,"2 TREM2 SNPs were found to be significantly associated with an increased risk of Alzheimer's disease. Here are the top SNPs according to the largest European genome-wide meta-analysis of Alzheimer's disease (Bellenguez, 2022):
  • rs75932628 (GWAS P-value: 1.39E-27; b value: 0.8843)
  • rs143332484 (GWAS P-value: 6.04E-19; b value: 0.3346)","AD_combo_gene_notext_UUID_8300440
 AD_combo_gene_notext_UUID_8300439
-",8/23/2024,Maya,,Gene disease relations ,,,,,,,,
-Q52,What is the relevance of the gene TREM2 in Alzheimer's disease using SMR calculations?,"1 TREM2 SNP was found to be significant in Alzheimer's disease in the cortex:
+",8/23/2024,Maya,Multi-Filter; Threshold,Gene Disease Relations ,,,,,,,,
+Q52,What is the relevance of the gene TREM2 in Alzheimer's disease using SMR calculations?,"1 TREM2 SNP was found to be significant in Alzheimer's disease:
 • rs9394778
-    • Cortex: Adjusted SMR multi-SNP P-value: 6.31E-07; HEIDI: 0.7033",NDD_SMR_genes_all_update_text_1109138,8/23/2024,Maya,,SMR Gene disease relations ,,,,,,,,
+    • Cortex: Adjusted SMR multi-SNP P-value: 6.31E-07; HEIDI: 0.7033",NDD_SMR_genes_all_update_text_1109138,8/23/2024,Maya,Multi-Filter; Threshold; Data Retrieval; Join; Calculation,SMR Gene Disease Relations ,,,,,,,,
 Q53,Is there a statistically significant association between any APOE SNPs and Alzheimer's Disease?,"Yes, the APOE gene is widely recognized as a major genetic risk factor for Alzheimer's Disease. Here are the 5 significant SNPs in the largest European genome-wide meta-analysis of Alzheimer's disease (Bellenguez, 2022):
         •        rs1081106 (GWAS P-value: 7.20E-34; b value: -0.2024)
         •        rs769446 (GWAS P-value: 4.23E-31; b value: -0.1889)
@@ -2063,9 +2063,9 @@ Q53,Is there a statistically significant association between any APOE SNPs and A
 AD_combo_gene_notext_UUID_19908949
 AD_combo_gene_notext_UUID_19908960
 AD_combo_gene_notext_UUID_19908952
-AD_combo_gene_notext_UUID_19908948",8/23/2024,Maya,,Snp disease relations; Gene disease relations ,,,,,,,,
-Q54,Is CCDC93 associated with AD in tibial nerves? ,The expression patterns of the CCDC93 gene in the tibial nerve suggests that CCDC93 does not play a significant role in Alzheimer's Disease.,NDD_SMR_genes_all_update_text_1285358,7/9/2024,Maya,,SMR Gene disease relations; Tissue,,,,,,,,
-Q55,"Based on blood eQTL data, what is the top SNP in SNCA that is associated with Parkinson's disease (PD), and what is its adjusted SMR p-value?","SNCA’s top associated SNP, is rs2245801, has a multi SNP SMR p value of 9.761195e-14 and a HEIDI value of 5.974436e-15.",NDD_SMR_genes_all_update_text_1555943,Aug 6,Marzieh/Maya,,Tissue; SMR Snp disease relations; SMR Gene disease relations  ,,,,,,,,
+AD_combo_gene_notext_UUID_19908948",8/23/2024,Maya,Select; Threshold,SNP Disease Relations; Gene Disease Relations ,,,,,,,,
+Q54,Is CCDC93 associated with AD in tibial nerves? ,The expression patterns of the CCDC93 gene in the tibial nerve suggests that CCDC93 does not play a significant role in Alzheimer's Disease.,NDD_SMR_genes_all_update_text_1285358,7/9/2024,Maya,Multi-Filter; Threshold; Join,SMR Gene Disease Relations; Tissue,,,,,,,,
+Q55,"Based on blood eQTL data, what is the top SNP in SNCA that is associated with Parkinson's disease (PD), and what is its adjusted SMR p-value?","SNCA’s top associated SNP, is rs2245801, has a multi SNP SMR p value of 9.761195e-14 and a HEIDI value of 5.974436e-15.",NDD_SMR_genes_all_update_text_1555943,Aug 6,Marzieh/Maya,Multi-Filter; Threshold; Join; Calculation; Sorting,Tissue; SMR SNP Disease Relations; SMR Gene Disease Relations  ,,,,,,,,
 Q56,Has any relationship been reported between EIF2B3 and Alzheimer's Disease (AD)?,"No, the gene EIF2B3 is not found to have a significant relationship in Alzheimer's disease.","AD_combo_gene_notext_UUID_336642
 AD_combo_gene_notext_UUID_336813
 AD_combo_gene_notext_UUID_336380
@@ -2565,24 +2565,26 @@ AD_combo_gene_notext_UUID_337088
 AD_combo_gene_notext_UUID_336857
 AD_combo_gene_notext_UUID_336792
 AD_combo_gene_notext_UUID_336761
-AD_combo_gene_notext_UUID_336488",7/29/2024,Maya,,Gene disease relations ,,,,,,,,
-Q57,Has any SMR relationship been reported between EIF2B3 and Alzheimer's Disease (AD)?,"No, based on omic data from cortex, putamen basal ganglia, nucleus accumbens basal ganglia, whole blood, whole brain, and prefrontal cortex tissues, the gene EIF2B3 is not found to have a functionally significant role in Alzheimer's disease.","NDD_SMR_genes_all_update_text_1104733 NDD_SMR_genes_all_update_text_1582221 NDD_SMR_genes_all_update_text_1714909 NDD_SMR_genes_all_update_text_1490276 NDD_SMR_genes_all_update_text_37340 NDD_SMR_genes_all_update_text_37341  NDD_SMR_genes_all_update_text_1194963
-NDD_SMR_genes_all_update_text_37342 NDD_SMR_genes_all_update_text_1605096 NDD_SMR_genes_all_update_text_1244112 NDD_SMR_genes_all_update_text_652156 NDD_SMR_genes_all_update_text_1389059",6/27/2024 revised July 3th,Marzieh,,SMR Gene disease relations ,,,,,,,,
-Q58,How many genes does the drug Sontuzumab target and what are they? ,MUC1 is the only gene target of the drug Sontuzumab.,DrugGeneTargets_v1_4993,Aug 16,Marzieh/Maya,,Drug Gene relations,,,,,,,,
-Q59,"What is the genetic target of the antibody drug Bectumomab, and what is its status in clinical trials and FDA approval?",The genetic target of the antibody drug Bectumomab is CD22. Bectumomab reached phase 3 clinical trials but is not approved by the FDA for treatment of any disease.,DrugGeneTargets_v1_5503,Aug 6,Marzieh/Maya,,Drug meta; Drug Gene relations,,,,,,,,
-Q60,What are the synonymous names of the drug Flanvotumab?,"Flanvotumab has the associated synonyms 20-D-7S, 20D7S, IMC-20D7S, and IMC20D7S",DrugGeneTargets_text_12843,6/27/2024 revised July 3th,Marzieh,,Drug meta,,,,,,,,
-Q61,What is the chemblId of the drug Naminidil?,The chemblId for the drug Naminidil is CHEMBL2105160.,DrugGeneTargets_v1_4992,8/6/2024,Maya,,Drug meta,,,,,,,,
-Q62,What are the genetic targets of the drug Halothane?,"Halothane has several genetic targets, such as KCNK2, KCNK9, KCNK18, KCNK10, KCNK3, GLRA1, GLRB, GABRA1, GABRB2, GABRG2, GABRB3, GABRA4, GABRG3, GABRQ, GABRA3, GABRP, GABRD, GABRG1, GABRB1, GABRE, GABRA2, GABRA5, and GABRA6",DrugGeneTargets_v1_5037                                                                                                                                                                                                                                                                                         DrugGeneTargets_v1_5038                                                                                                                                                                                                                                                                                      DrugGeneTargets_v1_5039                                                                                                                                                                                                                                                                                                          DrugGeneTargets_v1_5040                                                                                                                                                                                                                                                                                      DrugGeneTargets_v1_5041                                                                                                                                                                                                                                                                                        DrugGeneTargets_v1_5042                                                                                                                                                                                                                                                                                       DrugGeneTargets_v1_5043,6/27/2024 revised July 3th,Marzieh,,Drug Gene relations,,,,,,,,
-Q63,What is the maximum clinical trial phase for the drug Halothane?,Halothane reached phase 4 clinical trials.,DrugGeneTargets_v1_5037                                                                                                                                                                                                                                                                                         DrugGeneTargets_v1_5038                                                                                                                                                                                                                                                                                      DrugGeneTargets_v1_5039                                                                                                                                                                                                                                                                                                          DrugGeneTargets_v1_5040                                                                                                                                                                                                                                                                                      DrugGeneTargets_v1_5041                                                                                                                                                                                                                                                                                        DrugGeneTargets_v1_5042                                                                                                                                                                                                                                                                                       DrugGeneTargets_v1_5043,6/27/2024 revised July 3th,Marzieh,,Drug meta,,,,,,,,
+AD_combo_gene_notext_UUID_336488",7/29/2024,Maya,Select; Threshold,Gene Disease Relations ,,,,,,,,
+Q57,Has any SMR relationship been reported between EIF2B3 and Alzheimer's Disease (AD) in tissue-specific omic data?,"No, based on the omic data from cortex, putamen basal ganglia, nucleus accumbens basal ganglia, whole blood, whole brain, and prefrontal cortex tissues, the gene EIF2B3 is not found to have a functionally significant role in Alzheimer's disease.","NDD_SMR_genes_all_update_text_1104733 NDD_SMR_genes_all_update_text_1582221 NDD_SMR_genes_all_update_text_1714909 NDD_SMR_genes_all_update_text_1490276 NDD_SMR_genes_all_update_text_37340 NDD_SMR_genes_all_update_text_37341  NDD_SMR_genes_all_update_text_1194963
+NDD_SMR_genes_all_update_text_37342 NDD_SMR_genes_all_update_text_1605096 NDD_SMR_genes_all_update_text_1244112 NDD_SMR_genes_all_update_text_652156 NDD_SMR_genes_all_update_text_1389059",6/27/2024 revised July 3th,Marzieh/Maya,Multi-Filter; Threshold; Data Retrieval; Join; Calculation,SMR Gene Disease Relations ,,,,,,,,
+Q58,How many genes does the drug Sontuzumab target and what are they? ,MUC1 is the only gene target of the drug Sontuzumab.,DrugGeneTargets_v1_4993,Aug 16,Marzieh/Maya,Multi-Filter; Data Retrieval; Aggregate,Drug Gene Relations,,,,,,,,
+Q59,"What is the genetic target of the antibody drug Bectumomab, and what is its status in clinical trials and FDA approval?",The genetic target of the antibody drug Bectumomab is CD22. Bectumomab reached phase 3 clinical trials but is not approved by the FDA for treatment of any disease.,DrugGeneTargets_v1_5503,Aug 6,Marzieh/Maya,Multi-Filter; Data Retrieval,Drug Meta; Drug Gene Relations,,4765,,,,,,
+Q60,What are the synonymous names of the drug Flanvotumab?,"Flanvotumab has the associated synonyms 20-D-7S, 20D7S, IMC-20D7S, and IMC20D7S",DrugGeneTargets_text_12843,6/27/2024 revised July 3th,Marzieh,Select; Data Retrieval; Aggregate,Drug Meta,,,,,,,,
+Q61,What is the chemblId of the drug Naminidil?,The chemblId for the drug Naminidil is CHEMBL2105160.,DrugGeneTargets_v1_4992,8/6/2024,Maya,Select; Data Retrieval,Drug Meta,,,,,,,,
+Q62,What are the genetic targets of the drug Halothane?,"Halothane has several genetic targets, such as KCNK2, KCNK9, KCNK18, KCNK10, KCNK3, GLRA1, GLRB, GABRA1, GABRB2, GABRG2, GABRB3, GABRA4, GABRG3, GABRQ, GABRA3, GABRP, GABRD, GABRG1, GABRB1, GABRE, GABRA2, GABRA5, and GABRA6",DrugGeneTargets_v1_5037                                                                                                                                                                                                                                                                                         DrugGeneTargets_v1_5038                                                                                                                                                                                                                                                                                      DrugGeneTargets_v1_5039                                                                                                                                                                                                                                                                                                          DrugGeneTargets_v1_5040                                                                                                                                                                                                                                                                                      DrugGeneTargets_v1_5041                                                                                                                                                                                                                                                                                        DrugGeneTargets_v1_5042                                                                                                                                                                                                                                                                                       DrugGeneTargets_v1_5043,6/27/2024 revised July 3th,Marzieh,Select; Aggregate,Drug Gene Relations,,,,,,,,
+Q63,What is the maximum clinical trial phase for the drug Halothane?,Halothane reached phase 4 clinical trials.,DrugGeneTargets_v1_5037                                                                                                                                                                                                                                                                                         DrugGeneTargets_v1_5038                                                                                                                                                                                                                                                                                      DrugGeneTargets_v1_5039                                                                                                                                                                                                                                                                                                          DrugGeneTargets_v1_5040                                                                                                                                                                                                                                                                                      DrugGeneTargets_v1_5041                                                                                                                                                                                                                                                                                        DrugGeneTargets_v1_5042                                                                                                                                                                                                                                                                                       DrugGeneTargets_v1_5043,6/27/2024 revised July 3th,Marzieh,Select; Data Retrieval,Drug Meta,,,,,,,,
 Q64,What other forms are there of the drug Chlorothiazide?,"There is one alternative form which is Chlorothiazide Sodium, the sodium salt form of Chlorothiazide.","DrugGeneTargets_v1_5405
-DrugGeneTargets_v1_4705",8/9/2024,Maya,,Drug forms,,,,,,,,
-Q65,"What type of molecule is Halothane, and what is its action type?","Halothane is a small molecule drug that acts as an opener, a positive allosteric modulator, and a positive modulator.",DrugGeneTargets_v1_5037                                                                                                                                                                                                                                                                                         DrugGeneTargets_v1_5038                                                                                                                                                                                                                                                                                      DrugGeneTargets_v1_5039                                                                                                                                                                                                                                                                                                          DrugGeneTargets_v1_5040                                                                                                                                                                                                                                                                                      DrugGeneTargets_v1_5041                                                                                                                                                                                                                                                                                        DrugGeneTargets_v1_5042                                                                                                                                                                                                                                                                                       DrugGeneTargets_v1_5043,6/27/2024 revised July 3th,Marzieh,,Pharmacology,,,,,,,,
-Q66,Is Halothane associated with any diseases?,"No, based on the data so far, Halothane is not associated with any diseases",DrugGeneTargets_v1_5037                                                                                                                                                                                                                                                                                         DrugGeneTargets_v1_5038                                                                                                                                                                                                                                                                                      DrugGeneTargets_v1_5039                                                                                                                                                                                                                                                                                                          DrugGeneTargets_v1_5040                                                                                                                                                                                                                                                                                      DrugGeneTargets_v1_5041                                                                                                                                                                                                                                                                                        DrugGeneTargets_v1_5042                                                                                                                                                                                                                                                                                       DrugGeneTargets_v1_5043,6/27/2024 revised July 3th,Marzieh,,Drug Disease relations,,,,,,,,
-Q67,What is the top-associated SNP of the gene EMID2 in whole brain eQTL omic data for LBD disease and is it functionally significant?,"The top-associated SNP for EMID2 in whole brain eQTL omic data for LBD disease is rs7805075, which has a multi-SNP SMR p-value of 0.8006395 and a HEIDI value of 0.7130096, and is not functionally significant.",NDD_SMR_genes_all_update_text_1629820,6/27/2024 revised July 3th,Marzieh,,SMR Snp disease relations; SMR Gene disease relations ,,,,,,,,
-Q68,Is there any basal ganglia eQTL omic data available for the gene ZNF257 in relation to ALS (Amyotrophic Lateral Sclerosis) disease?,"Yes, there is Basal Ganglia eQTL omic data for the gene ZNF257, which indicates it does not have a functionally significant role in Amyotrophic Lateral Sclerosis.",NDD_SMR_genes_all_update_text_25257,6/27/2024 revised July 3th,Marzieh,,Tissue; Gene disease relations ,,,,,,,,
-Q69,What is the nearest gene to SNP rs12483639?,The nearest gene to SNP rs12483639 is APP.,PDno23andme_full_gene_notext_4687626,July 3th,Marzieh/Maya,,Genomic location,,,,,,,,
-Q70,What is the position of rs12483639 in GRCh37 and GRCh38?,The position of this SNP is 27442372 in GRCh37 and 26070056 in GRCh38.,"PDno23andme_full_gene_notext_4687626
-AD_combo_gene_notext_UUID_20681288",7/29/2024,Marzieh/Maya,,Genomic location,,,,,,,,
+DrugGeneTargets_v1_4705",8/9/2024,Maya,Select; Aggregate; Similarity Search,Drug forms,,,,,,,,
+Q65,"What type of molecule is Halothane, and what is its action type?","Halothane is a small molecule drug that acts as an opener, a positive allosteric modulator, and a positive modulator.",DrugGeneTargets_v1_5037                                                                                                                                                                                                                                                                                         DrugGeneTargets_v1_5038                                                                                                                                                                                                                                                                                      DrugGeneTargets_v1_5039                                                                                                                                                                                                                                                                                                          DrugGeneTargets_v1_5040                                                                                                                                                                                                                                                                                      DrugGeneTargets_v1_5041                                                                                                                                                                                                                                                                                        DrugGeneTargets_v1_5042                                                                                                                                                                                                                                                                                       DrugGeneTargets_v1_5043,6/27/2024 revised July 3th,Marzieh,Multi-Filter; Data Retrieval,Pharmacology,,,,,,,,
+Q66,Is Halothane associated with any diseases?,"No, based on the data so far, Halothane is not associated with any diseases",DrugGeneTargets_v1_5037                                                                                                                                                                                                                                                                                         DrugGeneTargets_v1_5038                                                                                                                                                                                                                                                                                      DrugGeneTargets_v1_5039                                                                                                                                                                                                                                                                                                          DrugGeneTargets_v1_5040                                                                                                                                                                                                                                                                                      DrugGeneTargets_v1_5041                                                                                                                                                                                                                                                                                        DrugGeneTargets_v1_5042                                                                                                                                                                                                                                                                                       DrugGeneTargets_v1_5043,6/27/2024 revised July 3th,Marzieh,Select; Data Retrieval,Drug Disease Relations,,,,,,,,
+Q67,What is the top-associated SNP of the gene EMID2 in whole brain eQTL omic data for LBD disease and is it functionally significant?,"The top-associated SNP for EMID2 in whole brain eQTL omic data for LBD disease is rs7805075, which has a multi-SNP SMR p-value of 0.8006395 and a HEIDI value of 0.7130096, and is not functionally significant.",NDD_SMR_genes_all_update_text_1629820,6/27/2024 revised July 3th,Marzieh,Multi-Filter; Data Retrieval; Aggregate; Join; Threshold; Sorting; Calculation,SMR SNP Disease Relations; SMR Gene Disease Relations ,,,,,,,,
+Q68,Is there any basal ganglia eQTL omic data available for the gene ZNF257 in relation to ALS (Amyotrophic Lateral Sclerosis) disease?,"Yes, there is Basal Ganglia eQTL omic data for the gene ZNF257, which indicates it does not have a functionally significant role in Amyotrophic Lateral Sclerosis.",NDD_SMR_genes_all_update_text_25257,6/27/2024 revised July 3th,Marzieh,Multi-Filter; Aggregate; Join; Threshold,Tissue; Gene Disease Relations ,,,,,,,,
+Q69,What is the nearest gene to SNP rs12483639?,The nearest gene to SNP rs12483639 is APP.,"PDno23andme_full_gene_notext_4687626
+AD_combo_gene_notext_UUID_20681288
+",July 3th,Marzieh/Maya,Select; Join; Comparative Analysis,Genomic Location,,,,,,,,
+Q70,What is the bp position of rs12483639 in GRCh37 and GRCh38?,The bp position of the SNP rs12483639 is 27442372 in GRCh37 and 26070056 in GRCh38.,"PDno23andme_full_gene_notext_4687626
+AD_combo_gene_notext_UUID_20681288",7/29/2024,Marzieh/Maya,Select; Join; Comparative Analysis,Genomic Location,,,,,,,,
 Q71,What is the typical drug action type used by antibody therapies?,Antibody therapies most often act as inhibitors. ,"DrugGeneTargets_v1_2498
 DrugGeneTargets_v1_1591
 DrugGeneTargets_v1_2768
@@ -3027,55 +3029,100 @@ DrugGeneTargets_v1_560
 DrugGeneTargets_v1_4158
 DrugGeneTargets_v1_2795
 DrugGeneTargets_v1_1871
-DrugGeneTargets_v1_2146",8/20/2024,Maya,,Pharmacology,,,,,,,,
-Q72,When was Quazepam assigned a United States Adopted Name (USAN) and approved for use by the FDA?,Quazepam was assigned a USAN in 1976 and was approved for use by the FDA in 1985.,DrugTargetsIndication121923_text_964756 DrugTargetsIndication121923_text_964765 DrugTargetsIndication121923_text_964743 DrugTargetsIndication121923_text_964755 DrugTargetsIndication121923_text_964759 DrugTargetsIndication121923_text_964735 DrugTargetsIndication121923_text_964762 DrugTargetsIndication121923_text_964760 DrugTargetsIndication121923_text_964742 DrugTargetsIndication121923_text_964758 DrugTargetsIndication121923_text_964752 DrugTargetsIndication121923_text_964740 DrugTargetsIndication121923_text_964744 DrugTargetsIndication121923_text_964763 DrugTargetsIndication121923_text_964734 DrugTargetsIndication121923_text_964746 DrugTargetsIndication121923_text_964748 DrugTargetsIndication121923_text_964754 DrugTargetsIndication121923_text_964739 DrugTargetsIndication121923_text_964749 DrugTargetsIndication121923_text_964757 DrugTargetsIndication121923_text_964761 DrugTargetsIndication121923_text_964750 DrugTargetsIndication121923_text_964745 DrugTargetsIndication121923_text_964751 DrugTargetsIndication121923_text_964741 DrugTargetsIndication121923_text_964736 DrugTargetsIndication121923_text_964737 DrugTargetsIndication121923_text_964756 DrugTargetsIndication121923_text_964738 DrugTargetsIndication121923_text_964747 DrugTargetsIndication121923_text_964764,July 3th,Marzieh,,Drug meta,,,,,,,,
-Q73,"For what condition is Quazepam indicated, and which Experimental Factor Ontology (EFO) and Medical Subject Headings (MeSH) terms are associated with it?","Quazepam is indicated for the treatment of insomnia, associated with the Experimental Factor Ontology (EFO) term EFO:0004698 and the Medical Subject Headings (MeSH) term Sleep Initiation and Maintenance Disorders (D007319).",DrugTargetsIndication121923_text_964756 DrugTargetsIndication121923_text_964765 DrugTargetsIndication121923_text_964743 DrugTargetsIndication121923_text_964755 DrugTargetsIndication121923_text_964759 DrugTargetsIndication121923_text_964735 DrugTargetsIndication121923_text_964762 DrugTargetsIndication121923_text_964760 DrugTargetsIndication121923_text_964742 DrugTargetsIndication121923_text_964758 DrugTargetsIndication121923_text_964752 DrugTargetsIndication121923_text_964740 DrugTargetsIndication121923_text_964744 DrugTargetsIndication121923_text_964763 DrugTargetsIndication121923_text_964734 DrugTargetsIndication121923_text_964746 DrugTargetsIndication121923_text_964748 DrugTargetsIndication121923_text_964754 DrugTargetsIndication121923_text_964739 DrugTargetsIndication121923_text_964749 DrugTargetsIndication121923_text_964757 DrugTargetsIndication121923_text_964761 DrugTargetsIndication121923_text_964750 DrugTargetsIndication121923_text_964745 DrugTargetsIndication121923_text_964751 DrugTargetsIndication121923_text_964741 DrugTargetsIndication121923_text_964736 DrugTargetsIndication121923_text_964737 DrugTargetsIndication121923_text_964756 DrugTargetsIndication121923_text_964738 DrugTargetsIndication121923_text_964747 DrugTargetsIndication121923_text_964764,July 3th,Marzieh,,Drug Disease relations,,,,,,,,
-Q74,What are the trade names and synonyms associated with Quazepam?,"The trade name of this drug is Doral, and its synonyms are NSC-309702, Quazepam civ, SCH 16134, and SCH-16134.",DrugTargetsIndication121923_text_964756 DrugTargetsIndication121923_text_964765 DrugTargetsIndication121923_text_964743 DrugTargetsIndication121923_text_964755 DrugTargetsIndication121923_text_964759 DrugTargetsIndication121923_text_964735 DrugTargetsIndication121923_text_964762 DrugTargetsIndication121923_text_964760 DrugTargetsIndication121923_text_964742 DrugTargetsIndication121923_text_964758 DrugTargetsIndication121923_text_964752 DrugTargetsIndication121923_text_964740 DrugTargetsIndication121923_text_964744 DrugTargetsIndication121923_text_964763 DrugTargetsIndication121923_text_964734 DrugTargetsIndication121923_text_964746 DrugTargetsIndication121923_text_964748 DrugTargetsIndication121923_text_964754 DrugTargetsIndication121923_text_964739 DrugTargetsIndication121923_text_964749 DrugTargetsIndication121923_text_964757 DrugTargetsIndication121923_text_964761 DrugTargetsIndication121923_text_964750 DrugTargetsIndication121923_text_964745 DrugTargetsIndication121923_text_964751 DrugTargetsIndication121923_text_964741 DrugTargetsIndication121923_text_964736 DrugTargetsIndication121923_text_964737 DrugTargetsIndication121923_text_964756 DrugTargetsIndication121923_text_964738 DrugTargetsIndication121923_text_964747 DrugTargetsIndication121923_text_964764,July 3th,Marzieh,,Drug meta,,,,,,,,
-Q75,What was the first phosphate salt drug and when was it approved by the FDA? ,Histamine Phosphate was the first phosphate salt drug and was approved by the FDA 1939.  ,DrugGeneTargets_v2_2178,8/26/2024,Maya,,Drug forms; Drug Disease relations; Drug meta,,,,,,,,
-Q76,How many investigational indications does Iratumumab have?,Iratumumab has 3 investigational indications but is not approved by the FDA for the treatment of any disease.,DrugGeneTargets_v1_2241,July 3th,Marzieh/Maya,,Drug meta,,,,,,,,
-Q77,When was Sonidegib Phosphate assigned a United States assigned name (USAN)?,Sonidegib Phosphate was assigned a United States assigned name (USAN) in 2013.,DrugTargetsIndication121923_text_1072620 DrugTargetsIndication121923_text_1072622 DrugTargetsIndication121923_text_1072621,July 3th,Marzieh,,Drug meta,,,,,,,,
-Q78,Can you describe the association between the SNCA gene and Parkinson's disease?,"The gene SNCA has 218 SNPs that are significantly associated with Parkinson's disease, here are the top 10: 
-• rs356203        
-•        b value=        0.2398
-•        P-value=        3.01E-41
-• rs356204        
-•        b value=        0.2085
-•        P-value=        2.87E-32
-• rs189596        
-•        b value=        0.2093
-•        P-value=        4.29E-32
-• rs356200        
-•        b value=        0.2084
-•        P-value=        5.61E-32
-• rs356168        
-•        b value=        0.2089
-•        P-value=        8.41E-32
-• rs2736990        
-•        b value=        0.2089
-•        P-value=        1.08E-31
-• rs1372518        
-•        b value=        -0.2334
-•        P-value=        5.35E-29
-• rs1372519        
-•        b value=        -0.2279
-•        P-value=        6.05E-28
-• rs1372520        
-•        b value=        -0.2267
-•        P-value=        1.19E-27
-• rs990085        
-•        b value=        -0.2321
-•        P-value=        2.25E-27","PDno23andme_full_gene_notext_1492093
-PDno23andme_full_gene_notext_6805650
-PDno23andme_full_gene_notext_7042578
-PDno23andme_full_gene_notext_3240570
-PDno23andme_full_gene_notext_2591502
-PDno23andme_full_gene_notext_5819926
-PDno23andme_full_gene_notext_2683188
+DrugGeneTargets_v1_2146",8/20/2024,Maya,Select; Join; Aggregate; Calculation,Pharmacology,,,,,,,,
+Q72,When was Quazepam assigned a United States Adopted Name (USAN) and approved for use by the FDA?,Quazepam was assigned a USAN in 1976 and was approved for use by the FDA in 1985.,DrugTargetsIndication121923_text_964756 DrugTargetsIndication121923_text_964765 DrugTargetsIndication121923_text_964743 DrugTargetsIndication121923_text_964755 DrugTargetsIndication121923_text_964759 DrugTargetsIndication121923_text_964735 DrugTargetsIndication121923_text_964762 DrugTargetsIndication121923_text_964760 DrugTargetsIndication121923_text_964742 DrugTargetsIndication121923_text_964758 DrugTargetsIndication121923_text_964752 DrugTargetsIndication121923_text_964740 DrugTargetsIndication121923_text_964744 DrugTargetsIndication121923_text_964763 DrugTargetsIndication121923_text_964734 DrugTargetsIndication121923_text_964746 DrugTargetsIndication121923_text_964748 DrugTargetsIndication121923_text_964754 DrugTargetsIndication121923_text_964739 DrugTargetsIndication121923_text_964749 DrugTargetsIndication121923_text_964757 DrugTargetsIndication121923_text_964761 DrugTargetsIndication121923_text_964750 DrugTargetsIndication121923_text_964745 DrugTargetsIndication121923_text_964751 DrugTargetsIndication121923_text_964741 DrugTargetsIndication121923_text_964736 DrugTargetsIndication121923_text_964737 DrugTargetsIndication121923_text_964756 DrugTargetsIndication121923_text_964738 DrugTargetsIndication121923_text_964747 DrugTargetsIndication121923_text_964764,July 3th,Marzieh,Select; Data Retrieval; Join,Drug Meta,,,,,,,,
+Q73,"For what condition is Quazepam indicated, and which Experimental Factor Ontology (EFO) and Medical Subject Headings (MeSH) terms are associated with it?","Quazepam is indicated for the treatment of insomnia, associated with the Experimental Factor Ontology (EFO) id EFO:0004698, and Sleep Initiation and Maintenance Disorders associated with the Medical Subject Headings (MeSH) id D007319.",DrugTargetsIndication121923_text_964756 DrugTargetsIndication121923_text_964765 DrugTargetsIndication121923_text_964743 DrugTargetsIndication121923_text_964755 DrugTargetsIndication121923_text_964759 DrugTargetsIndication121923_text_964735 DrugTargetsIndication121923_text_964762 DrugTargetsIndication121923_text_964760 DrugTargetsIndication121923_text_964742 DrugTargetsIndication121923_text_964758 DrugTargetsIndication121923_text_964752 DrugTargetsIndication121923_text_964740 DrugTargetsIndication121923_text_964744 DrugTargetsIndication121923_text_964763 DrugTargetsIndication121923_text_964734 DrugTargetsIndication121923_text_964746 DrugTargetsIndication121923_text_964748 DrugTargetsIndication121923_text_964754 DrugTargetsIndication121923_text_964739 DrugTargetsIndication121923_text_964749 DrugTargetsIndication121923_text_964757 DrugTargetsIndication121923_text_964761 DrugTargetsIndication121923_text_964750 DrugTargetsIndication121923_text_964745 DrugTargetsIndication121923_text_964751 DrugTargetsIndication121923_text_964741 DrugTargetsIndication121923_text_964736 DrugTargetsIndication121923_text_964737 DrugTargetsIndication121923_text_964756 DrugTargetsIndication121923_text_964738 DrugTargetsIndication121923_text_964747 DrugTargetsIndication121923_text_964764,9/5/2024,Marzieh/Maya,Select; Join; Aggregate; Comparative Analysis,Drug Disease Relations,,,,,,,,
+Q74,What are the trade names and synonyms associated with Quazepam?,"The trade name of Quazepam is Doral, and its synonyms are NSC-309702, Quazepam civ, SCH 16134, and SCH-16134.",DrugTargetsIndication121923_text_964756 DrugTargetsIndication121923_text_964765 DrugTargetsIndication121923_text_964743 DrugTargetsIndication121923_text_964755 DrugTargetsIndication121923_text_964759 DrugTargetsIndication121923_text_964735 DrugTargetsIndication121923_text_964762 DrugTargetsIndication121923_text_964760 DrugTargetsIndication121923_text_964742 DrugTargetsIndication121923_text_964758 DrugTargetsIndication121923_text_964752 DrugTargetsIndication121923_text_964740 DrugTargetsIndication121923_text_964744 DrugTargetsIndication121923_text_964763 DrugTargetsIndication121923_text_964734 DrugTargetsIndication121923_text_964746 DrugTargetsIndication121923_text_964748 DrugTargetsIndication121923_text_964754 DrugTargetsIndication121923_text_964739 DrugTargetsIndication121923_text_964749 DrugTargetsIndication121923_text_964757 DrugTargetsIndication121923_text_964761 DrugTargetsIndication121923_text_964750 DrugTargetsIndication121923_text_964745 DrugTargetsIndication121923_text_964751 DrugTargetsIndication121923_text_964741 DrugTargetsIndication121923_text_964736 DrugTargetsIndication121923_text_964737 DrugTargetsIndication121923_text_964756 DrugTargetsIndication121923_text_964738 DrugTargetsIndication121923_text_964747 DrugTargetsIndication121923_text_964764,July 3th,Marzieh,Select; Join; Aggregate,Drug Meta,,,,,,,,
+Q75,What was the first phosphate salt drug and when was it approved by the FDA? ,Histamine Phosphate was the first phosphate salt drug and was approved by the FDA 1939.  ,DrugGeneTargets_v2_2178,8/26/2024,Maya,Multi-Filter; Data Retrieval; Join; Sorting; Similarity Search,Drug forms; Drug Disease Relations; Drug Meta,,,,,,,,
+Q76,How many investigational indications does Iratumumab have?,Iratumumab has 3 investigational indications but is not approved by the FDA for the treatment of any disease.,DrugGeneTargets_v1_2241,July 3th,Marzieh/Maya,Select; Data Retrieval,Drug Meta,,,,,,,,
+Q77,When was Sonidegib Phosphate assigned a United States assigned name (USAN)?,Sonidegib Phosphate was assigned a United States assigned name (USAN) in 2013.,DrugTargetsIndication121923_text_1072620 DrugTargetsIndication121923_text_1072622 DrugTargetsIndication121923_text_1072621,July 3th,Marzieh,Select; Data Retrieval,Drug Meta,,,,,,,,
+Q78,Can you describe the association between the SNCA gene and Parkinson's disease?,"According to the largest European genome-wide meta-analysis of Parkinson's disease (Nalls et al., 2019), the gene SNCA has 247 SNPs significantly associated with an increased risk and 48 SNPs significantly associated with a decreased risk of Parkinson's disease. Therefore, SNCA is strongly associated with Parkinson's disease, with the majority of SNPs linked to an increased risk.
+Here are the top 10 for each category:
+Increased risk:
+    •        rs356203 (GWAS P-value: 3.01E-41; b value: 0.2398)
+    •        rs356219 (GWAS P-value: 3.469E-41; b value: 0.2334)
+    •        rs356220 (GWAS P-value: 3.919E-41; b value: 0.2326)
+    •        rs356215 (GWAS P-value: 1.01E-36; b value: 0.2197)
+    •        rs356182 (GWAS P-value: 9.409E-34; b value: 0.2545)
+    •        rs356225 (GWAS P-value: 2.514E-32; b value: 0.2043)
+    •        rs356221 (GWAS P-value: 2.522E-32; b value: 0.2041)
+    •        rs356204 (GWAS P-value: 2.866E-32; b value: 0.2085)
+    •        rs189596 (GWAS P-value: 4.288E-32; b value: 0.2093)
+    •        rs356200 (GWAS P-value: 5.613E-32; b value: 0.2084)
+Decreased risk:
+    •        rs1372518 (GWAS P-value: 5.354E-29; b value: -0.2334)
+    •        rs1372519 (GWAS P-value: 6.053E-28; b value: -0.2279)
+    •        rs1372520 (GWAS P-value: 1.193E-27; b value: -0.2267)
+    •        rs990085 (GWAS P-value: 2.254E-27; b value: -0.2321)
+    •        rs1471484 (GWAS P-value: 2.379E-27; b value: -0.2322)
+    •        rs2737002 (GWAS P-value: 2.725E-27; b value: -0.2326)
+    •        rs2619356 (GWAS P-value: 4.005E-24; b value: -0.2166) 
+    •        rs2583978 (GWAS P-value: 4.114E-24; b value: -0.2167)
+    •        rs1442148 (GWAS P-value: 4.77E-24; b value: -0.2171)
+    •        rs2583979 (GWAS P-value: 4.822E-24; b value: -0.2164)
+","PDno23andme_full_gene_notext_2683188
 PDno23andme_full_gene_notext_4965940
 PDno23andme_full_gene_notext_4221061
 PDno23andme_full_gene_notext_1776190
 PDno23andme_full_gene_notext_5233185
 PDno23andme_full_gene_notext_6922072
+PDno23andme_full_gene_notext_5114632
+PDno23andme_full_gene_notext_5792625
+PDno23andme_full_gene_notext_4244890
+PDno23andme_full_gene_notext_5699697
+PDno23andme_full_gene_notext_2138953
+PDno23andme_full_gene_notext_1458962
+PDno23andme_full_gene_notext_3155638
+PDno23andme_full_gene_notext_2108200
+PDno23andme_full_gene_notext_1610459
+PDno23andme_full_gene_notext_6073657
+PDno23andme_full_gene_notext_4967358
+PDno23andme_full_gene_notext_3586376
+PDno23andme_full_gene_notext_754910
+PDno23andme_full_gene_notext_2129391
+PDno23andme_full_gene_notext_2898081
+PDno23andme_full_gene_notext_2058618
+PDno23andme_full_gene_notext_6763690
+PDno23andme_full_gene_notext_6248628
+PDno23andme_full_gene_notext_3234342
+PDno23andme_full_gene_notext_4096142
+PDno23andme_full_gene_notext_1864400
+PDno23andme_full_gene_notext_4828268
+PDno23andme_full_gene_notext_7208332
+PDno23andme_full_gene_notext_5635473
+PDno23andme_full_gene_notext_2924847
+PDno23andme_full_gene_notext_2754296
+PDno23andme_full_gene_notext_4620113
+PDno23andme_full_gene_notext_6271047
+PDno23andme_full_gene_notext_1626528
+PDno23andme_full_gene_notext_1006993
+PDno23andme_full_gene_notext_6919182
+PDno23andme_full_gene_notext_3567663
+PDno23andme_full_gene_notext_6938716
+PDno23andme_full_gene_notext_2236779
+PDno23andme_full_gene_notext_1922551
+PDno23andme_full_gene_notext_4705107
+PDno23andme_full_gene_notext_4820576
+PDno23andme_full_gene_notext_5311124
+PDno23andme_full_gene_notext_270859
+PDno23andme_full_gene_notext_54325
+PDno23andme_full_gene_notext_4499852
+PDno23andme_full_gene_notext_2494451
+PDno23andme_full_gene_notext_1492093
+PDno23andme_full_gene_notext_4541022
+PDno23andme_full_gene_notext_3029756
+PDno23andme_full_gene_notext_6349215
+PDno23andme_full_gene_notext_7539504
+PDno23andme_full_gene_notext_153395
+PDno23andme_full_gene_notext_4449871
+PDno23andme_full_gene_notext_6805650
+PDno23andme_full_gene_notext_7042578
+PDno23andme_full_gene_notext_3240570
+PDno23andme_full_gene_notext_2591502
+PDno23andme_full_gene_notext_5819926
+PDno23andme_full_gene_notext_4756590
+PDno23andme_full_gene_notext_3272323
+PDno23andme_full_gene_notext_1741695
 PDno23andme_full_gene_notext_3740399
 PDno23andme_full_gene_notext_7549829
 PDno23andme_full_gene_notext_3511837
@@ -3083,6 +3130,7 @@ PDno23andme_full_gene_notext_5450418
 PDno23andme_full_gene_notext_3411033
 PDno23andme_full_gene_notext_1336881
 PDno23andme_full_gene_notext_723828
+PDno23andme_full_gene_notext_6833692
 PDno23andme_full_gene_notext_3615409
 PDno23andme_full_gene_notext_4404188
 PDno23andme_full_gene_notext_3686644
@@ -3093,43 +3141,38 @@ PDno23andme_full_gene_notext_5469680
 PDno23andme_full_gene_notext_7671019
 PDno23andme_full_gene_notext_1891942
 PDno23andme_full_gene_notext_3945878
-PDno23andme_full_gene_notext_5114632
-PDno23andme_full_gene_notext_5792625
-PDno23andme_full_gene_notext_4244890
-PDno23andme_full_gene_notext_5699697
-PDno23andme_full_gene_notext_2138953
-PDno23andme_full_gene_notext_1458962
-PDno23andme_full_gene_notext_3155638
 PDno23andme_full_gene_notext_1141587
-PDno23andme_full_gene_notext_2108200
-PDno23andme_full_gene_notext_1610459
-PDno23andme_full_gene_notext_6073657
-PDno23andme_full_gene_notext_4967358
-PDno23andme_full_gene_notext_3586376
 PDno23andme_full_gene_notext_4186646
 PDno23andme_full_gene_notext_6634203
 PDno23andme_full_gene_notext_5980492
-PDno23andme_full_gene_notext_754910
-PDno23andme_full_gene_notext_2129391
-PDno23andme_full_gene_notext_2898081
-PDno23andme_full_gene_notext_2058618
 PDno23andme_full_gene_notext_1185479
 PDno23andme_full_gene_notext_3083469
 PDno23andme_full_gene_notext_5894039
-PDno23andme_full_gene_notext_6763690
-PDno23andme_full_gene_notext_6248628
-PDno23andme_full_gene_notext_3234342
+PDno23andme_full_gene_notext_3762573
 PDno23andme_full_gene_notext_3340733
+PDno23andme_full_gene_notext_7244706
+PDno23andme_full_gene_notext_5383397
+PDno23andme_full_gene_notext_1703034
+PDno23andme_full_gene_notext_1605258
+PDno23andme_full_gene_notext_5146757
+PDno23andme_full_gene_notext_1538687
 PDno23andme_full_gene_notext_5788290
+PDno23andme_full_gene_notext_6195919
+PDno23andme_full_gene_notext_6355011
 PDno23andme_full_gene_notext_912478
+PDno23andme_full_gene_notext_1278115
+PDno23andme_full_gene_notext_7189410
+PDno23andme_full_gene_notext_6679023
+PDno23andme_full_gene_notext_610040
 PDno23andme_full_gene_notext_566908
 PDno23andme_full_gene_notext_7632805
 PDno23andme_full_gene_notext_7098783
 PDno23andme_full_gene_notext_5064348
+PDno23andme_full_gene_notext_3725146
+PDno23andme_full_gene_notext_7213004
 PDno23andme_full_gene_notext_1596560
 PDno23andme_full_gene_notext_7552804
 PDno23andme_full_gene_notext_5732064
-PDno23andme_full_gene_notext_4096142
 PDno23andme_full_gene_notext_2559478
 PDno23andme_full_gene_notext_248194
 PDno23andme_full_gene_notext_5219548
@@ -3139,42 +3182,56 @@ PDno23andme_full_gene_notext_634001
 PDno23andme_full_gene_notext_981056
 PDno23andme_full_gene_notext_5963569
 PDno23andme_full_gene_notext_3502315
-PDno23andme_full_gene_notext_1864400
-PDno23andme_full_gene_notext_4828268
+PDno23andme_full_gene_notext_5531865
 PDno23andme_full_gene_notext_5731359
-PDno23andme_full_gene_notext_7208332
-PDno23andme_full_gene_notext_5635473
 PDno23andme_full_gene_notext_5488337
-PDno23andme_full_gene_notext_2924847
+PDno23andme_full_gene_notext_7531330
+PDno23andme_full_gene_notext_2285165
+PDno23andme_full_gene_notext_5284113
+PDno23andme_full_gene_notext_6687925
+PDno23andme_full_gene_notext_254817
+PDno23andme_full_gene_notext_2653895
+PDno23andme_full_gene_notext_2656107
+PDno23andme_full_gene_notext_2406369
+PDno23andme_full_gene_notext_3299824
 PDno23andme_full_gene_notext_601914
-PDno23andme_full_gene_notext_2754296
-PDno23andme_full_gene_notext_4620113
+PDno23andme_full_gene_notext_2378048
+PDno23andme_full_gene_notext_657879
+PDno23andme_full_gene_notext_6399211
+PDno23andme_full_gene_notext_1196817
+PDno23andme_full_gene_notext_6637820
+PDno23andme_full_gene_notext_5454138
 PDno23andme_full_gene_notext_4942372
+PDno23andme_full_gene_notext_3394934
+PDno23andme_full_gene_notext_1145121
+PDno23andme_full_gene_notext_1837269
+PDno23andme_full_gene_notext_5928970
+PDno23andme_full_gene_notext_2485027
+PDno23andme_full_gene_notext_5218940
+PDno23andme_full_gene_notext_711472
+PDno23andme_full_gene_notext_1464867
 PDno23andme_full_gene_notext_4354202
-PDno23andme_full_gene_notext_6271047
 PDno23andme_full_gene_notext_182797
 PDno23andme_full_gene_notext_3009514
-PDno23andme_full_gene_notext_1626528
+PDno23andme_full_gene_notext_1405993
 PDno23andme_full_gene_notext_207585
 PDno23andme_full_gene_notext_5649369
 PDno23andme_full_gene_notext_5545002
 PDno23andme_full_gene_notext_1992866
-PDno23andme_full_gene_notext_1006993
 PDno23andme_full_gene_notext_3161418
-PDno23andme_full_gene_notext_6919182
 PDno23andme_full_gene_notext_1316234
 PDno23andme_full_gene_notext_1149710
-PDno23andme_full_gene_notext_3567663
-PDno23andme_full_gene_notext_6938716
-PDno23andme_full_gene_notext_2236779
+PDno23andme_full_gene_notext_2444112
+PDno23andme_full_gene_notext_7229420
 PDno23andme_full_gene_notext_3700367
-PDno23andme_full_gene_notext_1922551
-PDno23andme_full_gene_notext_4705107
+PDno23andme_full_gene_notext_6922440
 PDno23andme_full_gene_notext_7462100
 PDno23andme_full_gene_notext_2794178
-PDno23andme_full_gene_notext_4820576
-PDno23andme_full_gene_notext_5311124
+PDno23andme_full_gene_notext_4545283
+PDno23andme_full_gene_notext_7028000
 PDno23andme_full_gene_notext_5045149
+PDno23andme_full_gene_notext_2783005
+PDno23andme_full_gene_notext_1575861
 PDno23andme_full_gene_notext_2985421
 PDno23andme_full_gene_notext_1029104
 PDno23andme_full_gene_notext_201927
@@ -3185,18 +3242,20 @@ PDno23andme_full_gene_notext_4926331
 PDno23andme_full_gene_notext_3362781
 PDno23andme_full_gene_notext_5222506
 PDno23andme_full_gene_notext_6447647
+PDno23andme_full_gene_notext_1249186
 PDno23andme_full_gene_notext_575618
-PDno23andme_full_gene_notext_270859
+PDno23andme_full_gene_notext_1636786
 PDno23andme_full_gene_notext_759560
 PDno23andme_full_gene_notext_4830172
-PDno23andme_full_gene_notext_54325
 PDno23andme_full_gene_notext_2287661
+PDno23andme_full_gene_notext_548577
 PDno23andme_full_gene_notext_7174594
-PDno23andme_full_gene_notext_4499852
 PDno23andme_full_gene_notext_3033563
 PDno23andme_full_gene_notext_3377310
 PDno23andme_full_gene_notext_5891586
+PDno23andme_full_gene_notext_2358662
 PDno23andme_full_gene_notext_6443329
+PDno23andme_full_gene_notext_4718688
 PDno23andme_full_gene_notext_2006830
 PDno23andme_full_gene_notext_4432820
 PDno23andme_full_gene_notext_4275596
@@ -3212,8 +3271,8 @@ PDno23andme_full_gene_notext_6186797
 PDno23andme_full_gene_notext_3412198
 PDno23andme_full_gene_notext_3797845
 PDno23andme_full_gene_notext_3922394
-PDno23andme_full_gene_notext_625911
 PDno23andme_full_gene_notext_5404279
+PDno23andme_full_gene_notext_625911
 PDno23andme_full_gene_notext_6705975
 PDno23andme_full_gene_notext_2439296
 PDno23andme_full_gene_notext_3307812
@@ -3263,9 +3322,13 @@ PDno23andme_full_gene_notext_1553385
 PDno23andme_full_gene_notext_7442171
 PDno23andme_full_gene_notext_2357321
 PDno23andme_full_gene_notext_7182535
+PDno23andme_full_gene_notext_3007373
 PDno23andme_full_gene_notext_6568546
 PDno23andme_full_gene_notext_1373016
+PDno23andme_full_gene_notext_6434067
 PDno23andme_full_gene_notext_5746066
+PDno23andme_full_gene_notext_293298
+PDno23andme_full_gene_notext_4784355
 PDno23andme_full_gene_notext_679880
 PDno23andme_full_gene_notext_4255719
 PDno23andme_full_gene_notext_3214763
@@ -3274,22 +3337,32 @@ PDno23andme_full_gene_notext_6831032
 PDno23andme_full_gene_notext_2261620
 PDno23andme_full_gene_notext_2006269
 PDno23andme_full_gene_notext_4477476
+PDno23andme_full_gene_notext_3579705
+PDno23andme_full_gene_notext_7237761
 PDno23andme_full_gene_notext_1945781
 PDno23andme_full_gene_notext_3347265
 PDno23andme_full_gene_notext_140491
-PDno23andme_full_gene_notext_2494451
+PDno23andme_full_gene_notext_7514380
 PDno23andme_full_gene_notext_7478
+PDno23andme_full_gene_notext_4310842
 PDno23andme_full_gene_notext_4544624
+PDno23andme_full_gene_notext_6605320
+PDno23andme_full_gene_notext_1757203
+PDno23andme_full_gene_notext_1078994
+PDno23andme_full_gene_notext_4624106
 PDno23andme_full_gene_notext_1221032
-PDno23andme_full_gene_notext_701322",7/30/2024,Maya,,Gene disease relations ,,,,,,,,
-Q79,Which tissues express genes with SNPs that are associated with PD? ,"Out of the 22 tissues tested, 21 expressed genes with SNPs that are significantly associated with Parkinson's Disease (PD). The tissue expressing genes with the highest number of significant SNPs was the whole brain, with 220 significant SNPs. The spinal cord had the highest proportion of significant SNPs relative to the total SNPs, with a proportional significance of 0.002.",All rows in PDno23andme_full_gene_notext,7/30/2024,Maya,,Tissue; Snp disease relations ,,,,,,,,
+PDno23andme_full_gene_notext_5110844
+PDno23andme_full_gene_notext_701322
+PDno23andme_full_gene_notext_7099367
+PDno23andme_full_gene_notext_5902045",9/6/2024,Maya,Select; Threshold; Sorting,Gene Disease Relations ,,,,,,,,
+Q79,Which tissues express genes with SNPs that are associated with PD? ,"Out of the 22 tissues tested, 21 expressed genes with SNPs that are significantly associated with Parkinson's Disease (PD). The tissue expressing genes with the highest number of significant SNPs was the whole brain, with 220 significant SNPs. The spinal cord had the highest proportion of significant SNPs relative to the total SNPs, with a proportional significance of 0.002.",All rows in PDno23andme_full_gene_notext,7/30/2024,Maya,Multi-Filter; Threshold; Join; Aggregate,Tissue; SNP Disease Relations ,,,,,,,,
 Q80,What is the patent number associated with Sonidegib Phosphate?,"There are 3 patent numbers associated with the drug Sonidegib Phosphate; 8178563, 10266523, and 8063043.","DrugTargetsIndication121923_text_1072620 
 DrugTargetsIndication121923_text_1072622 
-DrugTargetsIndication121923_text_1072621 ",7/30/2024,Marzieh/Maya,,Drug meta,,,,,,,,
+DrugTargetsIndication121923_text_1072621 ",7/30/2024,Marzieh/Maya,Select; Join; Aggregate,Drug Meta,,,,,,,,
 Q81,Which morphinan scaffold derived medications have been modified for extended-release (ER) or sustained-release (SR) using Polistirex?,"Hydrocodone, Codeine, and Dextromethorphan are all morphinan scaffold derived medications that have modified formulations using Polistirex to extend their release time, creating extended-release (ER) or sustained-release (SR) versions of these medications.","DrugGeneTargets_v1_3604
 DrugGeneTargets_v1_3605
 DrugGeneTargets_v1_2492
-DrugGeneTargets_v1_494",8/12/2024,Maya,,Drug forms; Pharmacology,,,,,,,,
+DrugGeneTargets_v1_494",8/12/2024,Maya,Select; Aggregate; Similarity Search,Drug forms; Pharmacology,,,,,,,,
 Q82,,,,,,,,,,,,,,,
 Q83,,,,,,,,,,,,,,,
 Q84,,,,,,,,,,,,,,,
