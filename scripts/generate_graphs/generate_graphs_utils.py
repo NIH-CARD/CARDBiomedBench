@@ -1,30 +1,35 @@
 import os
 import tiktoken
 import pandas as pd
+from scripts.scripts_utils import load_dataset
 
-def merge_model_responses(res_dir: str, output_csv: str, merge_on: str='uuid', question_col: str='question', answer_col: str='answer', category_col: str='bio_category') -> pd.DataFrame:
+def merge_model_responses(qa_path: str, res_dir: str, output_csv: str, merge_on: str='uuid', question_col: str='question', answer_col: str='answer', category_col: str='bio_category') -> pd.DataFrame:
     """
     Merge all individual model response CSV files in a directory into a single DataFrame, merging on a specific column.
     The question answer, and category columns are included only once in the final DataFrame.
     """
 
+    merged_df = load_dataset(qa_path)
+    if merged_df.empty:
+        print("No data to process. Exiting.")
+        return
+    else:
+        print("****Q/A Dataset loaded****")
+    
+    # TODO DELETE
+    merged_df = merged_df[['uuid', 'question', 'answer', 'SQL_Category', 'Bio_Category']]
+    merged_df.dropna(inplace=True)
+    # TODO DELETE
+
     # List all CSV files in the directory
     csv_files = [f for f in os.listdir(res_dir) if f.endswith('_responses.csv')]
-    
-    # Initialize an empty DataFrame
-    merged_df = pd.DataFrame()
 
     # Iterate over all the CSV files and merge them
     for i, csv_file in enumerate(csv_files):
         file_path = os.path.join(res_dir, csv_file)
         model_df = pd.read_csv(file_path)
-        if i == 0:
-            # On the first merge, include all columns
-            merged_df = model_df
-        else:
-            # On subsequent merges, drop the question and answer columns to avoid duplication
-            model_df = model_df.drop(columns=[question_col, answer_col, category_col])
-            merged_df = pd.merge(merged_df, model_df, on=merge_on, how='outer')
+        model_df = model_df.drop(columns=[question_col, answer_col])
+        merged_df = pd.merge(merged_df, model_df, on=merge_on, how='outer')
 
     # Save the final merged DataFrame
     merged_df.to_csv(output_csv, index=False)

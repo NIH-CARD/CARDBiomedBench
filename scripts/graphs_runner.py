@@ -12,14 +12,16 @@ from scripts.generate_graphs.generate_graphs_utils import merge_model_responses,
 
 def main():
     parser = argparse.ArgumentParser(description="Create graphs and tables on the benchmark results.")
+    parser.add_argument('--qa_path', type=str, required=True, help='Path to the QA CSV file')
     parser.add_argument('--res_dir', type=str, required=True, help='Directory to the res CSV files')
     parser.add_argument('--scored_path', type=str, required=True, help='Path to the compiled results file')
     args = parser.parse_args()
 
+    qa_path = args.qa_path
     res_dir = args.res_dir
     scored_path = args.scored_path
 
-    merge_model_responses(res_dir, scored_path)
+    merge_model_responses(qa_path, res_dir, scored_path)
     
     data = load_dataset(scored_path)
     if data.empty:
@@ -28,12 +30,12 @@ def main():
     
     # Compute and add token count columns for question, answer, and each model_response
     data = get_token_counts(data, MODELS_DICT)
-
     # Dataset statistics txt file
     statistics_txt(data, models=MODELS_DICT, title="statistics", save_path="results/")
 
     # Dataset distribution visualizations
-    plot_category_pie_chart(data, category="bio_category", title="Bio Category Pie", save_path="results/")
+    plot_category_pie_chart(data, category="Bio_Category", title="Bio Category Pie", save_path="results/")
+    plot_category_pie_chart(data, category="SQL_Category", title="SQL Category Pie", save_path="results/")
     plot_token_histograms(data, text_col="question", color="dodgerblue", title="Question", save_path="results/")
     plot_token_histograms(data, text_col="answer", color="deeppink", title="Answer", save_path="results/")
 
@@ -42,8 +44,8 @@ def main():
     if "BioScore" in METRICS_DICT:
         bioscore_model_order = get_model_order(data, "BioScore", MODELS_DICT)
         plot_metric_boxplot(data, "BioScore", MODELS_DICT, bioscore_model_order, "BioScore Boxplot", "results/")
-        plot_metric_heatmap(data, "BioScore", MODELS_DICT, bioscore_model_order, "bio_category", "BioScore Bio Heatmap", "results/")
-        plot_idk_heatmap(data, "BioScore", MODELS_DICT, bioscore_model_order, "bio_category", "Abstention Rate Bio Heatmap", "results/")
+        plot_metric_heatmap(data, "BioScore", MODELS_DICT, bioscore_model_order, "Bio_Category", "BioScore Bio Heatmap", "results/")
+        plot_idk_heatmap(data, "BioScore", MODELS_DICT, bioscore_model_order, "Bio_Category", "Abstention Rate Bio Heatmap", "results/")
         plot_scatterplot(data, "response_token_count", "BioScore", MODELS_DICT, "Mean Token Count by BioScore Stdv", "results/")
         metrics_list += ["BioScore"]
     if "BLEU_ROUGE_BERT" in METRICS_DICT:

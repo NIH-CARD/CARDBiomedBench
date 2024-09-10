@@ -20,7 +20,7 @@ def main():
         print("****Q/A Dataset loaded****")
     
     # TODO DELETE
-    data = data[['uuid', 'question', 'answer', 'bio_category']]
+    data = data[['uuid', 'question', 'answer']]
     data.dropna(inplace=True)
     # TODO DELETE
 
