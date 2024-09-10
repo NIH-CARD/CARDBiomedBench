@@ -23,7 +23,7 @@ def check_BioScore_response(response: str) -> tuple:
 
 def process_batch_results(batch_result_path: str, batch_file_path: str, grading_model) -> dict:
     """
-    Load and process the batch results from the .jsonl file. Cache the results using the query found in the original batch file.
+    Load and process the batch results from the .jsonl file. Cache only valid responses using the query found in the original batch file.
     
     Parameters:
     - batch_result_path (str): The path to the file containing the batch results.
@@ -31,7 +31,7 @@ def process_batch_results(batch_result_path: str, batch_file_path: str, grading_
     - grading_model (GPTQuery): The grading model instance with cache support.
 
     Returns:
-    - dict: A dictionary with the bioscore results mapped by custom_id.
+    - dict: A dictionary with the BioScore results mapped by custom_id.
     """
     bioscore_results = {}
     cache = grading_model.cache
@@ -56,26 +56,27 @@ def process_batch_results(batch_result_path: str, batch_file_path: str, grading_
             if custom_id in batch_queries:
                 original_query = batch_queries[custom_id]
 
-                # Generate the cache key using the original query
-                cache_key = grading_model.get_cache_key(original_query)
-                
-                # Cache the response if it isn't already cached
-                if cache_key not in cache:
-                    grading_model.cache[cache_key] = response_content
-
                 # Check the response and extract the BioScore
                 bioscore, valid = check_BioScore_response(response_content)
                 if valid:
+                    # Generate the cache key using the original query
+                    cache_key = grading_model.get_cache_key(original_query)
+                    
+                    # Cache the response if it isn't already cached and is valid
+                    if cache_key not in cache:
+                        grading_model.cache[cache_key] = response_content
+
                     bioscore_results[custom_id] = bioscore
                 else:
                     print(f"Invalid response for {custom_id}: {response_content}")
             else:
                 print(f"Custom ID {custom_id} not found in batch queries.")
 
-    # Save the updated cache
+    # Save the updated cache (only valid responses will be cached)
     grading_model.save_cache()
 
     return bioscore_results
+
 
 
 def generate_batch_file(grading_prompts, batch_file_path, grading_model, uuids) -> bool:
