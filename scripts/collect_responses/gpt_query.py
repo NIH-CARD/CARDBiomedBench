@@ -164,7 +164,7 @@ class GPTQuery:
             return {"error": error_message}
 
 
-    def poll_batch_status(self, batch_id: str, poll_freq: int = 15):
+    def poll_batch_status(self, batch_id: str, poll_freq: int = 30):
         """
         Poll the status of an ongoing batch job.
 
