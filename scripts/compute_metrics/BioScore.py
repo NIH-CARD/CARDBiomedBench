@@ -10,6 +10,7 @@ from scripts.collect_responses.collect_responses_utils import initialize_model
 CACHE_DIR = ".cache/batch_queries"
 os.makedirs(CACHE_DIR, exist_ok=True)
 
+
 def check_BioScore_response(response: str) -> tuple:
     """Check the BioScore evaluation response for a valid score."""
     match = re.search(r"[-+]?[0-9]*\.?[0-9]+", response)
@@ -20,6 +21,7 @@ def check_BioScore_response(response: str) -> tuple:
         if number == -1:
             return number, True
     return None, False
+
 
 def process_batch_results(batch_result_path: str, batch_file_path: str, grading_model) -> dict:
     """
@@ -78,7 +80,6 @@ def process_batch_results(batch_result_path: str, batch_file_path: str, grading_
     return bioscore_results
 
 
-
 def generate_batch_file(grading_prompts, batch_file_path, grading_model, uuids) -> bool:
     """Generate a .jsonl batch file with grading prompts for batch querying, excluding cached responses.
     
@@ -117,9 +118,7 @@ def generate_batch_file(grading_prompts, batch_file_path, grading_model, uuids) 
                 f.write(json.dumps(request) + '\n')
         return True
     else:
-        print("All queries are already cached. No new batch file created.")
         return False
-
 
 
 def map_bioscore_results_to_dataframe(data: pd.DataFrame, bioscore_results: dict, grading_model, model: str, query_col: str, gold_col: str, response_col: str) -> pd.DataFrame:
