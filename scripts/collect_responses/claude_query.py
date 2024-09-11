@@ -5,10 +5,11 @@ from dotenv import load_dotenv
 import anthropic
 
 class ClaudeQuery:
-    def __init__(self, system_prompt, model_name, max_tokens):
+    def __init__(self, system_prompt, model_name, max_tokens, temperature):
         self.system_prompt = system_prompt
         self.model_name = model_name
         self.max_tokens = max_tokens
+        self.temperature = temperature
         self.cache_file = self.get_cache_file_path()
         self.cache = self.load_cache()
         self.model = self.initialize_claude_model()
@@ -101,6 +102,7 @@ class ClaudeQuery:
             message = self.model.messages.create(
                 model=self.model_name,
                 max_tokens=self.max_tokens,
+                temperature=self.temperature,
                 system=self.system_prompt,
                 messages=[
                     {"role": "user", "content": query},

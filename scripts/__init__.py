@@ -18,8 +18,11 @@ GRADING_MODEL = CONFIG.get('grading_model', '')
 # Load metrics and filter out those not to be used
 METRICS_DICT = {name: details for name, details in CONFIG.get('metrics', {}).items() if details.get('use', False)}
 
-# Set max new tokens for models
-MAX_NEW_TOKENS = CONFIG.get('max_new_tokens', 512)
+# Set max tokens for models
+MAX_NEW_TOKENS = CONFIG.get('max_tokens', 1024)
+
+# Set temperature for models
+TEMPERATURE = 0
 
 # Set the local .cache directory for huggingface models
 HF_HOME = CONFIG['cache_directory']

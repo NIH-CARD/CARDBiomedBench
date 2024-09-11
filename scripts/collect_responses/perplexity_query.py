@@ -6,11 +6,12 @@ import requests
 from dotenv import load_dotenv
 
 class PerplexityQuery:
-    def __init__(self, system_prompt, model_name, max_tokens):
+    def __init__(self, system_prompt, model_name, max_tokens, temperature):
         self.api_url = "https://api.perplexity.ai/chat/completions"
         self.system_prompt = system_prompt
         self.model_name = model_name
         self.max_tokens = max_tokens
+        self.temperature = temperature
         self.headers = self.initialize_headers()
         self.cache_file = self.get_cache_file_path()
         self.cache = self.load_cache()
@@ -107,6 +108,7 @@ class PerplexityQuery:
         payload = {
             "model": self.model_name,
             "max_tokens": self.max_tokens,
+            "temperature": self.temperature,
             "messages": [
                 {"role": "system", "content": self.system_prompt},
                 {"role": "user", "content": query}

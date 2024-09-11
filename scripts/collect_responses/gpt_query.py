@@ -6,11 +6,12 @@ from dotenv import load_dotenv
 from openai import OpenAI
 
 class GPTQuery:
-    def __init__(self, system_prompt, model_name, max_tokens):
+    def __init__(self, system_prompt, model_name, max_tokens, temperature):
         self.client = self.initialize_openai_client()
         self.system_prompt = system_prompt
         self.model_name = model_name
         self.max_tokens = max_tokens
+        self.temperature = temperature
         self.cache_file = self.get_cache_file_path()
         self.cache = self.load_cache()
 
@@ -102,6 +103,7 @@ class GPTQuery:
             chat_completion = self.client.chat.completions.create(
                 model=self.model_name,
                 max_tokens=self.max_tokens,
+                temperature=self.temperature,
                 messages=[
                     {"role": "system", "content": self.system_prompt},
                     {"role": "user", "content": query}

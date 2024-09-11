@@ -6,10 +6,11 @@ from dotenv import load_dotenv
 import google.generativeai as genai
 
 class GeminiQuery:
-    def __init__(self, system_prompt, model_name, max_tokens):
+    def __init__(self, system_prompt, model_name, max_tokens, temperature):
         self.system_prompt = system_prompt
         self.model_name = model_name
         self.max_tokens = max_tokens
+        self.temperature = temperature
         self.cache_file = self.get_cache_file_path()
         self.cache = self.load_cache()
         self.model = self.initialize_gemini_model()
@@ -105,7 +106,10 @@ class GeminiQuery:
             )
             response = chat.send_message(
                 query, 
-                generation_config=genai.GenerationConfig(max_output_tokens=self.max_tokens)
+                generation_config=genai.GenerationConfig(
+                    max_output_tokens=self.max_tokens,
+                    temperature=self.temperature
+                )
             )
             response_text = response.text
 
