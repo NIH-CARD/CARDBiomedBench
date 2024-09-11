@@ -11,6 +11,7 @@ from scripts.generate_graphs.scatter import plot_scatterplot
 from scripts.generate_graphs.generate_graphs_utils import merge_model_responses, get_model_order, get_token_counts
 
 def main():
+    print("*** *** *** GRAPHS RUNNER *** *** ***")
     parser = argparse.ArgumentParser(description="Create graphs and tables on the benchmark results.")
     parser.add_argument('--qa_path', type=str, required=True, help='Path to the QA CSV file')
     parser.add_argument('--res_dir', type=str, required=True, help='Directory to the res CSV files')
@@ -30,6 +31,7 @@ def main():
     
     # Compute and add token count columns for question, answer, and each model_response
     data = get_token_counts(data, MODELS_DICT)
+
     # Dataset statistics txt file
     statistics_txt(data, models=MODELS_DICT, title="statistics", save_path="results/")
 
@@ -56,6 +58,8 @@ def main():
         metrics_list += nlp_metrics
     performance_table = create_performance_table(data, metrics_list, MODELS_DICT)
     style_dataframe(performance_table, "All Metrics", "results/")
+
+    print("*** Graphs Completed ***")
 
 
 if __name__ == "__main__":

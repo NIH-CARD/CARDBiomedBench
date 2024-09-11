@@ -4,6 +4,7 @@ from scripts.scripts_utils import load_dataset
 from scripts.collect_responses.collect_responses_utils import get_all_model_responses
 
 def main():
+    print("*** *** *** RESPONSES RUNNER *** *** ***")
     parser = argparse.ArgumentParser(description="Get LLM results on a QA benchmark.")
     parser.add_argument('--qa_path', type=str, required=True, help='Path to the QA CSV file')
     parser.add_argument('--res_dir', type=str, required=True, help='Directory to save the response CSV files')
@@ -16,17 +17,15 @@ def main():
     if data.empty:
         print("No data to process. Exiting.")
         return
-    else:
-        print("****Q/A Dataset loaded****")
     
     # TODO DELETE
     data = data[['uuid', 'question', 'answer']]
     data.dropna(inplace=True)
     # TODO DELETE
 
-    print("****Getting model responses****")
+    print("*** Getting model responses ***")
     data = get_all_model_responses(data, model_dict=MODELS_DICT, res_dir=res_dir)
-    print(f"****Responses collected and saved to {res_dir}****")
+    print(f"*** Responses collected and saved to {res_dir} ***")
 
 if __name__ == "__main__":
     main()

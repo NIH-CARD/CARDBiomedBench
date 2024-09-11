@@ -14,7 +14,7 @@ def merge_model_responses(qa_path: str, res_dir: str, output_csv: str, merge_on:
         print("No data to process. Exiting.")
         return
     else:
-        print("****Q/A Dataset loaded****")
+        print("Q/A Dataset loaded")
     
     # TODO DELETE
     merged_df = merged_df[['uuid', 'question', 'answer', 'SQL_Category', 'Bio_Category']]
