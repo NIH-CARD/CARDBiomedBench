@@ -14,7 +14,7 @@ def initialize_model(model: str, system_prompt: str):
     """Initialize the model client and create an instance of the query class for the specified model."""
 
     if model == 'gpt-4o':
-        return GPTQuery(system_prompt, 'gpt-4o-2024-08-06', max_tokens=MAX_NEW_TOKENS)
+        return GPTQuery(system_prompt, 'gpt-4o-2024-05-13', max_tokens=MAX_NEW_TOKENS)
     elif model == 'gemini-1.5-pro':
         return GeminiQuery(system_prompt, 'gemini-1.5-pro', max_tokens=MAX_NEW_TOKENS)
     elif model =='claude-3.5-sonnet':
