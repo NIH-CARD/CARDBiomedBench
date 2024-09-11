@@ -2,7 +2,9 @@ benchmark_filename: CARDBioBench.csv
 
 system_prompt: "You are a highly knowledgeable and experienced expert in the healthcare and biomedical field, possessing extensive medical knowledge and practical expertise. If you do not know the answer to a question, explicitly state that you do not know."
 
-max_new_tokens: 512
+max_tokens: 1024
+
+temperature: 0
 
 grading_model: gpt-4o
 
@@ -26,8 +28,6 @@ models:
     use: true
   llama-3.1-70b-it:
     use: true
-  llama-3.1-405b-it:
-    use: false
 
 metrics:
   BioScore:
