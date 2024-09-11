@@ -9,8 +9,8 @@ grading_model: gpt-4o
 cache_directory: ../.cache/huggingface
 
 run_scripts:
-  run_responses: false
-  run_metrics: false
+  run_responses: true
+  run_metrics: true
   run_graphs: true
 
 models:
