@@ -34,11 +34,14 @@ def plot_metric_boxplot(data: pd.DataFrame, metric: str, models: dict, model_ord
         else:
             idk_counts[model] = 0  # Ensure every model has a count entry
             melted_data = pd.concat([melted_data, pd.DataFrame({metric: [np.nan], 'Model': model})], axis=0)
-        
+    
     ax = plt.gca()
     ax.set_xticks(range(len(models)))
     ax.set_xticklabels(models, rotation=0, fontsize=20, ha='center')
     
+    # Custom properties for the median line
+    medianprops = {'color': 'black', 'linewidth': 3}
+
     # Plot the boxplot for metric
     sns.boxplot(
         x='Model', 
@@ -49,6 +52,7 @@ def plot_metric_boxplot(data: pd.DataFrame, metric: str, models: dict, model_ord
         hue='Model',
         dodge=False,
         ax=ax,
+        medianprops=medianprops,  # Change median line color
         legend=False
     )
     
