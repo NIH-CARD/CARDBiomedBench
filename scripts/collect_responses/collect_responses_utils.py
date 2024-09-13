@@ -22,9 +22,9 @@ def initialize_model(model: str, system_prompt: str):
     elif model == 'perplexity-sonar-huge':
         return PerplexityQuery(system_prompt, 'llama-3.1-sonar-huge-128k-online', max_tokens=MAX_NEW_TOKENS, temperature=TEMPERATURE)
     elif model == 'gemma-2-27b-it':
-        return HuggingFaceQuery(system_prompt, 'google/gemma-2-27b-it', max_tokens=MAX_NEW_TOKENS, temperature=TEMPERATURE) 
+        return HuggingFaceQuery(system_prompt, 'google/gemma-2-27b-it', max_tokens=MAX_NEW_TOKENS, do_sample=False) 
     elif model == 'llama-3.1-70b-it':
-        return HuggingFaceQuery(system_prompt, 'meta-llama/Meta-Llama-3.1-70B-Instruct', max_tokens=MAX_NEW_TOKENS, temperature=TEMPERATURE)
+        return HuggingFaceQuery(system_prompt, 'meta-llama/Meta-Llama-3.1-70B-Instruct', max_tokens=MAX_NEW_TOKENS, do_sample=False)
     else:
         return None
 
