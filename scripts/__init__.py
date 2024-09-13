@@ -4,6 +4,9 @@ from scripts.scripts_utils import load_config
 # Load configuration
 CONFIG = load_config()
 
+# Template samples
+TEMPLATE_SAMPLES = CONFIG.get('template_samples', 1)
+
 # Retrieve system prompt
 SYSTEM_PROMPT = CONFIG.get('system_prompt', '')
 

@@ -1,4 +1,8 @@
-benchmark_filename: CARDBioBench.csv
+benchmark_filename: CARDBioBenchTemplate.csv
+
+run_template: true
+
+template_samples: 10
 
 system_prompt: "You are a highly knowledgeable and experienced expert in the healthcare and biomedical field, possessing extensive medical knowledge and practical expertise. If you do not know the answer to a question, explicitly state that you do not know."
 

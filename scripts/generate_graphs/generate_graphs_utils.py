@@ -1,9 +1,10 @@
 import os
 import tiktoken
 import pandas as pd
-from scripts.scripts_utils import load_dataset
+from scripts import TEMPLATE_SAMPLES
+from scripts.scripts_utils import load_dataset, sample_data_by_template
 
-def merge_model_responses(qa_path: str, res_dir: str, output_csv: str, merge_on: str='uuid', question_col: str='question', answer_col: str='answer', category_col: str='bio_category') -> pd.DataFrame:
+def merge_model_responses(qa_path: str, res_dir: str, output_csv: str, template_flag: bool, merge_on: str='uuid') -> pd.DataFrame:
     """
     Merge all individual model response CSV files in a directory into a single DataFrame, merging on a specific column.
     The question answer, and category columns are included only once in the final DataFrame.
@@ -15,7 +16,11 @@ def merge_model_responses(qa_path: str, res_dir: str, output_csv: str, merge_on:
         return
     
     # TODO DELETE
-    merged_df = merged_df[['uuid', 'question', 'answer', 'SQL_Category', 'Bio_Category']]
+    merge_cols = ['uuid', 'question', 'answer', 'SQL_Category', 'Bio_Category']
+    if template_flag:
+        merged_df = sample_data_by_template(merged_df, TEMPLATE_SAMPLES)
+        merge_cols += ['template uuid']
+    merged_df = merged_df[merge_cols]
     merged_df.dropna(inplace=True)
     # TODO DELETE
 
@@ -26,7 +31,7 @@ def merge_model_responses(qa_path: str, res_dir: str, output_csv: str, merge_on:
     for i, csv_file in enumerate(csv_files):
         file_path = os.path.join(res_dir, csv_file)
         model_df = pd.read_csv(file_path)
-        model_df = model_df.drop(columns=[question_col, answer_col])
+        model_df = model_df.drop(columns=['question', 'answer'])
         merged_df = pd.merge(merged_df, model_df, on=merge_on, how='outer')
 
     # Save the final merged DataFrame
