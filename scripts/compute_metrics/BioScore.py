@@ -3,6 +3,7 @@ import pandas as pd
 import re
 import json
 from .prompts import biomedical_grading_prompt
+from scripts import BIOSCORE_SYSTEM_PROMPT
 from scripts.scripts_utils import load_dataset, save_dataset
 from scripts.collect_responses.collect_responses_utils import initialize_model
 
@@ -220,8 +221,7 @@ def poll_batch_results(grading_model, model, batch_ids, res_dir, query_col='ques
 
 def get_all_model_BioScore(res_dir: str, model_dict: dict, query_col: str='question', gold_col: str='answer', response_col: str='response') -> pd.DataFrame:
     """Grade responses from multiple LLMs with a specific prompt & GPT-4o for each query in the dataset."""
-    
-    grading_model = initialize_model("gpt-4o", system_prompt="")
+    grading_model = initialize_model("gpt-4o", system_prompt=BIOSCORE_SYSTEM_PROMPT)
 
     # Step 1: Submit batch files
     batch_ids = submit_batches(grading_model, model_dict, res_dir, query_col, gold_col, response_col)

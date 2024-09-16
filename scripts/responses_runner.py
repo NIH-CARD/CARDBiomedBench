@@ -31,7 +31,6 @@ def main():
     # TODO DELETE
     data = data[['uuid', 'question', 'answer']]
     data.dropna(inplace=True)
-    print(data)
     # TODO DELETE
 
     print("## Getting model responses")

@@ -1,21 +1,16 @@
-benchmark_filename: CARDBioBenchTemplate.csv
-
+benchmark_filename: CARDBioBench.csv
+template_benchmark_filename: CARDBioBenchTemplate.csv
 run_template: true
-
 template_samples: 10
-
 system_prompt: "You are a highly knowledgeable and experienced expert in the healthcare and biomedical field, possessing extensive medical knowledge and practical expertise. If you do not know the answer to a question, explicitly state that you do not know."
-
+bioscore_system_prompt: "You are a highly knowledgeable and experienced expert in the healthcare and biomedical field, possessing extensive medical knowledge and practical expertise."
 max_tokens: 1024
-
 temperature: 0
-
 grading_model: gpt-4o
-
 cache_directory: ../.cache/huggingface
 
 run_scripts:
-  run_responses: true
+  run_responses: false
   run_metrics: true
   run_graphs: true
 
@@ -23,18 +18,18 @@ models:
   gpt-4o:
     use: true
   gemini-1.5-pro:
-    use: true
+    use: false
   claude-3.5-sonnet:
-    use: true
+    use: false
   perplexity-sonar-huge:
-    use: true
+    use: false
   gemma-2-27b-it:
-    use: true
+    use: false
   llama-3.1-70b-it:
-    use: true
+    use: false
 
 metrics:
   BioScore:
     use: true
   BLEU_ROUGE_BERT:
-    use: true
+    use: false

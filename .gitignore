@@ -1,4 +1,5 @@
 # Repository Specific
+results/*
 manual_results/*
 template_results/*
 temp/*

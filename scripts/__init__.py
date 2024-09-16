@@ -7,8 +7,9 @@ CONFIG = load_config()
 # Template samples
 TEMPLATE_SAMPLES = CONFIG.get('template_samples', 1)
 
-# Retrieve system prompt
+# Retrieve system prompts
 SYSTEM_PROMPT = CONFIG.get('system_prompt', '')
+BIOSCORE_SYSTEM_PROMPT = CONFIG.get('bioscore_system_prompt', '')
 
 # Setup models dictionary
 MODELS_DICT = {name: details for name, details in CONFIG.get('models', {}).items() if details.get('use', False)}
