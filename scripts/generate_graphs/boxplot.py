@@ -90,3 +90,58 @@ def plot_metric_boxplot(data: pd.DataFrame, metric: str, models: dict, model_ord
     plt.tight_layout()
     plt.savefig(f'{save_path}/{title}')
     plt.close()
+
+def plot_template_boxplot(data: pd.DataFrame, metric: str, model: str, title: str, save_path: str):
+    """Create box and whisker plots to visualize performance on each template_uuid, handling -1 values for BioScore separately."""
+    sns.set_style("whitegrid")
+    sns.set_context("talk")
+
+    col_name = f'{model}_{metric}'
+    if col_name not in data.columns:
+        raise ValueError(f"Column {col_name} not found in the data.")
+    
+    melted_data = data[[col_name, 'uuid', 'template uuid']].copy()
+    melted_data.rename(columns={col_name: metric}, inplace=True)
+    
+    idk_counts = {}
+    for template_uuid in melted_data['template uuid'].unique():
+        template_data = melted_data[melted_data['template uuid'] == template_uuid]
+        idk_count = (template_data[metric] == -1).sum()
+        idk_counts[template_uuid] = idk_count
+        melted_data = melted_data[~((melted_data['template uuid'] == template_uuid) & (melted_data[metric] == -1))]
+    
+    plt.figure(figsize=(20, 10))
+    plt.axhline(y=0, color='k', linestyle=':', linewidth=2)
+    
+    sns.boxplot(
+        x='template uuid', 
+        y=metric, 
+        data=melted_data, 
+        palette='Set2',
+        hue='template uuid',
+        linewidth=2
+    )
+    
+    total_counts = melted_data.groupby('template uuid').size() + pd.Series(idk_counts)
+    for template_uuid in melted_data['template uuid'].unique():
+        model_index = list(melted_data['template uuid'].unique()).index(template_uuid)
+        count = idk_counts.get(template_uuid, 0)
+        total = total_counts.get(template_uuid, len(data))
+        percent = (count / total) * 100
+        plt.text(model_index, -0.125, f'({percent:.2f}%)', ha='center', va='center', fontsize=16, color='red')
+    
+    yticks = [0.0, 0.5, 1.0, 1.5, 2.0, 2.5, 3.0]
+    yticks = [yt / 3.0 for yt in yticks]
+    
+    plt.ylim(-0.05, max(yticks) + 0.05)
+    plt.yticks(yticks, [f'{yt:.2f}' for yt in yticks])
+
+    plt.xlabel("Template UUID", fontsize=22, fontweight='bold')
+    plt.ylabel(metric, fontsize=22, fontweight='bold')
+    plt.title(f"{title} (n = {len(melted_data)})", fontsize=24)
+    
+    plt.xticks()
+    plt.tight_layout()
+    
+    plt.savefig(f'{save_path}/{model}_{metric}_template.png')
+    plt.close()

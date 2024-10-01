@@ -2,7 +2,7 @@ import os
 import tiktoken
 import pandas as pd
 from scripts import TEMPLATE_SAMPLES
-from scripts.scripts_utils import load_dataset, sample_data_by_template
+from scripts.scripts_utils import load_dataset, sample_by_template
 
 def merge_model_responses(qa_path: str, res_dir: str, output_csv: str, template_flag: bool, merge_on: str='uuid') -> pd.DataFrame:
     """
@@ -18,7 +18,7 @@ def merge_model_responses(qa_path: str, res_dir: str, output_csv: str, template_
     # TODO DELETE
     merge_cols = ['uuid', 'question', 'answer', 'SQL_Category', 'Bio_Category']
     if template_flag:
-        merged_df = sample_data_by_template(merged_df, TEMPLATE_SAMPLES)
+        merged_df = sample_by_template(merged_df, TEMPLATE_SAMPLES)
         merge_cols += ['template uuid']
     merged_df = merged_df[merge_cols]
     merged_df.dropna(inplace=True)
