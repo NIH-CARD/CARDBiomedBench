@@ -1,6 +1,6 @@
 import argparse
 from scripts import MODELS_DICT, TEMPLATE_SAMPLES
-from scripts.scripts_utils import load_dataset, sample_data_by_template
+from scripts.scripts_utils import load_dataset, sample_by_template
 from scripts.collect_responses.collect_responses_utils import get_all_model_responses
 
 def main():
@@ -23,7 +23,7 @@ def main():
     if template_flag:
         print(f"## Sampling template file {TEMPLATE_SAMPLES} samples per 'template uuid' ##")
         try:
-            data = sample_data_by_template(data, TEMPLATE_SAMPLES)
+            data = sample_by_template(data, TEMPLATE_SAMPLES)
         except ValueError as e:
             print(f"Error during sampling: {e}")
             return

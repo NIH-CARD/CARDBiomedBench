@@ -51,25 +51,57 @@ def save_dataset(filepath: str, data: pd.DataFrame):
         data.to_csv(filepath, index=False)
     except Exception as e:
         print(f"Error saving responses: {e}")
-    
-def sample_data_by_template(data: pd.DataFrame, n: int) -> pd.DataFrame:
+
+def sample_by_template(data: pd.DataFrame, n: int, batch_size: int = 10, random_state: int = 12) -> pd.DataFrame:
     """
-    Groups the data by 'template uuid' and samples `n` rows from each group.
-    Throws a ValueError if a group has fewer than `n` rows.
+    Groups the data by 'template uuid' and samples deterministically from each group.
+    Ensures that when n increases, all previously sampled rows are included.
     
     Parameters:
     - data (pd.DataFrame): The input dataframe containing 'template uuid'.
-    - n (int): The number of samples to select from each group.
+    - n (int): The total number of samples to select per 'template uuid'.
+    - batch_size (int): The size of each sampling batch.
+    - random_state (int): Seed for reproducibility.
     
     Returns:
     - pd.DataFrame: A new dataframe with `n` rows sampled per 'template uuid'.
-    
-    Raises:
-    - ValueError: If any group has fewer than `n` rows.
     """
-    def check_and_sample(group):
-        if len(group) < n:
-            raise ValueError(f"Group {group['template uuid'].iloc[0]} has fewer than {n} rows.")
-        return group.sample(n=n, random_state=12)
+    final_sampled_df = pd.DataFrame()
 
-    return data.groupby('template uuid').apply(check_and_sample).reset_index(drop=True)
+    def deterministic_group_sample(group, n):
+        sampled_group_df = pd.DataFrame()
+        n = min(n, len(group))
+        for _ in range(0, n, batch_size):
+            current_batch_size = min(batch_size, n - len(sampled_group_df))
+            current_sample = group.sample(n=current_batch_size, random_state=random_state)
+            sampled_group_df = pd.concat([sampled_group_df, current_sample])
+            group = group.drop(current_sample.index)
+
+        return sampled_group_df
+
+    for template_uuid, group in data.groupby('template uuid'):
+        final_sampled_df = pd.concat([final_sampled_df, deterministic_group_sample(group, n)])
+
+    return final_sampled_df.reset_index(drop=True)
+    
+# def sample_data_by_template(data: pd.DataFrame, n: int) -> pd.DataFrame:
+#     """
+#     Groups the data by 'template uuid' and samples `n` rows from each group.
+#     Throws a ValueError if a group has fewer than `n` rows.
+    
+#     Parameters:
+#     - data (pd.DataFrame): The input dataframe containing 'template uuid'.
+#     - n (int): The number of samples to select from each group.
+    
+#     Returns:
+#     - pd.DataFrame: A new dataframe with `n` rows sampled per 'template uuid'.
+    
+#     Raises:
+#     - ValueError: If any group has fewer than `n` rows.
+#     """
+#     def check_and_sample(group):
+#         if len(group) < n:
+#             raise ValueError(f"Group {group['template uuid'].iloc[0]} has fewer than {n} rows.")
+#         return group.sample(n=n, random_state=12)
+
+#     return data.groupby('template uuid').apply(check_and_sample).reset_index(drop=True)
