@@ -18,13 +18,13 @@ if [ "$TEMPLATE_FLAG" = "true" ]; then
   BENCHMARK_PATH="benchmark/$TEMPLATE_BENCHMARK_FILE_NAME"
   RESULTS_PATH="results/template_results/"
   COMPILED_RES_PATH="${RESULTS_PATH}${TEMPLATE_BENCHMARK_FILE_NAME%.csv}_compiled.csv"
+  RESULTS_BY_MODEL_DIR="${RESULTS_PATH}by_model/"
 else
   BENCHMARK_PATH="benchmark/$MANUAL_BENCHMARK_FILE_NAME"
   RESULTS_PATH="results/manual_results/"
   COMPILED_RES_PATH="${RESULTS_PATH}${MANUAL_BENCHMARK_FILE_NAME%.csv}_compiled.csv"
+  RESULTS_BY_MODEL_DIR="${RESULTS_PATH}by_model/"
 fi
-
-RESULTS_BY_MODEL_DIR="${RESULTS_PATH}by_model/"
 
 # Run response_runner.py to collect results from the benchmark file if enabled
 if [ "$RUN_RESPONSES" = "true" ]; then
