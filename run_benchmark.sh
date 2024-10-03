@@ -13,6 +13,9 @@ RUN_METRICS=$(grep 'run_metrics:' $CONFIG_FILE | awk '{print $2}')
 RUN_GRAPHS=$(grep 'run_graphs:' $CONFIG_FILE | awk '{print $2}')
 TEMPLATE_FLAG=$(grep 'run_template:' $CONFIG_FILE | awk '{print $2}')
 
+# Optionally get a single model name from the command-line argument
+MODEL_NAME=${1:-"none"}
+
 # Set results directory based on template flag
 if [ "$TEMPLATE_FLAG" = "true" ]; then
   BENCHMARK_PATH="benchmark/$TEMPLATE_BENCHMARK_FILE_NAME"
@@ -28,7 +31,7 @@ fi
 
 # Run response_runner.py to collect results from the benchmark file if enabled
 if [ "$RUN_RESPONSES" = "true" ]; then
-  python3 -m scripts.responses_runner --qa_path $BENCHMARK_PATH --res_dir $RESULTS_BY_MODEL_DIR --template $TEMPLATE_FLAG
+  python3 -m scripts.responses_runner --qa_path $BENCHMARK_PATH --res_dir $RESULTS_BY_MODEL_DIR --template $TEMPLATE_FLAG --model_name $MODEL_NAME
 fi
 
 # Run metrics_runner.py to score the generated results if enabled
