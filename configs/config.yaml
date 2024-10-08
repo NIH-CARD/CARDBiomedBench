@@ -1,4 +1,4 @@
-benchmark_filename: CARDBioBench.csv
+benchmark_filename: CARDBiomedBench.csv
 template_benchmark_filename: CARDBioBenchTemplate.csv
 run_template: true
 template_samples: 270
