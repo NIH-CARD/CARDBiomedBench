@@ -15,14 +15,12 @@ def merge_model_responses(qa_path: str, res_dir: str, output_csv: str, template_
         print("No data to process. Exiting.")
         return
     
-    # TODO DELETE
     merge_cols = ['uuid', 'question', 'answer', 'SQL_Category', 'Bio_Category']
     if template_flag:
         merged_df = sample_by_template(merged_df, TEMPLATE_SAMPLES)
         merge_cols += ['template uuid']
     merged_df = merged_df[merge_cols]
     merged_df.dropna(inplace=True)
-    # TODO DELETE
 
     # List all CSV files in the directory
     csv_files = [f for f in os.listdir(res_dir) if f.endswith('_responses.csv')]
@@ -31,7 +29,7 @@ def merge_model_responses(qa_path: str, res_dir: str, output_csv: str, template_
     for i, csv_file in enumerate(csv_files):
         file_path = os.path.join(res_dir, csv_file)
         model_df = pd.read_csv(file_path)
-        model_df = model_df.drop(columns=['question', 'answer'])
+        model_df = model_df.drop(columns=[col for col in merge_cols if col != merge_on])
         merged_df = pd.merge(merged_df, model_df, on=merge_on, how='outer')
 
     # Save the final merged DataFrame
@@ -78,6 +76,7 @@ def count_tokens_tiktoken(string: str, model: str = "gpt-4o") -> int:
         encoding = tiktoken.get_encoding("cl100k_base")
     
     # Encode the string and return the number of tokens
+    string = str(string) if string is not None else ""
     num_tokens = len(encoding.encode(string))
     return num_tokens
 
