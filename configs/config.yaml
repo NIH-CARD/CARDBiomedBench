@@ -1,7 +1,7 @@
 benchmark_filename: CARDBioBench.csv
 template_benchmark_filename: CARDBioBenchTemplate.csv
 run_template: true
-template_samples: 10
+template_samples: 270
 system_prompt: "You are a highly knowledgeable and experienced expert in the healthcare and biomedical field, possessing extensive medical knowledge and practical expertise. If you do not know the answer to a question, explicitly state that you do not know."
 bioscore_system_prompt: "You are a highly knowledgeable and experienced expert in the healthcare and biomedical field, possessing extensive medical knowledge and practical expertise."
 max_tokens: 1024
