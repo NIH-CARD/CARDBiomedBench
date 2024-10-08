@@ -16,7 +16,7 @@ def merge_model_responses(qa_path: str, res_dir: str, output_csv: str, template_
         return
     
     merge_cols = ['uuid', 'question', 'answer', 'SQL_Category', 'Bio_Category']
-    if template_flag:
+    if template_flag == "true":
         merged_df = sample_by_template(merged_df, TEMPLATE_SAMPLES)
         merge_cols += ['template uuid']
     merged_df = merged_df[merge_cols]
