@@ -22,7 +22,7 @@ def main():
         print("No data to process. Exiting.")
         return
     
-    if template_flag:
+    if template_flag == "true":
         print(f"## Sampling template file {TEMPLATE_SAMPLES} samples per 'template uuid' ##")
         try:
             data = sample_by_template(data, TEMPLATE_SAMPLES)
