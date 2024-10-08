@@ -89,7 +89,7 @@ def main():
     style_dataframe(performance_table, "All Metrics", res_dir)
     print("*** Performance Table Styled and Saved ***")
 
-    print("*** Graphs Completed ***")
+    print("*** *** *** GRAPHS RUNNER COMPLETED *** *** ***")
 
 if __name__ == "__main__":
     main()

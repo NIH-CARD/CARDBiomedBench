@@ -19,6 +19,7 @@ def main():
         print("*** Getting BLEU, ROUGE, and BERTScore ***")
         get_all_model_BLEU_ROUGE_BERT(res_dir, model_dict=MODELS_DICT)
         print("*** BLEU, ROUGE, and BERTScore Completed ***")
+    print("*** *** *** METRICS RUNNER COMPLETED *** *** ***")
 
 
 if __name__ == "__main__":

@@ -44,6 +44,7 @@ def main():
     print(f"## Getting model responses on {len(data)} Q/A ##")
     data = get_all_model_responses(data, model_dict=selected_models_dict, res_dir=res_dir)
     print(f"## Responses collected and saved to {res_dir} ##")
+    print("*** *** *** RESPONSES RUNNER COMPLETED *** *** ***")
 
 if __name__ == "__main__":
     main()
