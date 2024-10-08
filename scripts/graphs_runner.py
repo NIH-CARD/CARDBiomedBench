@@ -69,7 +69,7 @@ def main():
         plot_scatterplot(data, "response_token_count", "BioScore", MODELS_DICT, "Mean Token Count by BioScore Stdv", res_dir)
         print("*** BioScore Scatterplot Completed ***")
         
-        if template_flag:
+        if template_flag == "true":
             plot_template_boxplot(data, "BioScore", "gpt-4o", "GPT-4o BioScore by Template Question", res_dir)
             print("*** GPT-4o BioScore by Template Boxplot Completed ***")
         
