@@ -3,6 +3,7 @@ results/*
 manual_results/*
 template_results/*
 temp/*
+run-outputs/*
 test.py
 slurm*
 .cache
