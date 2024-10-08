@@ -25,6 +25,7 @@ def main():
     template_flag = args.template
 
     merge_model_responses(qa_path, f'{res_dir}/by_model', scored_path, template_flag)
+    print("*** Model responses merged ***")
     
     data = load_dataset(scored_path)
     if data.empty:
@@ -33,38 +34,62 @@ def main():
     
     # Compute and add token count columns for question, answer, and each model_response
     data = get_token_counts(data, MODELS_DICT)
+    print("*** Token counts computed ***")
 
     # Dataset statistics txt file
     statistics_txt(data, models=MODELS_DICT, title="statistics", save_path=res_dir)
+    print("*** Dataset statistics generated ***")
 
     # Dataset distribution visualizations
     plot_category_pie_chart(data, category="Bio_Category", title="Bio Category Pie", save_path=res_dir)
+    print("*** Bio Category Pie Chart Completed ***")
+    
     plot_category_pie_chart(data, category="SQL_Category", title="SQL Category Pie", save_path=res_dir)
+    print("*** SQL Category Pie Chart Completed ***")
+    
     plot_token_histograms(data, text_col="question", color="dodgerblue", title="Question", save_path=res_dir)
+    print("*** Question Token Histogram Completed ***")
+    
     plot_token_histograms(data, text_col="answer", color="deeppink", title="Answer", save_path=res_dir)
+    print("*** Answer Token Histogram Completed ***")
 
     # Metric visualizations
     metrics_list = []
     if "BioScore" in METRICS_DICT:
         bioscore_model_order = get_model_order(data, "BioScore", MODELS_DICT)
         plot_metric_boxplot(data, "BioScore", MODELS_DICT, bioscore_model_order, "BioScore Boxplot", res_dir)
+        print("*** BioScore Boxplot Completed ***")
+        
         plot_metric_heatmap(data, "BioScore", MODELS_DICT, bioscore_model_order, "Bio_Category", "BioScore Bio Heatmap", res_dir)
+        print("*** BioScore Bio Heatmap Completed ***")
+        
         plot_idk_heatmap(data, "BioScore", MODELS_DICT, bioscore_model_order, "Bio_Category", "Abstention Rate Bio Heatmap", res_dir)
+        print("*** Abstention Rate Bio Heatmap Completed ***")
+        
         plot_scatterplot(data, "response_token_count", "BioScore", MODELS_DICT, "Mean Token Count by BioScore Stdv", res_dir)
+        print("*** BioScore Scatterplot Completed ***")
+        
         if template_flag:
             plot_template_boxplot(data, "BioScore", "gpt-4o", "GPT-4o BioScore by Template Question", res_dir)
+            print("*** GPT-4o BioScore by Template Boxplot Completed ***")
+        
         metrics_list += ["BioScore"]
+
     if "BLEU_ROUGE_BERT" in METRICS_DICT:
         nlp_metrics = ['BLEU', 'ROUGE2', 'ROUGEL', 'BERTScore']
         for metric in nlp_metrics:
             nlp_model_order = get_model_order(data, metric, MODELS_DICT)
             plot_metric_boxplot(data, metric, MODELS_DICT, bioscore_model_order, f"{metric} Boxplot", res_dir)
+        print("*** BLEU, ROUGE, and BERTScore Completed ***")
         metrics_list += nlp_metrics
+
     performance_table = create_performance_table(data, metrics_list, MODELS_DICT)
+    print("*** Performance Table Created ***")
+
     style_dataframe(performance_table, "All Metrics", res_dir)
+    print("*** Performance Table Styled and Saved ***")
 
     print("*** Graphs Completed ***")
-
 
 if __name__ == "__main__":
     main()
