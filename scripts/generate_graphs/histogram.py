@@ -24,18 +24,19 @@ def plot_token_histograms(data: pd.DataFrame, text_col: str, color: str, title: 
     # Add a vertical dashed line at the median
     plt.axvline(median_token_count, color='black', linestyle='--', label=f'Median: {median_token_count:.0f}')
     
-    plt.title(f'{title} Token Counts')
-    plt.xlabel('Token Count')
-    plt.ylabel('Percentage')
+    # Update axis labels and title
+    plt.title(f'{title} Token Count Distribution')
+    plt.xlabel(f'{title} Token Count')
+    plt.ylabel('Frequency (%)')
 
     # Set x-axis ticks to start at 0 with dynamic step size
     plt.xticks(range(0, max_token_count + step_size, step_size))
     
     # Set y-axis limits and ticks
-    plt.ylim(0, 50)
-    plt.yticks(range(0, 60, 10))
+    plt.ylim(0, 15)
+    plt.yticks(range(0, 20, 5))
     
     # Adjust layout and save the figure
     plt.tight_layout()
-    plt.savefig(f'{save_path}/{title} Histogram.png')
+    plt.savefig(f'{save_path}/{title}_Token_Histogram.png')
     plt.close()
