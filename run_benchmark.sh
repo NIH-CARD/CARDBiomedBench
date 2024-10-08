@@ -4,8 +4,8 @@
 CONFIG_FILE="configs/config.yaml"
 
 # Extract the benchmark_filename value from the YAML file
-MANUAL_BENCHMARK_FILE_NAME=$(grep 'benchmark_filename' $CONFIG_FILE | awk '{print $2}')
-TEMPLATE_BENCHMARK_FILE_NAME=$(grep 'template_benchmark_filename' $CONFIG_FILE | awk '{print $2}')
+MANUAL_BENCHMARK_FILE_NAME=$(grep '^benchmark_filename:' $CONFIG_FILE | awk '{print $2}')
+TEMPLATE_BENCHMARK_FILE_NAME=$(grep '^template_benchmark_filename:' $CONFIG_FILE | awk '{print $2}')
 
 # Extract run script flags from the YAML file
 RUN_RESPONSES=$(grep 'run_responses:' $CONFIG_FILE | awk '{print $2}')
