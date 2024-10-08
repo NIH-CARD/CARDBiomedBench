@@ -29,7 +29,6 @@ def main():
         except ValueError as e:
             print(f"Error during sampling: {e}")
             return
-
     selected_models_dict = MODELS_DICT.copy()
 
     # Filter the model dictionary if a model name is provided
