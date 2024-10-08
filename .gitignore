@@ -5,6 +5,7 @@ template_results/*
 temp/*
 run-outputs/*
 test.py
+commands.txt
 slurm*
 .cache
 
