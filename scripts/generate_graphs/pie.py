@@ -2,9 +2,8 @@ import pandas as pd
 import seaborn as sns
 import matplotlib.pyplot as plt
 
-def plot_category_pie_chart(data: pd.DataFrame, category: str, title: str, save_path: str):
+def plot_category_pie_chart(data: pd.DataFrame, category: str, title: str, save_path: str, color_flag: int):
     """Create a pie chart to visualize the distribution of categories in the dataset."""
-    
     # Explode the category column to handle multiple labels per entry
     exploded_data = data.copy()
     exploded_data[category] = exploded_data[category].apply(lambda x: [item.strip() for item in x.split(';')])
@@ -19,14 +18,19 @@ def plot_category_pie_chart(data: pd.DataFrame, category: str, title: str, save_
     # Sizes for each slice (proportional to the number of occurrences)
     sizes = category_counts.values
     
-    # Define colors for the pie chart
-    colors = sns.color_palette("pastel")[0:len(labels)]
+    # Define color palettes based on the color_flag
+    if color_flag == 1:
+        colors = sns.color_palette("Pastel1", len(labels))
+    elif color_flag == 2:
+        colors = sns.color_palette("Pastel2", len(labels))
+    else:
+        colors = sns.color_palette("pastel", len(labels))
     
     # Define explode values (to slightly separate each slice)
     explode = [0.1] * len(labels)
     
     # Plot the pie chart
-    plt.figure(figsize=(8, 6))
+    plt.figure(figsize=(12, 6))
     plt.pie(sizes, colors=colors, labels=labels, autopct='%1.1f%%', startangle=0, pctdistance=0.85, explode=explode, labeldistance=1.1)
     
     # Draw circle to make it a donut chart

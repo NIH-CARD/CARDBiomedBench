@@ -41,11 +41,11 @@ def main():
     print("*** Dataset statistics generated ***")
 
     # Dataset distribution visualizations
-    plot_category_pie_chart(data, category="Bio_Category", title="Bio Category Pie", save_path=res_dir)
-    print("*** Bio Category Pie Chart Completed ***")
+    plot_category_pie_chart(data, category="Bio_Category", title="Bio Category Donut", save_path=res_dir, color_flag=1)
+    print("*** Bio Category Donut Chart Completed ***")
     
-    plot_category_pie_chart(data, category="SQL_Category", title="SQL Category Pie", save_path=res_dir)
-    print("*** SQL Category Pie Chart Completed ***")
+    plot_category_pie_chart(data, category="SQL_Category", title="Reasoning Category Donut", save_path=res_dir, color_flag=2)
+    print("*** SQL Category Donut Chart Completed ***")
     
     plot_token_histograms(data, text_col="question", color="dodgerblue", title="Question", save_path=res_dir)
     print("*** Question Token Histogram Completed ***")
