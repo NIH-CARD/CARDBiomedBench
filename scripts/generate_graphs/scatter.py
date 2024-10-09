@@ -5,11 +5,12 @@ import matplotlib.pyplot as plt
 
 def plot_abstention_vs_bioscore(data: pd.DataFrame, metric: str, models: dict, title: str, save_path: str):
     """Plot mean BioScore against abstention rate for each model with legend and pastel colors,
-    and add quadrant lines at 0.5 for both axes and 95% confidence intervals on BioScore."""
+    and add quadrant lines at 0.5 for both axes and 95% confidence intervals on both BioScore and Abstention Rate."""
 
     mean_bioscores = []
     abstention_rates = []
-    bioscore_cis = []  # Store confidence intervals
+    bioscore_cis = []  # Store BioScore confidence intervals
+    abstention_cis = []  # Store Abstention Rate confidence intervals
     model_names = []
 
     # Collect data for each model
@@ -20,6 +21,8 @@ def plot_abstention_vs_bioscore(data: pd.DataFrame, metric: str, models: dict, t
             total_count = len(model_data)
             idk_count = (model_data == -1).sum()
             abstention_rate = idk_count / total_count
+            abstention_ci = 1.96 * np.sqrt((abstention_rate * (1 - abstention_rate)) / total_count)
+            
             valid_data = model_data[model_data != -1]
             n_valid = len(valid_data)
             if n_valid > 0:
@@ -29,9 +32,11 @@ def plot_abstention_vs_bioscore(data: pd.DataFrame, metric: str, models: dict, t
             else:
                 mean_bioscore = np.nan
                 ci_bioscore = np.nan
+                
             mean_bioscores.append(mean_bioscore)
             abstention_rates.append(abstention_rate)
             bioscore_cis.append(ci_bioscore)
+            abstention_cis.append(abstention_ci)
             model_names.append(model)
         else:
             # Handle missing data
@@ -44,23 +49,29 @@ def plot_abstention_vs_bioscore(data: pd.DataFrame, metric: str, models: dict, t
     # Use pastel color palette
     colors = sns.color_palette('pastel', n_colors=len(model_names))
 
-    # Create scatter plot with error bars for confidence intervals
+    # Create scatter plot with error bars for both BioScore and Abstention Rate confidence intervals
+    legend_handles = []  # To store proxy artists for legend
     for i, model in enumerate(model_names):
         x = mean_bioscores[i]
         y = abstention_rates[i]
-        ci = bioscore_cis[i]
+        ci_x = bioscore_cis[i]
+        ci_y = abstention_cis[i]
         if np.isnan(x) or np.isnan(y):
             continue  # Skip models with missing data
-        plt.errorbar(x, y, xerr=ci, fmt='o', markersize=8, color=colors[i], 
+        plt.errorbar(x, y, xerr=ci_x, yerr=ci_y, fmt='o', markersize=8, color=colors[i], 
                      ecolor='black', capsize=4, label=model, capthick=1, markeredgecolor='k')
+        
+        # Create a proxy artist (marker) for legend, without error bars
+        legend_handles.append(plt.Line2D([0], [0], marker='o', color=colors[i], label=model, 
+                                         markersize=8, markeredgecolor='k', linestyle='None'))
 
     # Draw quadrant lines at 0.5 for both BioScore and Abstention Rate
     plt.axhline(0.5, color='black', linewidth=1.5)
     plt.axvline(0.5, color='black', linewidth=1.5)
 
     # Set axes limits and flip y-axis
-    plt.xlim(0.0, 1.0)
-    plt.ylim(1.0, 0.0)
+    plt.xlim(0.3, 0.7)
+    plt.ylim(0.7, 0.1)
 
     # Label axes
     plt.xlabel("Mean BioScore", fontsize=18, fontweight='bold')
@@ -69,12 +80,13 @@ def plot_abstention_vs_bioscore(data: pd.DataFrame, metric: str, models: dict, t
     # Add title
     plt.title(title, fontsize=20, fontweight='bold')
 
-    # Add legend, place it outside the plot
-    plt.legend(title='Models', fontsize=10, title_fontsize=12, loc='upper left', bbox_to_anchor=(1.05, 1))
+    # Add legend, place it outside the plot using proxy artists
+    plt.legend(handles=legend_handles, title='Models', fontsize=10, title_fontsize=12, loc='upper left', bbox_to_anchor=(1.05, 1))
 
     plt.tight_layout()
     plt.savefig(f'{save_path}/{title}.png', bbox_inches='tight')
     plt.close()
+
 
 def plot_scatterplot(data: pd.DataFrame, x_metric: str, y_metric: str, models: dict, title: str, save_path: str):
     """Create a scatterplot to visualize the relationship between the stdv of one metrics to another's mean for each model."""
