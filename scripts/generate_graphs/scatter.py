@@ -5,13 +5,11 @@ import matplotlib.pyplot as plt
 
 def plot_abstention_vs_bioscore(data: pd.DataFrame, metric: str, models: dict, title: str, save_path: str):
     """Plot mean BioScore against abstention rate for each model with legend and pastel colors,
-    and add quadrant lines at 0.5 for both axes."""
-    import matplotlib.pyplot as plt
-    import seaborn as sns
-    import numpy as np
+    and add quadrant lines at 0.5 for both axes and 95% confidence intervals on BioScore."""
 
     mean_bioscores = []
     abstention_rates = []
+    bioscore_cis = []  # Store confidence intervals
     model_names = []
 
     # Collect data for each model
@@ -23,18 +21,20 @@ def plot_abstention_vs_bioscore(data: pd.DataFrame, metric: str, models: dict, t
             idk_count = (model_data == -1).sum()
             abstention_rate = idk_count / total_count
             valid_data = model_data[model_data != -1]
-            if not valid_data.empty:
+            n_valid = len(valid_data)
+            if n_valid > 0:
                 mean_bioscore = valid_data.mean()
+                std_bioscore = valid_data.std()
+                ci_bioscore = 1.96 * (std_bioscore / np.sqrt(n_valid))  # 95% CI
             else:
                 mean_bioscore = np.nan
+                ci_bioscore = np.nan
             mean_bioscores.append(mean_bioscore)
             abstention_rates.append(abstention_rate)
+            bioscore_cis.append(ci_bioscore)
             model_names.append(model)
         else:
             # Handle missing data
-            mean_bioscores.append(np.nan)
-            abstention_rates.append(np.nan)
-            model_names.append(model)
             print(f'Warning: Column {col_name} not found in data.')
 
     plt.figure(figsize=(10, 6))
@@ -44,13 +44,15 @@ def plot_abstention_vs_bioscore(data: pd.DataFrame, metric: str, models: dict, t
     # Use pastel color palette
     colors = sns.color_palette('pastel', n_colors=len(model_names))
 
-    # Create scatter plot with legend labels
+    # Create scatter plot with error bars for confidence intervals
     for i, model in enumerate(model_names):
         x = mean_bioscores[i]
         y = abstention_rates[i]
+        ci = bioscore_cis[i]
         if np.isnan(x) or np.isnan(y):
             continue  # Skip models with missing data
-        plt.scatter(x, y, s=150, color=colors[i], edgecolors='k', label=model)
+        plt.errorbar(x, y, xerr=ci, fmt='o', markersize=8, color=colors[i], 
+                     ecolor='black', capsize=4, label=model, capthick=1, markeredgecolor='k')
 
     # Draw quadrant lines at 0.5 for both BioScore and Abstention Rate
     plt.axhline(0.5, color='black', linewidth=1.5)
