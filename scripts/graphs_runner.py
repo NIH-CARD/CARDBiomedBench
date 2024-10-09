@@ -7,7 +7,7 @@ from scripts.generate_graphs.table import create_performance_table, style_datafr
 from scripts.generate_graphs.pie import plot_category_pie_chart
 from scripts.generate_graphs.histogram import plot_token_histograms
 from scripts.generate_graphs.statistics import statistics_txt
-from scripts.generate_graphs.scatter import plot_scatterplot
+from scripts.generate_graphs.scatter import plot_scatterplot, plot_abstention_vs_bioscore
 from scripts.generate_graphs.generate_graphs_utils import merge_model_responses, get_model_order, get_token_counts
 
 def main():
@@ -57,6 +57,7 @@ def main():
     metrics_list = []
     if "BioScore" in METRICS_DICT:
         bioscore_model_order = get_model_order(data, "BioScore", MODELS_DICT)
+        plot_abstention_vs_bioscore(data, 'BioScore', MODELS_DICT, 'Abstention Rate vs. Mean BioScore', res_dir)
         plot_metric_boxplot(data, "BioScore", MODELS_DICT, bioscore_model_order, "BioScore Boxplot", res_dir)
         print("*** BioScore Boxplot Completed ***")
         
