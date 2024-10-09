@@ -4,7 +4,8 @@ import seaborn as sns
 import matplotlib.pyplot as plt
 
 def plot_abstention_vs_bioscore(data: pd.DataFrame, metric: str, models: dict, title: str, save_path: str):
-    """Plot mean BioScore against abstention rate for each model with legend and pastel colors."""
+    """Plot mean BioScore against abstention rate for each model with legend and pastel colors,
+    and add quadrant lines at 0.5 for both axes."""
     import matplotlib.pyplot as plt
     import seaborn as sns
     import numpy as np
@@ -51,6 +52,10 @@ def plot_abstention_vs_bioscore(data: pd.DataFrame, metric: str, models: dict, t
             continue  # Skip models with missing data
         plt.scatter(x, y, s=150, color=colors[i], edgecolors='k', label=model)
 
+    # Draw quadrant lines at 0.5 for both BioScore and Abstention Rate
+    plt.axhline(0.5, color='black', linewidth=1.5)
+    plt.axvline(0.5, color='black', linewidth=1.5)
+
     # Set axes limits and flip y-axis
     plt.xlim(0.0, 1.0)
     plt.ylim(1.0, 0.0)
@@ -62,11 +67,11 @@ def plot_abstention_vs_bioscore(data: pd.DataFrame, metric: str, models: dict, t
     # Add title
     plt.title(title, fontsize=20, fontweight='bold')
 
-    # Add legend
-    plt.legend(title='Models', fontsize=12, title_fontsize=14)
+    # Add legend, place it outside the plot
+    plt.legend(title='Models', fontsize=10, title_fontsize=12, loc='upper left', bbox_to_anchor=(1.05, 1))
 
     plt.tight_layout()
-    plt.savefig(f'{save_path}/{title}.png')
+    plt.savefig(f'{save_path}/{title}.png', bbox_inches='tight')
     plt.close()
 
 def plot_scatterplot(data: pd.DataFrame, x_metric: str, y_metric: str, models: dict, title: str, save_path: str):
