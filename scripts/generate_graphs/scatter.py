@@ -4,6 +4,15 @@ import seaborn as sns
 import matplotlib.pyplot as plt
 from matplotlib.patches import Ellipse
 
+MODEL_LABELS = {
+    "gpt-4o": {"label": "GPT-4o", "position": (-0.025, -0.025)},
+    "gemini-1.5-pro": {"label": "Gemini-1.5-Pro", "position": (-0.05, 0.05)},
+    "claude-3.5-sonnet": {"label": "Claude-3.5-Sonnet", "position": (0.10, 0.05)},
+    "perplexity-sonar-huge": {"label": "Perplexity-Sonar-Huge", "position": (0.10, 0.05)},
+    "gemma-2-27b-it": {"label": "Gemma-2-27B", "position": (-0.05, -0.025)},
+    "llama-3.1-70b-it": {"label": "Llama-3.1-70B", "position": (-0.025, -0.025)}
+}
+
 def plot_abstention_vs_bioscore(data: pd.DataFrame, metric: str, models: dict, title: str, save_path: str):
     """Plot mean BioScore against abstention rate for each model with legend and pastel colors,
     and add quadrant lines at 0.5 for both axes and 95% confidence intervals on both BioScore and Abstention Rate,
@@ -66,6 +75,14 @@ def plot_abstention_vs_bioscore(data: pd.DataFrame, metric: str, models: dict, t
         ellipse = Ellipse((x, y), width=2 * ci_x, height=2 * ci_y, facecolor=colors[i], edgecolor='black', linewidth=1.5, alpha=1)
         ax.add_patch(ellipse)  # Add the ellipse to the plot
 
+        # Add custom text label for the model, relative to the center of the ellipse
+        if model in MODEL_LABELS:
+            label = MODEL_LABELS[model]["label"]
+            offset_x, offset_y = MODEL_LABELS[model]["position"]
+            label_x = x + offset_x  # Adjust the label position relative to the ellipse center
+            label_y = y + offset_y
+            plt.text(label_x, label_y, label, fontsize=14, fontweight='bold', ha='center')
+
     # Draw quadrant lines at 0.5 for both BioScore and Abstention Rate
     plt.axhline(0.5, color='black', linewidth=1.5)
     plt.axvline(0.5, color='black', linewidth=1.5)
@@ -74,13 +91,10 @@ def plot_abstention_vs_bioscore(data: pd.DataFrame, metric: str, models: dict, t
     plt.xlim(0.0, 1.0)
     plt.ylim(1.0, 0.0)
 
-    # Label axes
+    # Label axes and title
     plt.xlabel("Mean BioScore", fontsize=18, fontweight='bold')
     plt.ylabel("Abstention Rate", fontsize=18, fontweight='bold')
-
-    # Add title
     plt.title(title, fontsize=20, fontweight='bold')
-
     plt.tight_layout()
     plt.savefig(f'{save_path}/{title}.png', bbox_inches='tight')
     plt.close()
