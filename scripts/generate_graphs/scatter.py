@@ -2,15 +2,17 @@ import pandas as pd
 import numpy as np
 import seaborn as sns
 import matplotlib.pyplot as plt
+from matplotlib.patches import Ellipse
 
 def plot_abstention_vs_bioscore(data: pd.DataFrame, metric: str, models: dict, title: str, save_path: str):
     """Plot mean BioScore against abstention rate for each model with legend and pastel colors,
-    and add quadrant lines at 0.5 for both axes and 95% confidence intervals on both BioScore and Abstention Rate."""
+    and add quadrant lines at 0.5 for both axes and 95% confidence intervals on both BioScore and Abstention Rate,
+    represented as ellipses (ovals)."""
 
     mean_bioscores = []
     abstention_rates = []
-    bioscore_cis = []  # Store BioScore confidence intervals
-    abstention_cis = []  # Store Abstention Rate confidence intervals
+    bioscore_cis = []
+    abstention_cis = []
     model_names = []
 
     # Collect data for each model
@@ -49,8 +51,9 @@ def plot_abstention_vs_bioscore(data: pd.DataFrame, metric: str, models: dict, t
     # Use pastel color palette
     colors = sns.color_palette('pastel', n_colors=len(model_names))
 
-    # Create scatter plot with error bars for both BioScore and Abstention Rate confidence intervals
-    legend_handles = []  # To store proxy artists for legend
+    ax = plt.gca()  # Get the current axis
+
+    # Create ellipses for confidence intervals, no dots plotted
     for i, model in enumerate(model_names):
         x = mean_bioscores[i]
         y = abstention_rates[i]
@@ -58,20 +61,18 @@ def plot_abstention_vs_bioscore(data: pd.DataFrame, metric: str, models: dict, t
         ci_y = abstention_cis[i]
         if np.isnan(x) or np.isnan(y):
             continue  # Skip models with missing data
-        plt.errorbar(x, y, xerr=ci_x, yerr=ci_y, fmt='o', markersize=8, color=colors[i], 
-                     ecolor='black', capsize=4, label=model, capthick=1, markeredgecolor='k')
-        
-        # Create a proxy artist (marker) for legend, without error bars
-        legend_handles.append(plt.Line2D([0], [0], marker='o', color=colors[i], label=model, 
-                                         markersize=8, markeredgecolor='k', linestyle='None'))
+
+        # Create an ellipse to represent the confidence intervals
+        ellipse = Ellipse((x, y), width=2 * ci_x, height=2 * ci_y, facecolor=colors[i], edgecolor='black', linewidth=1.5, alpha=1)
+        ax.add_patch(ellipse)  # Add the ellipse to the plot
 
     # Draw quadrant lines at 0.5 for both BioScore and Abstention Rate
     plt.axhline(0.5, color='black', linewidth=1.5)
     plt.axvline(0.5, color='black', linewidth=1.5)
 
     # Set axes limits and flip y-axis
-    plt.xlim(0.3, 0.7)
-    plt.ylim(0.7, 0.1)
+    plt.xlim(0.0, 1.0)
+    plt.ylim(1.0, 0.0)
 
     # Label axes
     plt.xlabel("Mean BioScore", fontsize=18, fontweight='bold')
@@ -80,13 +81,9 @@ def plot_abstention_vs_bioscore(data: pd.DataFrame, metric: str, models: dict, t
     # Add title
     plt.title(title, fontsize=20, fontweight='bold')
 
-    # Add legend, place it outside the plot using proxy artists
-    plt.legend(handles=legend_handles, title='Models', fontsize=10, title_fontsize=12, loc='upper left', bbox_to_anchor=(1.05, 1))
-
     plt.tight_layout()
     plt.savefig(f'{save_path}/{title}.png', bbox_inches='tight')
     plt.close()
-
 
 def plot_scatterplot(data: pd.DataFrame, x_metric: str, y_metric: str, models: dict, title: str, save_path: str):
     """Create a scatterplot to visualize the relationship between the stdv of one metrics to another's mean for each model."""
