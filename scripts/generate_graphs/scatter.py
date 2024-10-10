@@ -5,7 +5,7 @@ import matplotlib.pyplot as plt
 from matplotlib.patches import Ellipse
 
 MODEL_LABELS = {
-    "gpt-4o": {"label": "GPT-4o", "position": (-0.025, -0.025)},
+    "gpt-4o": {"label": "ChatGPT-4o", "position": (-0.025, -0.025)},
     "gemini-1.5-pro": {"label": "Gemini-1.5-Pro", "position": (-0.05, 0.05)},
     "claude-3.5-sonnet": {"label": "Claude-3.5-Sonnet", "position": (0.10, 0.05)},
     "perplexity-sonar-huge": {"label": "Perplexity-Sonar-Huge", "position": (0.10, 0.05)},
@@ -16,7 +16,7 @@ MODEL_LABELS = {
 def plot_abstention_vs_bioscore(data: pd.DataFrame, metric: str, models: dict, title: str, save_path: str):
     """Plot mean BioScore against abstention rate for each model with legend and pastel colors,
     and add quadrant lines at 0.5 for both axes and 95% confidence intervals on both BioScore and Abstention Rate,
-    represented as ellipses (ovals)."""
+    represented as ellipses (ovals), and include quadrant labels."""
 
     mean_bioscores = []
     abstention_rates = []
@@ -90,6 +90,12 @@ def plot_abstention_vs_bioscore(data: pd.DataFrame, metric: str, models: dict, t
     # Set axes limits and flip y-axis
     plt.xlim(0.0, 1.0)
     plt.ylim(1.0, 0.0)
+
+    # Add quadrant labels
+    plt.text(0.99, 0.95, "Cautious Responders", fontsize=16, fontweight='bold', ha='right', va='center', color='grey', alpha=0.7)
+    plt.text(0.01, 0.95, "Unconfident Guessers", fontsize=16, fontweight='bold', ha='left', va='center', color='grey', alpha=0.7)
+    plt.text(0.99, 0.05, "Top Performers", fontsize=16, fontweight='bold', ha='right', va='center', color='grey', alpha=0.7)
+    plt.text(0.01, 0.05, "Risky Players", fontsize=16, fontweight='bold', ha='left', va='center', color='grey', alpha=0.7)
 
     # Label axes and title
     plt.xlabel("Mean BioScore", fontsize=18, fontweight='bold')
