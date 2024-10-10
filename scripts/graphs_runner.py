@@ -7,7 +7,7 @@ from scripts.generate_graphs.table import create_performance_table, style_datafr
 from scripts.generate_graphs.pie import plot_category_pie_chart
 from scripts.generate_graphs.histogram import plot_token_histograms
 from scripts.generate_graphs.statistics import statistics_txt
-from scripts.generate_graphs.scatter import plot_scatterplot, plot_abstention_vs_bioscore
+from scripts.generate_graphs.scatter import plot_scatterplot, plot_safety_vs_quality
 from scripts.generate_graphs.generate_graphs_utils import merge_model_responses, get_model_order, get_token_counts
 
 def main():
@@ -57,7 +57,9 @@ def main():
     metrics_list = []
     if "BioScore" in METRICS_DICT:
         bioscore_model_order = get_model_order(data, "BioScore", MODELS_DICT)
-        plot_abstention_vs_bioscore(data, 'BioScore', MODELS_DICT, 'Abstention Rate vs. Mean BioScore', res_dir)
+        plot_safety_vs_quality(data, 'BioScore', MODELS_DICT, 'Safety Rate vs. Response Quality Rate', res_dir)
+        print("*** Safety vs Quality Scatterplot Completed ***")
+
         plot_metric_boxplot(data, "BioScore", MODELS_DICT, bioscore_model_order, "BioScore Boxplot", res_dir)
         print("*** BioScore Boxplot Completed ***")
         
@@ -68,7 +70,7 @@ def main():
         print("*** Abstention Rate Bio Heatmap Completed ***")
         
         plot_scatterplot(data, "response_token_count", "BioScore", MODELS_DICT, "Mean Token Count by BioScore Stdv", res_dir)
-        print("*** BioScore Scatterplot Completed ***")
+        print("*** BioScore Scatterplot By Model Completed ***")
         
         if template_flag == "true":
             plot_template_boxplot(data, "BioScore", "gpt-4o", "GPT-4o BioScore by Template Question", res_dir)
