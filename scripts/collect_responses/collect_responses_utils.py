@@ -15,6 +15,8 @@ def initialize_model(model: str, system_prompt: str):
 
     if model == 'gpt-4o':
         return GPTQuery(system_prompt, 'gpt-4o-2024-05-13', max_tokens=MAX_NEW_TOKENS, temperature=TEMPERATURE)
+    elif model == 'gpt-3.5-turbo':
+        return GPTQuery(system_prompt, 'gpt-3.5-turbo-0125', max_tokens=MAX_NEW_TOKENS, temperature=TEMPERATURE)
     elif model == 'gemini-1.5-pro':
         return GeminiQuery(system_prompt, 'gemini-1.5-pro', max_tokens=MAX_NEW_TOKENS, temperature=TEMPERATURE)
     elif model =='claude-3.5-sonnet':

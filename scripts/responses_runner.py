@@ -8,7 +8,7 @@ def main():
     parser = argparse.ArgumentParser(description="Get LLM results on a QA benchmark.")
     parser.add_argument('--qa_path', type=str, required=True, help='Path to the QA CSV file')
     parser.add_argument('--res_dir', type=str, required=True, help='Directory to save the response CSV files')
-    parser.add_argument('--template', type=bool, default=False, help="Whether to run template-based sampling")
+    parser.add_argument('--template', type=str, required=True, help="Whether to run template-based sampling")
     parser.add_argument('--model_name', type=str, default="none", help="Specify a single model to run (optional)")
     args = parser.parse_args()
 

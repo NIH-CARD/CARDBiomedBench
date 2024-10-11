@@ -16,14 +16,14 @@ def main():
     parser.add_argument('--qa_path', type=str, required=True, help='Path to the QA CSV file')
     parser.add_argument('--res_dir', type=str, required=True, help='Directory to the res CSV files')
     parser.add_argument('--scored_path', type=str, required=True, help='Path to the compiled results file')
-    parser.add_argument('--template', type=bool, default=False, help="Whether to run template-based sampling")
+    parser.add_argument('--template', type=str, required=True, help="Whether to run template-based sampling")
     args = parser.parse_args()
 
     qa_path = args.qa_path
     res_dir = args.res_dir
     scored_path = args.scored_path
     template_flag = args.template
-
+    
     merge_model_responses(qa_path, f'{res_dir}/by_model', scored_path, template_flag)
     print("*** Model responses merged ***")
     
