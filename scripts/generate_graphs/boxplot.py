@@ -5,7 +5,7 @@ import matplotlib.pyplot as plt
 
 def plot_metric_boxplot(data: pd.DataFrame, metric: str, models: dict, model_order: list, title: str, save_path: str):
     """Create a box and whisker plot to visualize performance for the BioScore metric, handling -1 values separately."""
-    colors = ['#ADD8E6', '#FFB6C1', '#DDA0DD', '#87CEEB', '#FF69B4', '#BA55D3']
+    colors = ['#ADD8E6', '#FFB6C1', '#DDA0DD', '#87CEEB', '#FF69B4', '#BA55D3', '#CECECD']
     sns.set_style("whitegrid")
     sns.set_context("talk")
 
