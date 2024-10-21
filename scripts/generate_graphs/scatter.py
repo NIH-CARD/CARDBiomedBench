@@ -5,12 +5,13 @@ import matplotlib.pyplot as plt
 from matplotlib.patches import Ellipse
 
 MODEL_LABELS = {
-    "gpt-4o": {"label": "ChatGPT-4o", "position": (-0.025, -0.025)},
-    "gemini-1.5-pro": {"label": "Gemini-1.5-Pro", "position": (-0.05, 0.05)},
+    "gpt-4o": {"label": "ChatGPT-4o", "position": (0, -0.05)},
+    "gpt-3.5-turbo": {"label": "GPT-3.5-Turbo", "position": (0.10, 0)},
+    "gemini-1.5-pro": {"label": "Gemini-1.5-Pro", "position": (-0.05, 0.025)},
     "claude-3.5-sonnet": {"label": "Claude-3.5-Sonnet", "position": (0.10, 0.05)},
     "perplexity-sonar-huge": {"label": "Perplexity-Sonar-Huge", "position": (0.10, 0.05)},
-    "gemma-2-27b-it": {"label": "Gemma-2-27B", "position": (-0.05, -0.025)},
-    "llama-3.1-70b-it": {"label": "Llama-3.1-70B", "position": (-0.025, -0.025)}
+    "gemma-2-27b-it": {"label": "Gemma-2-27B", "position": (0.0, -0.05)},
+    "llama-3.1-70b-it": {"label": "Llama-3.1-70B", "position": (-0.075, -0.05)}
 }
 
 def plot_safety_vs_quality(data: pd.DataFrame, metric: str, models: dict, title: str, save_path: str):
@@ -45,6 +46,8 @@ def plot_safety_vs_quality(data: pd.DataFrame, metric: str, models: dict, title:
             quality_cis.append(quality_ci)
             safety_cis.append(safety_ci)
             model_names.append(model)
+
+            print(f'Model: {model}, Safety Rate: {safety_rate}, Quality Rate: {quality_rate}')
         else:
             # Handle missing data
             print(f'Warning: Column {col_name} not found in data.')
@@ -88,13 +91,13 @@ def plot_safety_vs_quality(data: pd.DataFrame, metric: str, models: dict, title:
     plt.ylim(0.0, 1.0)
 
     # Add quadrant labels
-    plt.text(0.99, 0.95, "_", fontsize=16, fontweight='bold', ha='right', va='center', color='grey', alpha=0.7)
-    plt.text(0.01, 0.95, "_", fontsize=16, fontweight='bold', ha='left', va='center', color='grey', alpha=0.7)
-    plt.text(0.99, 0.05, "_", fontsize=16, fontweight='bold', ha='right', va='center', color='grey', alpha=0.7)
-    plt.text(0.01, 0.05, "_", fontsize=16, fontweight='bold', ha='left', va='center', color='grey', alpha=0.7)
+    plt.text(0.99, 0.95, "Top Performers", fontsize=15, fontweight='bold', ha='right', va='center', color='grey', alpha=0.6)
+    plt.text(0.01, 0.95, "Cautious Responders", fontsize=15, fontweight='bold', ha='left', va='center', color='grey', alpha=0.6)
+    plt.text(0.99, 0.05, "Risky Players", fontsize=15, fontweight='bold', ha='right', va='center', color='grey', alpha=0.6)
+    plt.text(0.01, 0.05, "Unconfident Guessers", fontsize=15, fontweight='bold', ha='left', va='center', color='grey', alpha=0.6)
 
     # Label axes and title
-    plt.xlabel("Ability to Respond", fontsize=18, fontweight='bold')
+    plt.xlabel("Ability to Respond Accurately", fontsize=18, fontweight='bold')
     plt.ylabel("Commitment to Safety", fontsize=18, fontweight='bold')
     plt.title(title, fontsize=20, fontweight='bold')
     plt.tight_layout()
