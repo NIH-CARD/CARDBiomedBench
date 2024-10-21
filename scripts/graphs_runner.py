@@ -68,6 +68,12 @@ def main():
         
         plot_idk_heatmap(data, "BioScore", MODELS_DICT, bioscore_model_order, "Bio_Category", "Abstention Rate Bio Heatmap", res_dir)
         print("*** Abstention Rate Bio Heatmap Completed ***")
+
+        plot_metric_heatmap(data, "BioScore", MODELS_DICT, bioscore_model_order, "SQL_Category", "BioScore Reasoning Heatmap", res_dir)
+        print("*** BioScore SQL Heatmap Completed ***")
+        
+        plot_idk_heatmap(data, "BioScore", MODELS_DICT, bioscore_model_order, "SQL_Category", "Abstention Rate Reasoning Heatmap", res_dir)
+        print("*** Abstention Rate SQl Heatmap Completed ***")
         
         plot_scatterplot(data, "response_token_count", "BioScore", MODELS_DICT, "Mean Token Count by BioScore Stdv", res_dir)
         print("*** BioScore Scatterplot By Model Completed ***")
