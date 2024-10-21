@@ -9,7 +9,7 @@ def plot_metric_boxplot(data: pd.DataFrame, metric: str, models: dict, model_ord
     sns.set_style("whitegrid")
     sns.set_context("talk")
 
-    plt.figure(figsize=(20, 10))
+    plt.figure(figsize=(20, 12))
     plt.axhline(y=0, color='k', linestyle=':', linewidth=2)
 
     melted_data = pd.DataFrame()
@@ -56,26 +56,12 @@ def plot_metric_boxplot(data: pd.DataFrame, metric: str, models: dict, model_ord
         legend=False
     )
     
-    # Plot the stripplot for the metric
-    sns.stripplot(
-        x='Model', 
-        y=metric, 
-        data=melted_data, 
-        jitter=True, 
-        size=8, 
-        edgecolor='black', 
-        color='white', 
-        linewidth=1, 
-        alpha=0.3,
-        ax=ax
-    )
-    
     if metric == "BioScore":
         for model in models:
             count = idk_counts.get(model, 0)
             model_index = list(models.keys()).index(model)
             percent = (count / len(data)) * 100
-            plt.text(model_index, -0.125, f'({percent:.2f}%)', ha='center', va='center', fontsize=16, color='red')
+            plt.text(model_index, -0.12, f'({percent:.2f}%)', ha='center', va='center', fontsize=16, color='red')
         
     yticks = [0.0, 0.5, 1.0, 1.5, 2.0, 2.5, 3.0]
     yticks = [yt / 3.0 for yt in yticks]
@@ -83,9 +69,9 @@ def plot_metric_boxplot(data: pd.DataFrame, metric: str, models: dict, model_ord
     plt.ylim(-0.05, max(yticks) + 0.05)
     plt.yticks(yticks, [f'{yt:.2f}' for yt in yticks])
 
-    plt.xlabel("Model", fontsize=22, fontweight='bold')
+    plt.xlabel("Model", fontsize=22, fontweight='bold', labelpad=30)
     plt.ylabel(metric, fontsize=22, fontweight='bold')
-    plt.title(f"{title} (n = {len(data)})", fontsize=24)
+    plt.title(f"{title}", fontsize=24)
 
     plt.tight_layout()
     plt.savefig(f'{save_path}/{title}')
