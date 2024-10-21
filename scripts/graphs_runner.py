@@ -3,7 +3,7 @@ from scripts import MODELS_DICT, METRICS_DICT
 from scripts.scripts_utils import load_dataset
 from scripts.generate_graphs.boxplot import plot_metric_boxplot, plot_template_boxplot
 from scripts.generate_graphs.heatmap import plot_metric_heatmap, plot_idk_heatmap
-from scripts.generate_graphs.table import create_performance_table, style_dataframe
+from scripts.generate_graphs.table import bioscore_performance_table, create_performance_table, style_dataframe
 from scripts.generate_graphs.pie import plot_category_pie_chart
 from scripts.generate_graphs.histogram import plot_token_histograms
 from scripts.generate_graphs.statistics import statistics_txt
@@ -92,11 +92,17 @@ def main():
         print("*** BLEU, ROUGE, and BERTScore Completed ***")
         metrics_list += nlp_metrics
 
-    performance_table = create_performance_table(data, metrics_list, MODELS_DICT)
-    print("*** Performance Table Created ***")
+    performance_table = bioscore_performance_table(data, MODELS_DICT)
+    print("*** BioScore Performance Table Created ***")
 
-    style_dataframe(performance_table, "All Metrics", res_dir)
-    print("*** Performance Table Styled and Saved ***")
+    style_dataframe(performance_table, "All BioScore Metrics", res_dir)
+    print("*** BioScore Table Styled and Saved ***")
+
+    performance_table = create_performance_table(data, nlp_metrics, MODELS_DICT)
+    print("*** NLP Performance Table Created ***")
+
+    style_dataframe(performance_table, "All NLP Metrics", res_dir)
+    print("*** NLP Table Styled and Saved ***")
 
     print("*** *** *** GRAPHS RUNNER COMPLETED *** *** ***")
 
