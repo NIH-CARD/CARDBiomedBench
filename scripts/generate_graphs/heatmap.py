@@ -4,8 +4,8 @@ import seaborn as sns
 import matplotlib.pyplot as plt
 from matplotlib.colors import LinearSegmentedColormap
 
-def plot_metric_heatmap(data: pd.DataFrame, metric: str, models: dict, model_order: list, category: str, title: str, save_path: str):
-    """Create a heatmap to visualize average performance for a single metric across categories, filtering out -1 values."""
+def plot_metric_heatmap(data: pd.DataFrame, metric: str, models: dict, model_order: list, category: str, title: str, save_path: str, threshold: int = 0):
+    """Create a heatmap to visualize average performance for a single metric across categories, filtering out -1 values and categories with too few valid entries."""
     sns.set_theme(style="white")
     
     # Define a custom gradient colormap with three colors
@@ -28,9 +28,15 @@ def plot_metric_heatmap(data: pd.DataFrame, metric: str, models: dict, model_ord
             # Filter out -1 values
             exploded_data = exploded_data[exploded_data[col_name] != -1]
             
-            # Calculate the mean for each category
-            avg_performance = exploded_data.groupby(category)[col_name].mean()
-            heatmap_data[model] = avg_performance
+            # Group by category and calculate the number of valid entries and the mean performance
+            performance_stats = exploded_data.groupby(category)[col_name].agg(['mean', 'count'])
+            print(model)
+            print(performance_stats)
+            # Filter out categories with fewer valid entries than the threshold
+            filtered_stats = performance_stats[performance_stats['count'] >= threshold]
+            
+            # Store the mean performance in the heatmap data
+            heatmap_data[model] = filtered_stats['mean']
         else:
             heatmap_data[model] = np.nan  # Ensure every model has a column, even if it's NaN
     
@@ -38,7 +44,7 @@ def plot_metric_heatmap(data: pd.DataFrame, metric: str, models: dict, model_ord
     heatmap_data = heatmap_data.reindex(sorted(heatmap_data.index.unique()), fill_value=np.nan)
 
     # Increase figure size for larger boxes
-    plt.figure(figsize=(len(models) * 2, len(heatmap_data) * 1.2))
+    plt.figure(figsize=(len(models) * 1.75, len(heatmap_data) * 1.2))
     ax = sns.heatmap(heatmap_data, annot=True, cmap=custom_cmap, linewidths=5, square=True, fmt=".2f", annot_kws={"size": 14}, cbar_kws={'shrink': .75}, vmin=0.0, vmax=1.0)
     
     # Remove axis labels
@@ -98,7 +104,7 @@ def plot_idk_heatmap(data: pd.DataFrame, metric: str, models: dict, model_order:
     heatmap_data = heatmap_data.fillna(0)
 
     # Increase figure size for larger boxes
-    plt.figure(figsize=(len(models) * 2, len(heatmap_data) * 1.2))
+    plt.figure(figsize=(len(models) * 1.75, len(heatmap_data) * 1.2))
     ax = sns.heatmap(heatmap_data, annot=True, cmap=custom_cmap, linewidths=5, square=True, fmt=".2f", annot_kws={"size": 14}, cbar_kws={'shrink': .75}, vmin=0, vmax=1)
     
     # Remove axis labels
