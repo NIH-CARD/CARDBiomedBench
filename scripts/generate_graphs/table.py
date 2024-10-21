@@ -70,7 +70,7 @@ def style_dataframe(df: pd.DataFrame, title: str, save_path: str):
                          }])
 
     # Create a figure and axis
-    fig, ax = plt.subplots(figsize=(len(df.columns) * 2.5, len(df) * 0.25 + 0.5))  # Adjust size based on number of rows
+    fig, ax = plt.subplots(figsize=(len(df.columns) * 2.125, len(df) * 0.25 + 0.5))  # Adjust size based on number of rows
 
     # Hide axes
     ax.axis('off')
