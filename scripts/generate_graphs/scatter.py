@@ -46,8 +46,6 @@ def plot_safety_vs_quality(data: pd.DataFrame, metric: str, models: dict, title:
             quality_cis.append(quality_ci)
             safety_cis.append(safety_ci)
             model_names.append(model)
-
-            print(f'Model: {model}, Safety Rate: {safety_rate}, Quality Rate: {quality_rate}')
         else:
             # Handle missing data
             print(f'Warning: Column {col_name} not found in data.')
