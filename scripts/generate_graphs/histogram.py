@@ -6,8 +6,14 @@ import matplotlib.pyplot as plt
 def plot_token_histograms(data: pd.DataFrame, text_col: str, color: str, title: str, save_path: str):
     """Create a histogram to visualize token counts for a given text column, showing frequency as a percentage, and filter outliers."""
     sns.set_style("whitegrid")
-    sns.set_context("talk")
-    
+    plt.rcParams.update({
+        'font.family': 'DejaVu Sans',
+        'font.size': 16,
+        'axes.titlesize': 20,
+        'axes.labelsize': 16,
+        'xtick.labelsize': 16,
+        'ytick.labelsize': 16
+    })
     token_col = f'{text_col}_token_count'
 
     # Calculate Q1 (25th percentile), Q3 (75th percentile), and Interquartile range
