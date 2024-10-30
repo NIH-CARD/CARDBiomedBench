@@ -4,6 +4,14 @@ import matplotlib.pyplot as plt
 
 def plot_category_pie_chart(data: pd.DataFrame, category: str, title: str, save_path: str, color_flag: int):
     """Create a pie chart to visualize the distribution of categories in the dataset."""
+    # Set the font to 'DejaVu Sans' and larger sizes for clarity
+    plt.rcParams.update({
+        'font.family': 'DejaVu Sans',
+        'font.size': 13,
+        'axes.titlesize': 16,
+        'axes.labelsize': 13
+    })
+    
     # Explode the category column to handle multiple labels per entry
     exploded_data = data.copy()
     exploded_data[category] = exploded_data[category].apply(lambda x: [item.strip() for item in x.split(';')])
@@ -30,8 +38,17 @@ def plot_category_pie_chart(data: pd.DataFrame, category: str, title: str, save_
     explode = [0.1] * len(labels)
     
     # Plot the pie chart
-    plt.figure(figsize=(12, 6))
-    plt.pie(sizes, colors=colors, labels=labels, autopct='%1.1f%%', startangle=0, pctdistance=0.85, explode=explode, labeldistance=1.1)
+    plt.figure(figsize=(10, 6))
+    plt.pie(
+        sizes,
+        colors=colors,
+        labels=labels,
+        autopct='%1.1f%%',
+        startangle=0,
+        pctdistance=0.85,
+        explode=explode,
+        labeldistance=1.1
+    )
     
     # Draw circle to make it a donut chart
     centre_circle = plt.Circle((0, 0), 0.75, fc='white')
@@ -41,7 +58,7 @@ def plot_category_pie_chart(data: pd.DataFrame, category: str, title: str, save_
     # Equal aspect ratio ensures that pie is drawn as a circle
     plt.gca().set_aspect('equal')
     
-    plt.title(title, fontsize=12)
+    plt.title(title, fontsize=16)
     plt.tight_layout()
     plt.savefig(f'{save_path}/{title}.png')
     plt.close()
