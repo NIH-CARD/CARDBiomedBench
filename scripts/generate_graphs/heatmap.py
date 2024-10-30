@@ -7,6 +7,9 @@ from matplotlib.colors import LinearSegmentedColormap
 def plot_metric_heatmap(data: pd.DataFrame, metric: str, models: dict, model_order: list, category: str, title: str, save_path: str, threshold: int = 5):
     """Create a heatmap to visualize average performance for a single metric across categories, filtering out -1 values and categories with too few valid entries."""
     sns.set_theme(style="white")
+    plt.rcParams.update({
+        'font.family': 'DejaVu Sans',
+    })
     
     # Define a custom gradient colormap with three colors
     custom_cmap = LinearSegmentedColormap.from_list("custom_cmap", ["#f75984", "#f2f2f2", "#339cc5"])
@@ -47,7 +50,7 @@ def plot_metric_heatmap(data: pd.DataFrame, metric: str, models: dict, model_ord
     heatmap_data_filled = heatmap_data.fillna(-0.1)
     
     # Create custom annotations, replacing sentinel value with 'NA'
-    annotations = heatmap_data_filled.applymap(lambda x: 'NA' if x == -0.1 else f'{x:.2f}')
+    annotations = heatmap_data_filled.map(lambda x: 'NA' if x == -0.1 else f'{x:.2f}')
     
     # Increase figure size for larger boxes
     plt.figure(figsize=(len(models) * 1.75, len(heatmap_data) * 1.2))
@@ -79,9 +82,12 @@ def plot_metric_heatmap(data: pd.DataFrame, metric: str, models: dict, model_ord
 def plot_idk_heatmap(data: pd.DataFrame, metric: str, models: dict, model_order: list, category: str, title: str, save_path: str):
     """Create a heatmap to visualize the percentages of -1 values across models."""
     sns.set_theme(style="white")
+    plt.rcParams.update({
+        'font.family': 'DejaVu Sans',
+    })
 
     # Define a custom gradient colormap with two colors
-    custom_cmap = LinearSegmentedColormap.from_list("custom_cmap", ["#f2f2f2", "#fa954d"])
+    custom_cmap = LinearSegmentedColormap.from_list("custom_cmap", ["#f2f2f2", "#ff6a00"])
     
     # Initialize a DataFrame to store percentages of -1 values per category per model
     heatmap_data = pd.DataFrame()

@@ -18,6 +18,10 @@ def plot_safety_vs_quality(data: pd.DataFrame, metric: str, models: dict, title:
     """Plot Response Quality Rate against Safety Rate for each model with legend and pastel colors,
     and add quadrant lines at 0.5 for both axes and 95% confidence intervals on both Response Quality Rate and Safety Rate,
     represented as ellipses (ovals), and include quadrant labels."""
+    
+    plt.rcParams.update({
+        'font.family': 'DejaVu Sans',
+    })
 
     quality_rates = []
     safety_rates = []
