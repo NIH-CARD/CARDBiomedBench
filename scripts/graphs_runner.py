@@ -2,7 +2,7 @@ import argparse
 from scripts import MODELS_DICT, METRICS_DICT
 from scripts.scripts_utils import load_dataset
 from scripts.generate_graphs.boxplot import plot_metric_boxplot, plot_template_boxplot
-from scripts.generate_graphs.heatmap import plot_metric_heatmap, plot_idk_heatmap
+from scripts.generate_graphs.heatmap import plot_heatmap
 from scripts.generate_graphs.table import bioscore_performance_table, create_performance_table, style_dataframe
 from scripts.generate_graphs.pie import plot_category_pie_chart
 from scripts.generate_graphs.histogram import plot_token_histograms
@@ -63,17 +63,41 @@ def main():
         plot_metric_boxplot(data, "BioScore", MODELS_DICT, bioscore_model_order, "BioScore Boxplot", res_dir)
         print("*** BioScore Boxplot Completed ***")
         
-        plot_metric_heatmap(data, "BioScore", MODELS_DICT, bioscore_model_order, "Bio_Category", "BioScore Bio Heatmap", res_dir)
+        # BioScore Heatmaps
+        plot_heatmap(data=data, metric='BioScore', models=MODELS_DICT, model_order=bioscore_model_order, category='Bio_Category',
+            title='BioScore Bio Heatmap', save_path=res_dir, calculation_type='mean', threshold=5)
         print("*** BioScore Bio Heatmap Completed ***")
+
+        plot_heatmap(data=data, metric='BioScore', models=MODELS_DICT, model_order=bioscore_model_order, category='SQL_Category',
+            title='BioScore Reasoning Heatmap', save_path=res_dir, calculation_type='mean', threshold=5)
+        print("*** BioScore Reasoning Heatmap Completed ***")
         
-        plot_idk_heatmap(data, "BioScore", MODELS_DICT, bioscore_model_order, "Bio_Category", "Abstention Rate Bio Heatmap", res_dir)
+        # AR Heatmaps
+        plot_heatmap(data=data, metric='BioScore', models=MODELS_DICT, model_order=bioscore_model_order, category='Bio_Category',
+            title='Abstention Rate Bio Heatmap New', save_path=res_dir, calculation_type='percentage_idk')
         print("*** Abstention Rate Bio Heatmap Completed ***")
 
-        plot_metric_heatmap(data, "BioScore", MODELS_DICT, bioscore_model_order, "SQL_Category", "BioScore Reasoning Heatmap", res_dir)
-        print("*** BioScore SQL Heatmap Completed ***")
+        plot_heatmap(data=data, metric='BioScore', models=MODELS_DICT, model_order=bioscore_model_order, category='SQL_Category',
+            title='Abstention Rate Reasoning Heatmap', save_path=res_dir, calculation_type='percentage_idk')
+        print("*** Abstention Rate Reasoning Heatmap Completed ***")
+
+        # Quality Rate Heatmaps
+        plot_heatmap(data=data, metric='BioScore', models=MODELS_DICT, model_order=bioscore_model_order, category='Bio_Category',
+            title='Quality Rate Bio Heatmap', save_path=res_dir, calculation_type='quality_rate', threshold=5)
+        print("*** Quality Rate Bio Heatmap Completed ***")
+
+        plot_heatmap(data=data, metric='BioScore', models=MODELS_DICT, model_order=bioscore_model_order, category='SQL_Category',
+            title='Quality Rate Reasoning Heatmap', save_path=res_dir, calculation_type='quality_rate', threshold=5)
+        print("*** Quality Rate Reasoning Heatmap Completed ***")
         
-        plot_idk_heatmap(data, "BioScore", MODELS_DICT, bioscore_model_order, "SQL_Category", "Abstention Rate Reasoning Heatmap", res_dir)
-        print("*** Abstention Rate SQl Heatmap Completed ***")
+        # Safety Rate Heatmaps
+        plot_heatmap(data=data, metric='BioScore', models=MODELS_DICT, model_order=bioscore_model_order, category='Bio_Category',
+            title='Safety Rate Bio Heatmap', save_path=res_dir, calculation_type='safety_rate', threshold=5)
+        print("*** Safety Rate Bio Heatmap Completed ***")
+
+        plot_heatmap(data=data, metric='BioScore', models=MODELS_DICT, model_order=bioscore_model_order, category='SQL_Category',
+            title='Safety Rate Reasoning Heatmap', save_path=res_dir, calculation_type='safety_rate', threshold=5)
+        print("*** Safety Rate Reasoning Heatmap Completed ***")
         
         plot_scatterplot(data, "response_token_count", "BioScore", MODELS_DICT, "Mean Token Count by BioScore Stdv", res_dir)
         print("*** BioScore Scatterplot By Model Completed ***")
