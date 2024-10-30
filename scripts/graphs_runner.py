@@ -74,7 +74,7 @@ def main():
         
         # AR Heatmaps
         plot_heatmap(data=data, metric='BioScore', models=MODELS_DICT, model_order=bioscore_model_order, category='Bio_Category',
-            title='Abstention Rate Bio Heatmap New', save_path=res_dir, calculation_type='percentage_idk')
+            title='Abstention Rate Bio Heatmap', save_path=res_dir, calculation_type='percentage_idk')
         print("*** Abstention Rate Bio Heatmap Completed ***")
 
         plot_heatmap(data=data, metric='BioScore', models=MODELS_DICT, model_order=bioscore_model_order, category='SQL_Category',
