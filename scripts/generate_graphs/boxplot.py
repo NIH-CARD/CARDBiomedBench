@@ -8,6 +8,9 @@ def plot_metric_boxplot(data: pd.DataFrame, metric: str, models: dict, model_ord
     colors = ['#ADD8E6', '#FFB6C1', '#DDA0DD', '#87CEEB', '#FF69B4', '#BA55D3', '#CECECD']
     sns.set_style("whitegrid")
     sns.set_context("talk")
+    plt.rcParams.update({
+        'font.family': 'DejaVu Sans',
+    })
 
     plt.figure(figsize=(20, 12))
     plt.axhline(y=0, color='k', linestyle=':', linewidth=2)
@@ -61,17 +64,17 @@ def plot_metric_boxplot(data: pd.DataFrame, metric: str, models: dict, model_ord
             count = idk_counts.get(model, 0)
             model_index = list(models.keys()).index(model)
             percent = (count / len(data)) * 100
-            plt.text(model_index, -0.12, f'({percent:.2f}%)', ha='center', va='center', fontsize=16, color='red')
+            plt.text(model_index, -0.12, f'({percent:.2f}%)', ha='center', va='center', fontsize=20, color='red')
         
     yticks = [0.0, 0.5, 1.0, 1.5, 2.0, 2.5, 3.0]
     yticks = [yt / 3.0 for yt in yticks]
     
     plt.ylim(-0.05, max(yticks) + 0.05)
-    plt.yticks(yticks, [f'{yt:.2f}' for yt in yticks])
+    plt.yticks(yticks, [f'{yt:.2f}' for yt in yticks], fontsize=20)
 
-    plt.xlabel("Model", fontsize=22, fontweight='bold', labelpad=30)
-    plt.ylabel(metric, fontsize=22, fontweight='bold')
-    plt.title(f"{title}", fontsize=24)
+    plt.xlabel("Model", fontsize=26, fontweight='bold', labelpad=30)
+    plt.ylabel(metric, fontsize=26, fontweight='bold')
+    plt.title(f"{title}", fontsize=28)
 
     plt.tight_layout()
     plt.savefig(f'{save_path}/{title}')

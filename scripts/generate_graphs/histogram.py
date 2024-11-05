@@ -8,11 +8,11 @@ def plot_token_histograms(data: pd.DataFrame, text_col: str, color: str, title: 
     sns.set_style("whitegrid")
     plt.rcParams.update({
         'font.family': 'DejaVu Sans',
-        'font.size': 16,
+        'font.size': 20,
         'axes.titlesize': 20,
-        'axes.labelsize': 16,
-        'xtick.labelsize': 16,
-        'ytick.labelsize': 16
+        'axes.labelsize': 20,
+        'xtick.labelsize': 20,
+        'ytick.labelsize': 20
     })
     token_col = f'{text_col}_token_count'
 

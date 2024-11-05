@@ -132,9 +132,12 @@ def plot_heatmap(data: pd.DataFrame, metric: str, models: dict, model_order: lis
         linewidths=5,
         square=True,
         fmt="",
-        annot_kws={"size": 14},
+        annot_kws={"size": 18},
         cbar_kws={'shrink': .75}
     )
+
+    cbar = ax.collections[0].colorbar
+    cbar.ax.tick_params(labelsize=18)
 
     # Remove axis labels
     ax.set_xlabel('')
@@ -145,8 +148,8 @@ def plot_heatmap(data: pd.DataFrame, metric: str, models: dict, model_order: lis
         plt.title(f"{title} (AR %)", fontsize=18)
     else:
         plt.title(f"{title}", fontsize=18)
-    plt.xticks(rotation=45, ha='right', fontsize=14)
-    plt.yticks(fontsize=14)
+    plt.xticks(rotation=45, ha='right', fontsize=18)
+    plt.yticks(fontsize=18)
 
     plt.tight_layout()
     plt.savefig(f'{save_path}/{title}.png')

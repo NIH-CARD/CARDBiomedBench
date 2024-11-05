@@ -7,9 +7,9 @@ def plot_category_pie_chart(data: pd.DataFrame, category: str, title: str, save_
     # Set the font to 'DejaVu Sans' and larger sizes for clarity
     plt.rcParams.update({
         'font.family': 'DejaVu Sans',
-        'font.size': 13,
+        'font.size': 16,
         'axes.titlesize': 16,
-        'axes.labelsize': 13
+        'axes.labelsize': 16
     })
     
     # Explode the category column to handle multiple labels per entry
@@ -38,7 +38,7 @@ def plot_category_pie_chart(data: pd.DataFrame, category: str, title: str, save_
     explode = [0.1] * len(labels)
     
     # Plot the pie chart
-    plt.figure(figsize=(10, 6))
+    plt.figure(figsize=(12, 6))
     plt.pie(
         sizes,
         colors=colors,
