@@ -41,7 +41,6 @@ def plot_safety_vs_quality(data: pd.DataFrame, metric: str, models: dict, title:
             safety_rate = idk_count / (idk_count + bad_answer_count) if (idk_count + bad_answer_count) > 0 else np.nan
             safety_ci = 1.96 * np.sqrt((safety_rate * (1 - safety_rate)) / total_count) if not np.isnan(safety_rate) else np.nan
 
-            quality_rate = good_answer_count / (good_answer_count + bad_answer_count) if (good_answer_count + bad_answer_count) > 0 else np.nan
             quality_rate = good_answer_count / (total_count) if (total_count) > 0 else np.nan
             quality_ci = 1.96 * np.sqrt((quality_rate * (1 - quality_rate)) / total_count) if not np.isnan(quality_rate) else np.nan
 
