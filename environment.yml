@@ -1,0 +1,24 @@
+name: cardbiomedbench-env
+channels:
+  - conda-forge
+  - defaults
+dependencies:
+  - python=3.10
+  - numpy
+  - pandas
+  - seaborn
+  - matplotlib
+  - tqdm
+  - openai
+  - google-generativeai
+  - pyyaml
+  - python-dotenv
+  - pytorch
+  - transformers
+  - anthropic
+  - requests
+  - grpcio
+  - accelerate
+  - evaluate
+  - rouge-score
+  - bert_score
