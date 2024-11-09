@@ -1,6 +1,4 @@
-# CARDBiomedBench Environment Setup
-
-This script will automatically set up the environment for CARDBiomedBench, handling the installation and activation of required dependencies.
+# CARDBiomedBench
 
 ## Setup Environment
 
