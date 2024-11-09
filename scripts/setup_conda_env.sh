@@ -1,24 +1,39 @@
 #!/bin/bash
 
-echo "==================================================================="
-echo "Starting CARDBiomedBench Environment Initialization"
+# Function to display a streaming message effect
+stream_message() {
+    local message="$1"
+    local delay="${2:-0.025}"
+    for ((i=0; i<${#message}; i++)); do
+        echo -n "${message:$i:1}"
+        sleep "$delay"
+    done
+    echo
+}
 
-# Source conda.sh to enable conda commands
+echo "==================================================================="
+stream_message "🔧 Starting CARDBiomedBench Environment Initialization"
+
+# Source conda.sh to allow environment activation in the script
 CONDA_BASE=$(conda info --base)
 source "$CONDA_BASE/etc/profile.d/conda.sh"
 
 # Check if the 'cardbiomedbench-env' environment already exists
 if conda env list | grep -q '/conda/envs/cardbiomedbench-env'; then
-    echo "'cardbiomedbench-env' environment already exists. Skipping creation."
+    stream_message "🔧 The 'cardbiomedbench-env' environment already exists. Skipping creation."
 else
-    echo "Creating the 'cardbiomedbench-env' environment..."
-    conda env create -f environment.yml || { echo "Environment creation failed!"; exit 1; }
+    # Create the environment if it does not exist
+    stream_message "🔧 Creating the 'cardbiomedbench-env' environment from scratch..."
+        
+    conda env create -f environment.yml || { stream_message "❌ Environment creation failed!"; exit 1; }
 fi
 
-# Activate the environment
-echo "Activating 'cardbiomedbench-env' environment..."
-conda activate cardbiomedbench-env || { echo "Activation failed!"; exit 1; }
+# Activating the environment with a loading spinner
+stream_message "🔧 Activating the 'cardbiomedbench-env' environment..."
 
-# Final message
-echo "Setup complete. Your environment is ready to use."
+# Activate the environment
+conda activate cardbiomedbench-env || { echo "❌ Activation failed!"; exit 1; }
+
+# Final message using the streaming effect
+stream_message "🔧 Setup complete, your environment is ready to use!"
 echo "==================================================================="
