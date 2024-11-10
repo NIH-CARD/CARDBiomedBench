@@ -49,13 +49,13 @@ model_params:
 # Paths for data storage and outputs
 paths:
   # Directory for caching datasets and models
-  cache_directory: '.cache/'
+  cache_directory: './.cache/'
   # Directory where the dataset will be saved locally
-  dataset_directory: 'data/'
+  dataset_directory: './data/'
   # Directory for output results
-  output_directory: 'results/'
+  output_directory: './results/'
   # Directory for logs
-  logs_directory: 'logs/'
+  logs_directory: './logs/'
 
 # Execution flags to control which steps to run
 execution:

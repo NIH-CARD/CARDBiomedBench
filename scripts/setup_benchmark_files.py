@@ -5,6 +5,10 @@ from pathlib import Path
 from dotenv import load_dotenv
 from datasets import load_dataset
 import os
+import logging
+
+# Configure logging
+logging.basicConfig(level=logging.INFO, format='[%(levelname)s] %(message)s')
 
 # Define the base directory as the parent of the script's directory
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -19,15 +23,16 @@ def load_configuration(config_path):
     try:
         with open(config_path, 'r') as f:
             config = yaml.safe_load(f)
+        logging.info(f"Loaded configuration from {config_path}")
         return config
     except FileNotFoundError:
-        print(f"Configuration file not found at {config_path}")
+        logging.error(f"Configuration file not found at {config_path}")
         sys.exit(1)
     except yaml.YAMLError as e:
-        print(f"Error parsing YAML file: {e}")
+        logging.error(f"Error parsing YAML file: {e}")
         sys.exit(1)
     except Exception as e:
-        print(f"Error loading configuration file: {e}")
+        logging.error(f"Error loading configuration file: {e}")
         sys.exit(1)
 
 def setup_directories(config):
@@ -49,28 +54,33 @@ def setup_directories(config):
             existing_dirs.append(dir_path.relative_to(BASE_DIR))
 
     if created_dirs:
-        print("Created directories:")
+        logging.info("Created directories:")
         for dir_path in created_dirs:
-            print(f"- {dir_path}")
+            logging.info(f"- {dir_path}")
     if existing_dirs:
-        print("Directories already exist:")
+        logging.info("Directories already exist:")
         for dir_path in existing_dirs:
-            print(f"- {dir_path}")
+            logging.info(f"- {dir_path}")
 
 def download_dataset(config):
-    dataset_name = config['dataset'].get('dataset_name', 'CARDBiomedBench')
-    dataset_version = config['dataset'].get('dataset_version', 'latest')
-    save_path = BASE_DIR / config['paths'].get('dataset_directory', 'data')
+    # TODO modify this
+    # dataset_name = config['dataset'].get('dataset_name', 'NIH-CARD/CARDBiomedBench')
+    # save_path = BASE_DIR / config['paths'].get('dataset_directory', 'data')
 
-    save_path.mkdir(parents=True, exist_ok=True)
+    # logging.info(f"Downloading dataset '{dataset_name}'...")
 
-    print(f"Downloading dataset '{dataset_name}' version '{dataset_version}'...")
-    dataset = load_dataset(dataset_name, name=dataset_version)
-    dataset.save_to_disk(str(save_path))
-    print(f"Dataset saved to '{save_path}'")
+    # try:
+    #     # Force download and save to local disk
+    #     dataset = load_dataset(dataset_name)
+    #     dataset.save_to_disk(str(save_path))
+    #     logging.info(f"Dataset saved to '{save_path}'")
+    # except Exception as e:
+    #     logging.error(f"Failed to download dataset: {e}")
+    #     sys.exit(1)
+    pass
 
 def check_api_keys(config):
-    models = [model for model in config['models'] if model['use']]
+    models = [model for model in config['models'] if model.get('use')]
     required_keys = set()
 
     for model in models:
@@ -89,13 +99,13 @@ def check_api_keys(config):
     missing_keys = [key for key in required_keys if not os.getenv(key)]
 
     if missing_keys:
-        print("Missing API keys for the following services:")
+        logging.error("Missing API keys for the following services:")
         for key in missing_keys:
-            print(f"- {key}")
-        print("\nPlease set these API keys in your environment variables or .env file.")
+            logging.error(f"- {key}")
+        logging.error("Please set these API keys in your environment variables or .env file.")
         sys.exit(1)
     else:
-        print("All necessary API keys are present.")
+        logging.info("All necessary API keys are present.")
 
 def main():
     # Parse arguments
@@ -109,21 +119,21 @@ def main():
     dotenv_path = BASE_DIR / 'configs' / '.env'
     if dotenv_path.exists():
         load_dotenv(dotenv_path=dotenv_path)
-        print(f"Loaded environment variables from {dotenv_path}")
+        logging.info(f"Loaded environment variables from {dotenv_path}")
     else:
-        print(f"Warning: .env file not found at {dotenv_path}")
-        print("Proceeding without loading .env file. Ensure that API keys are set as environment variables.")
+        logging.warning(f".env file not found at {dotenv_path}")
+        logging.warning("Proceeding without loading .env file. Ensure that API keys are set as environment variables.")
 
     # Setup directories
     setup_directories(config)
 
-    # # Download dataset
-    # download_dataset(config)
+    # Download dataset to local
+    download_dataset(config)
 
     # Check API keys
     check_api_keys(config)
 
-    print("\nSetup complete. You can now run the benchmark.")
+    logging.info("Setup complete. You can now run the benchmark.")
 
 if __name__ == '__main__':
     main()
