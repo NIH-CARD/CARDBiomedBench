@@ -10,7 +10,7 @@ import getpass
 # Define the base directory as the parent of the script's directory
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-# Function to display a streaming message effect
+# Function to display a streaming message effect, one character at a time
 def stream_message(message, delay=0.025):
     for char in message:
         sys.stdout.write(char)
@@ -18,12 +18,14 @@ def stream_message(message, delay=0.025):
         time.sleep(delay)
     sys.stdout.write("\n")
 
+# Parse command-line arguments, including the config file path
 def parse_arguments():
     parser = argparse.ArgumentParser(description='Setup Benchmark Files for CARDBiomedBench')
     parser.add_argument('--config', type=str, default=BASE_DIR / 'configs' / 'default_config.yaml',
                         help='Path to the configuration file')
     return parser.parse_args()
 
+# Load configuration from a YAML file
 def load_configuration(config_path):
     try:
         with open(config_path, 'r') as f:
@@ -40,6 +42,7 @@ def load_configuration(config_path):
         stream_message(f"❌ Error loading configuration file: {e}")
         sys.exit(1)
 
+# Setup directories specified in the configuration file
 def setup_directories(config):
     directories = {
         'output_directory': BASE_DIR / config['paths'].get('output_directory', 'results'),
@@ -67,6 +70,7 @@ def setup_directories(config):
         for dir_path in existing_dirs:
             stream_message(f"     * {dir_path}")
 
+# Check for required API keys, prompt for missing ones, and save them to .env
 def check_api_keys(config, dotenv_path):
     models = [model for model in config['models'] if model.get('use')]
     required_keys = set()
@@ -101,6 +105,7 @@ def check_api_keys(config, dotenv_path):
     else:
         stream_message("🔧 All necessary API keys are present.")
 
+# Create a .env file by prompting the user for required API keys
 def create_env_file(config):
     models = [model for model in config['models'] if model.get('use')]
     required_keys = set()
@@ -132,14 +137,16 @@ def create_env_file(config):
 
     stream_message(f"🔧 Created .env file at {BASE_DIR.name}/{dotenv_path.relative_to(BASE_DIR)}")
 
+# Placeholder function for downloading datasets
 def download_dataset(config):
     pass
 
+# Main setup script
 def main():
     print("=============================================================================")
     stream_message("🔧 Starting CARDBiomedBench Directory Setup")
     
-    # Parse arguments
+    # Parse command-line arguments
     args = parse_arguments()
 
     # Load configuration
