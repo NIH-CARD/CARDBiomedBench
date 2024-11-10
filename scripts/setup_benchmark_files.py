@@ -2,9 +2,10 @@ import argparse
 import sys
 import yaml
 from pathlib import Path
-from dotenv import load_dotenv
+from dotenv import load_dotenv, set_key
 import os
 import time
+import getpass
 
 # Define the base directory as the parent of the script's directory
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -27,10 +28,10 @@ def load_configuration(config_path):
     try:
         with open(config_path, 'r') as f:
             config = yaml.safe_load(f)
-        stream_message(f"🔧 Loaded configuration from {BASE_DIR.name / config_path.relative_to(BASE_DIR)}")
+        stream_message(f"🔧 Loaded configuration from {BASE_DIR.name}/{config_path.relative_to(BASE_DIR)}")
         return config
     except FileNotFoundError:
-        stream_message(f"❌ Configuration file not found at {BASE_DIR.name / config_path.relative_to(BASE_DIR)}")
+        stream_message(f"❌ Configuration file not found at {BASE_DIR.name}/{config_path.relative_to(BASE_DIR)}")
         sys.exit(1)
     except yaml.YAMLError as e:
         stream_message(f"❌ Error parsing YAML file: {e}")
@@ -66,24 +67,7 @@ def setup_directories(config):
         for dir_path in existing_dirs:
             stream_message(f"     * {dir_path}")
 
-def download_dataset(config):
-    # TODO modify this
-    # dataset_name = config['dataset'].get('dataset_name', 'NIH-CARD/CARDBiomedBench')
-    # save_path = BASE_DIR / config['paths'].get('dataset_directory', 'data')
-
-    # logging.info(f"Downloading dataset '{dataset_name}'...")
-
-    # try:
-    #     # Force download and save to local disk
-    #     dataset = load_dataset(dataset_name)
-    #     dataset.save_to_disk(str(save_path))
-    #     logging.info(f"Dataset saved to '{save_path}'")
-    # except Exception as e:
-    #     logging.error(f"Failed to download dataset: {e}")
-    #     sys.exit(1)
-    pass
-
-def check_api_keys(config):
+def check_api_keys(config, dotenv_path):
     models = [model for model in config['models'] if model.get('use')]
     required_keys = set()
 
@@ -106,10 +90,50 @@ def check_api_keys(config):
         stream_message("❌ Missing API keys for the following services:")
         for key in missing_keys:
             stream_message(f"     * {key}")
-        stream_message("Please set these API keys in your environment variables or .env file.")
-        sys.exit(1)
+        stream_message("Please enter the missing API keys.")
+        
+        for key in missing_keys:
+            api_key = getpass.getpass(prompt=f"🔑 Enter your {key}: ")
+            # Set the key in both environment and the .env file
+            os.environ[key] = api_key
+            set_key(dotenv_path, key, api_key)
+        stream_message("🔧 Missing API keys have been added to the .env file.")
     else:
         stream_message("🔧 All necessary API keys are present.")
+
+def create_env_file(config):
+    models = [model for model in config['models'] if model.get('use')]
+    required_keys = set()
+
+    for model in models:
+        model_type = model.get('type')
+        if model_type == 'openai':
+            required_keys.add('OPENAI_API_KEY')
+        elif model_type == 'anthropic':
+            required_keys.add('ANTHROPIC_API_KEY')
+        elif model_type == 'google':
+            required_keys.add('GOOGLE_API_KEY')
+        elif model_type == 'huggingface':
+            required_keys.add('HF_TOKEN')
+        elif model_type == 'perplexity':
+            required_keys.add('PERPLEXITY_API_KEY')
+
+    env_vars = {}
+    for key in required_keys:
+        stream_message(f"🔑 Please enter your {key}:")
+        api_key = getpass.getpass(prompt='> ')
+        env_vars[key] = api_key
+
+    # Write the keys into the .env file
+    dotenv_path = BASE_DIR / 'configs' / '.env'
+    with open(dotenv_path, 'w') as f:
+        for key, value in env_vars.items():
+            f.write(f"{key}={value}\n")
+
+    stream_message(f"🔧 Created .env file at {BASE_DIR.name}/{dotenv_path.relative_to(BASE_DIR)}")
+
+def download_dataset(config):
+    pass
 
 def main():
     print("=============================================================================")
@@ -126,18 +150,21 @@ def main():
     dotenv_path = BASE_DIR / 'configs' / '.env'
     if dotenv_path.exists():
         load_dotenv(dotenv_path=dotenv_path)
-        stream_message(f"🔧 Loaded environment variables from {BASE_DIR.name / dotenv_path.relative_to(BASE_DIR)}")
+        stream_message(f"🔧 Loaded environment variables from {BASE_DIR.name}/{dotenv_path.relative_to(BASE_DIR)}")
+        # Check for missing API keys if the .env file exists
+        check_api_keys(config, dotenv_path)
     else:
-        stream_message(f"❌ .env file not found at {BASE_DIR.name / dotenv_path.relative_to(BASE_DIR)}. Ensure API keys are set as environment variables.")
+        stream_message(f"❌ .env file not found at {BASE_DIR.name}/{dotenv_path.relative_to(BASE_DIR)}")
+        stream_message(f"🔧 Creating .env file and prompting for API keys.")
+        create_env_file(config)
+        load_dotenv(dotenv_path=dotenv_path)
+        stream_message(f"🔧 Loaded environment variables from {BASE_DIR.name}/{dotenv_path.relative_to(BASE_DIR)}")
 
     # Setup directories
     setup_directories(config)
 
     # Download dataset to local
     download_dataset(config)
-
-    # Check API keys
-    check_api_keys(config)
 
     stream_message("✅ Setup complete, you can now run the benchmark.")
     print("=============================================================================")
