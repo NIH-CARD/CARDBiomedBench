@@ -1,0 +1,95 @@
+# Dataset settings
+dataset:
+  # Name of the dataset on Hugging Face
+  dataset_name: 'NIH-CARD/CARDBiomedBench'
+  # Number of samples to use for each template question
+  template_samples: 270
+
+# Prompts used by the models
+prompts:
+  # System prompt for the models during response generation
+  system_prompt: >
+    You are a highly knowledgeable and experienced expert in the healthcare and biomedical field,
+    possessing extensive medical knowledge and practical expertise. If you do not know the answer
+    to a question, explicitly state that you do not know.
+  # System prompt for the grading model during evaluation
+  bioscore_system_prompt: >
+    You are a highly knowledgeable and experienced expert in the healthcare and biomedical field,
+    possessing extensive medical knowledge and practical expertise.
+  # Grading prompt template for BioScore
+  bioscore_grading_prompt: | 
+    ### Scoring Instructions for Evaluating Analyst Responses
+
+    **Objective:** Evaluate an analyst's response against a gold standard.
+
+    **Scoring Criteria:**
+    - **Exact Match:** 3 points for an exact or equally accurate response.
+    - **Close Match:** 2 points for a very close response with minor inaccuracies.
+    - **Partial Match:** 1 point for a partially accurate response with significant omissions.
+    - **Irrelevant Information (Harmless):** Deduct 0.5 points for harmless irrelevant information.
+    - **Irrelevant Information (Distracting):** Deduct 1 point for distracting irrelevant information.
+    - **No Match:** 0 points for no match.
+    - **Not Knowing Response:** -1 point for stating lack of knowledge or abstaining. An example of this scenario is when Analyst Response says \'There are various studies, resources or databases on this topic that you can check ... but I do not have enough information on this topic.\'
+
+    **Scoring Process:**
+    1. **Maximum Score:** 3 points per question.
+    2. **Calculate Score:** Apply criteria to evaluate the response.
+
+    **Question:** {question}
+    f"**Golden Answer:** {gold_res}
+    f"**Analyst Response:** {pred_res}
+    ## Your grading
+    Using the scoring instructions above, grade the Analyst Response return only the numeric score on a scale from 0.0-3.0. If the response is stating lack of knowledge or abstaining, give it -1.0.
+
+# Model parameters for generation
+model_params:
+  max_tokens: 1024
+  temperature: 0.0
+
+# Paths for data storage and outputs
+paths:
+  # Directory for caching datasets and models
+  cache_directory: '.cache/'
+  # Directory where the dataset will be saved locally
+  dataset_directory: 'data/'
+  # Directory for output results
+  output_directory: 'results/'
+  # Directory for logs
+  logs_directory: 'logs/'
+
+# Execution flags to control which steps to run
+execution:
+  run_responses: true
+  run_metrics: true
+  run_graphs: true
+
+# Models to be used in the benchmark
+models:
+  - name: 'gpt-4'
+    use: true
+    type: 'openai'
+  - name: 'gpt-3.5-turbo'
+    use: true
+    type: 'openai'
+  - name: 'gemini-1.5-pro'
+    use: false
+    type: 'google'
+  - name: 'claude-3.5-sonnet'
+    use: false
+    type: 'anthropic'
+  - name: 'perplexity-sonar-huge'
+    use: false
+    type: 'perplexity'
+  - name: 'gemma-2-27b-it'
+    use: false
+    type: 'huggingface'
+  - name: 'llama-3.1-70b-it'
+    use: false
+    type: 'huggingface'
+
+# Evaluation metrics to be used
+metrics:
+  - name: 'BioScore'
+    use: true
+  - name: 'BLEU_ROUGE_BERT'
+    use: true
