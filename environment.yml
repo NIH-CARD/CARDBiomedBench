@@ -1,25 +1,138 @@
 name: cardbiomedbench-env
 channels:
   - conda-forge
+  - bioconda
   - defaults
 dependencies:
-  - python=3.10
-  - datasets
-  # - numpy
-  # - pandas
-  # - seaborn
-  # - matplotlib
-  # - tqdm
-  # - openai
-  # - google-generativeai
-  # - pyyaml
-  # - python-dotenv
-  # - pytorch
-  # - transformers
-  # - anthropic
-  # - requests
-  # - grpcio
-  # - accelerate
-  # - evaluate
-  # - rouge-score
-  # - bert_score
+  - _libgcc_mutex=0.1
+  - _openmp_mutex=4.5
+  - aiohappyeyeballs=2.4.3
+  - aiohttp=3.10.10
+  - aiosignal=1.3.1
+  - async-timeout=4.0.3
+  - attrs=24.2.0
+  - aws-c-auth=0.8.0
+  - aws-c-cal=0.8.0
+  - aws-c-common=0.10.0
+  - aws-c-compression=0.3.0
+  - aws-c-event-stream=0.5.0
+  - aws-c-http=0.9.0
+  - aws-c-io=0.15.0
+  - aws-c-mqtt=0.11.0
+  - aws-c-s3=0.7.0
+  - aws-c-sdkutils=0.2.0
+  - aws-checksums=0.2.0
+  - aws-crt-cpp=0.29.1
+  - aws-sdk-cpp=1.11.407
+  - azure-core-cpp=1.14.0
+  - azure-identity-cpp=1.10.0
+  - azure-storage-blobs-cpp=12.13.0
+  - azure-storage-common-cpp=12.8.0
+  - azure-storage-files-datalake-cpp=12.12.0
+  - brotli-python=1.1.0
+  - bzip2=1.0.8
+  - c-ares=1.34.2
+  - ca-certificates=2024.8.30
+  - certifi=2024.8.30
+  - cffi=1.17.1
+  - charset-normalizer=3.4.0
+  - colorama=0.4.6
+  - datasets=3.0.2
+  - dill=0.3.8
+  - filelock=3.16.1
+  - frozenlist=1.5.0
+  - fsspec=2024.9.0
+  - gflags=2.2.2
+  - glog=0.7.1
+  - h2=4.1.0
+  - hpack=4.0.0
+  - huggingface_hub=0.26.2
+  - hyperframe=6.0.1
+  - idna=3.10
+  - keyutils=1.6.1
+  - krb5=1.21.3
+  - ld_impl_linux-64=2.43
+  - libabseil=20240722.0
+  - libarrow=18.0.0
+  - libarrow-acero=18.0.0
+  - libarrow-dataset=18.0.0
+  - libarrow-substrait=18.0.0
+  - libblas=3.9.0
+  - libbrotlicommon=1.1.0
+  - libbrotlidec=1.1.0
+  - libbrotlienc=1.1.0
+  - libcblas=3.9.0
+  - libcrc32c=1.1.2
+  - libcurl=8.10.1
+  - libedit=3.1.20191231
+  - libev=4.33
+  - libevent=2.1.12
+  - libffi=3.4.2
+  - libgcc=14.2.0
+  - libgcc-ng=14.2.0
+  - libgfortran=14.2.0
+  - libgfortran5=14.2.0
+  - libgomp=14.2.0
+  - libgoogle-cloud=2.30.0
+  - libgoogle-cloud-storage=2.30.0
+  - libgrpc=1.67.1
+  - libiconv=1.17
+  - liblapack=3.9.0
+  - libnghttp2=1.64.0
+  - libnsl=2.0.1
+  - libopenblas=0.3.28
+  - libparquet=18.0.0
+  - libprotobuf=5.28.2
+  - libre2-11=2024.07.02
+  - libsqlite=3.47.0
+  - libssh2=1.11.0
+  - libstdcxx=14.2.0
+  - libstdcxx-ng=14.2.0
+  - libthrift=0.21.0
+  - libutf8proc=2.8.0
+  - libuuid=2.38.1
+  - libxcrypt=4.4.36
+  - libxml2=2.13.4
+  - libzlib=1.3.1
+  - lz4-c=1.9.4
+  - multidict=6.1.0
+  - multiprocess=0.70.16
+  - ncurses=6.5
+  - numpy=2.1.3
+  - openssl=3.3.2
+  - orc=2.0.2
+  - packaging=24.1
+  - pandas=2.2.3
+  - pip=24.3.1
+  - propcache=0.2.0
+  - pyarrow=18.0.0
+  - pyarrow-core=18.0.0
+  - pycparser=2.22
+  - pysocks=1.7.1
+  - python=3.10.15
+  - python-dateutil=2.9.0
+  - python-tzdata=2024.2
+  - python-xxhash=3.5.0
+  - python_abi=3.10
+  - pytz=2024.1
+  - pyyaml=6.0.2
+  - re2=2024.07.02
+  - readline=8.2
+  - requests=2.32.3
+  - s2n=1.5.6
+  - setuptools=75.3.0
+  - six=1.16.0
+  - snappy=1.2.1
+  - tk=8.6.13
+  - tqdm=4.67.0
+  - typing-extensions=4.12.2
+  - typing_extensions=4.12.2
+  - tzdata=2024b
+  - urllib3=2.2.3
+  - wheel=0.44.0
+  - xxhash=0.8.2
+  - xz=5.2.6
+  - yaml=0.2.5
+  - yarl=1.16.0
+  - zstandard=0.23.0
+  - zstd=1.5.6
