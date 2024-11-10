@@ -1,6 +1,6 @@
 # CARDBiomedBench
 
-## Setup Environment
+### Setup Environment
 
 Run the setup script to create and activate the `cardbiomedbench-env` environment with necessary dependencies:
 
@@ -8,7 +8,7 @@ Run the setup script to create and activate the `cardbiomedbench-env` environmen
    source scripts/setup_conda_env.sh
    ```
 
-## Setup Benchmark
+### Setup Benchmark
 
 Run the setup script to create directories, load the benchmark, and prep for running evaluation:
 
