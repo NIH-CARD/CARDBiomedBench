@@ -20,7 +20,7 @@ wait_for_exit() {
     exit 1
 }
 
-echo "==================================================================="
+echo "============================================================================="
 stream_message "🔧 Starting CARDBiomedBench Environment Initialization"
 
 # Check if Conda is installed
@@ -61,5 +61,5 @@ if ! conda activate cardbiomedbench-env; then
 fi
 
 # Final message using the streaming effect
-stream_message "🔧 Setup complete, your environment is ready to use!"
-echo "==================================================================="
+stream_message "✅ Setup complete, your environment is ready to use!"
+echo "============================================================================="

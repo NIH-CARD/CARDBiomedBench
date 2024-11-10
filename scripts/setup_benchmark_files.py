@@ -112,7 +112,7 @@ def check_api_keys(config):
         stream_message("🔧 All necessary API keys are present.")
 
 def main():
-    print("===================================================================")
+    print("=============================================================================")
     stream_message("🔧 Starting CARDBiomedBench Directory Setup")
     
     # Parse arguments
@@ -140,7 +140,7 @@ def main():
     check_api_keys(config)
 
     stream_message("✅ Setup complete, you can now run the benchmark.")
-    print("===================================================================")
+    print("=============================================================================")
 
 if __name__ == '__main__':
     main()
