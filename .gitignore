@@ -1,8 +1,8 @@
 # Repository Specific
-results/*
 .cache/*
-logs/*
 data/*
+logs/*
+results/*
 
 # Byte-compiled / optimized / DLL files
 __pycache__
