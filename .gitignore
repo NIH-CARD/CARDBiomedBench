@@ -1,13 +1,8 @@
 # Repository Specific
 results/*
-manual_results/*
-template_results/*
-temp/*
-run-outputs/*
-test.py
-commands.txt
-slurm*
-.cache
+.cache/*
+logs/*
+benchmark/*
 
 # Byte-compiled / optimized / DLL files
 __pycache__
