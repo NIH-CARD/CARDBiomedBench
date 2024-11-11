@@ -3,6 +3,7 @@ import sys
 import yaml
 from pathlib import Path
 from dotenv import load_dotenv, set_key
+from datasets import load_dataset
 import os
 import time
 import getpass
@@ -137,9 +138,32 @@ def create_env_file(config):
 
     stream_message(f"🔧 Created .env file at {BASE_DIR.name}/{dotenv_path.relative_to(BASE_DIR)}")
 
-# Placeholder function for downloading datasets
+# Download the dataset hosted on huggface 
 def download_dataset(config):
-    pass
+    dataset_name = config['dataset'].get('dataset_name', 'NIH-CARD/CARDBiomedBench')
+    save_path = BASE_DIR / config['paths'].get('dataset_directory', 'data')
+    save_path.mkdir(parents=True, exist_ok=True)
+    
+    csv_file_name = 'CARDBiomedBench.csv'
+    csv_file_path = save_path / csv_file_name
+
+    stream_message(f"🔧 Downloading dataset '{dataset_name}'...")
+
+    try:
+        # Load the dataset
+        dataset = load_dataset(dataset_name)
+        
+        # Since there's only one split, get it directly
+        split_name = list(dataset.keys())[0]
+        split_dataset = dataset[split_name]
+        
+        # Save the dataset to CSV
+        split_dataset.to_csv(str(csv_file_path))
+        stream_message(f"🔧 Saved dataset to '{BASE_DIR.name}/{csv_file_path.relative_to(BASE_DIR)}'")
+        
+    except Exception as e:
+        stream_message(f"❌ Failed to download dataset: {e}")
+        sys.exit(1)
 
 # Main setup script
 def main():
