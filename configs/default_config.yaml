@@ -48,7 +48,7 @@ model_params:
 
 # Paths for data storage and outputs
 paths:
-  # Directory for caching datasets and models
+  # Directory for caching
   cache_directory: './.cache/'
   # Directory where the dataset will be saved locally
   dataset_directory: './data/'
