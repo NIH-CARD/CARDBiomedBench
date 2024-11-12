@@ -19,5 +19,5 @@ Run the setup script to create required directories, configure environment varia
 ### Run Benchmark
 
    ```bash
-   python run_benchmark.py --run_responses --run_metrics --run_graphs
+   python scripts/run_benchmark.py --run_responses --run_metrics --run_graphs
    ```
