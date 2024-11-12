@@ -2,6 +2,7 @@ import argparse
 import yaml
 import os
 import sys
+import json
 from pathlib import Path
 from functools import partial
 import time
@@ -36,14 +37,16 @@ def load_configuration(config_path):
         stream_message(f"❌ Error loading configuration file: {e}")
         sys.exit(1)
 
-def run_responses_runner(model_name, config):
+def run_responses_runner(model_name, qa_path, res_dir, hyperparams):
     """Run the responses_runner.py script for a specific model."""
+    hyperparams_str = json.dumps(hyperparams)
+    
     cmd = [
         'python', '-m', 'scripts.responses_runner',
         '--qa_path', qa_path,
         '--res_dir', res_dir,
-        '--template', template_flag,
-        '--model_name', model_name
+        '--model_name', model_name,
+        '--hyperparams', f"'{hyperparams_str}'"
     ]
     stream_message(f"🚀 Starting response generation for model: {model_name}")
     exit_code = os.system(' '.join(cmd))
@@ -57,6 +60,17 @@ def main():
     stream_message("🔧 Benchmarking LLMs on CARDBiomedBench")
     args = parse_arguments()
     config = load_configuration(args.config)
+
+    # Extract model hyperparameters
+    model_params = config.get('model_params', {})
+    system_prompt = config['prompts']['system_prompt']
+    
+    # Prepare a dictionary of hyperparameters
+    hyperparams = {
+        'system_prompt': system_prompt,
+        'max_new_tokens': model_params.get('max_tokens', 1024),
+        'temperature': model_params.get('temperature', 0.0),
+    }
     
     # Get paths from the config
     dataset_directory = config['paths'].get('dataset_directory', './data/')
@@ -85,16 +99,16 @@ def main():
         stream_message("❌ No execution flags provided. Please specify at least one of --run_responses, --run_metrics, --run_graphs.")
         sys.exit(1)
 
-    # # Step 1: Run Responses Runner
-    # if args.run_responses:
-    #     stream_message("🚀 Running response generation step")
-    #     for model_name in models_to_run:
-    #         run_responses_runner(model_name, config)
-    #     stream_message("✅ Completed response generation for all models")
-    # else:
-    #     stream_message("⚠️  Skipping response generation step")
+    # Step 1: Run Responses Runner
+    if args.run_responses:
+        stream_message("🚀 Running response generation step")
+        for model_name in models_to_run:
+            run_responses_runner(model_name, qa_path, res_dir, hyperparams)
+        stream_message("✅ Completed response generation for all models")
+    else:
+        stream_message("⚠️  Skipping response generation step")
 
-    # stream_message("🎉 Benchmark run completed successfully!")
+    stream_message("🎉 Benchmark run completed successfully!")
 
 if __name__ == '__main__':
     main()

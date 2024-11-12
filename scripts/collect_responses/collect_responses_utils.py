@@ -2,7 +2,6 @@ import time
 import pandas as pd
 from tqdm import tqdm
 from typing import Callable
-from scripts import SYSTEM_PROMPT, MODELS_DICT, MAX_NEW_TOKENS, TEMPERATURE
 from scripts.scripts_utils import save_dataset
 from .gpt_query import GPTQuery
 from .gemini_query import GeminiQuery
@@ -10,35 +9,31 @@ from .claude_query import ClaudeQuery
 from .perplexity_query import PerplexityQuery
 from .huggingface_query import HuggingFaceQuery
 
-def initialize_model(model: str, system_prompt: str):
+def initialize_model(model_name: str, system_prompt: str, max_new_tokens: int, temperature: float):
     """Initialize the model client and create an instance of the query class for the specified model."""
 
-    if model == 'gpt-4o':
-        return GPTQuery(system_prompt, 'gpt-4o-2024-05-13', max_tokens=MAX_NEW_TOKENS, temperature=TEMPERATURE)
-    elif model == 'gpt-3.5-turbo':
-        return GPTQuery(system_prompt, 'gpt-3.5-turbo-0125', max_tokens=MAX_NEW_TOKENS, temperature=TEMPERATURE)
-    elif model == 'gemini-1.5-pro':
-        return GeminiQuery(system_prompt, 'gemini-1.5-pro', max_tokens=MAX_NEW_TOKENS, temperature=TEMPERATURE)
-    elif model =='claude-3.5-sonnet':
-        return ClaudeQuery(system_prompt, 'claude-3-5-sonnet-20240620', max_tokens=MAX_NEW_TOKENS, temperature=TEMPERATURE)
-    elif model == 'perplexity-sonar-huge':
-        return PerplexityQuery(system_prompt, 'llama-3.1-sonar-huge-128k-online', max_tokens=MAX_NEW_TOKENS, temperature=TEMPERATURE)
-    elif model == 'gemma-2-27b-it':
-        return HuggingFaceQuery(system_prompt, 'google/gemma-2-27b-it', max_tokens=MAX_NEW_TOKENS, do_sample=False) 
-    elif model == 'llama-3.1-70b-it':
-        return HuggingFaceQuery(system_prompt, 'meta-llama/Meta-Llama-3.1-70B-Instruct', max_tokens=MAX_NEW_TOKENS, do_sample=False)
+    if model_name == 'gpt-4o':
+        return GPTQuery(system_prompt, 'gpt-4o-2024-05-13', max_tokens=max_new_tokens, temperature=temperature)
+    elif model_name == 'gpt-3.5-turbo':
+        return GPTQuery(system_prompt, 'gpt-3.5-turbo-0125', max_tokens=max_new_tokens, temperature=temperature)
+    elif model_name == 'gemini-1.5-pro':
+        return GeminiQuery(system_prompt, 'gemini-1.5-pro', max_tokens=max_new_tokens, temperature=temperature)
+    elif model_name == 'claude-3.5-sonnet':
+        return ClaudeQuery(system_prompt, 'claude-3-5-sonnet-20240620', max_tokens=max_new_tokens, temperature=temperature)
+    elif model_name == 'perplexity-sonar-huge':
+        return PerplexityQuery(system_prompt, 'llama-3.1-sonar-huge-128k-online', max_tokens=max_new_tokens, temperature=temperature)
+    elif model_name == 'gemma-2-27b-it':
+        return HuggingFaceQuery(system_prompt, 'google/gemma-2-27b-it', max_tokens=max_new_tokens, do_sample=False) 
+    elif model_name == 'llama-3.1-70b-it':
+        return HuggingFaceQuery(system_prompt, 'meta-llama/Meta-Llama-3.1-70B-Instruct', max_tokens=max_new_tokens, do_sample=False)
     else:
-        return None
+        raise ValueError(f"Model {model_name} is not recognized.")
 
-def delete_model(model: str):
+def delete_model(query_instance):
     """Delete the model instance and release any resources."""
 
-    if model in MODELS_DICT and MODELS_DICT[model]['query_instance'] is not None:
-        query_instance = MODELS_DICT[model]['query_instance']
+    if query_instance is not None:
         query_instance.delete()
-        MODELS_DICT[model]['query_instance'] = None
-    else:
-        print(f"Model {model} is not initialized or not found in MODELS_DICT.")
 
 def check_model_response(response: str) -> tuple:
     """Checks that a model response to a query was valid and not an error returned by the query instance."""
@@ -63,29 +58,38 @@ def query_model_retries(query: str, query_instance: object, query_checker: Calla
             print(f"Error querying model. Retry {retry_count}/{retries}")
             time.sleep(delay)
             delay *= 2
-    return f"ERROR: Failed getting response for {query} after {retries} retries. Error: {response}"
+    return f"ERROR: Failed getting response for '{query}' after {retries} retries. Error: {response}"
 
-def collect_single_model_responses(model: str, query_instance: object, queries: list, query_checker: Callable[[str], bool], retries: int, initial_delay: int) -> list:
+def collect_single_model_responses(model_name: str, query_instance: object, queries: list, query_checker: Callable[[str], bool], retries: int, initial_delay: int) -> list:
     """Collect responses from a specific model for a list of queries sequentially."""
 
     responses = []
-    for query in tqdm(queries, desc=f"Running queries on {model}"):
+    for query in tqdm(queries, desc=f"Running queries on {model_name}"):
         response = query_model_retries(query, query_instance, query_checker, retries, initial_delay)
         responses.append(response)
 
     return responses
 
-def get_all_model_responses(data: pd.DataFrame, model_dict: dict, res_dir: str, query_col: str='question', retries: int=3, initial_delay: int=2) -> pd.DataFrame:
-    """Get responses from multiple LLMs for each query in the dataset, save intermediate results after each model."""
-    
-    for model in model_dict:
-        data[f'{model}_response'] = ''
-        MODELS_DICT[model]['query_instance'] = initialize_model(model, SYSTEM_PROMPT)
-        responses = collect_single_model_responses(model, MODELS_DICT[model]['query_instance'], data[query_col].tolist(), check_model_response, retries, initial_delay)
-        data[f'{model}_response'] = responses
-        delete_model(model)
+def get_model_responses(data: pd.DataFrame, model_name: str, res_dir: str, 
+    hyperparams: dict, query_col: str='question', retries: int=3, initial_delay: int=2,) -> pd.DataFrame:
+    """Get responses from a single LLM for each query in the dataset, save the results."""
+    data[f'{model_name}_response'] = ''
+    # Extract hyperparameters
+    system_prompt = hyperparams.get('system_prompt', '')
+    max_new_tokens = hyperparams.get('max_new_tokens', 1024)
+    temperature = hyperparams.get('temperature', 0.0)
 
-        save_dataset(f'{res_dir}/{model}_responses.csv', data)
-        data.drop(columns=[f'{model}_response'], inplace=True)
+    query_instance = initialize_model(model_name, system_prompt, max_new_tokens, temperature)
+    responses = collect_single_model_responses(
+        model_name,
+        query_instance,
+        data[query_col].tolist(),
+        check_model_response,
+        retries,
+        initial_delay,
+    )
+    data[f'{model_name}_response'] = responses
+    delete_model(query_instance)
 
+    save_dataset(f'{res_dir}/{model_name}_responses.csv', data)
     return data
