@@ -47,6 +47,7 @@ def load_configuration(config_path):
 def setup_directories(config):
     directories = {
         'output_directory': BASE_DIR / config['paths'].get('output_directory', 'results'),
+        'by_model_directory': BASE_DIR / config['paths'].get('output_directory', 'results') / 'by_model',
         'logs_directory': BASE_DIR / config['paths'].get('logs_directory', 'logs'),
         'cache_directory': BASE_DIR / config['paths'].get('cache_directory', '.cache'),
         'dataset_directory': BASE_DIR / config['paths'].get('dataset_directory', 'data'),
