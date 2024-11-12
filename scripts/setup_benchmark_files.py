@@ -141,29 +141,37 @@ def create_env_file(config):
 
 # Download the dataset hosted on huggface 
 def download_dataset(config):
+    # Retrieve dataset name from config with a default fallback
     dataset_name = config['dataset'].get('dataset_name', 'NIH-CARD/CARDBiomedBench')
+    
+    # Retrieve dataset directory path from config
     save_path = BASE_DIR / config['paths'].get('dataset_directory', 'data')
     save_path.mkdir(parents=True, exist_ok=True)
     
-    csv_file_name = 'CARDBiomedBench.csv'
+    # Retrieve the desired split from config, defaulting to 'test' if not specified
+    split_type = config['dataset'].get('split', 'test')
+    
+    # Dynamically set the CSV file name based on the split type
+    csv_file_name = f'CARDBiomedBench_{split_type}.csv'
     csv_file_path = save_path / csv_file_name
 
-    stream_message(f"🔧 Downloading dataset '{dataset_name}'...")
+    stream_message(f"🔧 Downloading the '{split_type}' split of dataset '{dataset_name}'...")
 
     try:
-        # Load the dataset
-        dataset = load_dataset(dataset_name)
+        # Attempt to load only the specified split of the dataset
+        split_dataset = load_dataset(dataset_name, split=split_type)
         
-        # Since there's only one split, get it directly
-        split_name = list(dataset.keys())[0]
-        split_dataset = dataset[split_name]
-        
-        # Save the dataset to CSV
+        # Save the specified split to CSV
         split_dataset.to_csv(str(csv_file_path))
-        stream_message(f"🔧 Saved dataset to '{BASE_DIR.name}/{csv_file_path.relative_to(BASE_DIR)}'")
+        stream_message(f"🔧 Saved '{split_type}' split dataset to '{BASE_DIR.name}/{csv_file_path.relative_to(BASE_DIR)}'")
         
+    except ValueError as ve:
+        # Handle cases where the specified split does not exist
+        stream_message(f"❌ The dataset '{dataset_name}' does not have a '{split_type}' split: {ve}")
+        sys.exit(1)
     except Exception as e:
-        stream_message(f"❌ Failed to download dataset: {e}")
+        # Handle other possible exceptions
+        stream_message(f"❌ Failed to download the '{split_type}' split of the dataset: {e}")
         sys.exit(1)
 
 # Main setup script

@@ -2,8 +2,8 @@
 dataset:
   # Name of the dataset on Hugging Face
   dataset_name: 'NIH-CARD/CARDBiomedBench'
-  # Number of samples to use for each template question
-  template_samples: 270
+  # Which split to use for evals
+  split: 'test'
 
 # Prompts used by the models
 prompts:
