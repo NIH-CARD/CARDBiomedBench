@@ -57,15 +57,9 @@ paths:
   # Directory for logs
   logs_directory: './logs/'
 
-# Execution flags to control which steps to run
-execution:
-  run_responses: true
-  run_metrics: true
-  run_graphs: true
-
 # Models to be used in the benchmark
 models:
-  - name: 'gpt-4'
+  - name: 'gpt-4o'
     use: true
     type: 'openai'
   - name: 'gpt-3.5-turbo'
