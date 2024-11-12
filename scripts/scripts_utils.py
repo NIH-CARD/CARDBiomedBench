@@ -58,7 +58,29 @@ def sample_by_template(data: pd.DataFrame, n: int, batch_size: int = 10, random_
 
         return sampled_group_df
 
-    for template_uuid, group in data.groupby('template uuid'):
+    for template_uuid, group in data.groupby('template_uuid'):
         final_sampled_df = pd.concat([final_sampled_df, deterministic_group_sample(group, n)])
 
     return final_sampled_df.reset_index(drop=True)
+
+if __name__ == "__main__":
+    # Load the original data
+    orig = pd.read_csv("data/CARDBiomedBench.csv")
+    print("Original Data:")
+    print(orig.head())
+
+    # Sample the data
+    sampled = sample_by_template(orig, 270)
+    print("\nSampled Data (Test Set):")
+    print(len(sampled))
+
+    # Identify the train set by excluding sampled indices
+    train = orig.loc[~orig.index.isin(sampled.index)]
+    print("\nTrain Data:")
+    print(train.head())
+
+    # Save the splits to CSV files
+    sampled.to_csv("data/test.csv", index=False)
+    train.to_csv("data/train.csv", index=False)
+
+    print("\nData has been successfully split into 'test.csv' and 'train.csv'.")
