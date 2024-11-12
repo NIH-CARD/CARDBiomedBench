@@ -15,3 +15,9 @@ Run the setup script to create required directories, configure environment varia
    ```bash
    python scripts/setup_benchmark_files.py
    ```
+
+### Run Benchmark
+
+   ```bash
+   python run_benchmark.py --run_responses --run_metrics --run_graphs
+   ```
