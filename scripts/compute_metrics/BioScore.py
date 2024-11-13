@@ -11,7 +11,6 @@ from scripts.collect_responses.collect_responses_utils import initialize_model
 CACHE_DIR = ".cache/batch_queries"
 os.makedirs(CACHE_DIR, exist_ok=True)
 
-
 def check_BioScore_response(response: str) -> tuple:
     """Check the BioScore evaluation response for a valid score."""
     match = re.search(r"[-+]?[0-9]*\.?[0-9]+", response)
@@ -22,7 +21,6 @@ def check_BioScore_response(response: str) -> tuple:
         if number == -1:
             return number, True
     return None, False
-
 
 def process_batch_results(batch_result_path: str, batch_file_path: str, grading_model) -> dict:
     """
@@ -80,7 +78,6 @@ def process_batch_results(batch_result_path: str, batch_file_path: str, grading_
 
     return bioscore_results
 
-
 def generate_batch_file(grading_prompts, batch_file_path, grading_model, uuids) -> bool:
     """Generate a .jsonl batch file with grading prompts for batch querying, excluding cached responses.
     
@@ -122,7 +119,6 @@ def generate_batch_file(grading_prompts, batch_file_path, grading_model, uuids) 
     else:
         return False
 
-
 def map_bioscore_results_to_dataframe(data: pd.DataFrame, bioscore_results: dict, grading_model, model: str, query_col: str, gold_col: str, response_col: str) -> pd.DataFrame:
     """
     Map the BioScore results to the DataFrame. If the result is not in bioscore_results, 
@@ -162,7 +158,6 @@ def map_bioscore_results_to_dataframe(data: pd.DataFrame, bioscore_results: dict
     
     return data
 
-
 def submit_batches(grading_model, model_dict, res_dir, query_col='question', gold_col='answer', response_col='response'):
     """
     Submits batch files for BioScore grading for all models in the model_dict.
@@ -197,7 +192,6 @@ def submit_batches(grading_model, model_dict, res_dir, query_col='question', gol
             print(f"No new batch file created for {model}. Skipping submission.")
 
     return batch_ids
-
 
 def poll_batch_results(grading_model, model, batch_ids, res_dir, query_col='question', gold_col='answer', response_col='response'):
     """
