@@ -75,7 +75,7 @@ def collect_single_model_responses(model_name: str, query_instance: object, quer
 
     return responses
 
-def get_model_responses(data: pd.DataFrame, model_name: str, res_dir: str, 
+def get_model_responses(data: pd.DataFrame, model_name: str, res_by_model_dir: str, 
     hyperparams: dict, query_col: str='question', retries: int=3, initial_delay: int=2,) -> pd.DataFrame:
     """Get responses from a single LLM for each query in the dataset, save the results."""
     data[f'{model_name}_response'] = ''
@@ -96,14 +96,14 @@ def get_model_responses(data: pd.DataFrame, model_name: str, res_dir: str,
     data[f'{model_name}_response'] = responses
     delete_model(query_instance)
 
-    save_dataset(f'{res_dir}/by_model/{model_name}_responses.csv', data)
+    save_dataset(f'{res_by_model_dir}{model_name}_responses.csv', data)
     return data
 
 def main():
     print("*** *** *** RESPONSES RUNNER *** *** ***")
     parser = argparse.ArgumentParser(description="Get LLM results on a QA benchmark.")
     parser.add_argument('--qa_path', type=str, required=True, help='Path to the QA CSV file')
-    parser.add_argument('--res_dir', type=str, required=True, help='Directory to save the response CSV files')
+    parser.add_argument('--res_by_model_dir', type=str, required=True, help='Directory to save the response CSV files')
     parser.add_argument('--model_name', type=str, required=True, help="Specify a single model to run")
     parser.add_argument('--hyperparams', type=str, required=True, help='Model hyperparameters as JSON string')
     args = parser.parse_args()
@@ -112,7 +112,7 @@ def main():
     hyperparams = json.loads(args.hyperparams)
 
     qa_path = args.qa_path
-    res_dir = args.res_dir
+    res_by_model_dir = args.res_by_model_dir
     model_name = args.model_name
 
     data = load_dataset(qa_path)
@@ -121,8 +121,8 @@ def main():
         return
 
     print(f"## Getting model responses on {len(data)} Q/A ##")
-    data = get_model_responses(data, model_name=model_name, res_dir=res_dir, hyperparams=hyperparams)
-    print(f"## Responses collected and saved to {res_dir}/by_model/ ##")
+    data = get_model_responses(data, model_name=model_name, res_by_model_dir=res_by_model_dir, hyperparams=hyperparams)
+    print(f"## Responses collected and saved to {res_by_model_dir} ##")
     print("*** *** *** RESPONSES RUNNER COMPLETED *** *** ***")
 
 if __name__ == "__main__":

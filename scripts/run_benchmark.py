@@ -37,14 +37,14 @@ def load_configuration(config_path):
         stream_message(f"❌ Error loading configuration file: {e}")
         sys.exit(1)
 
-def run_responses_runner(model_name, qa_path, res_dir, hyperparams):
+def run_responses_runner(model_name, qa_path, res_by_model_dir, hyperparams):
     """Run the responses_runner.py script for a specific model."""
     hyperparams_str = json.dumps(hyperparams)
     
     cmd = [
         'python', '-m', 'scripts.responses_runner',
         '--qa_path', qa_path,
-        '--res_dir', res_dir,
+        '--res_by_model_dir', res_by_model_dir,
         '--model_name', model_name,
         '--hyperparams', f"'{hyperparams_str}'"
     ]
@@ -78,7 +78,7 @@ def main():
     dataset_name = f"CARDBiomedBench_{split_type}.csv"
     qa_path = os.path.join(dataset_directory, dataset_name)
     res_dir = config['paths'].get('output_directory', './results/')
-    res_by_model_dir = os.path.join(res_dir, 'by_model')
+    res_by_model_dir = os.path.join(res_dir, 'by_model/')
     
     # Determine models to run
     models_to_run = []
@@ -103,18 +103,18 @@ def main():
     if args.run_responses:
         stream_message("🚀 Running response generation step")
         for model_name in models_to_run:
-            run_responses_runner(model_name, qa_path, res_dir, hyperparams)
+            run_responses_runner(model_name, qa_path, res_by_model_dir, hyperparams)
         stream_message("✅ Completed response generation for all models")
     else:
         stream_message("⚠️  Skipping response generation step")
     
-    # Step 2: Run Metrics Runner
-    if args.run_metrics:
-        stream_message("🚀 Running metric grading step")
-        
-        stream_message("✅ Completed metric grading for all models")
-    else:
-        stream_message("⚠️  Skipping metric grading step")
+    # # Step 2: Run Metrics Runner
+    # if args.run_metrics:
+    #     stream_message("🚀 Running metric grading step")
+    #     run_metrics_runner()
+    #     stream_message("✅ Completed metric grading for all models")
+    # else:
+    #     stream_message("⚠️  Skipping metric grading step")
 
     stream_message("🎉 Benchmark run completed successfully!")
     print("="*100)
