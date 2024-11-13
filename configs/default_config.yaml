@@ -7,17 +7,14 @@ dataset:
 
 # Prompts used by the models
 prompts:
-  # System prompt for the models during response generation
-  system_prompt: >
+  system_prompt: > # System prompt for the models during response generation
     You are a highly knowledgeable and experienced expert in the healthcare and biomedical field,
     possessing extensive medical knowledge and practical expertise. If you do not know the answer
     to a question, explicitly state that you do not know.
-  # System prompt for the grading model during evaluation
-  bioscore_system_prompt: >
+  bioscore_system_prompt: > # System prompt for the grading model during evaluation
     You are a highly knowledgeable and experienced expert in the healthcare and biomedical field,
     possessing extensive medical knowledge and practical expertise.
-  # Grading prompt template for BioScore
-  bioscore_grading_prompt: | 
+  bioscore_grading_prompt: | # Grading prompt template for BioScore
     ### Scoring Instructions for Evaluating Analyst Responses
 
     **Objective:** Evaluate an analyst's response against a gold standard.
