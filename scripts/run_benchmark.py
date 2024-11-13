@@ -3,8 +3,6 @@ import yaml
 import os
 import sys
 import json
-from pathlib import Path
-from functools import partial
 import time
 
 def stream_message(message, delay=0.025):
@@ -37,36 +35,14 @@ def load_configuration(config_path):
         stream_message(f"❌ Error loading configuration file: {e}")
         sys.exit(1)
 
-def run_responses_runner(model_name, qa_path, res_by_model_dir, hyperparams):
-    """Run the responses_runner.py script for a specific model."""
-    hyperparams_str = json.dumps(hyperparams)
-    
-    cmd = [
-        'python', '-m', 'scripts.responses_runner',
-        '--qa_path', qa_path,
-        '--res_by_model_dir', res_by_model_dir,
-        '--model_name', model_name,
-        '--hyperparams', f"'{hyperparams_str}'"
-    ]
-    stream_message(f"🚀 Starting response generation for model: {model_name}")
-    exit_code = os.system(' '.join(cmd))
-    if exit_code != 0:
-        stream_message(f"❌ Response generation failed for model: {model_name}")
-    else:
-        stream_message(f"✅ Completed response generation for model: {model_name}")
-
-def main():
-    print("="*100)
-    stream_message("🔧 Benchmarking LLMs on CARDBiomedBench")
-    args = parse_arguments()
-    config = load_configuration(args.config)
-
-    # Extract model hyperparameters
+def run_responses(args, config):
+    """Run the response generation step."""
+    # Extract model_hyperparameters
     model_params = config.get('model_params', {})
     system_prompt = config['prompts']['system_prompt'].rstrip()
     
-    # Prepare a dictionary of hyperparameters
-    hyperparams = {
+    # Prepare a dictionary of model_hyperparams
+    model_hyperparams = {
         'system_prompt': system_prompt,
         'max_new_tokens': model_params.get('max_tokens', 1024),
         'temperature': model_params.get('temperature', 0.0),
@@ -93,31 +69,65 @@ def main():
         else:
             stream_message(f"❌ Model '{args.model}' not found in configuration.")
             sys.exit(1)
+    
+    stream_message("🚀 Running response generation step")
+    for model_name in models_to_run:
+        model_hyperparams_str = json.dumps(model_hyperparams)
+        cmd = [
+            'python', '-m', 'scripts.responses_runner',
+            '--qa_path', qa_path,
+            '--res_by_model_dir', res_by_model_dir,
+            '--model_name', model_name,
+            '--hyperparams', f"'{model_hyperparams_str}'"
+        ]
+        stream_message(f"     🔧 Starting response generation for model: {model_name}")
+        exit_code = os.system(' '.join(cmd))
+        if exit_code != 0:
+            stream_message(f"     ❌ Response generation failed for model: {model_name}")
+        else:
+            stream_message(f"     ✅ Completed response generation for model: {model_name}")
+    stream_message("✅ Completed response generation for all models")
 
+def run_metrics(args, config):
+    """Run the metrics evaluation step."""
+    stream_message("🚀 Running metrics evaluation step")
+    # TODO
+    stream_message("✅ Completed metrics evaluation")
+
+def run_graphs(args, config):
+    """Run the graphs generation step."""
+    stream_message("🚀 Running graphs generation step")
+    # TODO
+    stream_message("✅ Completed graphs generation")
+
+def main():
+    print("=" * 100)
+    stream_message("🎆 Benchmarking LLMs on CARDBiomedBench 🎆")
+    args = parse_arguments()
+    config = load_configuration(args.config)
+    
     # Determine if at least one step is selected
     if not (args.run_responses or args.run_metrics or args.run_graphs):
         stream_message("❌ No execution flags provided. Please specify at least one of --run_responses, --run_metrics, --run_graphs.")
         sys.exit(1)
-
-    # Step 1: Run Responses Runner
-    if args.run_responses:
-        stream_message("🚀 Running response generation step")
-        for model_name in models_to_run:
-            run_responses_runner(model_name, qa_path, res_by_model_dir, hyperparams)
-        stream_message("✅ Completed response generation for all models")
-    else:
-        stream_message("⚠️  Skipping response generation step")
     
-    # # Step 2: Run Metrics Runner
-    # if args.run_metrics:
-    #     stream_message("🚀 Running metric grading step")
-    #     run_metrics_runner()
-    #     stream_message("✅ Completed metric grading for all models")
-    # else:
-    #     stream_message("⚠️  Skipping metric grading step")
-
-    stream_message("🎉 Benchmark run completed successfully!")
-    print("="*100)
+    if args.run_responses:
+        run_responses(args, config)
+    else:
+        stream_message("⚠️ Skipping response generation step ⚠️")
+    
+    if args.run_metrics:
+        run_metrics(args, config)
+    else:
+        stream_message("⚠️ Skipping metrics evaluation step ⚠️")
+    
+    if args.run_graphs:
+        run_graphs(args, config)
+    else:
+        stream_message("⚠️ Skipping graphs generation step ⚠️")
+    
+    stream_message("🎉 Benchmark run completed successfully! 🎉")
+    print("=" * 100)
 
 if __name__ == '__main__':
     main()

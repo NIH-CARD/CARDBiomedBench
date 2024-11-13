@@ -60,7 +60,7 @@ def query_model_retries(query: str, query_instance: object, query_checker: Calla
             return response
         else:
             retry_count += 1
-            print(f"Error querying model. Retry {retry_count}/{retries}")
+            print(f"     ❌ Error querying model. Retry {retry_count}/{retries}")
             time.sleep(delay)
             delay *= 2
     return f"ERROR: Failed getting response for '{query}' after {retries} retries. Error: {response}"
@@ -69,7 +69,7 @@ def collect_single_model_responses(model_name: str, query_instance: object, quer
     """Collect responses from a specific model for a list of queries sequentially."""
 
     responses = []
-    for query in tqdm(queries, desc=f"Running queries on {model_name}"):
+    for query in tqdm(queries, desc=f"     🔧 Running queries on {model_name}"):
         response = query_model_retries(query, query_instance, query_checker, retries, initial_delay)
         responses.append(response)
 
@@ -100,7 +100,6 @@ def get_model_responses(data: pd.DataFrame, model_name: str, res_by_model_dir: s
     return data
 
 def main():
-    print("*** *** *** RESPONSES RUNNER *** *** ***")
     parser = argparse.ArgumentParser(description="Get LLM results on a QA benchmark.")
     parser.add_argument('--qa_path', type=str, required=True, help='Path to the QA CSV file')
     parser.add_argument('--res_by_model_dir', type=str, required=True, help='Directory to save the response CSV files')
@@ -117,13 +116,12 @@ def main():
 
     data = load_dataset(qa_path)
     if data.empty:
-        print("No data to process. Exiting.")
+        print("     ❌ No data to process. Exiting.")
         return
 
-    print(f"## Getting model responses on {len(data)} Q/A ##")
+    print(f"     🔧 Getting model responses on {len(data)} Q/A ##")
     data = get_model_responses(data, model_name=model_name, res_by_model_dir=res_by_model_dir, hyperparams=hyperparams)
-    print(f"## Responses collected and saved to {res_by_model_dir} ##")
-    print("*** *** *** RESPONSES RUNNER COMPLETED *** *** ***")
+    print(f"     🔧 Responses collected and saved to {res_by_model_dir} ##")
 
 if __name__ == "__main__":
     main()
