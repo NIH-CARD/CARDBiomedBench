@@ -91,5 +91,5 @@ def get_model_responses(data: pd.DataFrame, model_name: str, res_dir: str,
     data[f'{model_name}_response'] = responses
     delete_model(query_instance)
 
-    save_dataset(f'{res_dir}/{model_name}_responses.csv', data)
+    save_dataset(f'{res_dir}/by_model/{model_name}_responses.csv', data)
     return data

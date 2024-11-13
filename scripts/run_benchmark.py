@@ -56,7 +56,7 @@ def run_responses_runner(model_name, qa_path, res_dir, hyperparams):
         stream_message(f"✅ Completed response generation for model: {model_name}")
 
 def main():
-    print("="*75)
+    print("="*100)
     stream_message("🔧 Benchmarking LLMs on CARDBiomedBench")
     args = parse_arguments()
     config = load_configuration(args.config)
@@ -107,9 +107,17 @@ def main():
         stream_message("✅ Completed response generation for all models")
     else:
         stream_message("⚠️  Skipping response generation step")
+    
+    # Step 2: Run Metrics Runner
+    if args.run_metrics:
+        stream_message("🚀 Running metric grading step")
+        
+        stream_message("✅ Completed metric grading for all models")
+    else:
+        stream_message("⚠️  Skipping metric grading step")
 
     stream_message("🎉 Benchmark run completed successfully!")
-    print("="*75)
+    print("="*100)
 
 if __name__ == '__main__':
     main()

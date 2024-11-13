@@ -26,7 +26,7 @@ def main():
 
     print(f"## Getting model responses on {len(data)} Q/A ##")
     data = get_model_responses(data, model_name=model_name, res_dir=res_dir, hyperparams=hyperparams)
-    print(f"## Responses collected and saved to {res_dir} ##")
+    print(f"## Responses collected and saved to {res_dir}/by_model/ ##")
     print("*** *** *** RESPONSES RUNNER COMPLETED *** *** ***")
 
 if __name__ == "__main__":
