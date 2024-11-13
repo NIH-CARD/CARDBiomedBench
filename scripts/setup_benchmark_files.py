@@ -176,7 +176,7 @@ def download_dataset(config):
 
 # Main setup script
 def main():
-    print("=============================================================================")
+    print("="*75)
     stream_message("🔧 Starting CARDBiomedBench Directory Setup")
     
     # Parse command-line arguments
@@ -207,7 +207,7 @@ def main():
     download_dataset(config)
 
     stream_message("✅ Setup complete, you can now run the benchmark.")
-    print("=============================================================================")
+    print("="*75)
 
 if __name__ == '__main__':
     main()
