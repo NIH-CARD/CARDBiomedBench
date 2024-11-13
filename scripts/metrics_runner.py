@@ -4,7 +4,6 @@ from scripts.compute_metrics.BleuRougeBert import get_all_model_BLEU_ROUGE_BERT
 from scripts.compute_metrics.BioScore import get_all_model_BioScore
 
 def main():
-    print("*** *** *** METRICS RUNNER *** *** ***")
     parser = argparse.ArgumentParser(description="Grade responses on the QA benchmark.")
     parser.add_argument('--res_dir', type=str, required=True, help='Directory to the responses CSV files')
     args = parser.parse_args()
@@ -19,7 +18,6 @@ def main():
         print("*** Getting BLEU, ROUGE, and BERTScore ***")
         get_all_model_BLEU_ROUGE_BERT(res_dir, model_dict=MODELS_DICT)
         print("*** BLEU, ROUGE, and BERTScore Completed ***")
-    print("*** *** *** METRICS RUNNER COMPLETED *** *** ***")
 
 
 if __name__ == "__main__":
