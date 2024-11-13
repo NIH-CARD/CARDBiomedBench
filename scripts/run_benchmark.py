@@ -56,14 +56,14 @@ def run_responses_runner(model_name, qa_path, res_dir, hyperparams):
         stream_message(f"✅ Completed response generation for model: {model_name}")
 
 def main():
-    print("=============================================================================")
+    print("="*75)
     stream_message("🔧 Benchmarking LLMs on CARDBiomedBench")
     args = parse_arguments()
     config = load_configuration(args.config)
 
     # Extract model hyperparameters
     model_params = config.get('model_params', {})
-    system_prompt = config['prompts']['system_prompt']
+    system_prompt = config['prompts']['system_prompt'].rstrip()
     
     # Prepare a dictionary of hyperparameters
     hyperparams = {
@@ -109,6 +109,7 @@ def main():
         stream_message("⚠️  Skipping response generation step")
 
     stream_message("🎉 Benchmark run completed successfully!")
+    print("="*75)
 
 if __name__ == '__main__':
     main()
