@@ -4,7 +4,7 @@ import seaborn as sns
 import matplotlib.pyplot as plt
 from matplotlib.colors import LinearSegmentedColormap
 
-def plot_heatmap(data: pd.DataFrame, metric: str, models: dict, model_order: list,
+def plot_heatmap(data: pd.DataFrame, metric: str, models: list, model_order: list,
                  category: str, title: str, save_path: str, calculation_type: str,
                  threshold: int = 5):
     """
@@ -13,7 +13,7 @@ def plot_heatmap(data: pd.DataFrame, metric: str, models: dict, model_order: lis
     Parameters:
         data: DataFrame containing the data.
         metric: The base metric to calculate (e.g., 'BioScore').
-        models: Dictionary of models.
+        models: List of models.
         model_order: List specifying the order of models.
         category: The category column to group by.
         title: The title of the plot.
@@ -43,7 +43,7 @@ def plot_heatmap(data: pd.DataFrame, metric: str, models: dict, model_order: lis
     heatmap_data = pd.DataFrame()
 
     # Reorder models
-    models = {model: models[model] for model in model_order}
+    models = [model for model in model_order if model in models]
 
     # Get all unique categories (for percentage_idk)
     if calculation_type == 'percentage_idk':

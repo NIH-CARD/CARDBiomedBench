@@ -1,10 +1,9 @@
 import os
 import tiktoken
 import pandas as pd
-from scripts import TEMPLATE_SAMPLES
 from scripts.scripts_utils import load_dataset, sample_by_template
 
-def merge_model_responses(qa_path: str, res_dir: str, output_csv: str, template_flag: str, merge_on: str='uuid') -> pd.DataFrame:
+def merge_model_responses(qa_path: str, res_dir: str, output_csv: str, merge_on: str='uuid') -> pd.DataFrame:
     """
     Merge all individual model response CSV files in a directory into a single DataFrame, merging on a specific column.
     The question answer, and category columns are included only once in the final DataFrame.
@@ -14,10 +13,7 @@ def merge_model_responses(qa_path: str, res_dir: str, output_csv: str, template_
     if merged_df.empty:
         print("No data to process. Exiting.")
         return
-    merge_cols = ['uuid', 'question', 'answer', 'SQL_Category', 'Bio_Category']
-    if template_flag == "true":
-        merged_df = sample_by_template(merged_df, TEMPLATE_SAMPLES)
-        merge_cols += ['template uuid']
+    merge_cols = ['uuid', 'template_uuid', 'question', 'answer', 'bio_category', 'reasoning_category']
     merged_df = merged_df[merge_cols]
     merged_df.dropna(inplace=True)
 
@@ -36,7 +32,7 @@ def merge_model_responses(qa_path: str, res_dir: str, output_csv: str, template_
     print(f"All responses merged and saved to {output_csv}.")
     return merged_df
 
-def get_model_order(data: pd.DataFrame, metric: str, models: dict) -> list:
+def get_model_order(data: pd.DataFrame, metric: str, models: list) -> list:
     """Get the order of models based on the median first, then IDK %, then spread (IQR) of the metric values."""
     model_stats = []
     
@@ -79,7 +75,7 @@ def count_tokens_tiktoken(string: str, model: str = "gpt-4o") -> int:
     num_tokens = len(encoding.encode(string))
     return num_tokens
 
-def get_token_counts(data: pd.DataFrame, models: dict) -> pd.DataFrame:
+def get_token_counts(data: pd.DataFrame, models: list) -> pd.DataFrame:
     """Add a token_count column for question, answer, and each model_response column in the DataFrame."""
     for col in ['question', 'answer']:
         data[f'{col}_token_count'] = data[col].apply(lambda x: count_tokens_tiktoken(x))

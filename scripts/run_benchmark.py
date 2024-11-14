@@ -125,15 +125,40 @@ def run_metrics(args, config):
 
     try:
         subprocess.run(cmd, check=True)
-        stream_message(f" ✅ Metric grading completed for all models")
+        stream_message(f"✅ Metric grading completed for all models")
     except subprocess.CalledProcessError:
-        stream_message(f" ❌ Metric grading failed for all models")
+        stream_message(f"❌ Metric grading failed for all models")
 
 def run_graphs(args, config):
     """Run the graphs generation step."""
+    # Extract the necessary paths from the config
+    dataset_directory = config['paths'].get('dataset_directory', './data/')
+    split_type = config['dataset'].get('split', 'test')
+    dataset_name = f"CARDBiomedBench_{split_type}.csv"
+    qa_path = os.path.join(dataset_directory, dataset_name)
+    res_dir = config['paths'].get('output_directory', './results/')
+    scored_path = os.path.join(res_dir, f"CARDBiomedBench_{split_type}_compiled.csv")
+
+    # Determine models to process and metrics to use
+    models_to_process = [model['name'] for model in config['models'] if model.get('use', False)]
+    metrics_to_use = [metric['name'] for metric in config['metrics'] if metric.get('use', False)]
+
     stream_message("🚀 Running graphs generation step")
-    # TODO
-    stream_message("✅ Completed graphs generation")
+    # Prepare the command
+    cmd = [
+        'python', '-m', 'scripts.graphs_runner',
+        '--qa_path', qa_path,
+        '--res_dir', res_dir,
+        '--scored_path', scored_path,
+        '--models_to_process', *models_to_process,
+        '--metrics_to_use', *metrics_to_use
+    ]
+
+    try:
+        subprocess.run(cmd, check=True)
+        stream_message("✅ Graphs generation completed")
+    except subprocess.CalledProcessError:
+        stream_message("❌ Graphs generation failed")
 
 def main():
     print("=" * 100)

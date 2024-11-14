@@ -1,6 +1,6 @@
 import pandas as pd
 
-def statistics_txt(data: pd.DataFrame, models: dict, title: str, save_path: str):
+def statistics_txt(data: pd.DataFrame, models: list, title: str, save_path: str):
     """Write statistics to a text file for each model."""
     
     # Construct the full file path with title
