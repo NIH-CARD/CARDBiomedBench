@@ -125,10 +125,9 @@ def run_metrics(args, config):
 
     try:
         subprocess.run(cmd, check=True)
-        stream_message(f"     ✅ Metric grading completed for all models")
+        stream_message(f" ✅ Metric grading completed for all models")
     except subprocess.CalledProcessError:
-        stream_message(f"     ❌ Metric grading failed for all models")
-    stream_message("✅ Completed metrics evaluation")
+        stream_message(f" ❌ Metric grading failed for all models")
 
 def run_graphs(args, config):
     """Run the graphs generation step."""
