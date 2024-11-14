@@ -119,7 +119,7 @@ def main():
         print("     ❌ No data to process. Exiting.")
         return
 
-    print(f"     🔧 Getting model responses on {len(data)} Q/A ##")
+    print(f"     🔧 Getting model responses on {len(data)} Q/A for {model_name}")
     data = get_model_responses(data, model_name=model_name, res_by_model_dir=res_by_model_dir, hyperparams=hyperparams)
     print(f"     🔧 Responses collected and saved to {res_by_model_dir} ##")
 
