@@ -67,9 +67,9 @@ def process_batch_results(batch_result_path: str, batch_file_path: str, grading_
 
                     bioscore_results[custom_id] = bioscore
                 else:
-                    print(f"     🔧 Invalid response for {custom_id}: {response_content}")
+                    print(f"Invalid response for {custom_id}: {response_content}")
             else:
-                print(f"     🔧 Custom ID {custom_id} not found in batch queries.")
+                print(f"Custom ID {custom_id} not found in batch queries.")
 
     # Save the updated cache (only valid responses will be cached)
     grading_model.save_cache()
@@ -156,9 +156,9 @@ def map_bioscore_results_to_dataframe(data: pd.DataFrame, bioscore_results: dict
                 if valid:
                     data.at[i, f'{model}_BioScore'] = bioscore
                 else:
-                    print(f"     🔧 Invalid cached response for uuid {uuid}")
+                    print(f"Invalid cached response for uuid {uuid}")
             else:
-                print(f     🔧 "No BioScore found for uuid {uuid}")
+                print(f"No BioScore found for uuid {uuid}")
     
     return data
 
@@ -192,12 +192,12 @@ def submit_batches(grading_model, models_to_use, bioscore_grading_prompt, res_di
 
         # Submit batch only if a new batch file was created
         if batch_file_created:
-            print(f"     🔧 Submitting BioScore grading for {model} to gpt-4o batch API...")
+            print(f"Submitting BioScore grading for {model} to gpt-4o batch API...")
             batch_id = grading_model.submit_batch_query(batch_file_path)
             batch_ids[model] = batch_id
-            print(f"     🔧 Batch ID {batch_id} submitted for {model}")
+            print(f"Batch ID {batch_id} submitted for {model}")
         else:
-            print(f"     🔧 No new batch file created for {model}. Skipping submission.")
+            print(f"No new batch file created for {model}. Skipping submission.")
 
     return batch_ids
 
@@ -206,14 +206,14 @@ def poll_batch_results(grading_model, model, batch_ids, res_dir, query_col='ques
     Polls the batch results for all models in batch_ids and processes the results.
     """
     batch_id = batch_ids[model]
-    print(f"       Polling BioScore batch results for {model} with batch ID {batch_id}...")
+    print(f"Polling BioScore batch results for {model} with batch ID {batch_id}...")
     batch_results = grading_model.poll_batch_status(batch_id)
 
     # Save the batch results to a JSONL file
     batch_result_path = f"{CACHE_DIR}/{model}_grading_batch_results.jsonl"
     with open(batch_result_path, 'w') as f:
         f.write(batch_results)
-    print(f"     🔧Batch results saved for {model} to {batch_result_path}")
+    print(f"Batch results saved for {model} to {batch_result_path}")
 
     # Process the results and validate them
     batch_file_path = f"{CACHE_DIR}/{model}_grading_batch.jsonl"
@@ -250,8 +250,8 @@ def get_all_model_BioScore(res_dir: str, models_to_use: list, hyperparams: dict,
 
         # Save the updated dataframe
         save_dataset(f'{res_dir}{model}_responses.csv', data)
-        print(f"     🔧 BioScore computed and saved for {model} to {res_dir}{model}_responses.csv")
+        print(f"BioScore computed and saved for {model} to {res_dir}{model}_responses.csv")
 
     # Cleanup
-    print("     🔧 All batches submitted and results processed.")
+    print("All batches submitted and results processed.")
     grading_model.delete()

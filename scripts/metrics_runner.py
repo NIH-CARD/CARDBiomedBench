@@ -19,13 +19,13 @@ def main():
     bioscore_grading_prompt = args.bioscore_grading_prompt
 
     if "BioScore" in metrics_to_use:
-        print("     🔧 Getting BioScore Grades")
+        print("🔧 Getting BioScore Grades")
         get_all_model_BioScore(res_dir, models_to_grade, hyperparams, bioscore_grading_prompt)
-        print("     🔧 BioScore Completed")
+        print("🔧 BioScore Completed")
     if "BLEU_ROUGE_BERT" in metrics_to_use:
-        print("     🔧 Getting BLEU, ROUGE, and BERTScore")
+        print("🔧 Getting BLEU, ROUGE, and BERTScore")
         get_all_model_BLEU_ROUGE_BERT(res_dir, models_to_grade)
-        print("     🔧 BLEU, ROUGE, and BERTScore Completed")
+        print("🔧 BLEU, ROUGE, and BERTScore Completed")
 
 if __name__ == "__main__":
     main()
