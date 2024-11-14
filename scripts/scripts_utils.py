@@ -66,17 +66,17 @@ def sample_by_template(data: pd.DataFrame, n: int, batch_size: int = 10, random_
 if __name__ == "__main__":
     # Load the original data
     orig = pd.read_csv("data/CARDBiomedBench.csv")
-    print("Original Data:")
+    print(f"Original Data: {len(orig)}")
     print(orig.head())
 
     # Sample the data
     sampled = sample_by_template(orig, 270)
-    print("\nSampled Data (Test Set):")
+    print(f"\nSampled Data (Test Set): {len(sampled)}")
     print(len(sampled))
 
     # Identify the train set by excluding sampled indices
     train = orig.loc[~orig.index.isin(sampled.index)]
-    print("\nTrain Data:")
+    print(f"\nTrain Data: {len(train)}")
     print(train.head())
 
     # Save the splits to CSV files
