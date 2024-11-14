@@ -4,6 +4,7 @@ import os
 import sys
 import json
 import time
+import subprocess
 
 def stream_message(message, delay=0.025):
     """Display a streaming message effect."""
@@ -90,8 +91,43 @@ def run_responses(args, config):
 
 def run_metrics(args, config):
     """Run the metrics evaluation step."""
+    # Extract model_hyperparameters
+    model_params = config.get('model_params', {})
+    bioscore_system_prompt = config['prompts']['bioscore_system_prompt'].rstrip()
+    bioscore_grading_prompt = config['prompts']['bioscore_grading_prompt'].rstrip()
+    
+    # Prepare a dictionary of model_hyperparams
+    model_hyperparams = {
+        'system_prompt': bioscore_system_prompt,
+        'max_new_tokens': model_params.get('max_tokens', 1024),
+        'temperature': model_params.get('temperature', 0.0),
+    }
+    
+    # Get paths from the config
+    res_dir = config['paths'].get('output_directory', './results/')
+    res_by_model_dir = os.path.join(res_dir, 'by_model/')
+
+    # Determine which models to grade and on which metrics
+    models_to_grade = [model['name'] for model in config['models'] if model.get('use', False)]
+    metrics_to_use = [metric['name'] for metric in config['metrics'] if metric.get('use', False)]
+
     stream_message("🚀 Running metrics evaluation step")
-    # TODO
+
+    # Prepare the command
+    cmd = [
+        'python', '-m', 'scripts.metrics_runner',
+        '--res_by_model_dir', res_by_model_dir,
+        '--models_to_grade', *models_to_grade,
+        '--metrics_to_use', *metrics_to_use,
+        '--hyperparams', json.dumps(model_hyperparams),
+        '--bioscore_grading_prompt', bioscore_grading_prompt
+    ]
+
+    try:
+        subprocess.run(cmd, check=True)
+        stream_message(f"     ✅ Metric grading completed for all models")
+    except subprocess.CalledProcessError:
+        stream_message(f"     ❌ Metric grading failed for all models")
     stream_message("✅ Completed metrics evaluation")
 
 def run_graphs(args, config):
@@ -114,17 +150,17 @@ def main():
     if args.run_responses:
         run_responses(args, config)
     else:
-        stream_message("⚠️ Skipping response generation step ⚠️")
+        stream_message("⚠️  Skipping response generation step  ⚠️")
     
     if args.run_metrics:
         run_metrics(args, config)
     else:
-        stream_message("⚠️ Skipping metrics evaluation step ⚠️")
+        stream_message("⚠️  Skipping metrics evaluation step  ⚠️")
     
     if args.run_graphs:
         run_graphs(args, config)
     else:
-        stream_message("⚠️ Skipping graphs generation step ⚠️")
+        stream_message("⚠️  Skipping graphs generation step  ⚠️")
     
     stream_message("🎉 Benchmark run completed successfully! 🎉")
     print("=" * 100)

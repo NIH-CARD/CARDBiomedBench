@@ -5,7 +5,7 @@ import warnings
 
 warnings.filterwarnings("ignore", category=FutureWarning, module='transformers')
 
-def get_all_model_BLEU_ROUGE_BERT(res_dir: str, model_dict: dict, gold_col: str='answer', response_col: str='response') -> None:
+def get_all_model_BLEU_ROUGE_BERT(res_dir: str, models_to_grade: list, gold_col: str='answer', response_col: str='response') -> None:
     """Compute BLEU, ROUGE, BERTScore for each model's responses and save the results back to CSV files."""
 
     # Load BLEU, ROUGE, and BERT evaluators once
@@ -13,9 +13,9 @@ def get_all_model_BLEU_ROUGE_BERT(res_dir: str, model_dict: dict, gold_col: str=
     rouge = load('rouge')
     bertscore = load("bertscore")
 
-    for model in model_dict:
+    for model in models_to_grade:
         # Load the dataset for the current model
-        data = load_dataset(f'{res_dir}/{model}_responses.csv')
+        data = load_dataset(f'{res_dir}{model}_responses.csv')
 
         # Initialize columns for BLEU, ROUGE, and BERTScore
         for metric in ['BLEU', 'ROUGE2', 'ROUGEL', 'BERTScore']:

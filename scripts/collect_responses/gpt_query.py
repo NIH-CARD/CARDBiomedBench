@@ -189,7 +189,7 @@ class GPTQuery:
 
                 batch_info = self.client.batches.retrieve(batch_id)
                 batch_status = batch_info.status
-                print(f"Batch Status: {batch_status} | Time Passed: {time_passed}")
+                print(f"     🔧 Batch Status: {batch_status} | Time Passed: {time_passed}")
 
                 if batch_status == "failed" or batch_status == "expired":
                     return {"error": f"Batch {batch_status} with error"}
