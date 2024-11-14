@@ -33,8 +33,8 @@ prompts:
     2. **Calculate Score:** Apply criteria to evaluate the response.
 
     **Question:** {question}
-    f"**Golden Answer:** {gold_res}
-    f"**Analyst Response:** {pred_res}
+    **Golden Answer:** {gold_res}
+    **Analyst Response:** {pred_res}
     ## Your grading
     Using the scoring instructions above, grade the Analyst Response return only the numeric score on a scale from 0.0-3.0. If the response is stating lack of knowledge or abstaining, give it -1.0.
 
@@ -57,25 +57,25 @@ paths:
 # Models to be used in the benchmark
 models:
   - name: 'gpt-4o'
-    use: true
+    use: false
     type: 'openai'
   - name: 'gpt-3.5-turbo'
     use: true
     type: 'openai'
   - name: 'gemini-1.5-pro'
-    use: true
+    use: false
     type: 'google'
   - name: 'claude-3.5-sonnet'
-    use: true
+    use: false
     type: 'anthropic'
   - name: 'perplexity-sonar-huge'
-    use: true
+    use: false
     type: 'perplexity'
   - name: 'gemma-2-27b-it'
-    use: true
+    use: false
     type: 'huggingface'
   - name: 'llama-3.1-70b-it'
-    use: true
+    use: false
     type: 'huggingface'
 
 # Evaluation metrics to be used
@@ -83,4 +83,4 @@ metrics:
   - name: 'BioScore'
     use: true
   - name: 'BLEU_ROUGE_BERT'
-    use: true
+    use: false
