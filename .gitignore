@@ -3,6 +3,7 @@
 data/*
 logs/*
 results/*
+slurm*
 
 # VSCode directory
 .vscode
