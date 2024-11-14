@@ -7,7 +7,6 @@ from typing import List, Callable
 
 from scripts.scripts_utils import load_dataset, save_dataset
 
-# Import the model query classes
 from scripts.collect_responses.gpt_query import GPTQuery
 from scripts.collect_responses.gemini_query import GeminiQuery
 from scripts.collect_responses.claude_query import ClaudeQuery
@@ -32,7 +31,7 @@ def initialize_model(model_name: str, system_prompt: str, max_new_tokens: int, t
     elif model_name == 'llama-3.1-70b-it':
         return HuggingFaceQuery(system_prompt, 'meta-llama/Meta-Llama-3.1-70B-Instruct', max_tokens=max_new_tokens, do_sample=False)
     else:
-        raise ValueError(f"Model {model_name} is not recognized.")
+        raise ValueError(f"❌ Model {model_name} is not recognized.")
 
 def delete_model(query_instance):
     """Delete the model instance and release any resources."""
@@ -60,7 +59,7 @@ def query_model_retries(query: str, query_instance: object, query_checker: Calla
             return response
         else:
             retry_count += 1
-            print(f"     ❌ Error querying model. Retry {retry_count}/{retries}")
+            print(f"❌ Error querying model. Retry {retry_count}/{retries}")
             time.sleep(delay)
             delay *= 2
     return f"ERROR: Failed getting response for '{query}' after {retries} retries. Error: {response}"
@@ -69,7 +68,7 @@ def collect_single_model_responses(model_name: str, query_instance: object, quer
     """Collect responses from a specific model for a list of queries sequentially."""
 
     responses = []
-    for query in tqdm(queries, desc=f"     🔧 Running queries on {model_name}"):
+    for query in tqdm(queries, desc=f"🔧 Running queries on {model_name}"):
         response = query_model_retries(query, query_instance, query_checker, retries, initial_delay)
         responses.append(response)
 
@@ -116,12 +115,12 @@ def main():
 
     data = load_dataset(qa_path)
     if data.empty:
-        print("     ❌ No data to process. Exiting.")
+        print("❌ No data to process. Exiting.")
         return
 
-    print(f"     🔧 Getting model responses on {len(data)} Q/A for {model_name}")
+    print(f"🔧 Getting model responses on {len(data)} Q/A for {model_name}")
     data = get_model_responses(data, model_name=model_name, res_by_model_dir=res_by_model_dir, hyperparams=hyperparams)
-    print(f"     🔧 Responses collected and saved to {res_by_model_dir} ##")
+    print(f"🔧 Responses collected and saved to {res_by_model_dir} ##")
 
 if __name__ == "__main__":
     main()
