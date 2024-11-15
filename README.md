@@ -1,10 +1,10 @@
-# CARDBiomedBench
+# CARDBiomedBench 🧬
 
 CARDBiomedBench is a benchmarking suite for evaluating Large Language Models (LLMs) on complex biomedical question-answering tasks.
 
 For detailed methodology and results, please refer to our [paper](#).
 
-## Setup Environment
+## Setup Environment 
 
 Create a Conda environment with the necessary dependencies:
 
