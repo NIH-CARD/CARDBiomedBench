@@ -9,7 +9,7 @@ For detailed methodology and results, please refer to our [paper](#).
 Create a Conda environment with the necessary dependencies:
 
    ```bash
-   bash scripts/setup_conda_env.sh
+   source scripts/setup_conda_env.sh
    ```
 
 ## Setup Benchmark
