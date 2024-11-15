@@ -32,7 +32,7 @@ Run the benchmark end-to-end:
 
 ### Running with Slurm Cluster
 
-If using a Slurm cluster, submit jobs for each model:
+If using a Slurm cluster, submit jobs for each model with example commands specified in the slurm_commands.txt file.
 
 ## Customizing the Configuration
 
