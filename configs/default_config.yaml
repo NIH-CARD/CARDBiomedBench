@@ -2,19 +2,24 @@
 dataset:
   # Name of the dataset on Hugging Face
   dataset_name: 'NIH-CARD/CARDBiomedBench'
-  # Which split to use for evals
+  # Which split to use for evaluations ('train' or 'test')
   split: 'test'
 
 # Prompts used by the models
 prompts:
-  system_prompt: > # System prompt for the models during response generation
+  # System prompt for the models during response generation
+  system_prompt: >
     You are a highly knowledgeable and experienced expert in the healthcare and biomedical field,
     possessing extensive medical knowledge and practical expertise. If you do not know the answer
     to a question, explicitly state that you do not know.
-  bioscore_system_prompt: > # System prompt for the grading model during evaluation
+
+  # System prompt for the grading model during evaluation
+  bioscore_system_prompt: >
     You are a highly knowledgeable and experienced expert in the healthcare and biomedical field,
     possessing extensive medical knowledge and practical expertise.
-  bioscore_grading_prompt: | # Grading prompt template for BioScore
+  
+  # Grading prompt template for BioScore
+  bioscore_grading_prompt: |
     ### Scoring Instructions for Evaluating Analyst Responses
 
     **Objective:** Evaluate an analyst's response against a gold standard.
@@ -38,7 +43,7 @@ prompts:
     ## Your grading
     Using the scoring instructions above, grade the Analyst Response return only the numeric score on a scale from 0.0-3.0. If the response is stating lack of knowledge or abstaining, give it -1.0.
 
-# Model parameters for generation
+# Model parameters for response generation
 model_params:
   max_tokens: 1024
   temperature: 0.0
@@ -47,6 +52,8 @@ model_params:
 paths:
   # Directory for caching
   cache_directory: './.cache/'
+  # Directory for Hugging Face caching
+  hf_cache_directory: './.cache/huggingface/'
   # Directory where the dataset will be saved locally
   dataset_directory: './data/'
   # Directory for output results
