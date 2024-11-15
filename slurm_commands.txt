@@ -1,0 +1,60 @@
+# Run responses for each model
+sbatch \
+    --mem=50g \
+    --time=24:00:00 \
+    --partition=norm \
+    --cpus-per-task=4 \
+    scripts/benchmark_runner.sh gpt-4o --run_responses
+
+sbatch \
+    --mem=50g \
+    --time=24:00:00 \
+    --partition=norm \
+    --cpus-per-task=4 \
+    scripts/benchmark_runner.sh gpt-3.5-turbo --run_responses
+
+sbatch \
+    --mem=50g \
+    --time=24:00:00 \
+    --partition=norm \
+    --cpus-per-task=4 \
+    scripts/benchmark_runner.sh gemini-1.5-pro --run_responses
+
+sbatch \
+    --mem=50g \
+    --time=24:00:00 \
+    --partition=norm \
+    --cpus-per-task=4 \
+    scripts/benchmark_runner.sh claude-3.5-sonnet --run_responses
+
+sbatch \
+    --mem=50g \
+    --time=36:00:00 \
+    --partition=norm \
+    --cpus-per-task=4 \
+    scripts/benchmark_runner.sh perplexity-sonar-huge --run_responses
+
+sbatch \
+    --mem=100g \
+    --time=24:00:00 \
+    --partition=gpu \
+    --cpus-per-task=8 \
+    --gres=gpu:a100:2 \
+    scripts/benchmark_runner.sh gemma-2-27b-it --run_responses
+
+sbatch \
+    --mem=100g \
+    --time=12:00:00 \
+    --partition=gpu \
+    --cpus-per-task=8 \
+    --gres=gpu:a100:3 \
+    scripts/benchmark_runner.sh llama-3.1-70b-it --run_responses
+
+# Run metrics for all models
+sbatch \
+    --mem=100g \
+    --time=24:00:00 \
+    --partition=gpu \
+    --cpus-per-task=8 \
+    --gres=gpu:a100:1 \
+    scripts/benchmark_runner.sh --run_metrics
