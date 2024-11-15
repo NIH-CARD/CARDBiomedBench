@@ -2,7 +2,7 @@
 
 CARDBiomedBench is a benchmarking suite for evaluating Large Language Models (LLMs) on complex biomedical question-answering tasks.
 
-For detailed methodology and results, please refer to our [paper](#).
+For detailed methodology and results, please refer to our [paper](#). The CARDBiomedBench dataset is hosted on Hugging Face. You can access it here: [CARDBiomedBench on Hugging Face](https://huggingface.co/datasets/NIH-CARD/CARDBiomedBench).
 
 ## Setup Environment 
 
