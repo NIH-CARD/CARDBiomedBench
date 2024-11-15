@@ -1,3 +1,5 @@
+# SLURM submission script for CARDBiomedBench
+
 # Run responses for each model
 sbatch \
     --mem=50g \
