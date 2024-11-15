@@ -1,5 +1,13 @@
 #!/bin/bash
 
+#===============================================================================
+# setup_conda_env.sh
+#
+# This script sets up the 'cardbiomedbench-env' Conda environment for the
+# CARDBiomedBench project. It checks for Conda installation, creates the
+# environment if it doesn't exist, and activates it.
+#===============================================================================
+
 # Function to display a streaming message effect
 stream_message() {
     local message="$1"
@@ -39,7 +47,7 @@ if conda env list | awk '{print $1}' | grep -qw '^cardbiomedbench-env$'; then
 else
     # Create the environment if it does not exist
     stream_message "🔧 Creating the 'cardbiomedbench-env' environment from scratch..."
-    
+
     # Check for the existence of 'environment.yml' before creating the environment
     if [ ! -f "environment.yml" ]; then
         stream_message "❌ The 'environment.yml' file is missing. Please ensure it is present in the current directory."

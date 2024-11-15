@@ -1,67 +1,93 @@
+"""
+scripts_utils.py
+
+Utility functions for loading and saving datasets, and for sampling data.
+
+This script can also be run directly to split the CARDBiomedBench dataset into train and test sets.
+"""
+
 import os
+import argparse
 import pandas as pd
+
 
 def load_dataset(filepath: str) -> pd.DataFrame:
     """
-    Load dataset from a CSV file using pandas.
+    Load a dataset from a CSV file using pandas.
 
-    Parameters:
-    - filepath (str): The path to the CSV file.
+    Args:
+        filepath (str): The path to the CSV file.
 
     Returns:
-    - pd.DataFrame: Loaded dataset.
+        pd.DataFrame: Loaded dataset.
+
+    Raises:
+        FileNotFoundError: If the file does not exist.
+        pd.errors.ParserError: If the CSV cannot be parsed.
     """
     try:
         dataset = pd.read_csv(filepath)
         return dataset
     except Exception as e:
-        print(f"Error loading dataset: {e}")
+        print(f"Error loading dataset from '{filepath}': {e}")
         return pd.DataFrame()
 
-def save_dataset(filepath: str, data: pd.DataFrame):
-    """
-    Save responses to a CSV file using pandas.
 
-    Parameters:
-    - filepath (str): The path to the output CSV file.
-    - responses (pd.DataFrame): DataFrame containing the responses.
+def save_dataset(filepath: str, data: pd.DataFrame) -> None:
+    """
+    Save a DataFrame to a CSV file using pandas.
+
+    Args:
+        filepath (str): The path to the output CSV file.
+        data (pd.DataFrame): DataFrame containing the data to save.
+
+    Raises:
+        IOError: If the file cannot be written.
     """
     try:
         data.to_csv(filepath, index=False)
     except Exception as e:
-        print(f"Error saving responses: {e}")
+        print(f"Error saving dataset to '{filepath}': {e}")
 
-def sample_by_template(data: pd.DataFrame, n: int, batch_size: int = 10, random_state: int = 12) -> pd.DataFrame:
+
+def sample_by_template(
+    data: pd.DataFrame,
+    n: int,
+    batch_size: int = 10,
+    random_state: int = 12
+) -> pd.DataFrame:
     """
-    Groups the data by 'template uuid' and samples deterministically from each group.
-    Ensures that when n increases, all previously sampled rows are included.
-    
-    Parameters:
-    - data (pd.DataFrame): The input dataframe containing 'template uuid'.
-    - n (int): The total number of samples to select per 'template uuid'.
-    - batch_size (int): The size of each sampling batch.
-    - random_state (int): Seed for reproducibility.
-    
+    Group the data by 'template_uuid' and sample deterministically from each group.
+    Ensures that when 'n' increases, all previously sampled rows are included.
+
+    Args:
+        data (pd.DataFrame): The input DataFrame containing 'template_uuid'.
+        n (int): The total number of samples to select per 'template_uuid'.
+        batch_size (int): The size of each sampling batch.
+        random_state (int): Seed for reproducibility.
+
     Returns:
-    - pd.DataFrame: A new dataframe with `n` rows sampled per 'template uuid'.
+        pd.DataFrame: A new DataFrame with 'n' rows sampled per 'template_uuid'.
     """
     final_sampled_df = pd.DataFrame()
 
-    def deterministic_group_sample(group, n):
+    def deterministic_group_sample(group: pd.DataFrame, n_samples: int) -> pd.DataFrame:
         sampled_group_df = pd.DataFrame()
-        n = min(n, len(group))
-        for _ in range(0, n, batch_size):
-            current_batch_size = min(batch_size, n - len(sampled_group_df))
-            current_sample = group.sample(n=current_batch_size, random_state=random_state)
+        n_samples = min(n_samples, len(group))
+        remaining_group = group.copy()
+        for _ in range(0, n_samples, batch_size):
+            current_batch_size = min(batch_size, n_samples - len(sampled_group_df))
+            current_sample = remaining_group.sample(n=current_batch_size, random_state=random_state)
             sampled_group_df = pd.concat([sampled_group_df, current_sample])
-            group = group.drop(current_sample.index)
-
+            remaining_group = remaining_group.drop(current_sample.index)
         return sampled_group_df
 
     for template_uuid, group in data.groupby('template_uuid'):
-        final_sampled_df = pd.concat([final_sampled_df, deterministic_group_sample(group, n)])
+        sampled_group = deterministic_group_sample(group, n)
+        final_sampled_df = pd.concat([final_sampled_df, sampled_group])
 
     return final_sampled_df.reset_index(drop=True)
+
 
 if __name__ == "__main__":
     # Load the original data

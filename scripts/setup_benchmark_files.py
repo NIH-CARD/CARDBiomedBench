@@ -1,40 +1,71 @@
+"""
+setup_benchmark_files.py
+
+This script sets up the necessary directories, checks for required API keys,
+prompts for any missing ones, saves them to a .env file, and downloads the
+required dataset for the CARDBiomedBench project.
+"""
+
 import argparse
 import sys
 import yaml
-from pathlib import Path
-from dotenv import load_dotenv, set_key
-from datasets import load_dataset
 import os
 import time
 import getpass
+from pathlib import Path
+from dotenv import load_dotenv, set_key
+from datasets import load_dataset
 
 # Define the base directory as the parent of the script's directory
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-# Function to display a streaming message effect, one character at a time
 def stream_message(message, delay=0.025):
+    """
+    Displays a message one character at a time with an optional delay.
+
+    Args:
+        message (str): The message to display.
+        delay (float, optional): Delay between characters. Defaults to 0.025 seconds.
+    """
     for char in message:
         sys.stdout.write(char)
         sys.stdout.flush()
         time.sleep(delay)
     sys.stdout.write("\n")
 
-# Parse command-line arguments, including the config file path
 def parse_arguments():
+    """
+    Parses command-line arguments, including the config file path.
+
+    Returns:
+        argparse.Namespace: Parsed command-line arguments.
+    """
     parser = argparse.ArgumentParser(description='Setup Benchmark Files for CARDBiomedBench')
-    parser.add_argument('--config', type=str, default=BASE_DIR / 'configs' / 'default_config.yaml',
-                        help='Path to the configuration file')
+    parser.add_argument(
+        '--config',
+        type=str,
+        default=str(BASE_DIR / 'configs' / 'default_config.yaml'),
+        help='Path to the configuration file'
+    )
     return parser.parse_args()
 
-# Load configuration from a YAML file
 def load_configuration(config_path):
+    """
+    Loads configuration from a YAML file.
+
+    Args:
+        config_path (Path): Path to the configuration YAML file.
+
+    Returns:
+        dict: Loaded configuration dictionary.
+    """
     try:
         with open(config_path, 'r') as f:
             config = yaml.safe_load(f)
-        stream_message(f"🔧 Loaded configuration from {BASE_DIR.name}/{config_path.relative_to(BASE_DIR)}")
+        stream_message(f"🔧 Loaded configuration from {config_path.relative_to(BASE_DIR)}")
         return config
     except FileNotFoundError:
-        stream_message(f"❌ Configuration file not found at {BASE_DIR.name}/{config_path.relative_to(BASE_DIR)}")
+        stream_message(f"❌ Configuration file not found at {config_path.relative_to(BASE_DIR)}")
         sys.exit(1)
     except yaml.YAMLError as e:
         stream_message(f"❌ Error parsing YAML file: {e}")
@@ -43,8 +74,27 @@ def load_configuration(config_path):
         stream_message(f"❌ Error loading configuration file: {e}")
         sys.exit(1)
 
-# Setup directories specified in the configuration file
+def setup_environment(config):
+    """
+    Sets up environment variables for Hugging Face caches.
+
+    Args:
+        config (dict): Configuration dictionary.
+    """
+    hf_cache_dir = BASE_DIR / config['paths'].get('hf_cache_directory', '.cache/huggingface')
+    os.environ['HF_HOME'] = str(hf_cache_dir)
+    os.environ['HF_DATASETS_CACHE'] = str(hf_cache_dir / 'datasets')
+
+    stream_message(f"🔧 Set HF_HOME to {os.environ['HF_HOME']}")
+    stream_message(f"🔧 Set HF_DATASETS_CACHE to {os.environ['HF_DATASETS_CACHE']}")
+
 def setup_directories(config):
+    """
+    Sets up directories specified in the configuration file.
+
+    Args:
+        config (dict): Configuration dictionary.
+    """
     directories = {
         'output_directory': BASE_DIR / config['paths'].get('output_directory', 'results'),
         'by_model_directory': BASE_DIR / config['paths'].get('output_directory', 'results') / 'by_model',
@@ -59,12 +109,12 @@ def setup_directories(config):
     for dir_name, dir_path in directories.items():
         if not dir_path.exists():
             dir_path.mkdir(parents=True, exist_ok=True)
-            created_dirs.append(f"{BASE_DIR.name}/{dir_path.relative_to(BASE_DIR)}")
+            created_dirs.append(f"{dir_path.relative_to(BASE_DIR)}")
         else:
-            existing_dirs.append(f"{BASE_DIR.name}/{dir_path.relative_to(BASE_DIR)}")
+            existing_dirs.append(f"{dir_path.relative_to(BASE_DIR)}")
 
     if created_dirs:
-        stream_message("🔧 Created directories: ")
+        stream_message("🔧 Created directories:")
         for dir_path in created_dirs:
             stream_message(f"     * {dir_path}")
     if existing_dirs:
@@ -72,8 +122,14 @@ def setup_directories(config):
         for dir_path in existing_dirs:
             stream_message(f"     * {dir_path}")
 
-# Check for required API keys, prompt for missing ones, and save them to .env
 def check_api_keys(config, dotenv_path):
+    """
+    Checks for required API keys, prompts for missing ones, and saves them to .env.
+
+    Args:
+        config (dict): Configuration dictionary.
+        dotenv_path (Path): Path to the .env file.
+    """
     models = [model for model in config['models'] if model.get('use')]
     required_keys = set()
 
@@ -97,7 +153,7 @@ def check_api_keys(config, dotenv_path):
         for key in missing_keys:
             stream_message(f"     * {key}")
         stream_message("Please enter the missing API keys.")
-        
+
         for key in missing_keys:
             api_key = getpass.getpass(prompt=f"🔑 Enter your {key}: ")
             # Set the key in both environment and the .env file
@@ -107,8 +163,13 @@ def check_api_keys(config, dotenv_path):
     else:
         stream_message("🔧 All necessary API keys are present.")
 
-# Create a .env file by prompting the user for required API keys
 def create_env_file(config):
+    """
+    Creates a .env file by prompting the user for required API keys.
+
+    Args:
+        config (dict): Configuration dictionary.
+    """
     models = [model for model in config['models'] if model.get('use')]
     required_keys = set()
 
@@ -127,8 +188,7 @@ def create_env_file(config):
 
     env_vars = {}
     for key in required_keys:
-        stream_message(f"🔑 Please enter your {key}:")
-        api_key = getpass.getpass(prompt='> ')
+        api_key = getpass.getpass(prompt=f"🔑 Please enter your {key}: ")
         env_vars[key] = api_key
 
     # Write the keys into the .env file
@@ -137,48 +197,55 @@ def create_env_file(config):
         for key, value in env_vars.items():
             f.write(f"{key}={value}\n")
 
-    stream_message(f"🔧 Created .env file at {BASE_DIR.name}/{dotenv_path.relative_to(BASE_DIR)}")
+    stream_message(f"🔧 Created .env file at {dotenv_path.relative_to(BASE_DIR)}")
 
-# Download the dataset hosted on huggface 
 def download_dataset(config):
-    # Retrieve dataset name from config with a default fallback
+    """
+    Downloads the dataset hosted on Hugging Face.
+
+    Args:
+        config (dict): Configuration dictionary.
+    """
+    # Retrieve dataset name and split from config with defaults
     dataset_name = config['dataset'].get('dataset_name', 'NIH-CARD/CARDBiomedBench')
-    
+    split_type = config['dataset'].get('split', 'test')
+
     # Retrieve dataset directory path from config
     save_path = BASE_DIR / config['paths'].get('dataset_directory', 'data')
     save_path.mkdir(parents=True, exist_ok=True)
-    
-    # Retrieve the desired split from config, defaulting to 'test' if not specified
-    split_type = config['dataset'].get('split', 'test')
-    
-    # Dynamically set the CSV file name based on the split type
+
+    # Set the CSV file name based on the split type
     csv_file_name = f'CARDBiomedBench_{split_type}.csv'
     csv_file_path = save_path / csv_file_name
 
     stream_message(f"🔧 Downloading the '{split_type}' split of dataset '{dataset_name}'...")
 
     try:
-        # Attempt to load only the specified split of the dataset
-        split_dataset = load_dataset(dataset_name, split=split_type)
-        
+        # Load the specified split of the dataset
+        split_dataset = load_dataset(
+            dataset_name,
+            split=split_type,
+            cache_dir=os.environ['HF_DATASETS_CACHE']
+        )
+
         # Save the specified split to CSV
         split_dataset.to_csv(str(csv_file_path))
-        stream_message(f"🔧 Saved '{split_type}' split dataset to '{BASE_DIR.name}/{csv_file_path.relative_to(BASE_DIR)}'")
-        
+        stream_message(f"🔧 Saved '{split_type}' split dataset to '{csv_file_path.relative_to(BASE_DIR)}'")
+
     except ValueError as ve:
-        # Handle cases where the specified split does not exist
         stream_message(f"❌ The dataset '{dataset_name}' does not have a '{split_type}' split: {ve}")
         sys.exit(1)
     except Exception as e:
-        # Handle other possible exceptions
         stream_message(f"❌ Failed to download the '{split_type}' split of the dataset: {e}")
         sys.exit(1)
 
-# Main setup script
 def main():
-    print("="*75)
+    """
+    Main function that orchestrates the setup process.
+    """
+    print("=" * 75)
     stream_message("🔧 Starting CARDBiomedBench Directory Setup")
-    
+
     # Parse command-line arguments
     args = parse_arguments()
 
@@ -186,19 +253,22 @@ def main():
     config_path = Path(args.config)
     config = load_configuration(config_path)
 
+    # Setup environment variables for caching
+    setup_environment(config)
+
     # Load environment variables from .env
     dotenv_path = BASE_DIR / 'configs' / '.env'
     if dotenv_path.exists():
         load_dotenv(dotenv_path=dotenv_path)
-        stream_message(f"🔧 Loaded environment variables from {BASE_DIR.name}/{dotenv_path.relative_to(BASE_DIR)}")
+        stream_message(f"🔧 Loaded environment variables from {dotenv_path.relative_to(BASE_DIR)}")
         # Check for missing API keys if the .env file exists
         check_api_keys(config, dotenv_path)
     else:
-        stream_message(f"❌ .env file not found at {BASE_DIR.name}/{dotenv_path.relative_to(BASE_DIR)}")
-        stream_message(f"🔧 Creating .env file and prompting for API keys.")
+        stream_message(f"❌ .env file not found at {dotenv_path.relative_to(BASE_DIR)}")
+        stream_message("🔧 Creating .env file and prompting for API keys.")
         create_env_file(config)
         load_dotenv(dotenv_path=dotenv_path)
-        stream_message(f"🔧 Loaded environment variables from {BASE_DIR.name}/{dotenv_path.relative_to(BASE_DIR)}")
+        stream_message(f"🔧 Loaded environment variables from {dotenv_path.relative_to(BASE_DIR)}")
 
     # Setup directories
     setup_directories(config)
@@ -206,8 +276,8 @@ def main():
     # Download dataset to local
     download_dataset(config)
 
-    stream_message("✅ Setup complete, you can now run the benchmark.")
-    print("="*75)
+    stream_message("✅ Setup complete. You can now run the benchmark.")
+    print("=" * 75)
 
 if __name__ == '__main__':
     main()
