@@ -6,6 +6,9 @@ import json
 import time
 import subprocess
 
+# Set the local .cache directory for huggingface models
+os.environ['HF_HOME'] = os.path.abspath(os.path.join(os.path.dirname(__file__), '../.cache/huggingface'))
+
 def stream_message(message, delay=0.025):
     """Display a streaming message effect."""
     for char in message:
@@ -58,10 +61,7 @@ def run_responses(args, config):
     res_by_model_dir = os.path.join(res_dir, 'by_model/')
     
     # Determine models to run
-    models_to_run = []
-    for model in config['models']:
-        if model.get('use', False):
-            models_to_run.append(model['name'])
+    models_to_run = [model['name'] for model in config['models'] if model.get('use', False)]
     
     # If a specific model is specified via command-line, override
     if args.model:
@@ -79,15 +79,17 @@ def run_responses(args, config):
             '--qa_path', qa_path,
             '--res_by_model_dir', res_by_model_dir,
             '--model_name', model_name,
-            '--hyperparams', f"'{model_hyperparams_str}'"
+            '--hyperparams', model_hyperparams_str  # Remove extra quotes
         ]
         stream_message(f"     🔧 Starting response generation for model: {model_name}")
-        exit_code = os.system(' '.join(cmd))
-        if exit_code != 0:
-            stream_message(f"     ❌ Response generation failed for model: {model_name}")
-        else:
+        try:
+            subprocess.run(cmd, check=True)
             stream_message(f"     ✅ Completed response generation for model: {model_name}")
+        except subprocess.CalledProcessError as e:
+            stream_message(f"     ❌ Response generation failed for model: {model_name}")
+            stream_message(f"         Error: {e}")
     stream_message("✅ Completed response generation for all models")
+
 
 def run_metrics(args, config):
     """Run the metrics evaluation step."""
