@@ -30,7 +30,6 @@ def main():
     """
     Main function to generate graphs and tables from benchmark results.
     """
-    print("=== GRAPHS RUNNER STARTED ===")
     parser = argparse.ArgumentParser(description="Create graphs and tables on the benchmark results.")
     parser.add_argument('--qa_path', type=str, required=True, 
         help='Path to the QA CSV file'
@@ -66,11 +65,11 @@ def main():
 
     # Compute and add token count columns for question, answer, and each model response
     data = get_token_counts(data, models_list)
-    print("Token counts computed.")
+    print("🔧 Token counts computed.")
 
     # Generate dataset statistics text file
     statistics_txt(data, models=models_list, title="statistics", save_path=res_dir)
-    print("Dataset statistics generated.")
+    print("🔧 Dataset statistics generated.")
 
     # Generate dataset distribution visualizations
     plot_category_pie_chart(
@@ -80,7 +79,7 @@ def main():
         save_path=res_dir,
         color_flag=1,
     )
-    print("Bio Category Donut Chart created.")
+    print("🔧 Bio Category Donut Chart created.")
 
     plot_category_pie_chart(
         data,
@@ -89,7 +88,7 @@ def main():
         save_path=res_dir,
         color_flag=2,
     )
-    print("Reasoning Category Donut Chart created.")
+    print("🔧 Reasoning Category Donut Chart created.")
 
     plot_token_histograms(
         data,
@@ -98,7 +97,7 @@ def main():
         title="Question Token Histogram",
         save_path=res_dir,
     )
-    print("Question Token Histogram created.")
+    print("🔧 Question Token Histogram created.")
 
     plot_token_histograms(
         data,
@@ -107,7 +106,7 @@ def main():
         title="Answer Token Histogram",
         save_path=res_dir,
     )
-    print("Answer Token Histogram created.")
+    print("🔧 Answer Token Histogram created.")
 
     # Metric visualizations
     if "BioScore" in metrics_list:
@@ -120,7 +119,7 @@ def main():
             title='Safety Rate vs. Response Quality Rate',
             save_path=res_dir,
         )
-        print("Safety vs. Quality Scatterplot created.")
+        print("🔧 Safety vs. Quality Scatterplot created.")
 
         plot_metric_boxplot(
             data,
@@ -130,7 +129,7 @@ def main():
             title="BioScore Boxplot",
             save_path=res_dir,
         )
-        print("BioScore Boxplot created.")
+        print("🔧 BioScore Boxplot created.")
 
         # BioScore Heatmaps
         plot_heatmap(
@@ -144,7 +143,7 @@ def main():
             calculation_type='mean',
             threshold=5,
         )
-        print("BioScore Bio Category Heatmap created.")
+        print("🔧 BioScore Bio Category Heatmap created.")
 
         plot_heatmap(
             data=data,
@@ -157,7 +156,7 @@ def main():
             calculation_type='mean',
             threshold=5,
         )
-        print("BioScore Reasoning Category Heatmap created.")
+        print("🔧 BioScore Reasoning Category Heatmap created.")
 
         # Abstention Rate Heatmaps
         plot_heatmap(
@@ -170,7 +169,7 @@ def main():
             save_path=res_dir,
             calculation_type='percentage_idk',
         )
-        print("Abstention Rate Bio Category Heatmap created.")
+        print("🔧 Abstention Rate Bio Category Heatmap created.")
 
         plot_heatmap(
             data=data,
@@ -182,7 +181,7 @@ def main():
             save_path=res_dir,
             calculation_type='percentage_idk',
         )
-        print("Abstention Rate Reasoning Category Heatmap created.")
+        print("🔧 Abstention Rate Reasoning Category Heatmap created.")
 
         # Quality Rate Heatmaps
         plot_heatmap(
@@ -196,7 +195,7 @@ def main():
             calculation_type='quality_rate',
             threshold=5,
         )
-        print("Quality Rate Bio Category Heatmap created.")
+        print("🔧 Quality Rate Bio Category Heatmap created.")
 
         plot_heatmap(
             data=data,
@@ -209,7 +208,7 @@ def main():
             calculation_type='quality_rate',
             threshold=5,
         )
-        print("Quality Rate Reasoning Category Heatmap created.")
+        print("🔧 Quality Rate Reasoning Category Heatmap created.")
 
         # Safety Rate Heatmaps
         plot_heatmap(
@@ -223,7 +222,7 @@ def main():
             calculation_type='safety_rate',
             threshold=5,
         )
-        print("Safety Rate Bio Category Heatmap created.")
+        print("🔧 Safety Rate Bio Category Heatmap created.")
 
         plot_heatmap(
             data=data,
@@ -236,7 +235,7 @@ def main():
             calculation_type='safety_rate',
             threshold=5,
         )
-        print("Safety Rate Reasoning Category Heatmap created.")
+        print("🔧 Safety Rate Reasoning Category Heatmap created.")
 
     if "BLEU_ROUGE_BERT" in metrics_list:
         nlp_metrics = ['BLEU', 'ROUGE2', 'ROUGEL', 'BERTScore']
@@ -249,22 +248,20 @@ def main():
                 title=f"{metric} Boxplot",
                 save_path=res_dir,
             )
-            print(f"{metric} Boxplot created.")
+            print(f"🔧 {metric} Boxplot created.")
 
     # Generate performance tables
     if "BioScore" in metrics_list:
         performance_table = bioscore_performance_table(data, models_list)
-        print("BioScore Performance Table created.")
+        print("🔧 BioScore Performance Table created.")
         style_dataframe(performance_table, "All BioScore Metrics", res_dir)
-        print("BioScore Table styled and saved.")
+        print("🔧 BioScore Table styled and saved.")
 
     if "BLEU_ROUGE_BERT" in metrics_list:
         performance_table = create_performance_table(data, nlp_metrics, models_list)
-        print("NLP Performance Table created.")
+        print("🔧 NLP Performance Table created.")
         style_dataframe(performance_table, "All NLP Metrics", res_dir)
-        print("NLP Table styled and saved.")
-
-    print("=== GRAPHS RUNNER COMPLETED ===")
+        print("🔧 NLP Table styled and saved.")
 
 
 if __name__ == "__main__":
