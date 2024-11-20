@@ -74,7 +74,7 @@ def load_configuration(config_path):
     try:
         with open(config_path, 'r') as f:
             config = yaml.safe_load(f)
-        stream_message(f"🔧 Loaded configuration from {config_path}")
+        stream_message(f"🔧 Loaded configuration from {config_path.relative_to(BASE_DIR)}")
         return config
     except Exception as e:
         stream_message(f"❌ Error loading configuration file: {e}")
@@ -91,8 +91,12 @@ def setup_environment(config):
     os.environ['HF_HOME'] = str(hf_cache_dir)
     os.environ['HF_DATASETS_CACHE'] = str(hf_cache_dir / 'datasets')
 
-    stream_message(f"🔧 Set HF_HOME to {os.environ['HF_HOME']}")
-    stream_message(f"🔧 Set HF_DATASETS_CACHE to {os.environ['HF_DATASETS_CACHE']}")
+    # Convert paths to be relative to BASE_DIR
+    relative_hf_home = os.path.relpath(hf_cache_dir, start=BASE_DIR)
+    relative_hf_datasets_cache = os.path.relpath(hf_cache_dir / 'datasets', start=BASE_DIR)
+
+    stream_message(f"🔧 Set HF_HOME to {relative_hf_home}")
+    stream_message(f"🔧 Set HF_DATASETS_CACHE to {relative_hf_datasets_cache}")
 
 def run_responses(args, config):
     """
@@ -148,7 +152,6 @@ def run_responses(args, config):
             stream_message(f"     ✅ Completed response generation for model: {model_name}")
         except subprocess.CalledProcessError as e:
             stream_message(f"     ❌ Response generation failed for model: {model_name}")
-            stream_message(f"         Error: {e}")
     stream_message("✅ Completed response generation for all models")
 
 def run_metrics(args, config):
@@ -195,7 +198,7 @@ def run_metrics(args, config):
         subprocess.run(cmd, check=True)
         stream_message("✅ Metric grading completed for all models")
     except subprocess.CalledProcessError as e:
-        stream_message(f"❌ Metric grading failed: {e}")
+        stream_message(f"❌ Metric grading failed")
         sys.exit(1)
 
 def run_graphs(args, config):
@@ -233,7 +236,7 @@ def run_graphs(args, config):
         subprocess.run(cmd, check=True)
         stream_message("✅ Graphs generation completed")
     except subprocess.CalledProcessError as e:
-        stream_message(f"❌ Graphs generation failed: {e}")
+        stream_message(f"❌ Graphs generation failed")
         sys.exit(1)
 
 def main():
@@ -243,7 +246,8 @@ def main():
     print("=" * 100)
     stream_message("🎆 Benchmarking LLMs on CARDBiomedBench 🎆")
     args = parse_arguments()
-    config = load_configuration(args.config)
+    config_path = Path(args.config)
+    config = load_configuration(config_path)
 
     # Setup environment variables for caching
     setup_environment(config)
