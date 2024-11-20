@@ -85,8 +85,12 @@ def setup_environment(config):
     os.environ['HF_HOME'] = str(hf_cache_dir)
     os.environ['HF_DATASETS_CACHE'] = str(hf_cache_dir / 'datasets')
 
-    stream_message(f"🔧 Set HF_HOME to {os.environ['HF_HOME']}")
-    stream_message(f"🔧 Set HF_DATASETS_CACHE to {os.environ['HF_DATASETS_CACHE']}")
+    # Convert paths to be relative to BASE_DIR
+    relative_hf_home = os.path.relpath(hf_cache_dir, start=BASE_DIR)
+    relative_hf_datasets_cache = os.path.relpath(hf_cache_dir / 'datasets', start=BASE_DIR)
+
+    stream_message(f"🔧 Set HF_HOME to {relative_hf_home}")
+    stream_message(f"🔧 Set HF_DATASETS_CACHE to {relative_hf_datasets_cache}")
 
 def setup_directories(config):
     """
