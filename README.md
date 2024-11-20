@@ -4,7 +4,12 @@ CARDBiomedBench is a benchmarking suite for evaluating Large Language Models on 
 
 ## Setup Environment 
 
-Create an environment with the necessary dependencies in the environment.yml file
+Create a Conda environment with the necessary dependencies:
+
+   ```bash
+   source scripts/setup_conda_env.sh
+   ```
+
 ## Setup Benchmark
 
 Prepare directories, configure environment variables, and download the dataset:
