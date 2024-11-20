@@ -244,7 +244,7 @@ def main():
         res_by_model_dir=res_by_model_dir,
         hyperparams=hyperparams
     )
-    print(f"🔧 Responses collected and saved to {res_by_model_dir}")
+    print(f"🔧 Responses collected and saved to for {model_name}")
 
 if __name__ == "__main__":
     main()
