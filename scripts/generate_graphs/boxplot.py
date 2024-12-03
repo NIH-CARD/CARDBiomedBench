@@ -73,7 +73,7 @@ def plot_metric_boxplot(data: pd.DataFrame, metric: str, models: list, model_ord
             plt.text(model_index, -0.12, f'({percent:.2f}%)', ha='center', va='center', fontsize=20, color='red')
         
     # Adjust y-axis ticks
-    yticks = [yt / 3.0 for yt in range(0, 10)]  # From 0 to 3 in steps of 0.333...
+    yticks = [yt / 3.0 for yt in range(0, 4)]
     plt.ylim(-0.05, max(yticks) + 0.05)
     plt.yticks(yticks, [f'{yt:.2f}' for yt in yticks], fontsize=20)
 
@@ -133,7 +133,7 @@ def plot_template_boxplot(data: pd.DataFrame, metric: str, model: str, title: st
         plt.text(model_index, -0.125, f'({percent:.2f}%)', ha='center', va='center', fontsize=16, color='red')
     
     # Adjust y-axis ticks
-    yticks = [yt / 3.0 for yt in range(0, 10)]
+    yticks = [yt / 3.0 for yt in range(0, 4)]
     plt.ylim(-0.05, max(yticks) + 0.05)
     plt.yticks(yticks, [f'{yt:.2f}' for yt in yticks])
     
