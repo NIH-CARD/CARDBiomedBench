@@ -1,6 +1,6 @@
 """
 graphs_runner.py
-
+ 
 This script generates graphs and tables based on the benchmark results.
 It processes the data, computes metrics, and produces visualizations and performance tables.
 """
