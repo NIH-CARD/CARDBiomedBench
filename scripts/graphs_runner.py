@@ -1,6 +1,6 @@
 """
 graphs_runner.py
-
+ 
 This script generates graphs and tables based on the benchmark results.
 It processes the data, computes metrics, and produces visualizations and performance tables.
 """
@@ -56,7 +56,7 @@ def main():
 
     # Merge model responses
     merge_model_responses(qa_path, f'{res_dir}by_model', scored_path)
-    print("Model responses merged successfully.")
+    print("🔧 Model responses merged successfully.")
 
     data = load_dataset(scored_path)
     if data.empty:
