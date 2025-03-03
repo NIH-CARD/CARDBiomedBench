@@ -52,6 +52,8 @@ def initialize_model(
         return GeminiQuery(system_prompt, 'gemini-1.5-pro', max_tokens=max_new_tokens, temperature=temperature)
     elif model_name == 'claude-3.5-sonnet':
         return ClaudeQuery(system_prompt, 'claude-3-5-sonnet-20240620', max_tokens=max_new_tokens, temperature=temperature)
+    elif model_name == 'claude-3.7-sonnet':
+        return ClaudeQuery(system_prompt, 'claude-3-7-sonnet-20250219', max_tokens=max_new_tokens, temperature=temperature)
     elif model_name == 'perplexity-sonar-huge':
         return PerplexityQuery(system_prompt, 'llama-3.1-sonar-huge-128k-online', max_tokens=max_new_tokens, temperature=temperature)
     elif model_name == 'gemma-2-27b-it':

@@ -146,12 +146,12 @@ def run_responses(args, config):
             '--model_name', model_name,
             '--hyperparams', model_hyperparams_str
         ]
-        stream_message(f"     🔧 Starting response generation for model: {model_name}")
+        stream_message(f"🔧 Starting response generation for model: {model_name}")
         try:
             subprocess.run(cmd, check=True)
-            stream_message(f"     ✅ Completed response generation for model: {model_name}")
+            stream_message(f"✅ Completed response generation for model: {model_name}")
         except subprocess.CalledProcessError as e:
-            stream_message(f"     ❌ Response generation failed for model: {model_name}")
+            stream_message(f"❌ Response generation failed for model: {model_name}")
     stream_message("✅ Completed response generation for all models")
 
 def run_metrics(args, config):
