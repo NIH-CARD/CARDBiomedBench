@@ -399,7 +399,7 @@ def get_all_model_BioScore(
         )
 
         # Save the updated DataFrame
-        save_dataset(f'{res_dir}{model}_responses.csv', data)
+        save_dataset(f'{res_dir}/{model}_responses.csv', data)
         print(f"BioScore computed and saved for {model} to {res_dir}{model}_responses.csv")
 
     # Cleanup
