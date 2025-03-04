@@ -5,16 +5,16 @@ import matplotlib.pyplot as plt
 from matplotlib.patches import Ellipse
 
 MODEL_LABELS = {
-    "gpt-4o": {"label": "ChatGPT-4o", "position": (-0.06, -0.07)},
+    "gpt-4o": {"label": "GPT-4o", "position": (-0.06, -0.07)},
     "gpt-3.5-turbo": {"label": "GPT-3.5-Turbo", "position": (0.11, 0)},
     "gemini-1.5-pro": {"label": "Gemini-1.5-Pro", "position": (-0.11, -0.03)},
     "claude-3.5-sonnet": {"label": "Claude-3.5-Sonnet", "position": (0.0, 0.04)},
-    "perplexity-sonar-huge": {"label": "Perplexity-Sonar-Huge", "position": (-0.17, 0.0)},
+    "perplexity-sonar-huge": {"label": "Perplexity-Sonar-Huge", "position": (+0.16, -0.02)},
     "gemma-2-27b-it": {"label": "Gemma-2-27B", "position": (0.0, -0.07)},
     "llama-3.1-70b-it": {"label": "Llama-3.1-70B", "position": (-0.11, 0.0)},
     "claude-3.7-sonnet": {"label": "Claude-3.7-Sonnet", "position": (0.00, -0.07)},
     "gpt-4.5-preview": {"label": "GPT-4.5-Preview", "position": (0.00, 0.035)},
-    "gemini-2.0-flash": {"label": "Gemini-2.0-Flash", "position": (-0.03, 0.035)}
+    "gemini-2.0-flash": {"label": "Gemini-2.0-Flash", "position": (-0.125, -0.015)}
 }
 
 def plot_safety_vs_quality(data: pd.DataFrame, metric: str, models: list, title: str, save_path: str):
@@ -76,10 +76,9 @@ def plot_safety_vs_quality(data: pd.DataFrame, metric: str, models: list, title:
 
         # Create an ellipse to represent the confidence intervals
         if model in ["claude-3.7-sonnet", "gpt-4.5-preview", "gemini-2.0-flash"]:
-            border_color = '#913574'
+            ellipse = Ellipse((x, y), width=2 * ci_x, height=2 * ci_y, facecolor='white', edgecolor="#3587CD", linewidth=1.75, alpha=.9)
         else:
-            border_color = '#58DCBC'
-        ellipse = Ellipse((x, y), width=2 * ci_x, height=2 * ci_y, facecolor='#E0E0E0', edgecolor=border_color, linewidth=1.5, alpha=1)
+            ellipse = Ellipse((x, y), width=2 * ci_x, height=2 * ci_y, facecolor='white', edgecolor="#3587CD", linewidth=1.5, alpha=.5)
 
         ax.add_patch(ellipse)  # Add the ellipse to the plot
 
