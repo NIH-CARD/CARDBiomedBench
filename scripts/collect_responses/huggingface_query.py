@@ -166,4 +166,4 @@ class HuggingFaceQuery:
             # Clear any remaining references
             gc.collect()
         except Exception as e:
-            print(f"Error during deletion of {self.model_name} model and tokenizer: {e}")
+            print(f"Error during deletion of model and tokenizer: {e}")
