@@ -69,7 +69,7 @@ models:
   - name: 'gpt-4o'
     use: true
     type: 'openai'
-  - name: 'gpt-4.5-preview'
+  - name: 'gpt-4.1'
     use: true
     type: 'openai'
   - name: 'gemini-1.5-pro'
@@ -81,7 +81,7 @@ models:
   - name: 'claude-3.5-sonnet'
     use: true
     type: 'anthropic'
-  - name: 'claude-3.7-sonnet'
+  - name: 'claude-4.0-sonnet'
     use: true
     type: 'anthropic'
   - name: 'perplexity-sonar-huge'

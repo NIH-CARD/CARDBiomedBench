@@ -5,6 +5,13 @@ sbatch \
     --time=24:00:00 \
     --partition=norm \
     --cpus-per-task=4 \
+    scripts/benchmark_runner.sh gpt-4.1 --run_responses
+
+sbatch \
+    --mem=50g \
+    --time=24:00:00 \
+    --partition=norm \
+    --cpus-per-task=4 \
     scripts/benchmark_runner.sh gpt-4o --run_responses
 
 sbatch \
@@ -19,7 +26,21 @@ sbatch \
     --time=24:00:00 \
     --partition=norm \
     --cpus-per-task=4 \
+    scripts/benchmark_runner.sh gemini-2.0-flash --run_responses
+
+sbatch \
+    --mem=50g \
+    --time=24:00:00 \
+    --partition=norm \
+    --cpus-per-task=4 \
     scripts/benchmark_runner.sh gemini-1.5-pro --run_responses
+
+sbatch \
+    --mem=50g \
+    --time=24:00:00 \
+    --partition=norm \
+    --cpus-per-task=4 \
+    scripts/benchmark_runner.sh claude-4.0-sonnet --run_responses
 
 sbatch \
     --mem=50g \
