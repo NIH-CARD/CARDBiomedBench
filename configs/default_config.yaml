@@ -81,7 +81,7 @@ models:
   - name: 'claude-3.5-sonnet'
     use: true
     type: 'anthropic'
-  - name: 'claude-4.0-sonnet'
+  - name: 'claude-3.7-sonnet'
     use: true
     type: 'anthropic'
   - name: 'perplexity-sonar-huge'
