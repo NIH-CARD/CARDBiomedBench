@@ -1,6 +1,7 @@
 import os
 import gc
 import json
+import httpx
 from dotenv import load_dotenv
 import anthropic
 
@@ -26,7 +27,7 @@ class ClaudeQuery:
             load_dotenv(os.path.join(os.path.dirname(__file__), '../../configs/.env'))
             anthropic_api_key = os.environ.get("ANTHROPIC_API_KEY")
             if anthropic_api_key:
-                return anthropic.Anthropic(api_key=anthropic_api_key)
+                return anthropic.Anthropic(api_key=anthropic_api_key, http_client=httpx.Client(timeout=60))
             else:
                 print("Anthropic API key not found in environment variables.")
         except Exception as e:
