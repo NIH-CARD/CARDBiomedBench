@@ -37,10 +37,10 @@ sbatch \
 
 sbatch \
     --mem=50g \
-    --time=36:00:00 \
+    --time=24:00:00 \
     --partition=norm \
     --cpus-per-task=4 \
-    scripts/benchmark_runner.sh claude-4.0-sonnet --run_responses
+    scripts/benchmark_runner.sh claude-3.7-sonnet --run_responses
 
 sbatch \
     --mem=50g \
