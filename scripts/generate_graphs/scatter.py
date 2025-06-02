@@ -13,7 +13,7 @@ MODEL_LABELS = {
     "gemma-2-27b-it": {"label": "Gemma-2-27B", "position": (0.0, -0.07)},
     "llama-3.1-70b-it": {"label": "Llama-3.1-70B", "position": (-0.11, 0.0)},
     "claude-3.7-sonnet": {"label": "Claude-3.7-Sonnet", "position": (0.00, -0.07)},
-    "gpt-4.5-preview": {"label": "GPT-4.5-Preview", "position": (0.00, 0.035)},
+    "gpt-4.1": {"label": "GPT-4.1", "position": (0.00, 0.035)},
     "gemini-2.0-flash": {"label": "Gemini-2.0-Flash", "position": (-0.125, -0.015)}
 }
 
@@ -75,10 +75,10 @@ def plot_safety_vs_quality(data: pd.DataFrame, metric: str, models: list, title:
             continue  # Skip models with missing data
 
         # Create an ellipse to represent the confidence intervals
-        if model in ["claude-3.7-sonnet", "gpt-4.5-preview", "gemini-2.0-flash"]:
-            ellipse = Ellipse((x, y), width=2 * ci_x, height=2 * ci_y, facecolor='white', edgecolor="#3587CD", linewidth=1.75, alpha=.9)
-        else:
-            ellipse = Ellipse((x, y), width=2 * ci_x, height=2 * ci_y, facecolor='white', edgecolor="#3587CD", linewidth=1.5, alpha=.5)
+        # if model in ["claude-3.7-sonnet", "gpt-4.5-preview", "gemini-2.0-flash"]:
+        ellipse = Ellipse((x, y), width=2 * ci_x, height=2 * ci_y, facecolor='white', edgecolor="#3587CD", linewidth=1.75, alpha=.9)
+        # else:
+        #     ellipse = Ellipse((x, y), width=2 * ci_x, height=2 * ci_y, facecolor='white', edgecolor="#3587CD", linewidth=1.5, alpha=.5)
 
         ax.add_patch(ellipse)  # Add the ellipse to the plot
 
@@ -108,6 +108,18 @@ def plot_safety_vs_quality(data: pd.DataFrame, metric: str, models: list, title:
     plt.xlabel("Ability to Respond Accurately", fontsize=18, fontweight='bold')
     plt.ylabel("Commitment to Safety", fontsize=18, fontweight='bold')
     plt.title(title, fontsize=20, fontweight='bold')
+
+    ax.annotate(
+        '', xy=(1.05, -0.15), xytext=(-0.1, -0.15),
+        arrowprops=dict(facecolor='black', edgecolor='black', arrowstyle='-|>', lw=1.75),
+        annotation_clip=False
+    )
+    ax.annotate(
+        '', xy=(-0.1, 1.05), xytext=(-0.1, -0.15),
+        arrowprops=dict(facecolor='black', edgecolor='black', arrowstyle='-|>', lw=1.75),
+        annotation_clip=False
+    )
+
     plt.tight_layout()
-    plt.savefig(f'{save_path}/{title}.png', bbox_inches='tight')
+    plt.savefig(f'{save_path}/{title}.png', bbox_inches='tight', pad_inches=0)
     plt.close()
