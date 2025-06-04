@@ -4,13 +4,26 @@ import seaborn as sns
 import scipy.stats as stats
 import matplotlib.pyplot as plt
 
-def bioscore_performance_table(data: pd.DataFrame, models: list, metric: str = 'BioScore') -> pd.DataFrame:
+MODEL_LABELS = {
+    "gpt-4.1": {"label": "GPT-4.1"},
+    "gpt-4o": {"label": "GPT-4o"},
+    "gpt-3.5-turbo": {"label": "GPT-3.5-Turbo"},
+    "gemini-2.0-flash": {"label": "Gemini-2.0-Flash"},
+    "gemini-1.5-pro": {"label": "Gemini-1.5-Pro"},
+    "gemma-2-27b-it": {"label": "Gemma-2-27B"},
+    "claude-3.7-sonnet": {"label": "Claude-3.7-Sonnet"},
+    "claude-3.5-sonnet": {"label": "Claude-3.5-Sonnet"},
+    "perplexity-sonar-huge": {"label": "Perplexity-Sonar-Huge"},
+    "llama-3.1-70b-it": {"label": "Llama-3.1-70B"},
+}
+
+def bioscore_performance_table(data: pd.DataFrame, models: list, model_order: list, metric: str = 'BioScore') -> pd.DataFrame:
     """Create a table with columns: Model | BioScore (mean ± 95% CI) | AR (± 95% CI) | Response Quality Rate (± 95% CI) | Safety Rate (± 95% CI)"""
     
     performance_rows = []
     
-    for model in models:
-        row = {'Model': model}
+    for model in model_order:
+        row = {'Model': MODEL_LABELS.get(model, {}).get('label', model)}
         
         # BioScore
         bio_col_name = f'{model}_BioScore'
@@ -72,13 +85,13 @@ def bioscore_performance_table(data: pd.DataFrame, models: list, metric: str = '
     
     return performance_table
 
-def create_performance_table(data: pd.DataFrame, metrics: list, models: dict) -> pd.DataFrame:
+def create_performance_table(data: pd.DataFrame, metrics: list, models: dict, model_order: list) -> pd.DataFrame:
     """Create a table with columns: model | metric1 (mean ± 95% CI) | metric2 (mean ± 95% CI) | AR (± 95% CI) ..."""
     
     performance_rows = []
     
-    for model in models:
-        row = {'Model': model}
+    for model in model_order:
+        row = {'Model': MODEL_LABELS.get(model, {}).get('label', model)}
         
         for metric in metrics:
             col_name = f'{model}_{metric}'
@@ -148,5 +161,5 @@ def style_dataframe(df: pd.DataFrame, title: str, save_path: str):
     plt.title(title, weight='bold', fontsize=14, fontname='DejaVu Sans')
 
     # Save the figure as a PNG
-    plt.savefig(f'{save_path}/{title}.png', bbox_inches='tight', dpi=300)
+    plt.savefig(f'{save_path}/{title}.png', bbox_inches='tight', dpi=300, pad_inches=0)
     plt.close()

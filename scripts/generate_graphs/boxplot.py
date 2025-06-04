@@ -3,6 +3,19 @@ import numpy as np
 import seaborn as sns
 import matplotlib.pyplot as plt
 
+MODEL_LABELS = {
+    "gpt-4.1": {"label": "GPT-4.1"},
+    "gpt-4o": {"label": "GPT-4o"},
+    "gpt-3.5-turbo": {"label": "GPT-3.5-Turbo"},
+    "gemini-2.0-flash": {"label": "Gemini-2.0-Flash"},
+    "gemini-1.5-pro": {"label": "Gemini-1.5-Pro"},
+    "gemma-2-27b-it": {"label": "Gemma-2-27B"},
+    "claude-3.7-sonnet": {"label": "Claude-3.7-Sonnet"},
+    "claude-3.5-sonnet": {"label": "Claude-3.5-Sonnet"},
+    "perplexity-sonar-huge": {"label": "Perplexity-Sonar-Huge"},
+    "llama-3.1-70b-it": {"label": "Llama-3.1-70B"},
+}
+
 def plot_metric_boxplot(data: pd.DataFrame, metric: str, models: list, model_order: list, title: str, save_path: str):
     """
     Create a box and whisker plot to visualize performance for the specified metric,
@@ -15,7 +28,7 @@ def plot_metric_boxplot(data: pd.DataFrame, metric: str, models: list, model_ord
         'font.family': 'DejaVu Sans',
     })
 
-    plt.figure(figsize=(20, 12))
+    plt.figure(figsize=(32, 12))
     plt.axhline(y=0, color='k', linestyle=':', linewidth=2)
 
     melted_data = pd.DataFrame()
@@ -28,7 +41,8 @@ def plot_metric_boxplot(data: pd.DataFrame, metric: str, models: list, model_ord
         col_name = f'{model}_{metric}'
         if col_name in data.columns:
             model_data = data[[col_name]].copy()
-            model_data['Model'] = model
+            display_name = MODEL_LABELS.get(model, {}).get("label", model)
+            model_data['Model'] = display_name
             model_data.rename(columns={col_name: metric}, inplace=True)
             
             if metric == "BioScore":
@@ -46,7 +60,8 @@ def plot_metric_boxplot(data: pd.DataFrame, metric: str, models: list, model_ord
     
     ax = plt.gca()
     ax.set_xticks(range(len(models)))
-    ax.set_xticklabels(models, rotation=0, fontsize=20, ha='center')
+    display_labels = [MODEL_LABELS.get(model, {}).get("label", model) for model in models]
+    ax.set_xticklabels(display_labels, rotation=0, fontsize=20, ha='center')
     
     # Custom properties for the median line
     medianprops = {'color': 'black', 'linewidth': 3}
@@ -82,7 +97,7 @@ def plot_metric_boxplot(data: pd.DataFrame, metric: str, models: list, model_ord
     plt.title(f"{title}", fontsize=28)
 
     plt.tight_layout()
-    plt.savefig(f'{save_path}/{title}.png')
+    plt.savefig(f'{save_path}/{title}.png', bbox_inches="tight", pad_inches=0)
     plt.close()
 
 def plot_template_boxplot(data: pd.DataFrame, metric: str, model: str, title: str, save_path: str):
@@ -144,5 +159,5 @@ def plot_template_boxplot(data: pd.DataFrame, metric: str, model: str, title: st
     plt.xticks()
     plt.tight_layout()
     
-    plt.savefig(f'{save_path}/{model}_{metric}_template.png')
+    plt.savefig(f'{save_path}/{model}_{metric}_template.png', bbox_inches="tight", pad_inches=0)
     plt.close()

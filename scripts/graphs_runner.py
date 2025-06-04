@@ -23,8 +23,20 @@ from scripts.generate_graphs.table import (
     create_performance_table,
     style_dataframe,
 )
+from scripts.generate_graphs.manuscript import (
+    create_four_panel_distribution_figure,
+    create_two_panel_heatmap_figure
+)
 from scripts.scripts_utils import load_dataset
 
+
+MODEL_ORDER = [
+    "gpt-4.1", "gpt-4o", "gpt-3.5-turbo",
+    "gemini-2.0-flash", "gemini-1.5-pro", "gemma-2-27b-it",
+    "claude-3.7-sonnet", "claude-3.5-sonnet",
+    "perplexity-sonar-huge",
+    "llama-3.1-70b-it",
+]
 
 def main():
     """
@@ -125,7 +137,7 @@ def main():
             data,
             metric="BioScore",
             models=models_list,
-            model_order=bioscore_model_order,
+            model_order=MODEL_ORDER,
             title="BioScore Boxplot",
             save_path=res_dir,
         )
@@ -136,7 +148,7 @@ def main():
             data=data,
             metric='BioScore',
             models=models_list,
-            model_order=bioscore_model_order,
+            model_order=MODEL_ORDER,
             category='bio_category',
             title='BioScore by Bio Category Heatmap',
             save_path=res_dir,
@@ -149,7 +161,7 @@ def main():
             data=data,
             metric='BioScore',
             models=models_list,
-            model_order=bioscore_model_order,
+            model_order=MODEL_ORDER,
             category='reasoning_category',
             title='BioScore by Reasoning Category Heatmap',
             save_path=res_dir,
@@ -163,7 +175,7 @@ def main():
             data=data,
             metric='BioScore',
             models=models_list,
-            model_order=bioscore_model_order,
+            model_order=MODEL_ORDER,
             category='bio_category',
             title='Abstention Rate by Bio Category Heatmap',
             save_path=res_dir,
@@ -175,7 +187,7 @@ def main():
             data=data,
             metric='BioScore',
             models=models_list,
-            model_order=bioscore_model_order,
+            model_order=MODEL_ORDER,
             category='reasoning_category',
             title='Abstention Rate by Reasoning Category Heatmap',
             save_path=res_dir,
@@ -188,7 +200,7 @@ def main():
             data=data,
             metric='BioScore',
             models=models_list,
-            model_order=bioscore_model_order,
+            model_order=MODEL_ORDER,
             category='bio_category',
             title='Quality Rate by Bio Category Heatmap',
             save_path=res_dir,
@@ -201,7 +213,7 @@ def main():
             data=data,
             metric='BioScore',
             models=models_list,
-            model_order=bioscore_model_order,
+            model_order=MODEL_ORDER,
             category='reasoning_category',
             title='Quality Rate by Reasoning Category Heatmap',
             save_path=res_dir,
@@ -215,7 +227,7 @@ def main():
             data=data,
             metric='BioScore',
             models=models_list,
-            model_order=bioscore_model_order,
+            model_order=MODEL_ORDER,
             category='bio_category',
             title='Safety Rate by Bio Category Heatmap',
             save_path=res_dir,
@@ -228,7 +240,7 @@ def main():
             data=data,
             metric='BioScore',
             models=models_list,
-            model_order=bioscore_model_order,
+            model_order=MODEL_ORDER,
             category='reasoning_category',
             title='Safety Rate by Reasoning Category Heatmap',
             save_path=res_dir,
@@ -244,7 +256,7 @@ def main():
                 data,
                 metric=metric,
                 models=models_list,
-                model_order=bioscore_model_order,
+                model_order=MODEL_ORDER,
                 title=f"{metric} Boxplot",
                 save_path=res_dir,
             )
@@ -252,17 +264,23 @@ def main():
 
     # Generate performance tables
     if "BioScore" in metrics_list:
-        performance_table = bioscore_performance_table(data, models_list)
+        performance_table = bioscore_performance_table(data, models_list, MODEL_ORDER)
         print("🔧 BioScore Performance Table created.")
         style_dataframe(performance_table, "All BioScore Metrics", res_dir)
         print("🔧 BioScore Table styled and saved.")
 
     if "BLEU_ROUGE_BERT" in metrics_list:
-        performance_table = create_performance_table(data, nlp_metrics, models_list)
+        performance_table = create_performance_table(data, nlp_metrics, models_list, MODEL_ORDER)
         print("🔧 NLP Performance Table created.")
         style_dataframe(performance_table, "All NLP Metrics", res_dir)
         print("🔧 NLP Table styled and saved.")
 
+    if True:
+        create_four_panel_distribution_figure(data, res_dir)
+        print("📊 4-Panel Distribution Figure saved.")
+
+        create_two_panel_heatmap_figure(data, res_dir, models_list, MODEL_ORDER)
+        print("📊 2-Panel Heatmap Figure saved.")
 
 if __name__ == "__main__":
     main()
