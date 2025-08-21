@@ -159,5 +159,5 @@ def plot_template_boxplot(data: pd.DataFrame, metric: str, model: str, title: st
     plt.xticks()
     plt.tight_layout()
     
-    plt.savefig(f'{save_path}/{model}_{metric}_template.png', bbox_inches="tight", pad_inches=0)
+    plt.savefig(f'{save_path}/{model}_{metric}_template.png', bbox_inches="tight", pad_inches=0, dpi=300)
     plt.close()

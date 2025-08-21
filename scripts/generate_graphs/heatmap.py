@@ -177,5 +177,5 @@ def plot_heatmap(data: pd.DataFrame, metric: str, models: list, model_order: lis
     ax.set_yticklabels(ax.get_yticklabels(), fontsize=plt.rcParams["font.size"])
 
     if fig:
-        fig.savefig(f'{save_path}/{title}.png', bbox_inches="tight", pad_inches=0)
+        fig.savefig(f'{save_path}/{title}.png', bbox_inches="tight", pad_inches=0, dpi=300)
         plt.close(fig)

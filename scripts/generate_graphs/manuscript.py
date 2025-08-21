@@ -71,8 +71,8 @@ def create_four_panel_distribution_figure(data, save_path: str):
     )
 
     plt.tight_layout()
-    fig.savefig(f"{save_path}/figures/figure2.png", dpi=300, bbox_inches='tight', pad_inches=0)
-    fig.savefig(f"{save_path}/figures/figure2.eps", format='eps', dpi=300, bbox_inches='tight', pad_inches=0)
+    fig.savefig(f"{save_path}/figures/figure2.png", bbox_inches='tight', pad_inches=0, dpi=300)
+    fig.savefig(f"{save_path}/figures/figure2.eps", bbox_inches='tight', pad_inches=0, format='eps', dpi=300)
 
 def create_two_panel_heatmap_figure(data, save_path: str, models_list: list, model_order: list):
     """
@@ -81,7 +81,7 @@ def create_two_panel_heatmap_figure(data, save_path: str, models_list: list, mod
     - (B) Safety Rate by Bio Category Heatmap
     """
 
-    fig = plt.figure(figsize=(24, 8))
+    fig = plt.figure(figsize=(25, 8))
     gs = gridspec.GridSpec(1, 2, wspace=0.3)
 
     ax1 = fig.add_subplot(gs[0, 0])
@@ -118,5 +118,5 @@ def create_two_panel_heatmap_figure(data, save_path: str, models_list: list, mod
         ax=ax2
     )
 
-    fig.savefig(f"{save_path}/figures/figure4.png", dpi=300, bbox_inches='tight', pad_inches=0)
-    fig.savefig(f"{save_path}/figures/figure4.eps", format='eps', dpi=300, bbox_inches='tight', pad_inches=0)
+    fig.savefig(f"{save_path}/figures/figure4.png", bbox_inches='tight', pad_inches=0, dpi=300)
+    fig.savefig(f"{save_path}/figures/figure4.eps", bbox_inches='tight', pad_inches=0, format='eps', dpi=300)
