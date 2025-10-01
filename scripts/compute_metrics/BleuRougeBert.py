@@ -2,11 +2,12 @@ import pandas as pd
 from evaluate import load
 from scripts.scripts_utils import load_dataset, save_dataset
 import warnings
+from tqdm import tqdm
 
 warnings.filterwarnings("ignore", category=FutureWarning, module='transformers')
 
 def get_all_model_BLEU_ROUGE_BERT(res_dir: str, models_to_grade: list, gold_col: str='answer', response_col: str='response') -> None:
-    """Compute BLEU, ROUGE, BERTScore for each model's responses and save the results back to CSV files."""
+    """Compute BLEU (per-example), ROUGE (per-example), BERTScore (batched) for each model's responses and save to CSV."""
 
     # Load BLEU, ROUGE, and BERT evaluators once
     bleu = load('bleu')
@@ -14,41 +15,49 @@ def get_all_model_BLEU_ROUGE_BERT(res_dir: str, models_to_grade: list, gold_col:
     bertscore = load("bertscore")
 
     for model in models_to_grade:
-        # Load the dataset for the current model
-        data = load_dataset(f'{res_dir}{model}_responses.csv')
+        print(f"\n=== Working on model: {model} ===")
 
-        # Initialize columns for BLEU, ROUGE, and BERTScore
+        # Load dataset
+        data = load_dataset(f'{res_dir}/{model}_responses.csv')
+
+        # Initialize columns
         for metric in ['BLEU', 'ROUGE2', 'ROUGEL', 'BERTScore']:
             data[f'{model}_{metric}'] = 0.0
 
-        # Compute scores for each model response
-        for index, row in data.iterrows():
-            answer = row[gold_col]
-            model_response = row[f'{model}_{response_col}']
+        # Prepare for BERTScore batch
+        all_preds = data[f'{model}_{response_col}'].fillna("").tolist()
+        all_refs = data[gold_col].fillna("").tolist()
 
-            # Compute BLEU score, default to 0 on failure
+        # ---- BERTScore (batched)
+        try:
+            print("Computing BERTScore...")
+            bertscore_result = bertscore.compute(predictions=all_preds, references=all_refs, lang="en", device="cuda")
+            data[f'{model}_BERTScore'] = bertscore_result['f1']
+        except Exception as e:
+            print(f"Error in BERTScore for {model}: {e}")
+
+        # ---- BLEU + ROUGE (per-example loop)
+        print("Computing BLEU + ROUGE (per-example)...")
+        for index, (pred, ref) in tqdm(enumerate(zip(all_preds, all_refs)), total=len(all_preds), desc=f"Scoring {model} (BLEU/ROUGE)"):
+            
+            # BLEU
             try:
-                bleu_score = bleu.compute(predictions=[model_response], references=[[answer]])
+                bleu_score = bleu.compute(predictions=[pred], references=[[ref]])
                 data.at[index, f'{model}_BLEU'] = bleu_score['bleu']
             except Exception:
                 data.at[index, f'{model}_BLEU'] = 0.0
 
-            # Compute ROUGE score, default to 0 on failure
+            # ROUGE
             try:
-                rouge_score = rouge.compute(predictions=[model_response], references=[answer])
-                for metric in ['rouge2', 'rougeL']:
-                    data.at[index, f'{model}_{metric.upper()}'] = rouge_score[metric]
+                rouge_score = rouge.compute(predictions=[pred], references=[ref])
+                data.at[index, f'{model}_ROUGE2'] = rouge_score['rouge2']
+                data.at[index, f'{model}_ROUGEL'] = rouge_score['rougeL']
             except Exception:
-                for metric in ['rouge2', 'rougeL']:
-                    data.at[index, f'{model}_{metric.upper()}'] = 0.0
+                data.at[index, f'{model}_ROUGE2'] = 0.0
+                data.at[index, f'{model}_ROUGEL'] = 0.0
 
-            # Compute BERTScore, default to 0 on failure
-            try:
-                bertscore_result = bertscore.compute(predictions=[model_response], references=[answer], lang="en")
-                data.at[index, f'{model}_BERTScore'] = bertscore_result['f1']
-            except Exception:
-                data.at[index, f'{model}_BERTScore'] = 0.0
+        print(f"=== Finished model: {model} ===")
 
-        # Save the updated dataset back to the CSV file
-        save_dataset(f'{res_dir}{model}_responses.csv', data)
-        print(f"BLEU/ROUGE/BERTScore computed and saved for {model} to {res_dir}{model}_responses.csv")
+        # Save updated dataset
+        save_dataset(f'{res_dir}/{model}_responses.csv', data)
+        print(f"Results saved to {res_dir}/{model}_responses.csv\n")

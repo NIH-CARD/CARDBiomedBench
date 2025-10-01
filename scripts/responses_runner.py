@@ -44,20 +44,37 @@ def initialize_model(
     Raises:
         ValueError: If the model_name is not recognized.
     """
+    THINKING_TOKENS = 1024
     if model_name == 'gpt-3.5-turbo':
         return GPTQuery(system_prompt, 'gpt-3.5-turbo-0125', max_tokens=max_new_tokens, temperature=temperature)
     elif model_name == 'gpt-4o':
         return GPTQuery(system_prompt, 'gpt-4o-2024-05-13', max_tokens=max_new_tokens, temperature=temperature)
-    elif model_name == 'gpt-4.5-preview':
-        return GPTQuery(system_prompt, 'gpt-4.5-preview-2025-02-27', max_tokens=max_new_tokens, temperature=temperature)
+    elif model_name == 'gpt-4.1':
+        return GPTQuery(system_prompt, 'gpt-4.1-2025-04-14', max_tokens=max_new_tokens, temperature=temperature)
+    elif model_name == 'gpt-5':
+        return GPTQuery(system_prompt, 'gpt-5-2025-08-07', max_tokens=max_new_tokens, temperature=temperature)
+    elif model_name == 'gpt-5-mini':
+        return GPTQuery(system_prompt, 'gpt-5-mini-2025-08-07', max_tokens=max_new_tokens, temperature=temperature)
+    elif model_name == 'o3':
+        return GPTQuery(system_prompt, 'o3-2025-04-16', max_tokens=max_new_tokens, temperature=temperature)
+    elif model_name == 'o3-mini':
+        return GPTQuery(system_prompt, 'o3-mini-2025-01-31', max_tokens=max_new_tokens, temperature=temperature)
     elif model_name == 'gemini-1.5-pro':
         return GeminiQuery(system_prompt, 'gemini-1.5-pro', max_tokens=max_new_tokens, temperature=temperature)
     elif model_name == 'gemini-2.0-flash':
         return GeminiQuery(system_prompt, 'gemini-2.0-flash', max_tokens=max_new_tokens, temperature=temperature)
+    elif model_name == 'gemini-2.5-flash':
+        return GeminiQuery(system_prompt, 'gemini-2.5-flash', max_tokens=max_new_tokens+THINKING_TOKENS, temperature=temperature, thinking_budget=THINKING_TOKENS)
+    elif model_name == 'gemini-2.5-pro':
+        return GeminiQuery(system_prompt, 'gemini-2.5-pro', max_tokens=max_new_tokens+THINKING_TOKENS, temperature=temperature, thinking_budget=THINKING_TOKENS)
     elif model_name == 'claude-3.5-sonnet':
         return ClaudeQuery(system_prompt, 'claude-3-5-sonnet-20240620', max_tokens=max_new_tokens, temperature=temperature)
     elif model_name == 'claude-3.7-sonnet':
         return ClaudeQuery(system_prompt, 'claude-3-7-sonnet-20250219', max_tokens=max_new_tokens, temperature=temperature)
+    elif model_name == 'claude-4.0-sonnet':
+        return ClaudeQuery(system_prompt, 'claude-sonnet-4-20250514', max_tokens=max_new_tokens+THINKING_TOKENS, temperature=temperature, thinking_budget_tokens=THINKING_TOKENS)
+    elif model_name == 'claude-4.1-opus':
+        return ClaudeQuery(system_prompt, 'claude-opus-4-1-20250805', max_tokens=max_new_tokens+THINKING_TOKENS, temperature=temperature, thinking_budget_tokens=THINKING_TOKENS)
     elif model_name == 'perplexity-sonar-huge':
         return PerplexityQuery(system_prompt, 'llama-3.1-sonar-huge-128k-online', max_tokens=max_new_tokens, temperature=temperature)
     elif model_name == 'gemma-2-27b-it':

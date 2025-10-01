@@ -4,7 +4,7 @@
 # It is designed to be submitted as a job script in SLURM.
 
 # Default configuration file
-CONFIG_FILE="configs/default_config.yaml"
+CONFIG_FILE="$(realpath configs/default_config.yaml)"
 
 # Initialize an array to hold additional arguments for the Python command
 ARGS=()
@@ -13,7 +13,7 @@ ARGS=()
 while [[ $# -gt 0 ]]; do
     case $1 in
         --config)
-            CONFIG_FILE="$2"
+            CONFIG_FILE="$(realpath "$2")"
             shift 2
             ;;
         --model)

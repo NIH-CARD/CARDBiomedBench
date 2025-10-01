@@ -1,15 +1,17 @@
 import os
 import gc
 import json
+import httpx
 from dotenv import load_dotenv
 import anthropic
 
 class ClaudeQuery:
-    def __init__(self, system_prompt, model_name, max_tokens, temperature):
+    def __init__(self, system_prompt, model_name, max_tokens, temperature, thinking_budget_tokens = None):
         self.system_prompt = system_prompt
         self.model_name = model_name
         self.max_tokens = max_tokens
         self.temperature = temperature
+        self.thinking_budget_tokens = thinking_budget_tokens
         self.cache_file = self.get_cache_file_path()
         self.cache = self.load_cache()
         self.model = self.initialize_claude_model()
@@ -26,7 +28,7 @@ class ClaudeQuery:
             load_dotenv(os.path.join(os.path.dirname(__file__), '../../configs/.env'))
             anthropic_api_key = os.environ.get("ANTHROPIC_API_KEY")
             if anthropic_api_key:
-                return anthropic.Anthropic(api_key=anthropic_api_key)
+                return anthropic.Anthropic(api_key=anthropic_api_key, http_client=httpx.Client(timeout=120))
             else:
                 print("Anthropic API key not found in environment variables.")
         except Exception as e:
@@ -99,16 +101,27 @@ class ClaudeQuery:
 
         # If not cached, query the API
         try:
-            message = self.model.messages.create(
+            kwargs = dict(
                 model=self.model_name,
                 max_tokens=self.max_tokens,
-                temperature=self.temperature,
                 system=self.system_prompt,
-                messages=[
-                    {"role": "user", "content": query},
-                ]
+                messages=[{"role": "user", "content": query}],
             )
-            response = message.content[0].text
+
+            # Enable thinking automatically if budget set
+            if self.thinking_budget_tokens is not None:
+                kwargs["thinking"] = {"type": "enabled", "budget_tokens": self.thinking_budget_tokens}
+                kwargs["temperature"] = 1.0
+            else:
+                kwargs["temperature"] = self.temperature
+
+            message = self.model.messages.create(**kwargs)
+            text_parts = [
+                getattr(block, "text", "")
+                for block in message.content
+                if getattr(block, "type", None) == "text"
+            ]
+            response = "\n".join([t for t in text_parts if t]).strip()
 
             # Cache the result
             self.cache[cache_key] = response
@@ -117,6 +130,7 @@ class ClaudeQuery:
             return response
         except Exception as e:
             error_message = f"Error in {self.model_name} response: {e}"
+            print(error_message)
             return error_message
 
     def delete(self):

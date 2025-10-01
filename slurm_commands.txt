@@ -2,6 +2,41 @@
 # Run responses for each model
 sbatch \
     --mem=50g \
+    --time=72:00:00 \
+    --partition=norm \
+    --cpus-per-task=4 \
+    scripts/benchmark_runner.sh gpt-5 --run_responses
+
+sbatch \
+    --mem=50g \
+    --time=72:00:00 \
+    --partition=norm \
+    --cpus-per-task=4 \
+    scripts/benchmark_runner.sh gpt-5-mini --run_responses
+
+sbatch \
+    --mem=50g \
+    --time=72:00:00 \
+    --partition=norm \
+    --cpus-per-task=4 \
+    scripts/benchmark_runner.sh o3 --run_responses
+
+sbatch \
+    --mem=50g \
+    --time=72:00:00 \
+    --partition=norm \
+    --cpus-per-task=4 \
+    scripts/benchmark_runner.sh o3-mini --run_responses
+
+sbatch \
+    --mem=50g \
+    --time=24:00:00 \
+    --partition=norm \
+    --cpus-per-task=4 \
+    scripts/benchmark_runner.sh gpt-4.1 --run_responses
+
+sbatch \
+    --mem=50g \
     --time=24:00:00 \
     --partition=norm \
     --cpus-per-task=4 \
@@ -16,10 +51,52 @@ sbatch \
 
 sbatch \
     --mem=50g \
+    --time=72:00:00 \
+    --partition=norm \
+    --cpus-per-task=4 \
+    scripts/benchmark_runner.sh gemini-2.5-pro --run_responses
+
+sbatch \
+    --mem=50g \
+    --time=72:00:00 \
+    --partition=norm \
+    --cpus-per-task=4 \
+    scripts/benchmark_runner.sh gemini-2.5-flash --run_responses
+
+sbatch \
+    --mem=50g \
+    --time=24:00:00 \
+    --partition=norm \
+    --cpus-per-task=4 \
+    scripts/benchmark_runner.sh gemini-2.0-flash --run_responses
+
+sbatch \
+    --mem=50g \
     --time=24:00:00 \
     --partition=norm \
     --cpus-per-task=4 \
     scripts/benchmark_runner.sh gemini-1.5-pro --run_responses
+
+sbatch \
+    --mem=50g \
+    --time=72:00:00 \
+    --partition=norm \
+    --cpus-per-task=4 \
+    scripts/benchmark_runner.sh claude-4.1-opus --run_responses
+
+sbatch \
+    --mem=50g \
+    --time=72:00:00 \
+    --partition=norm \
+    --cpus-per-task=4 \
+    scripts/benchmark_runner.sh claude-4.0-sonnet --run_responses
+
+sbatch \
+    --mem=50g \
+    --time=24:00:00 \
+    --partition=norm \
+    --cpus-per-task=4 \
+    scripts/benchmark_runner.sh claude-3.7-sonnet --run_responses
 
 sbatch \
     --mem=50g \
@@ -45,7 +122,7 @@ sbatch \
 
 sbatch \
     --mem=100g \
-    --time=12:00:00 \
+    --time=24:00:00 \
     --partition=gpu \
     --cpus-per-task=8 \
     --gres=gpu:a100:3 \

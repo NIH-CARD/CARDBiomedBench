@@ -100,15 +100,23 @@ class GPTQuery:
 
         # If not cached, query the API
         try:
-            chat_completion = self.client.chat.completions.create(
-                model=self.model_name,
-                max_tokens=self.max_tokens,
-                temperature=self.temperature,
-                messages=[
+            request_args = {
+                "model": self.model_name,
+                "max_completion_tokens": self.max_tokens,
+                "messages": [
                     {"role": "system", "content": self.system_prompt},
                     {"role": "user", "content": query}
                 ]
-            )
+            }
+
+            # Add reasoning_effort only for reasoning models
+            if self.model_name in ["gpt-5-2025-08-07", "gpt-5-mini-2025-08-07", "o3-2025-04-16", "o3-mini-2025-01-31"]:
+                request_args["reasoning_effort"] = "low"
+                request_args["temperature"] = 1.0
+            else:
+                request_args["temperature"] = self.temperature
+
+            chat_completion = self.client.chat.completions.create(**request_args)
             response = chat_completion.choices[0].message.content
 
             # Cache the result

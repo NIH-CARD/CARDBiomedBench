@@ -4,9 +4,30 @@ import seaborn as sns
 import matplotlib.pyplot as plt
 from matplotlib.colors import LinearSegmentedColormap
 
+MODEL_LABELS = {
+    "gpt-5": {"label": "GPT-5"},
+    "gpt-5-mini": {"label": "GPT-5-Mini"},
+    "o3": {"label": "o3"},
+    "o3-mini": {"label": "o3-mini"},
+    "gpt-4.1": {"label": "GPT-4.1"},
+    "gpt-4o": {"label": "GPT-4o"},
+    "gpt-3.5-turbo": {"label": "GPT-3.5-Turbo"},
+    "gemini-2.5-pro": {"label": "Gemini-2.5-Pro"},
+    "gemini-2.5-flash": {"label": "Gemini-2.5-Flash"},
+    "gemini-2.0-flash": {"label": "Gemini-2.0-Flash"},
+    "gemini-1.5-pro": {"label": "Gemini-1.5-Pro"},
+    "gemma-2-27b-it": {"label": "Gemma-2-27B"},
+    "claude-4.1-opus": {"label": "Claude-4.1-Opus"},
+    "claude-4.0-sonnet": {"label": "Claude-4.0-Sonnet"},
+    "claude-3.7-sonnet": {"label": "Claude-3.7-Sonnet"},
+    "claude-3.5-sonnet": {"label": "Claude-3.5-Sonnet"},
+    "perplexity-sonar-huge": {"label": "Perplexity-Sonar-Huge"},
+    "llama-3.1-70b-it": {"label": "Llama-3.1-70B"},
+}
+
 def plot_heatmap(data: pd.DataFrame, metric: str, models: list, model_order: list,
-                 category: str, title: str, save_path: str, calculation_type: str,
-                 threshold: int = 5):
+        category: str, title: str, save_path: str, calculation_type: str,
+        threshold: int = 5, ax = None, include_yticks: bool = True, include_legend: bool = True, cbar_ax=None):
     """
     Create a heatmap to visualize a metric across categories.
 
@@ -30,6 +51,11 @@ def plot_heatmap(data: pd.DataFrame, metric: str, models: list, model_order: lis
     sns.set_theme(style="white")
     plt.rcParams.update({
         'font.family': 'DejaVu Sans',
+        'font.size': 18,
+        'axes.titlesize': 20,
+        'axes.labelsize': 16,
+        'xtick.labelsize': 16,
+        'ytick.labelsize': 16,
     })
 
     # Define custom colormap
@@ -120,10 +146,13 @@ def plot_heatmap(data: pd.DataFrame, metric: str, models: list, model_order: lis
     annotations = heatmap_data_filled.map(lambda x: 'NA' if x == -0.1 else f'{x:.2f}')
 
     # Increase figure size for larger boxes
-    plt.figure(figsize=(len(models) * 1.75, len(heatmap_data) * 1.2))
+    if ax is None:
+        fig, ax = plt.subplots(figsize=(len(models) * 1.75, len(heatmap_data) * 1.2))
+    else:
+        fig = None
 
     # Plot heatmap
-    ax = sns.heatmap(
+    sns.heatmap(
         heatmap_data_filled,
         annot=annotations,
         cmap=custom_cmap,
@@ -132,12 +161,19 @@ def plot_heatmap(data: pd.DataFrame, metric: str, models: list, model_order: lis
         linewidths=5,
         square=True,
         fmt="",
-        annot_kws={"size": 18},
-        cbar_kws={'shrink': .75}
+        annot_kws={"size": plt.rcParams["font.size"] - 2},
+        cbar=include_legend,
+        cbar_kws={'shrink': .75, 'pad': 0.02},
+        cbar_ax=cbar_ax,
+        ax=ax
     )
 
-    cbar = ax.collections[0].colorbar
-    cbar.ax.tick_params(labelsize=18)
+    if include_legend and ax.collections and ax.collections[0].colorbar is not None:
+        ax.collections[0].colorbar.ax.tick_params(labelsize=18)
+    elif cbar_ax is not None:
+        cbar_ax.set_xticks([]); cbar_ax.set_yticks([])
+        for sp in cbar_ax.spines.values(): sp.set_visible(False)
+        cbar_ax.set_facecolor("none")
 
     # Remove axis labels
     ax.set_xlabel('')
@@ -145,12 +181,21 @@ def plot_heatmap(data: pd.DataFrame, metric: str, models: list, model_order: lis
 
     # Set title
     if calculation_type == 'percentage_idk':
-        plt.title(f"{title} (AR %)", fontsize=18)
+        ax.set_title(f"{title} (AR %)", fontsize=plt.rcParams["axes.titlesize"])
     else:
-        plt.title(f"{title}", fontsize=18)
-    plt.xticks(rotation=45, ha='right', fontsize=18)
-    plt.yticks(fontsize=18)
+        ax.set_title(title, fontsize=plt.rcParams["axes.titlesize"])
 
-    plt.tight_layout()
-    plt.savefig(f'{save_path}/{title}.png')
-    plt.close()
+    # Ticks
+    model_labels = [MODEL_LABELS.get(model, {"label": model})["label"] for model in models]
+    ax.set_xticklabels(model_labels, rotation=45, ha='right', fontsize=plt.rcParams["font.size"])
+    if include_yticks:
+        ax.set_yticklabels(ax.get_yticklabels(), fontsize=plt.rcParams["font.size"])
+        ax.tick_params(axis='y', length=3)
+    else:
+        ax.set_yticks([])
+        ax.set_yticklabels([])
+        ax.tick_params(axis='y', length=0)
+
+    if fig:
+        fig.savefig(f'{save_path}/{title}.png', bbox_inches="tight", pad_inches=0, dpi=300)
+        plt.close(fig)
