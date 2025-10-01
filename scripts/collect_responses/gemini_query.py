@@ -3,55 +3,37 @@ import gc
 import time
 import json
 from dotenv import load_dotenv
-import google.generativeai as genai
+from google import genai
 
 class GeminiQuery:
-    def __init__(self, system_prompt, model_name, max_tokens, temperature):
+    def __init__(self, system_prompt, model_name, max_tokens, temperature, thinking_budget=-1):
         self.system_prompt = system_prompt
         self.model_name = model_name
         self.max_tokens = max_tokens
         self.temperature = temperature
+        self.thinking_budget = thinking_budget
         self.cache_file = self.get_cache_file_path()
         self.cache = self.load_cache()
         self.model = self.initialize_gemini_model()
 
     def initialize_gemini_model(self):
-        """
-        Initialize the Gemini model.
-
-        Returns:
-        - genai.GenerativeModel: Initialized Gemini model.
-        """
         try:
             load_dotenv(os.path.join(os.path.dirname(__file__), '../../configs/.env'))
-            google_api_key = os.environ["GOOGLE_API_KEY"]
-            if google_api_key:
-                genai.configure(api_key=google_api_key)
-                return genai.GenerativeModel(model_name=self.model_name)
-            else:
+            google_api_key = os.environ.get("GOOGLE_API_KEY")
+            if not google_api_key:
                 print("Google API key not found in environment variables.")
+                return None
+            return genai.Client(api_key=google_api_key)
         except Exception as e:
-            print(f"Error initializing Gemini model: {e}")
+            print(f"Error initializing Gemini client: {e}")
         return None
 
     def get_cache_file_path(self):
-        """
-        Get the path to the cache file based on the model name.
-
-        Returns:
-        - str: The cache file path.
-        """
         cache_dir = os.path.join(os.path.dirname(__file__), '..', '..', '.cache', 'model_responses_cache')
         os.makedirs(cache_dir, exist_ok=True)
         return os.path.join(cache_dir, f'{self.model_name}_cache.json')
 
     def load_cache(self):
-        """
-        Load the cache from the cache file.
-
-        Returns:
-        - dict: The loaded cache data.
-        """
         if os.path.exists(self.cache_file):
             try:
                 with open(self.cache_file, 'r') as f:
@@ -61,9 +43,6 @@ class GeminiQuery:
         return {}
 
     def save_cache(self):
-        """
-        Save the cache to a cache file.
-        """
         try:
             with open(self.cache_file, 'w') as f:
                 json.dump(self.cache, f)
@@ -71,69 +50,70 @@ class GeminiQuery:
             print(f"Error saving cache file: {e}")
 
     def get_cache_key(self, query: str):
-        """
-        Generate a unique cache key based on the model name, query, and system prompt.
-
-        Parameters:
-        - query (str): The input query string.
-
-        Returns:
-        - str: The cache key.
-        """
         return f"{self.model_name}_{self.system_prompt}_{query}"
 
+    def _build_generate_config(self):
+        safety = [
+            genai.types.SafetySetting(category="HARM_CATEGORY_HATE_SPEECH", threshold="OFF"),
+            genai.types.SafetySetting(category="HARM_CATEGORY_DANGEROUS_CONTENT", threshold="OFF"),
+            genai.types.SafetySetting(category="HARM_CATEGORY_SEXUALLY_EXPLICIT", threshold="OFF"),
+            genai.types.SafetySetting(category="HARM_CATEGORY_HARASSMENT", threshold="OFF"),
+        ]
+        thinking_cfg = None
+        if isinstance(self.thinking_budget, int) and self.thinking_budget >= 0:
+            thinking_cfg = genai.types.ThinkingConfig(thinking_budget=self.thinking_budget)
+        return genai.types.GenerateContentConfig(
+            temperature=self.temperature,
+            max_output_tokens=self.max_tokens,
+            response_modalities=["TEXT"],
+            safety_settings=safety,
+            tools=[],  # always none
+            thinking_config=thinking_cfg,
+            system_instruction=self.system_prompt,
+        )
+
     def query(self, query: str) -> str:
-        """
-        Query the Google API with Gemini 1.5 Pro or retrieve from cache if available.
-
-        Parameters:
-        - query (str): The input query string.
-
-        Returns:
-        - str: The response content from the API or the cached response.
-        """
         cache_key = self.get_cache_key(query)
-
-        # Check if the result is already cached
         if cache_key in self.cache:
             return self.cache[cache_key]
 
-        # If not cached, query the API
         time.sleep(3)
         try:
-            chat = self.model.start_chat(
-                history=[{"role": "user", "parts": [self.system_prompt]}]
-            )
-            response = chat.send_message(
-                query, 
-                generation_config=genai.GenerationConfig(
-                    max_output_tokens=self.max_tokens,
-                    temperature=self.temperature
-                )
-            )
-            response_text = response.text
+            if self.model is None:
+                return f"Error in {self.model_name} response: client not initialized"
 
-            # Cache the result
-            self.cache[cache_key] = response_text
+            gen_cfg = self._build_generate_config()
+            response = self.model.models.generate_content(
+                model=self.model_name,
+                contents=query,
+                config=gen_cfg
+            )
+
+            text = ""
+            if getattr(response, "candidates", None):
+                cand = response.candidates[0]
+                if getattr(cand, "content", None) and getattr(cand.content, "parts", None):
+                    text = "".join(
+                        getattr(p, "text", "") for p in cand.content.parts if hasattr(p, "text")
+                    ).strip()
+
+            if not text:
+                text = str(response)
+
+            self.cache[cache_key] = text
             self.save_cache()
+            return text
 
-            return response_text
         except Exception as e:
-            error_message = f"Error in {self.model_name} response: {e}"
-            return error_message
-    
-    def delete(self):
-        """
-        Delete the model to free up memory.
-        """
-        try:
-            if self.model is not None:
-                del self.model
+            return f"Error in {self.model_name} response: {e}"
 
+    def delete(self):
+        try:
+            if getattr(self, "model", None) is not None:
+                del self.model
             for attr in ['system_prompt', 'model_name']:
                 if hasattr(self, attr):
                     delattr(self, attr)
-
             gc.collect()
         except Exception as e:
             print(f"Error during deletion of {self.model_name} model: {e}")

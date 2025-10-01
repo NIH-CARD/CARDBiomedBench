@@ -4,18 +4,28 @@ import seaborn as sns
 import scipy.stats as stats
 import matplotlib.pyplot as plt
 
+
 MODEL_LABELS = {
+    "gpt-5": {"label": "GPT-5"},
+    "gpt-5-mini": {"label": "GPT-5-Mini"},
+    "o3": {"label": "o3"},
+    "o3-mini": {"label": "o3-mini"},
     "gpt-4.1": {"label": "GPT-4.1"},
     "gpt-4o": {"label": "GPT-4o"},
     "gpt-3.5-turbo": {"label": "GPT-3.5-Turbo"},
+    "gemini-2.5-pro": {"label": "Gemini-2.5-Pro"},
+    "gemini-2.5-flash": {"label": "Gemini-2.5-Flash"},
     "gemini-2.0-flash": {"label": "Gemini-2.0-Flash"},
     "gemini-1.5-pro": {"label": "Gemini-1.5-Pro"},
     "gemma-2-27b-it": {"label": "Gemma-2-27B"},
+    "claude-4.1-opus": {"label": "Claude-4.1-Opus"},
+    "claude-4.0-sonnet": {"label": "Claude-4.0-Sonnet"},
     "claude-3.7-sonnet": {"label": "Claude-3.7-Sonnet"},
     "claude-3.5-sonnet": {"label": "Claude-3.5-Sonnet"},
     "perplexity-sonar-huge": {"label": "Perplexity-Sonar-Huge"},
     "llama-3.1-70b-it": {"label": "Llama-3.1-70B"},
 }
+
 
 def bioscore_performance_table(data: pd.DataFrame, models: list, model_order: list, metric: str = 'BioScore') -> pd.DataFrame:
     """Create a table with columns: Model | BioScore (mean ± 95% CI) | AR (± 95% CI) | Response Quality Rate (± 95% CI) | Safety Rate (± 95% CI)"""
@@ -33,7 +43,7 @@ def bioscore_performance_table(data: pd.DataFrame, models: list, model_order: li
             
             # Calculate mean and 95% confidence interval for BioScore
             mean_val = bioscore_data.mean()
-            std_err = stats.sem(bioscore_data)
+            std_err = stats.sem(bioscore_data, nan_policy='omit')
             z_value = stats.norm.ppf(0.975)  # 95% confidence
             ci_low = mean_val - z_value * std_err
             ci_high = mean_val + z_value * std_err

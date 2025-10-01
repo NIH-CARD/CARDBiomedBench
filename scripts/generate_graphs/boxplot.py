@@ -3,18 +3,28 @@ import numpy as np
 import seaborn as sns
 import matplotlib.pyplot as plt
 
+
 MODEL_LABELS = {
+    "gpt-5": {"label": "GPT-5"},
+    "gpt-5-mini": {"label": "GPT-5-mini"},
+    "o3": {"label": "o3"},
+    "o3-mini": {"label": "o3-mini"},
     "gpt-4.1": {"label": "GPT-4.1"},
     "gpt-4o": {"label": "GPT-4o"},
     "gpt-3.5-turbo": {"label": "GPT-3.5-Turbo"},
+    "gemini-2.5-pro": {"label": "Gemini-2.5-Pro"},
+    "gemini-2.5-flash": {"label": "Gemini-2.5-Flash"},
     "gemini-2.0-flash": {"label": "Gemini-2.0-Flash"},
     "gemini-1.5-pro": {"label": "Gemini-1.5-Pro"},
     "gemma-2-27b-it": {"label": "Gemma-2-27B"},
+    "claude-4.1-opus": {"label": "Claude-4.1-Opus"},
+    "claude-4.0-sonnet": {"label": "Claude-4.0-Sonnet"},
     "claude-3.7-sonnet": {"label": "Claude-3.7-Sonnet"},
     "claude-3.5-sonnet": {"label": "Claude-3.5-Sonnet"},
     "perplexity-sonar-huge": {"label": "Perplexity-Sonar-Huge"},
     "llama-3.1-70b-it": {"label": "Llama-3.1-70B"},
 }
+
 
 def plot_metric_boxplot(data: pd.DataFrame, metric: str, models: list, model_order: list, title: str, save_path: str):
     """
@@ -28,7 +38,7 @@ def plot_metric_boxplot(data: pd.DataFrame, metric: str, models: list, model_ord
         'font.family': 'DejaVu Sans',
     })
 
-    plt.figure(figsize=(32, 12))
+    plt.figure(figsize=(30, 12))
     plt.axhline(y=0, color='k', linestyle=':', linewidth=2)
 
     melted_data = pd.DataFrame()
@@ -52,11 +62,11 @@ def plot_metric_boxplot(data: pd.DataFrame, metric: str, models: list, model_ord
             else:
                 idk_counts[model] = 0  # No IDK values for other metrics
 
-            melted_data = pd.concat([melted_data, model_data], axis=0)
+            melted_data = pd.concat([melted_data, model_data], axis=0, ignore_index=True)
         else:
             idk_counts[model] = 0  # Ensure every model has a count entry
             # Append NaN values for models without data
-            melted_data = pd.concat([melted_data, pd.DataFrame({metric: [np.nan], 'Model': model})], axis=0)
+            melted_data = pd.concat([melted_data, pd.DataFrame({metric: [np.nan], 'Model': model})], axis=0, ignore_index=True)
     
     ax = plt.gca()
     ax.set_xticks(range(len(models)))
@@ -73,7 +83,7 @@ def plot_metric_boxplot(data: pd.DataFrame, metric: str, models: list, model_ord
         data=melted_data, 
         palette=colors[:len(models)], 
         linewidth=2,
-        hue='Model',
+        # hue='Model',
         dodge=False,
         ax=ax,
         medianprops=medianprops,

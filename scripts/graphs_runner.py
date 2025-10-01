@@ -31,9 +31,9 @@ from scripts.scripts_utils import load_dataset
 
 
 MODEL_ORDER = [
-    "gpt-4.1", "gpt-4o", "gpt-3.5-turbo",
-    "gemini-2.0-flash", "gemini-1.5-pro", "gemma-2-27b-it",
-    "claude-3.7-sonnet", "claude-3.5-sonnet",
+    "gpt-5", "gpt-5-mini", "o3", "o3-mini", "gpt-4.1", "gpt-4o", "gpt-3.5-turbo",
+    "gemini-2.5-pro", "gemini-2.5-flash", "gemini-2.0-flash", "gemini-1.5-pro", "gemma-2-27b-it",
+    "claude-4.1-opus", "claude-4.0-sonnet", "claude-3.7-sonnet", "claude-3.5-sonnet",
     "perplexity-sonar-huge",
     "llama-3.1-70b-it",
 ]
@@ -132,16 +132,21 @@ def main():
             save_path=res_dir,
         )
         print("🔧 Safety vs. Quality Scatterplot created.")
-
-        plot_metric_boxplot(
-            data,
-            metric="BioScore",
-            models=models_list,
-            model_order=MODEL_ORDER,
-            title="BioScore Boxplot",
-            save_path=res_dir,
-        )
-        print("🔧 BioScore Boxplot created.")
+        
+        model_groups = [
+            ("Group 1", models_list[:len(models_list)//2]),
+            ("Group 2", models_list[len(models_list)//2:])
+        ]
+        for group_name, group_models in model_groups:
+            plot_metric_boxplot(
+                data,
+                metric="BioScore",
+                models=group_models,
+                model_order=MODEL_ORDER,
+                title=f"BioScore Boxplot ({group_name})",
+                save_path=res_dir,
+            )
+            print(f"🔧 BioScore Boxplot ({group_name}) created.")
 
         # BioScore Heatmaps
         plot_heatmap(
@@ -251,16 +256,22 @@ def main():
 
     if "BLEU_ROUGE_BERT" in metrics_list:
         nlp_metrics = ['BLEU', 'ROUGE2', 'ROUGEL', 'BERTScore']
-        for metric in nlp_metrics:
-            plot_metric_boxplot(
-                data,
-                metric=metric,
-                models=models_list,
-                model_order=MODEL_ORDER,
-                title=f"{metric} Boxplot",
-                save_path=res_dir,
-            )
-            print(f"🔧 {metric} Boxplot created.")
+        model_groups = [
+            ("Group 1", models_list[:len(models_list)//2]),
+            ("Group 2", models_list[len(models_list)//2:])
+        ]
+
+        for group_name, group_models in model_groups:
+            for metric in nlp_metrics:
+                plot_metric_boxplot(
+                    data,
+                    metric=metric,
+                    models=group_models,
+                    model_order=MODEL_ORDER,
+                    title=f"{metric} Boxplot ({group_name})",
+                    save_path=res_dir,
+                )
+                print(f"🔧 {metric} Boxplot ({group_name}) created.")
 
     # Generate performance tables
     if "BioScore" in metrics_list:
