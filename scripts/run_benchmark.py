@@ -182,6 +182,14 @@ def run_metrics(args, config):
     models_to_grade = [model['name'] for model in config['models'] if model.get('use', False)]
     metrics_to_use = [metric['name'] for metric in config['metrics'] if metric.get('use', False)]
 
+    # If a specific model is specified via command-line, override
+    if args.model:
+        if args.model in [model['name'] for model in config['models']]:
+            models_to_grade = [args.model]
+        else:
+            stream_message(f"❌ Model '{args.model}' not found in configuration.")
+            sys.exit(1)
+
     stream_message("🚀 Running metrics evaluation step")
 
     # Prepare the command

@@ -84,6 +84,9 @@ models:
   - name: 'o3-mini'
     use: true
     type: 'openai'
+  - name: 'gpt-5.1'
+    use: true
+    type: 'openai'
   - name: 'gemini-1.5-pro'
     use: true
     type: 'google'
@@ -96,6 +99,9 @@ models:
   - name: 'gemini-2.5-pro'
     use: true
     type: 'google'
+  - name: 'gemini-3-pro-preview'
+    use: true
+    type: 'google'
   - name: 'claude-3.5-sonnet'
     use: true
     type: 'anthropic'
@@ -103,9 +109,12 @@ models:
     use: true
     type: 'anthropic'
   - name: 'claude-4.0-sonnet'
-    use: true
+    use: false
     type: 'anthropic'
   - name: 'claude-4.1-opus'
+    use: true
+    type: 'anthropic'
+  - name: 'claude-4.5-opus'
     use: true
     type: 'anthropic'
   - name: 'perplexity-sonar-huge'
@@ -123,4 +132,4 @@ metrics:
   - name: 'BioScore'
     use: true
   - name: 'BLEU_ROUGE_BERT'
-    use: true
+    use: false
