@@ -45,6 +45,7 @@ def initialize_model(
         ValueError: If the model_name is not recognized.
     """
     THINKING_TOKENS = 1024
+    CLAUDE_EFFORT = 'low'
     if model_name == 'gpt-3.5-turbo':
         return GPTQuery(system_prompt, 'gpt-3.5-turbo-0125', max_tokens=max_new_tokens, temperature=temperature)
     elif model_name == 'gpt-4o':
@@ -81,6 +82,10 @@ def initialize_model(
         return ClaudeQuery(system_prompt, 'claude-opus-4-1-20250805', max_tokens=max_new_tokens+THINKING_TOKENS, temperature=temperature, thinking_budget_tokens=THINKING_TOKENS)
     elif model_name == 'claude-4.5-opus':
         return ClaudeQuery(system_prompt, 'claude-opus-4-5-20251101', max_tokens=max_new_tokens+THINKING_TOKENS, temperature=temperature, thinking_budget_tokens=THINKING_TOKENS)
+    elif model_name == 'claude-opus-5':
+        return ClaudeQuery(system_prompt, 'claude-opus-5', max_tokens=max_new_tokens, temperature=temperature, effort=CLAUDE_EFFORT)
+    elif model_name == 'claude-fable-5.1':
+        return ClaudeQuery(system_prompt, 'claude-fable-5-1', max_tokens=max_new_tokens, temperature=temperature, effort=CLAUDE_EFFORT)
     elif model_name == 'perplexity-sonar-huge':
         return PerplexityQuery(system_prompt, 'llama-3.1-sonar-huge-128k-online', max_tokens=max_new_tokens, temperature=temperature)
     elif model_name == 'gemma-2-27b-it':

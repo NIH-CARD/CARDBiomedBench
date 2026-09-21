@@ -19,6 +19,8 @@ MODEL_LABELS = {
     "gemini-2.0-flash": {"label": "Gemini-2.0-Flash", "position": (-0.085, -0.002)},
     "gemini-1.5-pro": {"label": "Gemini-1.5-Pro", "position": (-0.080, -0.025)},
     "gemma-2-27b-it": {"label": "Gemma-2-27B", "position": (0.00, -0.040)},
+    "claude-fable-5.1": {"label": "Claude-Fable-5.1", "position": (0.00, -0.040)},
+    "claude-opus-5": {"label": "Claude-Opus-5", "position": (0.00, +0.060)},
     "claude-4.1-opus": {"label": "Claude-4.1-Opus", "position": (0.00, -0.040)},
     "claude-4.0-sonnet": {"label": "Claude-4.0-Sonnet", "position": (0.00, +0.060)},
     "claude-3.7-sonnet": {"label": "Claude-3.7-Sonnet", "position": (0.00, -0.040)},
