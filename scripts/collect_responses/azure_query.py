@@ -96,6 +96,25 @@ class AzureQuery:
         except Exception as error:
             return f"Error in {self.model_name} response: {error}"
 
+    def submit_batch_query(self, batch_file_path: str, metadata: dict = None) -> str:
+        """Upload a JSONL request file and submit it as an Azure batch job."""
+        try:
+            with open(batch_file_path, "rb") as batch_file:
+                batch_input_file = self.client.files.create(
+                    file=batch_file,
+                    purpose="batch",
+                )
+
+            batch = self.client.batches.create(
+                input_file_id=batch_input_file.id,
+                endpoint="/chat/completions",
+                completion_window="24h",
+                metadata=metadata,
+            )
+            return batch.id
+        except Exception as error:
+            return {"error": f"Error during Azure batch submission: {error}"}
+
     def delete(self):
         try:
             if self.client is not None:
