@@ -1,17 +1,28 @@
 import os
 import gc
 import json
-import httpx
 from dotenv import load_dotenv
 import anthropic
 
 class ClaudeQuery:
-    def __init__(self, system_prompt, model_name, max_tokens, temperature, thinking_budget_tokens = None):
+    VALID_EFFORTS = {"low", "medium", "high", "xhigh", "max"}
+
+    def __init__(self, system_prompt, model_name, max_tokens, temperature,
+                 thinking_budget_tokens=None, effort=None):
+        if thinking_budget_tokens is not None and effort is not None:
+            raise ValueError("Use either thinking_budget_tokens or effort, not both.")
+        if effort is not None and effort not in self.VALID_EFFORTS:
+            raise ValueError(
+                f"Invalid Claude effort '{effort}'. Expected one of: "
+                f"{', '.join(sorted(self.VALID_EFFORTS))}."
+            )
+
         self.system_prompt = system_prompt
         self.model_name = model_name
         self.max_tokens = max_tokens
         self.temperature = temperature
         self.thinking_budget_tokens = thinking_budget_tokens
+        self.effort = effort
         self.cache_file = self.get_cache_file_path()
         self.cache = self.load_cache()
         self.model = self.initialize_claude_model()
@@ -28,7 +39,7 @@ class ClaudeQuery:
             load_dotenv(os.path.join(os.path.dirname(__file__), '../../configs/.env'))
             anthropic_api_key = os.environ.get("ANTHROPIC_API_KEY")
             if anthropic_api_key:
-                return anthropic.Anthropic(api_key=anthropic_api_key, http_client=httpx.Client(timeout=120))
+                return anthropic.Anthropic(api_key=anthropic_api_key, timeout=120)
             else:
                 print("Anthropic API key not found in environment variables.")
         except Exception as e:
@@ -81,7 +92,8 @@ class ClaudeQuery:
         Returns:
         - str: The cache key.
         """
-        return f"{self.model_name}_{self.system_prompt}_{query}"
+        effort_suffix = f"_effort={self.effort}" if self.effort is not None else ""
+        return f"{self.model_name}{effort_suffix}_{self.system_prompt}_{query}"
 
     def query(self, query: str) -> str:
         """
@@ -112,6 +124,10 @@ class ClaudeQuery:
             if self.thinking_budget_tokens is not None:
                 kwargs["thinking"] = {"type": "enabled", "budget_tokens": self.thinking_budget_tokens}
                 kwargs["temperature"] = 1.0
+            elif self.effort is not None:
+                # Claude 5 models use adaptive thinking. It is enabled by
+                # default, and effort controls its depth and token usage.
+                kwargs["output_config"] = {"effort": self.effort}
             else:
                 kwargs["temperature"] = self.temperature
 

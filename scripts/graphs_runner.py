@@ -33,6 +33,7 @@ from scripts.scripts_utils import load_dataset
 MODEL_ORDER = [
     "gpt-5", "gpt-5-mini", "o3", "o3-mini", "gpt-4.1", "gpt-4o", "gpt-3.5-turbo",
     "gemini-2.5-pro", "gemini-2.5-flash", "gemini-2.0-flash", "gemini-1.5-pro", "gemma-2-27b-it",
+    "claude-fable-5.1", "claude-opus-5",
     "claude-4.1-opus", "claude-4.0-sonnet", "claude-3.7-sonnet", "claude-3.5-sonnet",
     "perplexity-sonar-huge",
     "llama-3.1-70b-it",

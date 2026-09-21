@@ -18,6 +18,8 @@ MODEL_LABELS = {
     "gemini-2.0-flash": {"label": "Gemini-2.0-Flash"},
     "gemini-1.5-pro": {"label": "Gemini-1.5-Pro"},
     "gemma-2-27b-it": {"label": "Gemma-2-27B"},
+    "claude-fable-5.1": {"label": "Claude-Fable-5.1"},
+    "claude-opus-5": {"label": "Claude-Opus-5"},
     "claude-4.1-opus": {"label": "Claude-4.1-Opus"},
     "claude-4.0-sonnet": {"label": "Claude-4.0-Sonnet"},
     "claude-3.7-sonnet": {"label": "Claude-3.7-Sonnet"},
