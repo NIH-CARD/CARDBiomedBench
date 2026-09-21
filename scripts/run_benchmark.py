@@ -143,7 +143,7 @@ def run_responses(args, config):
             model for model in config['models'] if model['name'] == model_name
         )
         if model_config.get('type') == 'azure_openai':
-            current_model_hyperparams['azure_deployment'] = model_config.get('deployment')
+            current_model_hyperparams['model_type'] = 'azure_openai'
 
         model_hyperparams_str = json.dumps(current_model_hyperparams)
         cmd = [

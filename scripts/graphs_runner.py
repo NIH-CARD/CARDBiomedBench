@@ -31,7 +31,7 @@ from scripts.scripts_utils import load_dataset
 
 
 MODEL_ORDER = [
-    "azure-openai",
+    "gpt-6-astra", "gpt-5.6-sol",
     "gpt-5", "gpt-5-mini", "o3", "o3-mini", "gpt-4.1", "gpt-4o", "gpt-3.5-turbo",
     "gemini-2.5-pro", "gemini-2.5-flash", "gemini-2.0-flash", "gemini-1.5-pro", "gemma-2-27b-it",
     "claude-fable-5.1", "claude-opus-5",

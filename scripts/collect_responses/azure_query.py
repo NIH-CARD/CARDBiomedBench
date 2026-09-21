@@ -12,7 +12,7 @@ class AzureQuery:
     def __init__(self, system_prompt, deployment_name, max_tokens, temperature):
         if not deployment_name:
             raise ValueError(
-                "Azure OpenAI requires a deployment name in the model configuration."
+                "Azure OpenAI requires the configured model name to match a deployment name."
             )
 
         self.system_prompt = system_prompt

@@ -29,7 +29,7 @@ def initialize_model(
     system_prompt: str,
     max_new_tokens: int,
     temperature: float,
-    azure_deployment: str = None,
+    model_type: str = None,
 ):
     """
     Initialize the model client and create an instance of the query class for the specified model.
@@ -39,6 +39,7 @@ def initialize_model(
         system_prompt (str): System prompt to provide to the model.
         max_new_tokens (int): Maximum number of tokens to generate.
         temperature (float): Sampling temperature.
+        model_type (str, optional): Provider type used for provider-specific routing.
 
     Returns:
         An instance of the appropriate model query class.
@@ -48,7 +49,9 @@ def initialize_model(
     """
     THINKING_TOKENS = 1024
     CLAUDE_EFFORT = 'low'
-    if model_name == 'gpt-3.5-turbo':
+    if model_type == 'azure_openai':
+        return AzureQuery(system_prompt, model_name, max_tokens=max_new_tokens, temperature=temperature)
+    elif model_name == 'gpt-3.5-turbo':
         return GPTQuery(system_prompt, 'gpt-3.5-turbo-0125', max_tokens=max_new_tokens, temperature=temperature)
     elif model_name == 'gpt-4o':
         return GPTQuery(system_prompt, 'gpt-4o-2024-05-13', max_tokens=max_new_tokens, temperature=temperature)
@@ -64,8 +67,6 @@ def initialize_model(
         return GPTQuery(system_prompt, 'o3-mini-2025-01-31', max_tokens=max_new_tokens, temperature=temperature)
     elif model_name == 'gpt-5.1':
         return GPTQuery(system_prompt, 'gpt-5.1-2025-11-13', max_tokens=max_new_tokens, temperature=temperature)
-    elif model_name == 'azure-openai':
-        return AzureQuery(system_prompt, azure_deployment, max_tokens=max_new_tokens, temperature=temperature)
     elif model_name == 'gemini-1.5-pro':
         return GeminiQuery(system_prompt, 'gemini-1.5-pro', max_tokens=max_new_tokens, temperature=temperature)
     elif model_name == 'gemini-2.0-flash':
@@ -220,14 +221,14 @@ def get_model_responses(
     system_prompt = hyperparams.get('system_prompt', '')
     max_new_tokens = hyperparams.get('max_new_tokens', 1024)
     temperature = hyperparams.get('temperature', 0.0)
-    azure_deployment = hyperparams.get('azure_deployment')
+    model_type = hyperparams.get('model_type')
 
     query_instance = initialize_model(
         model_name,
         system_prompt,
         max_new_tokens,
         temperature,
-        azure_deployment=azure_deployment,
+        model_type=model_type,
     )
     responses = collect_single_model_responses(
         model_name,
