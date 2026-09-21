@@ -7,6 +7,8 @@ from matplotlib.offsetbox import AnnotationBbox, TextArea, HPacker
 
 
 MODEL_LABELS = {
+    "gpt-6-astra": {"label": "GPT-6-Astra", "position": (0.00, -0.040)},
+    "gpt-5.6-sol": {"label": "GPT-5.6-Sol", "position": (0.00, +0.060)},
     "gpt-5": {"label": "OpenAI-GPT-5", "position": (-0.010, +0.030)},
     "gpt-5-mini": {"label": "OpenAI-GPT-5-Mini", "position": (0.00, +0.030)},
     "o3": {"label": "OpenAI-o3", "position": (-0.010, -0.040)},

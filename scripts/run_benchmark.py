@@ -138,7 +138,14 @@ def run_responses(args, config):
 
     stream_message("🚀 Running response generation step")
     for model_name in models_to_run:
-        model_hyperparams_str = json.dumps(model_hyperparams)
+        current_model_hyperparams = model_hyperparams.copy()
+        model_config = next(
+            model for model in config['models'] if model['name'] == model_name
+        )
+        if model_config.get('type') == 'azure_openai':
+            current_model_hyperparams['model_type'] = 'azure_openai'
+
+        model_hyperparams_str = json.dumps(current_model_hyperparams)
         cmd = [
             'python', '-m', 'scripts.responses_runner',
             '--qa_path', qa_path,

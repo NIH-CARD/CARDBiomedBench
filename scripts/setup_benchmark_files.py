@@ -141,6 +141,12 @@ def check_api_keys(config, dotenv_path):
         model_type = model.get('type')
         if model_type == 'openai':
             required_keys.add('OPENAI_API_KEY')
+        elif model_type == 'azure_openai':
+            required_keys.update({
+                'AZURE_OPENAI_API_KEY',
+                'AZURE_OPENAI_ENDPOINT',
+                'AZURE_API_VERSION',
+            })
         elif model_type == 'anthropic':
             required_keys.add('ANTHROPIC_API_KEY')
         elif model_type == 'google':
@@ -181,6 +187,12 @@ def create_env_file(config):
         model_type = model.get('type')
         if model_type == 'openai':
             required_keys.add('OPENAI_API_KEY')
+        elif model_type == 'azure_openai':
+            required_keys.update({
+                'AZURE_OPENAI_API_KEY',
+                'AZURE_OPENAI_ENDPOINT',
+                'AZURE_API_VERSION',
+            })
         elif model_type == 'anthropic':
             required_keys.add('ANTHROPIC_API_KEY')
         elif model_type == 'google':
