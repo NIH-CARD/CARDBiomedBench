@@ -87,6 +87,10 @@ models:
   - name: 'gpt-5.1'
     use: true
     type: 'openai'
+  - name: 'azure-openai'
+    use: false
+    type: 'azure_openai'
+    deployment: ''
   - name: 'gemini-1.5-pro'
     use: true
     type: 'google'

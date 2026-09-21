@@ -17,6 +17,7 @@ from tqdm import tqdm
 
 from scripts.scripts_utils import load_dataset, save_dataset
 from scripts.collect_responses.gpt_query import GPTQuery
+from scripts.collect_responses.azure_query import AzureQuery
 from scripts.collect_responses.gemini_query import GeminiQuery
 from scripts.collect_responses.claude_query import ClaudeQuery
 from scripts.collect_responses.perplexity_query import PerplexityQuery
@@ -27,7 +28,8 @@ def initialize_model(
     model_name: str,
     system_prompt: str,
     max_new_tokens: int,
-    temperature: float
+    temperature: float,
+    azure_deployment: str = None,
 ):
     """
     Initialize the model client and create an instance of the query class for the specified model.
@@ -62,6 +64,8 @@ def initialize_model(
         return GPTQuery(system_prompt, 'o3-mini-2025-01-31', max_tokens=max_new_tokens, temperature=temperature)
     elif model_name == 'gpt-5.1':
         return GPTQuery(system_prompt, 'gpt-5.1-2025-11-13', max_tokens=max_new_tokens, temperature=temperature)
+    elif model_name == 'azure-openai':
+        return AzureQuery(system_prompt, azure_deployment, max_tokens=max_new_tokens, temperature=temperature)
     elif model_name == 'gemini-1.5-pro':
         return GeminiQuery(system_prompt, 'gemini-1.5-pro', max_tokens=max_new_tokens, temperature=temperature)
     elif model_name == 'gemini-2.0-flash':
@@ -216,8 +220,15 @@ def get_model_responses(
     system_prompt = hyperparams.get('system_prompt', '')
     max_new_tokens = hyperparams.get('max_new_tokens', 1024)
     temperature = hyperparams.get('temperature', 0.0)
+    azure_deployment = hyperparams.get('azure_deployment')
 
-    query_instance = initialize_model(model_name, system_prompt, max_new_tokens, temperature)
+    query_instance = initialize_model(
+        model_name,
+        system_prompt,
+        max_new_tokens,
+        temperature,
+        azure_deployment=azure_deployment,
+    )
     responses = collect_single_model_responses(
         model_name,
         query_instance,

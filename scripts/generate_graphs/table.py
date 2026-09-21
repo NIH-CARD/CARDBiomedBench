@@ -6,6 +6,7 @@ import matplotlib.pyplot as plt
 
 
 MODEL_LABELS = {
+    "azure-openai": {"label": "Azure-OpenAI"},
     "gpt-5": {"label": "GPT-5"},
     "gpt-5-mini": {"label": "GPT-5-Mini"},
     "o3": {"label": "o3"},

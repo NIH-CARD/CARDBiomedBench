@@ -18,6 +18,18 @@ Prepare directories, configure environment variables, and download the dataset:
    python scripts/setup_benchmark_files.py
    ```
 
+For an Azure OpenAI deployment, add these values to `configs/.env`:
+
+   ```dotenv
+   AZURE_OPENAI_API_KEY=...
+   AZURE_OPENAI_ENDPOINT=https://your-resource.openai.azure.com
+   AZURE_API_VERSION=...
+   ```
+
+Then set the `deployment` value for `azure-openai` in
+`configs/default_config.yaml`. The deployment name is configuration rather than
+an environment variable because it is not a credential.
+
 ## Run Benchmark
 
 ### Hands-Free Execution
