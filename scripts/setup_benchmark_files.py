@@ -147,6 +147,8 @@ def check_api_keys(config, dotenv_path):
                 'AZURE_OPENAI_ENDPOINT',
                 'AZURE_API_VERSION',
             })
+        elif model_type == 'openrouter':
+            required_keys.add('OPENROUTER_API_KEY')
         elif model_type == 'anthropic':
             required_keys.add('ANTHROPIC_API_KEY')
         elif model_type == 'google':
@@ -193,6 +195,8 @@ def create_env_file(config):
                 'AZURE_OPENAI_ENDPOINT',
                 'AZURE_API_VERSION',
             })
+        elif model_type == 'openrouter':
+            required_keys.add('OPENROUTER_API_KEY')
         elif model_type == 'anthropic':
             required_keys.add('ANTHROPIC_API_KEY')
         elif model_type == 'google':

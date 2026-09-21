@@ -93,6 +93,18 @@ models:
   - name: 'gpt-6-astra'
     use: false
     type: 'azure_openai'
+  - name: 'qwen-3.8-max'
+    use: false
+    type: 'openrouter'
+  - name: 'kimi-k3'
+    use: false
+    type: 'openrouter'
+  - name: 'glm-5.3'
+    use: false
+    type: 'openrouter'
+  - name: 'deepseek-v4-pro'
+    use: false
+    type: 'openrouter'
   - name: 'gemini-1.5-pro'
     use: true
     type: 'google'
