@@ -1,6 +1,7 @@
 import gc
 import json
 import os
+import time
 
 from dotenv import load_dotenv
 from openai import AzureOpenAI
@@ -132,6 +133,31 @@ class AzureQuery:
             return batch.id
         except Exception as error:
             return {"error": f"Error during Azure batch submission: {error}"}
+
+    def poll_batch_status(self, batch_id: str, poll_freq: int = 30) -> str:
+        """Wait for an Azure batch job and return its JSONL output."""
+        start_time = time.time()
+
+        while True:
+            batch = self.client.batches.retrieve(batch_id)
+            status = batch.status
+            elapsed_time = time.time() - start_time
+            hours, remainder = divmod(elapsed_time, 3600)
+            minutes, seconds = divmod(remainder, 60)
+            time_passed = f"{int(hours):02}:{int(minutes):02}:{int(seconds):02}"
+            print(f"     🔧 Batch Status: {status} | Time Passed: {time_passed}")
+
+            if status == "completed":
+                if not batch.output_file_id:
+                    raise RuntimeError(
+                        f"Azure batch {batch_id} completed without an output file."
+                    )
+                return self.client.files.content(batch.output_file_id).text
+
+            if status in {"failed", "expired", "cancelled"}:
+                raise RuntimeError(f"Azure batch {batch_id} ended with status {status}.")
+
+            time.sleep(poll_freq)
 
     def delete(self):
         try:

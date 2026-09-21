@@ -33,6 +33,9 @@ def main():
     parser.add_argument('--bioscore_grading_prompt', type=str, required=False,
         help='BioScore grading prompt'
     )
+    parser.add_argument('--bioscore_provider', choices=['openai', 'azure'],
+        default='openai', help='Provider used for BioScore grading'
+    )
     args = parser.parse_args()
 
     res_dir: str = args.res_by_model_dir
@@ -54,7 +57,8 @@ def main():
             res_dir,
             models_to_grade,
             hyperparams,
-            bioscore_grading_prompt
+            bioscore_grading_prompt,
+            grading_provider=args.bioscore_provider,
         )
         print("🔧 BioScore Completed")
 

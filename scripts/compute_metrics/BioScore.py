@@ -14,6 +14,7 @@ import pandas as pd
 
 from scripts.scripts_utils import load_dataset, save_dataset
 from scripts.responses_runner import initialize_model
+from scripts.collect_responses.azure_query import AzureQuery
 
 # Define the new cache subdirectory for batch queries
 CACHE_DIR = ".cache/batch_queries"
@@ -269,7 +270,15 @@ def submit_batches(
 
         # Submit batch only if a new batch file was created
         if batch_file_created:
-            print(f"Submitting BioScore grading for {model} to GPT-4o batch API...")
+            provider_name = (
+                "Azure OpenAI"
+                if isinstance(grading_model, AzureQuery)
+                else "OpenAI"
+            )
+            print(
+                f"Submitting BioScore grading for {model} to the "
+                f"{provider_name} GPT-4o batch API..."
+            )
             batch_id = grading_model.submit_batch_query(batch_file_path)
             batch_ids[model] = batch_id
             print(f"Batch ID {batch_id} submitted for {model}")
@@ -329,6 +338,7 @@ def get_all_model_BioScore(
     models_to_use: List[str],
     hyperparams: dict,
     bioscore_grading_prompt: str,
+    grading_provider: str = 'openai',
     query_col: str = 'question',
     gold_col: str = 'answer',
     response_col: str = 'response'
@@ -341,6 +351,7 @@ def get_all_model_BioScore(
         models_to_use (List[str]): List of model names to grade.
         hyperparams (dict): Hyperparameters for the grading model.
         bioscore_grading_prompt (str): The grading prompt template.
+        grading_provider (str): GPT-4o provider, either 'openai' or 'azure'.
         query_col (str, optional): Column name for queries. Defaults to 'question'.
         gold_col (str, optional): Column name for gold answers. Defaults to 'answer'.
         response_col (str, optional): Column name for model responses. Defaults to 'response'.
@@ -350,12 +361,20 @@ def get_all_model_BioScore(
     bioscore_system_prompt = hyperparams.get('system_prompt', '')
     max_new_tokens = hyperparams.get('max_new_tokens', 1024)
     temperature = hyperparams.get('temperature', 0.0)
-    grading_model = initialize_model(
-        grading_model_name,
-        bioscore_system_prompt,
-        max_new_tokens,
-        temperature
-    )
+    if grading_provider == 'azure':
+        grading_model = AzureQuery(
+            bioscore_system_prompt,
+            grading_model_name,
+            max_new_tokens,
+            temperature,
+        )
+    else:
+        grading_model = initialize_model(
+            grading_model_name,
+            bioscore_system_prompt,
+            max_new_tokens,
+            temperature
+        )
 
     # Step 1: Submit batch files
     batch_ids = submit_batches(
