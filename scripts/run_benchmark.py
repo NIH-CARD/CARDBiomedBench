@@ -50,8 +50,9 @@ def parse_arguments():
     parser.add_argument('--run_responses', action='store_true',
         help='Run response generation step'
     )
-    parser.add_argument('--run_metrics', action='store_true',
-        help='Run metrics evaluation step'
+    parser.add_argument('--run_metrics', nargs='?', const='openai',
+        choices=['openai', 'azure'],
+        help='Run metrics evaluation step (BioScore provider: openai or azure)'
     )
     parser.add_argument('--run_graphs', action='store_true',
         help='Run graphs generation step'
@@ -206,7 +207,8 @@ def run_metrics(args, config):
         '--models_to_grade', *models_to_grade,
         '--metrics_to_use', *metrics_to_use,
         '--hyperparams', json.dumps(model_hyperparams),
-        '--bioscore_grading_prompt', bioscore_grading_prompt
+        '--bioscore_grading_prompt', bioscore_grading_prompt,
+        '--bioscore_provider', args.run_metrics,
     ]
 
     try:

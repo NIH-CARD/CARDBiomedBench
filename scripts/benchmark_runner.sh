@@ -20,7 +20,16 @@ while [[ $# -gt 0 ]]; do
             ARGS+=("--model" "$2")
             shift 2
             ;;
-        --run_responses|--run_metrics|--run_graphs)
+        --run_metrics)
+            ARGS+=("$1")
+            if [[ $# -gt 1 && "$2" =~ ^(openai|azure)$ ]]; then
+                ARGS+=("$2")
+                shift 2
+            else
+                shift
+            fi
+            ;;
+        --run_responses|--run_graphs)
             ARGS+=("$1")
             shift
             ;;
