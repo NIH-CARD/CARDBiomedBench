@@ -50,6 +50,7 @@ def initialize_model(
     """
     THINKING_TOKENS = 1024
     CLAUDE_EFFORT = 'low'
+    AZURE_EFFORT = 'low'
     OPENROUTER_MODELS = {
         'qwen-3.8-max': {
             'model_id': 'qwen/qwen3.8-max-0902',
@@ -69,7 +70,13 @@ def initialize_model(
         },
     }
     if model_type == 'azure_openai':
-        return AzureQuery(system_prompt, model_name, max_tokens=max_new_tokens, temperature=temperature)
+        return AzureQuery(
+            system_prompt,
+            model_name,
+            max_tokens=max_new_tokens,
+            temperature=temperature,
+            reasoning_effort=AZURE_EFFORT,
+        )
     elif model_type == 'openrouter':
         try:
             openrouter_config = OPENROUTER_MODELS[model_name]

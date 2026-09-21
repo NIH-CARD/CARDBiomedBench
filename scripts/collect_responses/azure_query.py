@@ -9,7 +9,14 @@ from openai import AzureOpenAI
 class AzureQuery:
     """Query an Azure OpenAI chat-completions deployment."""
 
-    def __init__(self, system_prompt, deployment_name, max_tokens, temperature):
+    def __init__(
+        self,
+        system_prompt,
+        deployment_name,
+        max_tokens,
+        temperature,
+        reasoning_effort=None,
+    ):
         if not deployment_name:
             raise ValueError(
                 "Azure OpenAI requires the configured model name to match a deployment name."
@@ -19,6 +26,7 @@ class AzureQuery:
         self.model_name = deployment_name
         self.max_tokens = max_tokens
         self.temperature = temperature
+        self.reasoning_effort = reasoning_effort
         self.cache_file = self.get_cache_file_path()
         self.cache = self.load_cache()
         self.client = self.initialize_azure_client()
@@ -72,7 +80,12 @@ class AzureQuery:
             print(f"Error saving Azure response cache: {error}")
 
     def get_cache_key(self, query: str):
-        return f"azure_{self.model_name}_{self.system_prompt}_{query}"
+        effort_suffix = (
+            f"_effort={self.reasoning_effort}"
+            if self.reasoning_effort is not None
+            else ""
+        )
+        return f"azure_{self.model_name}{effort_suffix}_{self.system_prompt}_{query}"
 
     def query(self, query: str) -> str:
         cache_key = self.get_cache_key(query)
@@ -80,15 +93,20 @@ class AzureQuery:
             return self.cache[cache_key]
 
         try:
-            completion = self.client.chat.completions.create(
-                model=self.model_name,
-                max_completion_tokens=self.max_tokens,
-                temperature=self.temperature,
-                messages=[
+            request_args = {
+                "model": self.model_name,
+                "max_completion_tokens": self.max_tokens,
+                "messages": [
                     {"role": "system", "content": self.system_prompt},
                     {"role": "user", "content": query},
                 ],
-            )
+            }
+            if self.reasoning_effort is not None:
+                request_args["reasoning_effort"] = self.reasoning_effort
+            else:
+                request_args["temperature"] = self.temperature
+
+            completion = self.client.chat.completions.create(**request_args)
             response = completion.choices[0].message.content
             self.cache[cache_key] = response
             self.save_cache()
