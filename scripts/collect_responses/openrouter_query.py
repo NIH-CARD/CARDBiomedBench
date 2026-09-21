@@ -9,11 +9,23 @@ from openai import OpenAI
 class OpenRouterQuery:
     """Query an OpenRouter model through its OpenAI-compatible API."""
 
-    def __init__(self, system_prompt, model_name, max_tokens, temperature):
+    VALID_REASONING_EFFORTS = {"minimal", "low", "medium", "high", "xhigh", "max"}
+
+    def __init__(self, system_prompt, model_name, max_tokens, temperature,
+                 reasoning_effort=None):
+        if (
+            reasoning_effort is not None
+            and reasoning_effort not in self.VALID_REASONING_EFFORTS
+        ):
+            raise ValueError(
+                f"Invalid OpenRouter reasoning effort '{reasoning_effort}'."
+            )
+
         self.system_prompt = system_prompt
         self.model_name = model_name
         self.max_tokens = max_tokens
         self.temperature = temperature
+        self.reasoning_effort = reasoning_effort
         self.cache_file = self.get_cache_file_path()
         self.cache = self.load_cache()
         self.client = self.initialize_openrouter_client()
@@ -59,7 +71,15 @@ class OpenRouterQuery:
             print(f"Error saving OpenRouter response cache: {error}")
 
     def get_cache_key(self, query: str):
-        return f"openrouter_{self.model_name}_{self.system_prompt}_{query}"
+        effort_suffix = (
+            f"_effort={self.reasoning_effort}"
+            if self.reasoning_effort is not None
+            else ""
+        )
+        return (
+            f"openrouter_{self.model_name}{effort_suffix}_"
+            f"{self.system_prompt}_{query}"
+        )
 
     def query(self, query: str) -> str:
         cache_key = self.get_cache_key(query)
@@ -67,7 +87,7 @@ class OpenRouterQuery:
             return self.cache[cache_key]
 
         try:
-            completion = self.client.chat.completions.create(
+            request_args = dict(
                 model=self.model_name,
                 max_tokens=self.max_tokens,
                 temperature=self.temperature,
@@ -76,6 +96,10 @@ class OpenRouterQuery:
                     {"role": "user", "content": query},
                 ],
             )
+            if self.reasoning_effort is not None:
+                request_args["reasoning_effort"] = self.reasoning_effort
+
+            completion = self.client.chat.completions.create(**request_args)
             response = completion.choices[0].message.content
             self.cache[cache_key] = response
             self.save_cache()

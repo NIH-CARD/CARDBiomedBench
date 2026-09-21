@@ -51,21 +51,39 @@ def initialize_model(
     THINKING_TOKENS = 1024
     CLAUDE_EFFORT = 'low'
     OPENROUTER_MODELS = {
-        'qwen-3.8-max': 'qwen/qwen3.8-max-0902',
-        'kimi-k3': 'moonshotai/kimi-k3',
-        'glm-5.3': 'z-ai/glm-5.3',
-        'deepseek-v4-pro': 'deepseek/deepseek-v4-pro-0813',
+        'qwen-3.8-max': {
+            'model_id': 'qwen/qwen3.8-max-0902',
+            'reasoning_effort': 'low',
+        },
+        'kimi-k3': {
+            'model_id': 'moonshotai/kimi-k3',
+            'reasoning_effort': 'low',
+        },
+        'glm-5.3': {
+            'model_id': 'z-ai/glm-5.3',
+            'reasoning_effort': 'low',
+        },
+        'deepseek-v4-pro': {
+            'model_id': 'deepseek/deepseek-v4-pro-0813',
+            'reasoning_effort': 'low',
+        },
     }
     if model_type == 'azure_openai':
         return AzureQuery(system_prompt, model_name, max_tokens=max_new_tokens, temperature=temperature)
     elif model_type == 'openrouter':
         try:
-            openrouter_model_name = OPENROUTER_MODELS[model_name]
+            openrouter_config = OPENROUTER_MODELS[model_name]
         except KeyError as error:
             raise ValueError(
                 f"❌ OpenRouter model '{model_name}' is not recognized."
             ) from error
-        return OpenRouterQuery(system_prompt, openrouter_model_name, max_tokens=max_new_tokens, temperature=temperature)
+        return OpenRouterQuery(
+            system_prompt,
+            openrouter_config['model_id'],
+            max_tokens=max_new_tokens,
+            temperature=temperature,
+            reasoning_effort=openrouter_config.get('reasoning_effort'),
+        )
     elif model_name == 'gpt-3.5-turbo':
         return GPTQuery(system_prompt, 'gpt-3.5-turbo-0125', max_tokens=max_new_tokens, temperature=temperature)
     elif model_name == 'gpt-4o':
