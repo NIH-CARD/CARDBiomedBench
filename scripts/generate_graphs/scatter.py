@@ -7,6 +7,10 @@ from matplotlib.offsetbox import AnnotationBbox, TextArea, HPacker
 
 
 MODEL_LABELS = {
+    "qwen-3.8-max": {"label": "Qwen-3.8-Max", "position": (0.00, -0.040)},
+    "kimi-k3": {"label": "Kimi-K3", "position": (0.00, +0.060)},
+    "glm-5.3": {"label": "GLM-5.3", "position": (-0.050, -0.040)},
+    "deepseek-v4-pro": {"label": "DeepSeek-V4-Pro", "position": (+0.050, +0.060)},
     "gpt-6-astra": {"label": "GPT-6-Astra", "position": (0.00, -0.040)},
     "gpt-5.6-sol": {"label": "GPT-5.6-Sol", "position": (0.00, +0.060)},
     "gpt-5": {"label": "OpenAI-GPT-5", "position": (-0.010, +0.030)},

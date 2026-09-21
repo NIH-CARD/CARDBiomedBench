@@ -5,6 +5,10 @@ import matplotlib.pyplot as plt
 from matplotlib.colors import LinearSegmentedColormap
 
 MODEL_LABELS = {
+    "qwen-3.8-max": {"label": "Qwen-3.8-Max"},
+    "kimi-k3": {"label": "Kimi-K3"},
+    "glm-5.3": {"label": "GLM-5.3"},
+    "deepseek-v4-pro": {"label": "DeepSeek-V4-Pro"},
     "gpt-6-astra": {"label": "GPT-6-Astra"},
     "gpt-5.6-sol": {"label": "GPT-5.6-Sol"},
     "gpt-5": {"label": "GPT-5"},

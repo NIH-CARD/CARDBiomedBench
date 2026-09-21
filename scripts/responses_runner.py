@@ -18,6 +18,7 @@ from tqdm import tqdm
 from scripts.scripts_utils import load_dataset, save_dataset
 from scripts.collect_responses.gpt_query import GPTQuery
 from scripts.collect_responses.azure_query import AzureQuery
+from scripts.collect_responses.openrouter_query import OpenRouterQuery
 from scripts.collect_responses.gemini_query import GeminiQuery
 from scripts.collect_responses.claude_query import ClaudeQuery
 from scripts.collect_responses.perplexity_query import PerplexityQuery
@@ -49,8 +50,47 @@ def initialize_model(
     """
     THINKING_TOKENS = 1024
     CLAUDE_EFFORT = 'low'
+    AZURE_EFFORT = 'low'
+    OPENROUTER_MODELS = {
+        'qwen-3.8-max': {
+            'model_id': 'qwen/qwen3.8-max-0902',
+            'reasoning_effort': 'low',
+        },
+        'kimi-k3': {
+            'model_id': 'moonshotai/kimi-k3',
+            'reasoning_effort': 'low',
+        },
+        'glm-5.3': {
+            'model_id': 'z-ai/glm-5.3',
+            'reasoning_effort': 'low',
+        },
+        'deepseek-v4-pro': {
+            'model_id': 'deepseek/deepseek-v4-pro-0813',
+            'reasoning_effort': 'low',
+        },
+    }
     if model_type == 'azure_openai':
-        return AzureQuery(system_prompt, model_name, max_tokens=max_new_tokens, temperature=temperature)
+        return AzureQuery(
+            system_prompt,
+            model_name,
+            max_tokens=max_new_tokens,
+            temperature=temperature,
+            reasoning_effort=AZURE_EFFORT,
+        )
+    elif model_type == 'openrouter':
+        try:
+            openrouter_config = OPENROUTER_MODELS[model_name]
+        except KeyError as error:
+            raise ValueError(
+                f"❌ OpenRouter model '{model_name}' is not recognized."
+            ) from error
+        return OpenRouterQuery(
+            system_prompt,
+            openrouter_config['model_id'],
+            max_tokens=max_new_tokens,
+            temperature=temperature,
+            reasoning_effort=openrouter_config.get('reasoning_effort'),
+        )
     elif model_name == 'gpt-3.5-turbo':
         return GPTQuery(system_prompt, 'gpt-3.5-turbo-0125', max_tokens=max_new_tokens, temperature=temperature)
     elif model_name == 'gpt-4o':

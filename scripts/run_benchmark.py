@@ -142,8 +142,8 @@ def run_responses(args, config):
         model_config = next(
             model for model in config['models'] if model['name'] == model_name
         )
-        if model_config.get('type') == 'azure_openai':
-            current_model_hyperparams['model_type'] = 'azure_openai'
+        if model_config.get('type') in {'azure_openai', 'openrouter'}:
+            current_model_hyperparams['model_type'] = model_config['type']
 
         model_hyperparams_str = json.dumps(current_model_hyperparams)
         cmd = [
