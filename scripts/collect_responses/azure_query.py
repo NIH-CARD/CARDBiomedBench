@@ -1,9 +1,11 @@
 import gc
 import json
 import os
+import tempfile
 import time
 
 from dotenv import load_dotenv
+from filelock import FileLock
 from openai import AzureOpenAI
 
 
@@ -65,20 +67,44 @@ class AzureQuery:
         return os.path.join(cache_dir, f"azure_{self.model_name}_cache.json")
 
     def load_cache(self):
-        if os.path.exists(self.cache_file):
-            try:
+        try:
+            with FileLock(f"{self.cache_file}.lock"):
+                if not os.path.exists(self.cache_file):
+                    return {}
                 with open(self.cache_file, "r") as cache_file:
                     return json.load(cache_file)
-            except Exception as error:
-                print(f"Error loading Azure response cache: {error}")
+        except Exception as error:
+            print(f"Error loading Azure response cache: {error}")
         return {}
 
     def save_cache(self):
+        temp_path = None
         try:
-            with open(self.cache_file, "w") as cache_file:
-                json.dump(self.cache, cache_file)
+            with FileLock(f"{self.cache_file}.lock"):
+                disk_cache = {}
+                if os.path.exists(self.cache_file):
+                    with open(self.cache_file, "r") as cache_file:
+                        disk_cache = json.load(cache_file)
+
+                disk_cache.update(self.cache)
+                with tempfile.NamedTemporaryFile(
+                    mode="w",
+                    dir=os.path.dirname(self.cache_file),
+                    delete=False,
+                ) as temp_file:
+                    temp_path = temp_file.name
+                    json.dump(disk_cache, temp_file)
+                    temp_file.flush()
+                    os.fsync(temp_file.fileno())
+
+                os.replace(temp_path, self.cache_file)
+                temp_path = None
+                self.cache = disk_cache
         except Exception as error:
             print(f"Error saving Azure response cache: {error}")
+        finally:
+            if temp_path and os.path.exists(temp_path):
+                os.unlink(temp_path)
 
     def get_cache_key(self, query: str):
         effort_suffix = (
