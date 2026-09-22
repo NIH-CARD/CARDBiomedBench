@@ -8,8 +8,7 @@ For most users, create the portable environment containing the repository's
 direct dependencies and let Conda resolve their transitive dependencies:
 
    ```bash
-   conda env create --file environment-minimal.yml --solver=libmamba
-   conda activate cardbiomedbench-env
+   source scripts/setup_conda_env.sh --minimal
    ```
 
 The original `environment.yml` is a largely pinned snapshot of the Linux/HPC
@@ -20,10 +19,11 @@ environment is more important than installation speed:
    source scripts/setup_conda_env.sh
    ```
 
-The setup script uses `environment.yml`; it does not use
-`environment-minimal.yml`. For GPU-backed Hugging Face inference or BERTScore,
-ensure that the installed PyTorch build matches the CUDA version available on
-your system.
+Without `--minimal`, the setup script uses `environment.yml`. Both paths create
+and activate `cardbiomedbench-env`. For GPU-backed Hugging Face inference or
+BERTScore, ensure that the installed PyTorch build matches the CUDA version
+available on your system. If `cardbiomedbench-env` already exists, the script
+activates it without recreating it; `--minimal` only affects new environments.
 
 ## Setup Benchmark
 
