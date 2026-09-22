@@ -162,10 +162,17 @@ def check_model_response(response: str) -> Tuple[str, bool]:
     Returns:
         Tuple[str, bool]: A tuple containing the response and a boolean indicating validity.
     """
-    if "Error in" not in response:
-        return response, True
-    else:
-        return response, False
+    if response is None:
+        return "Error in model response: received null content", False
+    if not isinstance(response, str):
+        return (
+            f"Error in model response: expected text, received "
+            f"{type(response).__name__}",
+            False,
+        )
+    if not response.strip():
+        return "Error in model response: received empty content", False
+    return response, "Error in" not in response
 
 
 def query_model_retries(
@@ -197,7 +204,10 @@ def query_model_retries(
             return response
         else:
             retry_count += 1
-            print(f"❌ Error querying model. Retry {retry_count}/{retries}")
+            print(
+                f"❌ Error querying model. Retry {retry_count}/{retries}: "
+                f"{response}"
+            )
             time.sleep(delay)
             delay *= 2  # Exponential backoff
     return f"ERROR: Failed getting response for '{query}' after {retries} retries. Last error: {response}"
