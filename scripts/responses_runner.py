@@ -289,6 +289,21 @@ def get_model_responses(
         initial_delay,
     )
     data[f'{model_name}_response'] = responses
+
+    failed_response_count = sum(
+        isinstance(response, str)
+        and response.startswith("ERROR: Failed getting response")
+        for response in responses
+    )
+    successful_response_count = len(responses) - failed_response_count
+    print(f"✅ Successful responses: {successful_response_count}")
+    print(f"❌ Failed responses: {failed_response_count}")
+    if failed_response_count:
+        print(
+            "⚠️  BioScore should not be run for this model until the "
+            "failed responses are resolved."
+        )
+
     delete_model(query_instance)
 
     # Ensure the directory exists
