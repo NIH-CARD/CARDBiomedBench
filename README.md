@@ -2,13 +2,28 @@
 
 CARDBiomedBench is a benchmarking suite for evaluating Large Language Models on complex biomedical question-answering tasks. For detailed methodology and results, please refer to our paper [CARDBiomedBench: Benchmarking Large Language Model Performance Gaps in Biomedical Research](https://www.biorxiv.org/content/10.1101/2025.01.15.633272v1). The CARDBiomedBench dataset is [hosted on Hugging Face](https://huggingface.co/datasets/NIH-CARD/CARDBiomedBench)🤗.
 
-## Setup Environment 
+## Setup Environment
 
-Create a Conda environment with the necessary dependencies:
+For most users, create the portable environment containing the repository's
+direct dependencies and let Conda resolve their transitive dependencies:
+
+   ```bash
+   conda env create --file environment-minimal.yml --solver=libmamba
+   conda activate cardbiomedbench-env
+   ```
+
+The original `environment.yml` is a largely pinned snapshot of the Linux/HPC
+environment used for the benchmark. Use it when closely reproducing that
+environment is more important than installation speed:
 
    ```bash
    source scripts/setup_conda_env.sh
    ```
+
+The setup script uses `environment.yml`; it does not use
+`environment-minimal.yml`. For GPU-backed Hugging Face inference or BERTScore,
+ensure that the installed PyTorch build matches the CUDA version available on
+your system.
 
 ## Setup Benchmark
 
