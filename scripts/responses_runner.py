@@ -162,10 +162,17 @@ def check_model_response(response: str) -> Tuple[str, bool]:
     Returns:
         Tuple[str, bool]: A tuple containing the response and a boolean indicating validity.
     """
-    if "Error in" not in response:
-        return response, True
-    else:
-        return response, False
+    if response is None:
+        return "Error in model response: received null content", False
+    if not isinstance(response, str):
+        return (
+            f"Error in model response: expected text, received "
+            f"{type(response).__name__}",
+            False,
+        )
+    if not response.strip():
+        return "Error in model response: received empty content", False
+    return response, "Error in" not in response
 
 
 def query_model_retries(
@@ -197,7 +204,10 @@ def query_model_retries(
             return response
         else:
             retry_count += 1
-            print(f"❌ Error querying model. Retry {retry_count}/{retries}")
+            print(
+                f"❌ Error querying model. Retry {retry_count}/{retries}: "
+                f"{response}"
+            )
             time.sleep(delay)
             delay *= 2  # Exponential backoff
     return f"ERROR: Failed getting response for '{query}' after {retries} retries. Last error: {response}"
@@ -279,6 +289,21 @@ def get_model_responses(
         initial_delay,
     )
     data[f'{model_name}_response'] = responses
+
+    failed_response_count = sum(
+        isinstance(response, str)
+        and response.startswith("ERROR: Failed getting response")
+        for response in responses
+    )
+    successful_response_count = len(responses) - failed_response_count
+    print(f"✅ Successful responses: {successful_response_count}")
+    print(f"❌ Failed responses: {failed_response_count}")
+    if failed_response_count:
+        print(
+            "⚠️  BioScore should not be run for this model until the "
+            "failed responses are resolved."
+        )
+
     delete_model(query_instance)
 
     # Ensure the directory exists

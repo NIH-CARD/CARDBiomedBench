@@ -58,7 +58,18 @@ class OpenRouterQuery:
         if os.path.exists(self.cache_file):
             try:
                 with open(self.cache_file, "r") as cache_file:
-                    return json.load(cache_file)
+                    cache = json.load(cache_file)
+                if not isinstance(cache, dict):
+                    raise ValueError("OpenRouter response cache is not a JSON object")
+
+                # Older runs could cache a successful API response whose
+                # message.content was null. Do not reuse those entries; they
+                # should be queried again.
+                return {
+                    key: value
+                    for key, value in cache.items()
+                    if isinstance(value, str) and value.strip()
+                }
             except Exception as error:
                 print(f"Error loading OpenRouter response cache: {error}")
         return {}
@@ -100,7 +111,21 @@ class OpenRouterQuery:
                 request_args["reasoning_effort"] = self.reasoning_effort
 
             completion = self.client.chat.completions.create(**request_args)
-            response = completion.choices[0].message.content
+            choice = completion.choices[0]
+            response = choice.message.content
+            if not isinstance(response, str) or not response.strip():
+                usage = getattr(completion, "usage", None)
+                completion_details = getattr(
+                    usage, "completion_tokens_details", None
+                )
+                diagnostic = (
+                    "empty message content"
+                    f"; finish_reason={getattr(choice, 'finish_reason', None)!r}"
+                    f"; completion_tokens={getattr(usage, 'completion_tokens', None)!r}"
+                    f"; reasoning_tokens={getattr(completion_details, 'reasoning_tokens', None)!r}"
+                )
+                return f"Error in {self.model_name} response: {diagnostic}"
+
             self.cache[cache_key] = response
             self.save_cache()
             return response
