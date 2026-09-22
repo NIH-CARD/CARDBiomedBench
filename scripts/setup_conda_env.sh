@@ -5,8 +5,20 @@
 #
 # This script sets up the 'cardbiomedbench-env' Conda environment for the
 # CARDBiomedBench project. It checks for Conda installation, creates the
-# environment if it doesn't exist, and activates it.
+# environment if it doesn't exist, and activates it. Pass --minimal to use
+# environment-minimal.yml instead of the pinned environment.yml snapshot.
 #===============================================================================
+
+ENVIRONMENT_FILE="environment.yml"
+ENVIRONMENT_DESCRIPTION="pinned Linux/HPC snapshot"
+
+if [[ "${1:-}" == "--minimal" ]]; then
+    ENVIRONMENT_FILE="environment-minimal.yml"
+    ENVIRONMENT_DESCRIPTION="portable minimal environment"
+elif [[ -n "${1:-}" ]]; then
+    echo "Usage: source scripts/setup_conda_env.sh [--minimal]"
+    return 1 2>/dev/null || exit 1
+fi
 
 # Function to display a streaming message effect
 stream_message() {
@@ -46,16 +58,16 @@ if conda env list | awk '{print $1}' | grep -qw '^cardbiomedbench-env$'; then
     stream_message "🔧 The 'cardbiomedbench-env' environment already exists. Skipping creation."
 else
     # Create the environment if it does not exist
-    stream_message "🔧 Creating the 'cardbiomedbench-env' environment from scratch..."
+    stream_message "🔧 Creating the 'cardbiomedbench-env' environment from the ${ENVIRONMENT_DESCRIPTION}..."
 
-    # Check for the existence of 'environment.yml' before creating the environment
-    if [ ! -f "environment.yml" ]; then
-        stream_message "❌ The 'environment.yml' file is missing. Please ensure it is present in the current directory."
+    # Check for the selected environment file before creating the environment
+    if [ ! -f "$ENVIRONMENT_FILE" ]; then
+        stream_message "❌ The '$ENVIRONMENT_FILE' file is missing. Please ensure it is present in the current directory."
         wait_for_exit
     fi
 
-    # Create environment from the environment.yml file
-    if ! conda env create -f environment.yml; then
+    # Create the environment from the selected specification
+    if ! conda env create -f "$ENVIRONMENT_FILE"; then
         stream_message "❌ Environment creation failed!"
         wait_for_exit
     fi

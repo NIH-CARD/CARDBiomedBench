@@ -1,0 +1,34 @@
+# Portable environment containing the repository's direct dependencies.
+name: cardbiomedbench-env
+
+channels:
+  - conda-forge
+
+dependencies:
+  - python=3.11
+  - pip
+  - accelerate
+  - datasets
+  - evaluate
+  - filelock
+  - matplotlib-base
+  - nltk
+  - numpy
+  - pandas
+  - python-dotenv
+  - pytorch
+  - pyyaml
+  - requests
+  - rouge-score
+  - sacrebleu
+  - scipy
+  - seaborn
+  - tiktoken
+  - tqdm
+  - transformers<5
+
+  - pip:
+      - "anthropic>=1.7,<2"
+      - bert-score
+      - google-genai
+      - "openai>=1.65,<3"
