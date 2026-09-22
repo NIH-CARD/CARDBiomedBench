@@ -129,6 +129,8 @@ def initialize_model(
         return ClaudeQuery(system_prompt, 'claude-opus-4-5-20251101', max_tokens=max_new_tokens+THINKING_TOKENS, temperature=temperature, thinking_budget_tokens=THINKING_TOKENS)
     elif model_name == 'claude-opus-5':
         return ClaudeQuery(system_prompt, 'claude-opus-5', max_tokens=max_new_tokens, temperature=temperature, effort=CLAUDE_EFFORT)
+    elif model_name == 'claude-opus-5.5':
+        return ClaudeQuery(system_prompt, 'claude-opus-5-5', max_tokens=max_new_tokens, temperature=temperature, effort=CLAUDE_EFFORT)
     elif model_name == 'claude-fable-5.1':
         return ClaudeQuery(system_prompt, 'claude-fable-5-1', max_tokens=max_new_tokens, temperature=temperature, effort=CLAUDE_EFFORT)
     elif model_name == 'perplexity-sonar-huge':

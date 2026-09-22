@@ -93,6 +93,9 @@ models:
   - name: 'gpt-6-astra'
     use: false
     type: 'azure_openai'
+  - name: 'gpt-6-sol'
+    use: false
+    type: 'azure_openai'
   - name: 'qwen-3.8-max'
     use: false
     type: 'openrouter'
@@ -136,6 +139,9 @@ models:
     use: true
     type: 'anthropic'
   - name: 'claude-opus-5'
+    use: false
+    type: 'anthropic'
+  - name: 'claude-opus-5.5'
     use: false
     type: 'anthropic'
   - name: 'claude-fable-5.1'
