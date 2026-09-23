@@ -5,6 +5,11 @@ import json
 from dotenv import load_dotenv
 from google import genai
 
+from scripts.collect_responses.cache_utils import (
+    filter_valid_cache,
+    is_valid_cached_response,
+)
+
 class GeminiQuery:
     def __init__(self, system_prompt, model_name, max_tokens, temperature, thinking_budget=-1):
         self.system_prompt = system_prompt
@@ -37,7 +42,7 @@ class GeminiQuery:
         if os.path.exists(self.cache_file):
             try:
                 with open(self.cache_file, 'r') as f:
-                    return json.load(f)
+                    return filter_valid_cache(json.load(f))
             except Exception as e:
                 print(f"Error loading cache file: {e}")
         return {}
@@ -74,8 +79,10 @@ class GeminiQuery:
 
     def query(self, query: str) -> str:
         cache_key = self.get_cache_key(query)
-        if cache_key in self.cache:
-            return self.cache[cache_key]
+        cached_response = self.cache.get(cache_key)
+        if is_valid_cached_response(cached_response):
+            return cached_response
+        self.cache.pop(cache_key, None)
 
         time.sleep(3)
         try:
@@ -97,8 +104,16 @@ class GeminiQuery:
                         getattr(p, "text", "") for p in cand.content.parts if hasattr(p, "text")
                     ).strip()
 
-            if not text:
-                text = str(response)
+            if not is_valid_cached_response(text):
+                finish_reason = None
+                if getattr(response, "candidates", None):
+                    finish_reason = getattr(
+                        response.candidates[0], "finish_reason", None
+                    )
+                return (
+                    f"Error in {self.model_name} response: empty message content"
+                    f"; finish_reason={finish_reason!r}"
+                )
 
             self.cache[cache_key] = text
             self.save_cache()

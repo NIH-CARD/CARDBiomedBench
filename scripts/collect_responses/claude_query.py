@@ -4,6 +4,11 @@ import json
 from dotenv import load_dotenv
 import anthropic
 
+from scripts.collect_responses.cache_utils import (
+    filter_valid_cache,
+    is_valid_cached_response,
+)
+
 class ClaudeQuery:
     VALID_EFFORTS = {"low", "medium", "high", "xhigh", "max"}
 
@@ -67,7 +72,7 @@ class ClaudeQuery:
         if os.path.exists(self.cache_file):
             try:
                 with open(self.cache_file, 'r') as f:
-                    return json.load(f)
+                    return filter_valid_cache(json.load(f))
             except Exception as e:
                 print(f"Error loading cache file: {e}")
         return {}
@@ -108,8 +113,10 @@ class ClaudeQuery:
         cache_key = self.get_cache_key(query)
 
         # Check if the result is already cached
-        if cache_key in self.cache:
-            return self.cache[cache_key]
+        cached_response = self.cache.get(cache_key)
+        if is_valid_cached_response(cached_response):
+            return cached_response
+        self.cache.pop(cache_key, None)
 
         # If not cached, query the API
         try:
@@ -138,6 +145,11 @@ class ClaudeQuery:
                 if getattr(block, "type", None) == "text"
             ]
             response = "\n".join([t for t in text_parts if t]).strip()
+            if not is_valid_cached_response(response):
+                return (
+                    f"Error in {self.model_name} response: empty message content"
+                    f"; stop_reason={getattr(message, 'stop_reason', None)!r}"
+                )
 
             # Cache the result
             self.cache[cache_key] = response

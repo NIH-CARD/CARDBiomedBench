@@ -5,6 +5,11 @@ import os
 from dotenv import load_dotenv
 from openai import OpenAI
 
+from scripts.collect_responses.cache_utils import (
+    filter_valid_cache,
+    is_valid_cached_response,
+)
+
 
 class OpenRouterQuery:
     """Query an OpenRouter model through its OpenAI-compatible API."""
@@ -58,18 +63,7 @@ class OpenRouterQuery:
         if os.path.exists(self.cache_file):
             try:
                 with open(self.cache_file, "r") as cache_file:
-                    cache = json.load(cache_file)
-                if not isinstance(cache, dict):
-                    raise ValueError("OpenRouter response cache is not a JSON object")
-
-                # Older runs could cache a successful API response whose
-                # message.content was null. Do not reuse those entries; they
-                # should be queried again.
-                return {
-                    key: value
-                    for key, value in cache.items()
-                    if isinstance(value, str) and value.strip()
-                }
+                    return filter_valid_cache(json.load(cache_file))
             except Exception as error:
                 print(f"Error loading OpenRouter response cache: {error}")
         return {}
@@ -94,8 +88,10 @@ class OpenRouterQuery:
 
     def query(self, query: str) -> str:
         cache_key = self.get_cache_key(query)
-        if cache_key in self.cache:
-            return self.cache[cache_key]
+        cached_response = self.cache.get(cache_key)
+        if is_valid_cached_response(cached_response):
+            return cached_response
+        self.cache.pop(cache_key, None)
 
         try:
             request_args = dict(
@@ -113,7 +109,7 @@ class OpenRouterQuery:
             completion = self.client.chat.completions.create(**request_args)
             choice = completion.choices[0]
             response = choice.message.content
-            if not isinstance(response, str) or not response.strip():
+            if not is_valid_cached_response(response):
                 usage = getattr(completion, "usage", None)
                 completion_details = getattr(
                     usage, "completion_tokens_details", None
