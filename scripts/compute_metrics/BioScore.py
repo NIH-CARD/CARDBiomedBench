@@ -8,6 +8,7 @@ It handles caching, batch submission, result polling, and mapping of scores back
 import os
 import re
 import json
+from collections import Counter
 from typing import Tuple, Dict, List
 
 import pandas as pd
@@ -19,6 +20,181 @@ from scripts.collect_responses.azure_query import AzureQuery
 # Define the new cache subdirectory for batch queries
 CACHE_DIR = ".cache/batch_queries"
 os.makedirs(CACHE_DIR, exist_ok=True)
+
+
+# Model response outcomes used to decide whether a response should be graded.
+# These are provider- and model-independent; provider-specific wording is
+# normalized by classify_model_response().
+RESPONSE_SUCCESS = "success"
+RESPONSE_TOKEN_EXHAUSTED = "token_exhausted"
+RESPONSE_EMPTY = "empty_response"
+RESPONSE_CONTENT_FILTERED = "content_filtered"
+RESPONSE_TRANSIENT_ERROR = "transient_error"
+RESPONSE_CONFIGURATION_ERROR = "configuration_error"
+RESPONSE_UNKNOWN_ERROR = "unknown_error"
+
+DIRECT_BIOSCORES = {
+    RESPONSE_TOKEN_EXHAUSTED: 0.0,
+    RESPONSE_EMPTY: 0.0,
+    RESPONSE_CONTENT_FILTERED: -1.0,
+}
+
+STANDARDIZED_ERROR_TYPES = {
+    "TOKEN_EXHAUSTED": RESPONSE_TOKEN_EXHAUSTED,
+    "EMPTY_RESPONSE": RESPONSE_EMPTY,
+    "CONTENT_FILTERED": RESPONSE_CONTENT_FILTERED,
+    "TRANSIENT_ERROR": RESPONSE_TRANSIENT_ERROR,
+    "CONFIGURATION_ERROR": RESPONSE_CONFIGURATION_ERROR,
+    "UNKNOWN_ERROR": RESPONSE_UNKNOWN_ERROR,
+}
+
+CONTENT_FILTER_MARKERS = (
+    "content management policy",
+    "content policy violation",
+    "content_filter",
+    "content filtered",
+    "response was filtered",
+    "finish_reason='safety'",
+    'finish_reason="safety"',
+    "finish_reason='refusal'",
+    'finish_reason="refusal"',
+    "stop_reason='refusal'",
+    'stop_reason="refusal"',
+    "finishreason.safety",
+    "finishreason.blocklist",
+    "finishreason.prohibited_content",
+    "finishreason.spii",
+    "finishreason.recitation",
+    "prohibited_content",
+    "safety filter",
+    "flagged by moderation",
+    "moderation policy",
+)
+
+EMPTY_RESPONSE_MARKERS = (
+    "received null content",
+    "received empty content",
+    "empty message content",
+    "empty model output",
+    "expected text, received",
+)
+
+TRANSIENT_ERROR_MARKERS = (
+    "rate limit",
+    "too many requests",
+    "timed out",
+    "timeout",
+    "connection error",
+    "connection reset",
+    "service unavailable",
+    "temporarily unavailable",
+    "overloaded",
+    "internal server error",
+)
+
+CONFIGURATION_ERROR_MARKERS = (
+    "authentication",
+    "api key",
+    "permission denied",
+    "forbidden",
+    "deployment not found",
+    "model not found",
+    "no endpoints",
+    "unsupported parameter",
+    "invalid parameter",
+    "invalid request",
+    "invalid_request",
+    "client not initialized",
+    "model or tokenizer not initialized",
+    "zdr violation",
+    "insufficient credits",
+    "payment required",
+    "quota exceeded",
+)
+
+
+def classify_model_response(response) -> str:
+    """Classify a model response for BioScore without using model names.
+
+    Normal model text is returned as ``success``. Known terminal model outcomes
+    receive a direct BioScore, while infrastructure, configuration, and unknown
+    failures are excluded from grading. Free-form legacy errors are supported;
+    future query clients can use ``ERROR[TYPE]: details`` in the same response
+    column for deterministic classification.
+    """
+    if response is None or (not isinstance(response, str) and pd.isna(response)):
+        return RESPONSE_EMPTY
+    if not isinstance(response, str):
+        return RESPONSE_UNKNOWN_ERROR
+
+    stripped_response = response.strip()
+    if not stripped_response:
+        return RESPONSE_EMPTY
+
+    standardized_match = re.match(
+        r"^ERROR\[([A-Z_]+)\]", stripped_response, flags=re.IGNORECASE
+    )
+    if standardized_match:
+        error_type = standardized_match.group(1).upper()
+        return STANDARDIZED_ERROR_TYPES.get(error_type, RESPONSE_UNKNOWN_ERROR)
+
+    is_legacy_error = (
+        stripped_response.startswith("ERROR:")
+        or stripped_response.startswith("Error in ")
+        or stripped_response.startswith("Last error:")
+        or stripped_response == "Model or tokenizer not initialized."
+    )
+    if not is_legacy_error:
+        return RESPONSE_SUCCESS
+
+    # The retry wrapper contains the original question, so only inspect the
+    # final provider error to avoid matching words that occurred in a question.
+    error_text = stripped_response.rsplit("Last error:", 1)[-1].lower()
+
+    wrapped_standardized_match = re.match(
+        r"\s*error\[([a-z_]+)\]", error_text, flags=re.IGNORECASE
+    )
+    if wrapped_standardized_match:
+        error_type = wrapped_standardized_match.group(1).upper()
+        return STANDARDIZED_ERROR_TYPES.get(error_type, RESPONSE_UNKNOWN_ERROR)
+
+    if any(marker in error_text for marker in CONTENT_FILTER_MARKERS):
+        return RESPONSE_CONTENT_FILTERED
+
+    if (
+        re.search(
+            r"(?:finish_reason|stop_reason)\s*=\s*['\"]?"
+            r"(?:length|max_tokens)",
+            error_text,
+        )
+        or "finishreason.max_tokens" in error_text
+        or "token budget exhausted" in error_text
+        or "exhausted its token budget" in error_text
+    ):
+        return RESPONSE_TOKEN_EXHAUSTED
+
+    if any(marker in error_text for marker in EMPTY_RESPONSE_MARKERS):
+        return RESPONSE_EMPTY
+
+    if (
+        any(marker in error_text for marker in TRANSIENT_ERROR_MARKERS)
+        or re.search(
+            r"(?:error|status) code:\s*(?:408|409|429|5\d\d)\b",
+            error_text,
+        )
+    ):
+        return RESPONSE_TRANSIENT_ERROR
+
+    if (
+        any(marker in error_text for marker in CONFIGURATION_ERROR_MARKERS)
+        or re.search(
+            r"(?:error|status) code:\s*(?:400|401|402|403|404|413|422)\b",
+            error_text,
+        )
+    ):
+        return RESPONSE_CONFIGURATION_ERROR
+
+    return RESPONSE_UNKNOWN_ERROR
 
 
 def check_BioScore_response(response: str) -> Tuple[float, bool]:
@@ -186,17 +362,35 @@ def map_bioscore_results_to_dataframe(
     Returns:
         pd.DataFrame: The DataFrame with BioScore results mapped for the specific model.
     """
+    bioscore_column = f'{model}_BioScore'
     for i, row in data.iterrows():
         uuid = row['uuid']
+        model_response = row[f'{model}_{response_col}']
+        response_status = classify_model_response(model_response)
+
+        if response_status in DIRECT_BIOSCORES:
+            data.at[i, bioscore_column] = DIRECT_BIOSCORES[response_status]
+            continue
+
+        if response_status != RESPONSE_SUCCESS:
+            # Do not preserve a score that may have been assigned by an older
+            # run which sent an internal error string to the grading model.
+            data.at[i, bioscore_column] = float("nan")
+            print(
+                f"No BioScore assigned for UUID {uuid}: "
+                f"{response_status}"
+            )
+            continue
+
         if str(uuid) in bioscore_results:
             # If the result is in bioscore_results, use it
-            data.at[i, f'{model}_BioScore'] = bioscore_results[str(uuid)]
+            data.at[i, bioscore_column] = bioscore_results[str(uuid)]
         else:
             # Check the cache for the response if it's not in bioscore_results
             prompt = bioscore_grading_prompt.format(
                 question=row[query_col],
                 gold_res=row[gold_col],
-                pred_res=row[f'{model}_{response_col}']
+                pred_res=model_response
             )
 
             # Generate the cache key
@@ -206,7 +400,7 @@ def map_bioscore_results_to_dataframe(
                 cached_response = grading_model.cache[cache_key]
                 bioscore, valid = check_BioScore_response(cached_response)
                 if valid:
-                    data.at[i, f'{model}_BioScore'] = bioscore
+                    data.at[i, bioscore_column] = bioscore
                 else:
                     print(f"Invalid cached response for UUID {uuid}")
             else:
@@ -246,18 +440,33 @@ def submit_batches(
         # Load the dataset
         data = load_dataset(f'{res_dir}/{model}_responses.csv')
 
-        # Format BioScore grading prompts
-        bioscore_grading_prompts = [
-            bioscore_grading_prompt.format(
-                question=row[query_col],
-                gold_res=row[gold_col],
-                pred_res=row[f'{model}_{response_col}']
-            )
-            for _, row in data.iterrows()
-        ]
+        # Only genuine model responses are sent to GPT-4o. Known terminal
+        # outcomes receive direct scores during result mapping, and all other
+        # failures remain unscored.
+        bioscore_grading_prompts = []
+        uuids = []
+        response_status_counts = Counter()
+        for _, row in data.iterrows():
+            model_response = row[f'{model}_{response_col}']
+            response_status = classify_model_response(model_response)
+            response_status_counts[response_status] += 1
+            if response_status != RESPONSE_SUCCESS:
+                continue
 
-        # Get the UUIDs
-        uuids = data['uuid'].astype(str).tolist()
+            bioscore_grading_prompts.append(
+                bioscore_grading_prompt.format(
+                    question=row[query_col],
+                    gold_res=row[gold_col],
+                    pred_res=model_response
+                )
+            )
+            uuids.append(str(row['uuid']))
+
+        status_summary = ", ".join(
+            f"{status}={count}"
+            for status, count in sorted(response_status_counts.items())
+        )
+        print(f"BioScore response classification for {model}: {status_summary}")
 
         # Generate the batch file for this model
         batch_file_path = f"{CACHE_DIR}/{model}_grading_batch.jsonl"
