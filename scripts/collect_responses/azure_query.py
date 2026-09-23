@@ -8,6 +8,11 @@ from dotenv import load_dotenv
 from filelock import FileLock
 from openai import AzureOpenAI
 
+from scripts.collect_responses.cache_utils import (
+    filter_valid_cache,
+    is_valid_cached_response,
+)
+
 
 class AzureQuery:
     """Query an Azure OpenAI chat-completions deployment."""
@@ -72,7 +77,7 @@ class AzureQuery:
                 if not os.path.exists(self.cache_file):
                     return {}
                 with open(self.cache_file, "r") as cache_file:
-                    return json.load(cache_file)
+                    return filter_valid_cache(json.load(cache_file))
         except Exception as error:
             print(f"Error loading Azure response cache: {error}")
         return {}
@@ -84,7 +89,7 @@ class AzureQuery:
                 disk_cache = {}
                 if os.path.exists(self.cache_file):
                     with open(self.cache_file, "r") as cache_file:
-                        disk_cache = json.load(cache_file)
+                        disk_cache = filter_valid_cache(json.load(cache_file))
 
                 disk_cache.update(self.cache)
                 with tempfile.NamedTemporaryFile(
@@ -116,8 +121,10 @@ class AzureQuery:
 
     def query(self, query: str) -> str:
         cache_key = self.get_cache_key(query)
-        if cache_key in self.cache:
-            return self.cache[cache_key]
+        cached_response = self.cache.get(cache_key)
+        if is_valid_cached_response(cached_response):
+            return cached_response
+        self.cache.pop(cache_key, None)
 
         try:
             request_args = {
@@ -134,7 +141,20 @@ class AzureQuery:
                 request_args["temperature"] = self.temperature
 
             completion = self.client.chat.completions.create(**request_args)
-            response = completion.choices[0].message.content
+            choice = completion.choices[0]
+            response = choice.message.content
+            if not is_valid_cached_response(response):
+                usage = getattr(completion, "usage", None)
+                completion_details = getattr(
+                    usage, "completion_tokens_details", None
+                )
+                return (
+                    f"Error in {self.model_name} response: empty message content"
+                    f"; finish_reason={getattr(choice, 'finish_reason', None)!r}"
+                    f"; completion_tokens={getattr(usage, 'completion_tokens', None)!r}"
+                    f"; reasoning_tokens="
+                    f"{getattr(completion_details, 'reasoning_tokens', None)!r}"
+                )
             self.cache[cache_key] = response
             self.save_cache()
             return response

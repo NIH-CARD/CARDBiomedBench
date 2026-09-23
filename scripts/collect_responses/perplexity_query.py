@@ -5,6 +5,11 @@ import json
 import requests
 from dotenv import load_dotenv
 
+from scripts.collect_responses.cache_utils import (
+    filter_valid_cache,
+    is_valid_cached_response,
+)
+
 class PerplexityQuery:
     def __init__(self, system_prompt, model_name, max_tokens, temperature):
         self.api_url = "https://api.perplexity.ai/chat/completions"
@@ -61,7 +66,7 @@ class PerplexityQuery:
         if os.path.exists(self.cache_file):
             try:
                 with open(self.cache_file, 'r') as f:
-                    return json.load(f)
+                    return filter_valid_cache(json.load(f))
             except Exception as e:
                 print(f"Error loading cache file: {e}")
         return {}
@@ -101,8 +106,10 @@ class PerplexityQuery:
         cache_key = self.get_cache_key(query)
 
         # Check if the result is already cached
-        if cache_key in self.cache:
-            return self.cache[cache_key]
+        cached_response = self.cache.get(cache_key)
+        if is_valid_cached_response(cached_response):
+            return cached_response
+        self.cache.pop(cache_key, None)
 
         # If not cached, query the API
         payload = {
@@ -119,7 +126,11 @@ class PerplexityQuery:
             time.sleep(3)
             response = requests.post(self.api_url, json=payload, headers=self.headers)
             response.raise_for_status()
-            response_content = response.json().get('choices', [{}])[0].get('message', {}).get('content', 'No content returned')
+            response_content = response.json().get('choices', [{}])[0].get(
+                'message', {}
+            ).get('content')
+            if not is_valid_cached_response(response_content):
+                return f"Error in {self.model_name} response: empty message content"
 
             # Cache the result
             self.cache[cache_key] = response_content
