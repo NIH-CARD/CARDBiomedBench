@@ -60,6 +60,9 @@ def parse_arguments():
     parser.add_argument('--run_graphs', action='store_true',
         help='Run graphs generation step'
     )
+    parser.add_argument('--models_from_results', action='store_true',
+        help='With --run_graphs, use models found in results/by_model instead of config use flags'
+    )
     return parser.parse_args()
 
 def load_configuration(config_path):
@@ -240,7 +243,18 @@ def run_graphs(args, config):
     scored_path = os.path.abspath(os.path.join(res_dir, f"CARDBiomedBench_{split_type}_compiled.csv"))
 
     # Determine models to process and metrics to use
-    models_to_process = [model['name'] for model in config['models'] if model.get('use', False)]
+    if args.models_from_results:
+        results_dir = Path(res_dir) / 'by_model'
+        models_to_process = sorted(
+            path.name.removesuffix('_responses.csv')
+            for path in results_dir.glob('*_responses.csv')
+            if path.is_file()
+        )
+        if not models_to_process:
+            sys.exit(f"No model response CSV files found in {results_dir}")
+        stream_message(f"🔧 Models found in {results_dir}: {', '.join(models_to_process)}")
+    else:
+        models_to_process = [model['name'] for model in config['models'] if model.get('use', False)]
     metrics_to_use = [metric['name'] for metric in config['metrics'] if metric.get('use', False)]
 
     stream_message("🚀 Running graphs generation step")
@@ -270,6 +284,8 @@ def main():
     args = parse_arguments()
     if args.retry_transient and not args.run_responses:
         sys.exit("--retry_transient requires --run_responses")
+    if args.models_from_results and not args.run_graphs:
+        sys.exit("--models_from_results requires --run_graphs")
     config_path = Path(args.config)
     config = load_configuration(config_path)
 
