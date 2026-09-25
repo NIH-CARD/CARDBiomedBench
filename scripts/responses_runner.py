@@ -251,7 +251,8 @@ def get_model_responses(
     hyperparams: dict,
     query_col: str = 'question',
     retries: int = 3,
-    initial_delay: int = 2
+    initial_delay: int = 2,
+    retry_transient: bool = False,
 ) -> pd.DataFrame:
     """
     Get responses from a single LLM for each query in the dataset and save the results.
@@ -268,7 +269,25 @@ def get_model_responses(
     Returns:
         pd.DataFrame: DataFrame with the model responses added.
     """
-    data[f'{model_name}_response'] = ''
+    response_column = f'{model_name}_response'
+    save_path = os.path.join(res_by_model_dir, f'{model_name}_responses.csv')
+    if retry_transient:
+        from scripts.compute_metrics.BioScore import (
+            RESPONSE_TRANSIENT_ERROR,
+            classify_model_response,
+        )
+
+        if not os.path.isfile(save_path):
+            raise FileNotFoundError(f"Existing response CSV required: {save_path}")
+        data = pd.read_csv(save_path)
+        if response_column not in data or query_col not in data:
+            raise ValueError(f"Missing {response_column} or {query_col} in {save_path}")
+        retry_rows = data[response_column].map(classify_model_response) == RESPONSE_TRANSIENT_ERROR
+        print(f"Retrying {int(retry_rows.sum())} transient responses for {model_name}")
+        if not retry_rows.any():
+            return data
+    else:
+        data[response_column] = ''
     # Extract hyperparameters
     system_prompt = hyperparams.get('system_prompt', '')
     max_new_tokens = hyperparams.get('max_new_tokens', 1024)
@@ -285,12 +304,18 @@ def get_model_responses(
     responses = collect_single_model_responses(
         model_name,
         query_instance,
-        data[query_col].tolist(),
+        data.loc[retry_rows, query_col].tolist() if retry_transient else data[query_col].tolist(),
         check_model_response,
         retries,
         initial_delay,
     )
-    data[f'{model_name}_response'] = responses
+    if retry_transient:
+        data.loc[retry_rows, response_column] = responses
+        score_column = f'{model_name}_BioScore'
+        if score_column in data:
+            data.loc[retry_rows, score_column] = float('nan')
+    else:
+        data[response_column] = responses
 
     failed_response_count = sum(
         isinstance(response, str)
@@ -310,7 +335,6 @@ def get_model_responses(
 
     # Ensure the directory exists
     os.makedirs(res_by_model_dir, exist_ok=True)
-    save_path = os.path.join(res_by_model_dir, f'{model_name}_responses.csv')
     save_dataset(save_path, data)
     return data
 
@@ -326,8 +350,11 @@ def main():
     parser.add_argument('--res_by_model_dir', type=str, required=True, 
         help='Directory to save the response CSV files'
     )
-    parser.add_argument('--model_name', type=str, required=True, 
+    parser.add_argument('--model_name', type=str, required=True,
         help="Specify a single model to run"
+    )
+    parser.add_argument('--retry_transient', action='store_true',
+        help='Retry only transient errors in the existing model response CSV'
     )
     parser.add_argument('--hyperparams', type=str, required=True, 
         help='Model hyperparameters as JSON string'
@@ -345,17 +372,19 @@ def main():
     res_by_model_dir = args.res_by_model_dir
     model_name = args.model_name
 
-    data = load_dataset(qa_path)
-    if data.empty:
+    data = load_dataset(qa_path) if not args.retry_transient else pd.DataFrame()
+    if not args.retry_transient and data.empty:
         print("❌ No data to process. Exiting.")
         return
 
-    print(f"🔧 Getting model responses on {len(data)} Q/A for {model_name}")
+    if not args.retry_transient:
+        print(f"🔧 Getting model responses on {len(data)} Q/A for {model_name}")
     data = get_model_responses(
         data,
         model_name=model_name,
         res_by_model_dir=res_by_model_dir,
-        hyperparams=hyperparams
+        hyperparams=hyperparams,
+        retry_transient=args.retry_transient,
     )
     print(f"🔧 Responses collected and saved to for {model_name}")
 
