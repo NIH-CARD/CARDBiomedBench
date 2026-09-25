@@ -47,8 +47,8 @@ NEARBY_LABEL_OFFSETS = {
 CALLOUT_OFFSETS = {
     "gpt-6-sol": (-0.07, +0.11),
     "claude-opus-5": (+0.07, +0.09),
-    "gpt-6-astra": (+0.10, -0.09),
-    "claude-opus-5.5": (-0.08, -0.13),
+    "gpt-6-astra": (-0.075, -0.085),
+    "claude-opus-5.5": (+0.11, -0.08),
 }
 
 def small_after_dash(label: str, main_size=14, small_size=12, weight='bold'):
