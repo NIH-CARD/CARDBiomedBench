@@ -2,17 +2,19 @@ import pandas as pd
 import numpy as np
 import seaborn as sns
 import matplotlib.pyplot as plt
+from pathlib import Path
 from matplotlib.patches import Ellipse
 from matplotlib.offsetbox import AnnotationBbox, TextArea, HPacker
 
 
 MODEL_LABELS = {
-    "qwen-3.8-max": {"label": "Qwen-3.8-Max", "position": (0.00, -0.040)},
-    "kimi-k3": {"label": "Kimi-K3", "position": (0.00, +0.060)},
-    "glm-5.3": {"label": "GLM-5.3", "position": (-0.050, -0.040)},
+    "qwen-3.8-max": {"label": "Qwen-3.8-Max"},
+    "kimi-k3": {"label": "Kimi-K3"},
+    "glm-5.3": {"label": "GLM-5.3"},
     "deepseek-v4-pro": {"label": "DeepSeek-V4-Pro", "position": (+0.050, +0.060)},
-    "gpt-6-astra": {"label": "GPT-6-Astra", "position": (0.00, -0.040)},
-    "gpt-5.6-sol": {"label": "GPT-5.6-Sol", "position": (0.00, +0.060)},
+    "gpt-6-astra": {"label": "GPT-6-Astra"},
+    "gpt-6-sol": {"label": "GPT-6-Sol"},
+    "gpt-5.6-sol": {"label": "GPT-5.6-Sol"},
     "gpt-5": {"label": "OpenAI-GPT-5", "position": (-0.010, +0.030)},
     "gpt-5-mini": {"label": "OpenAI-GPT-5-Mini", "position": (0.00, +0.030)},
     "o3": {"label": "OpenAI-o3", "position": (-0.010, -0.040)},
@@ -25,14 +27,28 @@ MODEL_LABELS = {
     "gemini-2.0-flash": {"label": "Gemini-2.0-Flash", "position": (-0.085, -0.002)},
     "gemini-1.5-pro": {"label": "Gemini-1.5-Pro", "position": (-0.080, -0.025)},
     "gemma-2-27b-it": {"label": "Gemma-2-27B", "position": (0.00, -0.040)},
-    "claude-fable-5.1": {"label": "Claude-Fable-5.1", "position": (0.00, -0.040)},
-    "claude-opus-5": {"label": "Claude-Opus-5", "position": (0.00, +0.060)},
+    "claude-fable-5.1": {"label": "Claude-Fable-5.1"},
+    "claude-opus-5.5": {"label": "Claude-Opus-5.5"},
+    "claude-opus-5": {"label": "Claude-Opus-5"},
     "claude-4.1-opus": {"label": "Claude-4.1-Opus", "position": (0.00, -0.040)},
     "claude-4.0-sonnet": {"label": "Claude-4.0-Sonnet", "position": (0.00, +0.060)},
     "claude-3.7-sonnet": {"label": "Claude-3.7-Sonnet", "position": (0.00, -0.040)},
     "claude-3.5-sonnet": {"label": "Claude-3.5-Sonnet", "position": (-0.100, +0.010)},
     "perplexity-sonar-huge": {"label": "Perplexity-Sonar-Huge", "position": (0.020, +0.030)},
-    "llama-3.1-70b-it": {"label": "Llama-3.1-70B", "position":(-0.085, -0.002)},
+    "llama-3.1-70b-it": {"label": "Llama-3.1-70B", "position": (-0.085, -0.002)},
+}
+
+NEARBY_LABEL_OFFSETS = {
+    "qwen-3.8-max": +0.025,
+    "claude-fable-5.1": +0.025,
+    "gpt-5.6-sol": +0.025,
+}
+
+CALLOUT_OFFSETS = {
+    "gpt-6-sol": (-0.07, +0.11),
+    "claude-opus-5": (+0.07, +0.09),
+    "gpt-6-astra": (-0.075, -0.085),
+    "claude-opus-5.5": (+0.11, -0.08),
 }
 
 def small_after_dash(label: str, main_size=14, small_size=12, weight='bold'):
@@ -42,6 +58,7 @@ def small_after_dash(label: str, main_size=14, small_size=12, weight='bold'):
     box_main  = TextArea(head, textprops=dict(fontsize=main_size, fontweight=weight))
     box_small = TextArea("-" + tail, textprops=dict(fontsize=small_size, fontweight=weight))
     return HPacker(children=[box_main, box_small], align="center", pad=0, sep=0)
+
 
 def plot_safety_vs_quality(data: pd.DataFrame, metric: str, models: list, title: str, save_path: str):
     """Plot Response Quality Rate against Safety Rate for each model with legend and pastel colors,
@@ -86,9 +103,6 @@ def plot_safety_vs_quality(data: pd.DataFrame, metric: str, models: list, title:
     sns.set_style("whitegrid")
     sns.set_context("talk")
 
-    # Use pastel color palette
-    colors = sns.color_palette('pastel', n_colors=len(model_names))
-
     ax = plt.gca()  # Get the current axis
 
     # Create ellipses for confidence intervals, no dots plotted
@@ -103,33 +117,68 @@ def plot_safety_vs_quality(data: pd.DataFrame, metric: str, models: list, title:
         # Create an ellipse to represent the confidence intervals
         ellipse = Ellipse((x, y), width=2 * ci_x, height=2 * ci_y, facecolor='white', edgecolor="#3587CD", linewidth=1.75, alpha=.9, zorder=2)
         ax.add_patch(ellipse)
-
-        # Add custom text label for the model, relative to the center of the ellipse
-        if model in MODEL_LABELS:
+        if model in NEARBY_LABEL_OFFSETS:
+            offset_y = NEARBY_LABEL_OFFSETS[model]
+            packed = small_after_dash(MODEL_LABELS[model]['label'], main_size=11, small_size=10)
+            ax.add_artist(AnnotationBbox(
+                packed, (x, y + offset_y),
+                xycoords='data',
+                frameon=False,
+                box_alignment=(0.5, 0 if offset_y > 0 else 1),
+                zorder=3,
+            ))
+        elif model == 'kimi-k3':
+            packed = small_after_dash(MODEL_LABELS[model]['label'], main_size=11, small_size=10)
+            ax.add_artist(AnnotationBbox(
+                packed, (x + 0.015, y),
+                xycoords='data',
+                frameon=False,
+                box_alignment=(0, 0.5),
+                zorder=3,
+            ))
+        elif model == 'glm-5.3':
+            packed = small_after_dash(MODEL_LABELS[model]['label'], main_size=11, small_size=10)
+            ax.add_artist(AnnotationBbox(
+                packed, (x - 0.015, y),
+                xycoords='data',
+                frameon=False,
+                box_alignment=(1, 0.5),
+                zorder=3,
+            ))
+        elif model in CALLOUT_OFFSETS:
+            offset_x, offset_y = CALLOUT_OFFSETS[model]
+            packed = small_after_dash(MODEL_LABELS[model]['label'], main_size=11, small_size=10)
+            end_x, end_y = x + offset_x, y + offset_y
+            ax.plot((x, end_x), (y, end_y), color='0.4', lw=0.9, zorder=1)
+            label_gap = -0.005 if offset_x < 0 else 0.005
+            ax.add_artist(AnnotationBbox(
+                packed, (end_x + label_gap, end_y),
+                xycoords='data',
+                box_alignment=(1 if offset_x < 0 else 0, 0.5),
+                frameon=False,
+                zorder=3,
+            ))
+        elif model in MODEL_LABELS:
             label = MODEL_LABELS[model]["label"]
             offset_x, offset_y = MODEL_LABELS[model]["position"]
-            label_x = x + offset_x  # Adjust the label position relative to the ellipse center
+            label_x = x + offset_x
             label_y = y + offset_y
-            main_size, small_size = 11, 10
-            packed = small_after_dash(label, main_size=main_size, small_size=small_size)
-            ab = AnnotationBbox(
+            packed = small_after_dash(label, main_size=11, small_size=10)
+            ax.add_artist(AnnotationBbox(
                 packed, (label_x, label_y),
                 xycoords='data',
                 frameon=False,
                 box_alignment=(0.5, 0.5),
-                zorder=3
-            )
-            ax.add_artist(ab)
-            if model in ["claude-4.0-sonnet"]:
+                zorder=3,
+            ))
+            if model == "claude-4.0-sonnet":
                 ax.annotate(
                     '', xy=(x, y), xytext=(label_x, label_y),
                     arrowprops=dict(
-                        arrowstyle="-",  # simple line
-                        color="black",
-                        lw=1,
-                        shrinkA=5, shrinkB=5
+                        arrowstyle='-', color='black', lw=1,
+                        shrinkA=5, shrinkB=5,
                     ),
-                    zorder=1
+                    zorder=1,
                 )
 
     # Draw quadrant lines at 0.5 for both Response Quality Rate and Safety Rate
@@ -163,8 +212,10 @@ def plot_safety_vs_quality(data: pd.DataFrame, metric: str, models: list, title:
     )
 
     plt.tight_layout()
-    plt.savefig(f'{save_path}/figures/figure3.png', bbox_inches='tight', pad_inches=0, dpi=300)
-    plt.savefig(f'{save_path}/figures/figure3.eps', format='eps', bbox_inches='tight', pad_inches=0, dpi=300)
+    figures_dir = Path(save_path) / 'figures'
+    figures_dir.mkdir(parents=True, exist_ok=True)
+    plt.savefig(figures_dir / 'figure3.png', bbox_inches='tight', pad_inches=0, dpi=300)
+    plt.savefig(figures_dir / 'figure3.eps', format='eps', bbox_inches='tight', pad_inches=0, dpi=300)
     plt.close()
 
 if __name__ == "__main__":
