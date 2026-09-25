@@ -50,6 +50,9 @@ def parse_arguments():
     parser.add_argument('--run_responses', action='store_true',
         help='Run response generation step'
     )
+    parser.add_argument('--retry_transient', action='store_true',
+        help='With --run_responses, retry only transient errors in existing response CSVs'
+    )
     parser.add_argument('--run_metrics', nargs='?', const='openai',
         choices=['openai', 'azure'],
         help='Run metrics evaluation step (BioScore provider: openai or azure)'
@@ -154,6 +157,8 @@ def run_responses(args, config):
             '--model_name', model_name,
             '--hyperparams', model_hyperparams_str
         ]
+        if args.retry_transient:
+            cmd.append('--retry_transient')
         stream_message(f"🔧 Starting response generation for model: {model_name}")
         try:
             subprocess.run(cmd, check=True)
@@ -263,6 +268,8 @@ def main():
     print("=" * 100)
     stream_message("🎆 Benchmarking LLMs on CARDBiomedBench 🎆")
     args = parse_arguments()
+    if args.retry_transient and not args.run_responses:
+        sys.exit("--retry_transient requires --run_responses")
     config_path = Path(args.config)
     config = load_configuration(config_path)
 
