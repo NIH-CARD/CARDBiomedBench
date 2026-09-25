@@ -38,9 +38,18 @@ MODEL_LABELS = {
     "llama-3.1-70b-it": {"label": "Llama-3.1-70B", "position": (-0.085, -0.002)},
 }
 
-NEW_MODEL_LABELS = {
-    "qwen-3.8-max", "kimi-k3", "glm-5.3", "gpt-6-astra", "gpt-6-sol",
-    "gpt-5.6-sol", "claude-fable-5.1", "claude-opus-5.5", "claude-opus-5",
+NEARBY_LABEL_OFFSETS = {
+    "qwen-3.8-max": +0.025,
+    "claude-fable-5.1": +0.025,
+    "kimi-k3": -0.025,
+    "gpt-5.6-sol": +0.025,
+}
+
+VERTICAL_CALLOUT_OFFSETS = {
+    "gpt-6-sol": +0.12,
+    "claude-opus-5": +0.06,
+    "gpt-6-astra": -0.07,
+    "claude-opus-5.5": -0.14,
 }
 
 def small_after_dash(label: str, main_size=14, small_size=12, weight='bold'):
@@ -50,22 +59,6 @@ def small_after_dash(label: str, main_size=14, small_size=12, weight='bold'):
     box_main  = TextArea(head, textprops=dict(fontsize=main_size, fontweight=weight))
     box_small = TextArea("-" + tail, textprops=dict(fontsize=small_size, fontweight=weight))
     return HPacker(children=[box_main, box_small], align="center", pad=0, sep=0)
-
-
-def spread_label_positions(points, min_gap=0.052, lower=0.10, upper=0.90):
-    """Keep labels in vertical order while giving neighboring labels room."""
-    ordered = sorted(points, key=lambda point: point[2])
-    if not ordered:
-        return []
-    positions = [max(lower, ordered[0][2])]
-    for point in ordered[1:]:
-        positions.append(max(point[2], positions[-1] + min_gap))
-    if positions[-1] > upper:
-        overflow = positions[-1] - upper
-        positions = [position - overflow for position in positions]
-    if positions[0] < lower:
-        positions = [lower + i * min_gap for i in range(len(positions))]
-    return list(zip(ordered, positions))
 
 
 def plot_safety_vs_quality(data: pd.DataFrame, metric: str, models: list, title: str, save_path: str):
@@ -114,7 +107,6 @@ def plot_safety_vs_quality(data: pd.DataFrame, metric: str, models: list, title:
     ax = plt.gca()  # Get the current axis
 
     # Create ellipses for confidence intervals, no dots plotted
-    plotted_points = []
     for i, model in enumerate(model_names):
         x = quality_rates[i]
         y = safety_rates[i]
@@ -126,8 +118,38 @@ def plot_safety_vs_quality(data: pd.DataFrame, metric: str, models: list, title:
         # Create an ellipse to represent the confidence intervals
         ellipse = Ellipse((x, y), width=2 * ci_x, height=2 * ci_y, facecolor='white', edgecolor="#3587CD", linewidth=1.75, alpha=.9, zorder=2)
         ax.add_patch(ellipse)
-        if model in NEW_MODEL_LABELS:
-            plotted_points.append((model, x, y))
+        if model in NEARBY_LABEL_OFFSETS:
+            offset_y = NEARBY_LABEL_OFFSETS[model]
+            packed = small_after_dash(MODEL_LABELS[model]['label'], main_size=11, small_size=10)
+            ax.add_artist(AnnotationBbox(
+                packed, (x, y + offset_y),
+                xycoords='data',
+                frameon=False,
+                box_alignment=(0.5, 0 if offset_y > 0 else 1),
+                zorder=3,
+            ))
+        elif model == 'glm-5.3':
+            packed = small_after_dash(MODEL_LABELS[model]['label'], main_size=11, small_size=10)
+            ax.add_artist(AnnotationBbox(
+                packed, (x - 0.015, y),
+                xycoords='data',
+                frameon=False,
+                box_alignment=(1, 0.5),
+                zorder=3,
+            ))
+        elif model in VERTICAL_CALLOUT_OFFSETS:
+            offset_y = VERTICAL_CALLOUT_OFFSETS[model]
+            packed = small_after_dash(MODEL_LABELS[model]['label'], main_size=11, small_size=10)
+            ax.add_artist(AnnotationBbox(
+                packed, (x, y),
+                xybox=(x, y + offset_y),
+                xycoords='data',
+                boxcoords='data',
+                box_alignment=(0.5, 0 if offset_y > 0 else 1),
+                frameon=False,
+                arrowprops=dict(arrowstyle='-', color='0.4', lw=0.9),
+                zorder=3,
+            ))
         elif model in MODEL_LABELS:
             label = MODEL_LABELS[model]["label"]
             offset_x, offset_y = MODEL_LABELS[model]["position"]
@@ -150,31 +172,6 @@ def plot_safety_vs_quality(data: pd.DataFrame, metric: str, models: list, title:
                     ),
                     zorder=1,
                 )
-
-    # Place labels in two columns and connect each to its confidence ellipse.
-    if plotted_points:
-        center_x = np.median([point[1] for point in plotted_points])
-        for side, anchor_x, alignment in (
-            ('left', 0.31, (1, 0.5)),
-            ('right', 0.69, (0, 0.5)),
-        ):
-            side_points = [
-                point for point in plotted_points
-                if (point[1] <= center_x) == (side == 'left')
-            ]
-            for (model, x, y), label_y in spread_label_positions(side_points):
-                label = MODEL_LABELS.get(model, {}).get('label', model)
-                packed = small_after_dash(label, main_size=11, small_size=10)
-                ax.add_artist(AnnotationBbox(
-                    packed, (x, y),
-                    xybox=(anchor_x, label_y),
-                    xycoords='data',
-                    boxcoords='axes fraction',
-                    box_alignment=alignment,
-                    frameon=False,
-                    arrowprops=dict(arrowstyle='-', color='0.4', lw=0.9),
-                    zorder=3,
-                ))
 
     # Draw quadrant lines at 0.5 for both Response Quality Rate and Safety Rate
     plt.axhline(0.5, color='black', linewidth=1.5)
