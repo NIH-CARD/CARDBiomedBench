@@ -32,10 +32,10 @@ from scripts.scripts_utils import load_dataset
 
 MODEL_ORDER = [
     "qwen-3.8-max", "kimi-k3", "glm-5.3", "deepseek-v4-pro",
-    "gpt-6-astra", "gpt-5.6-sol",
+    "gpt-6-astra", "gpt-6-sol", "gpt-5.6-sol",
     "gpt-5", "gpt-5-mini", "o3", "o3-mini", "gpt-4.1", "gpt-4o", "gpt-3.5-turbo",
     "gemini-2.5-pro", "gemini-2.5-flash", "gemini-2.0-flash", "gemini-1.5-pro", "gemma-2-27b-it",
-    "claude-fable-5.1", "claude-opus-5",
+    "claude-fable-5.1", "claude-opus-5.5", "claude-opus-5",
     "claude-4.1-opus", "claude-4.0-sonnet", "claude-3.7-sonnet", "claude-3.5-sonnet",
     "perplexity-sonar-huge",
     "llama-3.1-70b-it",
@@ -58,8 +58,11 @@ def main():
     parser.add_argument('--models_to_process', nargs='+', required=True, 
         help='List of models to process'
     )
-    parser.add_argument('--metrics_to_use', nargs='+', required=True, 
+    parser.add_argument('--metrics_to_use', nargs='*', required=True,
         help='List of metrics to process'
+    )
+    parser.add_argument('--scatter_only', action='store_true',
+        help='Generate only the BioScore safety versus quality scatterplot'
     )
     args = parser.parse_args()
 
@@ -76,6 +79,23 @@ def main():
     data = load_dataset(scored_path)
     if data.empty:
         print("❌ No data to process. Exiting.")
+        return
+
+    if args.scatter_only:
+        scored_models = [model for model in models_list if f'{model}_BioScore' in data]
+        if not scored_models:
+            raise ValueError("No BioScore columns found for the selected models")
+        missing_models = set(models_list) - set(scored_models)
+        if missing_models:
+            print(f"Skipping models without BioScore columns: {', '.join(sorted(missing_models))}")
+        plot_safety_vs_quality(
+            data,
+            metric='BioScore',
+            models=scored_models,
+            title='Safety Rate vs. Response Quality Rate',
+            save_path=res_dir,
+        )
+        print("🔧 Safety vs. Quality Scatterplot created.")
         return
 
     # Compute and add token count columns for question, answer, and each model response

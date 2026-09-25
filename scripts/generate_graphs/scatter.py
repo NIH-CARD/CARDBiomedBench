@@ -2,6 +2,7 @@ import pandas as pd
 import numpy as np
 import seaborn as sns
 import matplotlib.pyplot as plt
+from pathlib import Path
 from matplotlib.patches import Ellipse
 from matplotlib.offsetbox import AnnotationBbox, TextArea, HPacker
 
@@ -12,6 +13,7 @@ MODEL_LABELS = {
     "glm-5.3": {"label": "GLM-5.3", "position": (-0.050, -0.040)},
     "deepseek-v4-pro": {"label": "DeepSeek-V4-Pro", "position": (+0.050, +0.060)},
     "gpt-6-astra": {"label": "GPT-6-Astra", "position": (0.00, -0.040)},
+    "gpt-6-sol": {"label": "GPT-6-Sol", "position": (0.00, +0.060)},
     "gpt-5.6-sol": {"label": "GPT-5.6-Sol", "position": (0.00, +0.060)},
     "gpt-5": {"label": "OpenAI-GPT-5", "position": (-0.010, +0.030)},
     "gpt-5-mini": {"label": "OpenAI-GPT-5-Mini", "position": (0.00, +0.030)},
@@ -26,6 +28,7 @@ MODEL_LABELS = {
     "gemini-1.5-pro": {"label": "Gemini-1.5-Pro", "position": (-0.080, -0.025)},
     "gemma-2-27b-it": {"label": "Gemma-2-27B", "position": (0.00, -0.040)},
     "claude-fable-5.1": {"label": "Claude-Fable-5.1", "position": (0.00, -0.040)},
+    "claude-opus-5.5": {"label": "Claude-Opus-5.5", "position": (0.00, -0.040)},
     "claude-opus-5": {"label": "Claude-Opus-5", "position": (0.00, +0.060)},
     "claude-4.1-opus": {"label": "Claude-4.1-Opus", "position": (0.00, -0.040)},
     "claude-4.0-sonnet": {"label": "Claude-4.0-Sonnet", "position": (0.00, +0.060)},
@@ -163,8 +166,10 @@ def plot_safety_vs_quality(data: pd.DataFrame, metric: str, models: list, title:
     )
 
     plt.tight_layout()
-    plt.savefig(f'{save_path}/figures/figure3.png', bbox_inches='tight', pad_inches=0, dpi=300)
-    plt.savefig(f'{save_path}/figures/figure3.eps', format='eps', bbox_inches='tight', pad_inches=0, dpi=300)
+    figures_dir = Path(save_path) / 'figures'
+    figures_dir.mkdir(parents=True, exist_ok=True)
+    plt.savefig(figures_dir / 'figure3.png', bbox_inches='tight', pad_inches=0, dpi=300)
+    plt.savefig(figures_dir / 'figure3.eps', format='eps', bbox_inches='tight', pad_inches=0, dpi=300)
     plt.close()
 
 if __name__ == "__main__":

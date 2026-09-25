@@ -63,6 +63,9 @@ def parse_arguments():
     parser.add_argument('--models_from_results', action='store_true',
         help='With --run_graphs, use models found in results/by_model instead of config use flags'
     )
+    parser.add_argument('--scatter_only', action='store_true',
+        help='With --run_graphs, generate only the BioScore scatterplot'
+    )
     return parser.parse_args()
 
 def load_configuration(config_path):
@@ -267,6 +270,8 @@ def run_graphs(args, config):
         '--models_to_process', *models_to_process,
         '--metrics_to_use', *metrics_to_use
     ]
+    if args.scatter_only:
+        cmd.append('--scatter_only')
 
     try:
         subprocess.run(cmd, check=True)
@@ -286,6 +291,8 @@ def main():
         sys.exit("--retry_transient requires --run_responses")
     if args.models_from_results and not args.run_graphs:
         sys.exit("--models_from_results requires --run_graphs")
+    if args.scatter_only and not args.run_graphs:
+        sys.exit("--scatter_only requires --run_graphs")
     config_path = Path(args.config)
     config = load_configuration(config_path)
 
