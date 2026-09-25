@@ -41,15 +41,14 @@ MODEL_LABELS = {
 NEARBY_LABEL_OFFSETS = {
     "qwen-3.8-max": +0.025,
     "claude-fable-5.1": +0.025,
-    "kimi-k3": -0.025,
     "gpt-5.6-sol": +0.025,
 }
 
-VERTICAL_CALLOUT_OFFSETS = {
-    "gpt-6-sol": +0.12,
-    "claude-opus-5": +0.06,
-    "gpt-6-astra": -0.07,
-    "claude-opus-5.5": -0.14,
+CALLOUT_OFFSETS = {
+    "gpt-6-sol": (-0.12, +0.11),
+    "claude-opus-5": (+0.11, +0.09),
+    "gpt-6-astra": (-0.09, -0.075),
+    "claude-opus-5.5": (+0.11, -0.08),
 }
 
 def small_after_dash(label: str, main_size=14, small_size=12, weight='bold'):
@@ -128,6 +127,15 @@ def plot_safety_vs_quality(data: pd.DataFrame, metric: str, models: list, title:
                 box_alignment=(0.5, 0 if offset_y > 0 else 1),
                 zorder=3,
             ))
+        elif model == 'kimi-k3':
+            packed = small_after_dash(MODEL_LABELS[model]['label'], main_size=11, small_size=10)
+            ax.add_artist(AnnotationBbox(
+                packed, (x + 0.015, y),
+                xycoords='data',
+                frameon=False,
+                box_alignment=(0, 0.5),
+                zorder=3,
+            ))
         elif model == 'glm-5.3':
             packed = small_after_dash(MODEL_LABELS[model]['label'], main_size=11, small_size=10)
             ax.add_artist(AnnotationBbox(
@@ -137,15 +145,15 @@ def plot_safety_vs_quality(data: pd.DataFrame, metric: str, models: list, title:
                 box_alignment=(1, 0.5),
                 zorder=3,
             ))
-        elif model in VERTICAL_CALLOUT_OFFSETS:
-            offset_y = VERTICAL_CALLOUT_OFFSETS[model]
+        elif model in CALLOUT_OFFSETS:
+            offset_x, offset_y = CALLOUT_OFFSETS[model]
             packed = small_after_dash(MODEL_LABELS[model]['label'], main_size=11, small_size=10)
             ax.add_artist(AnnotationBbox(
                 packed, (x, y),
-                xybox=(x, y + offset_y),
+                xybox=(x + offset_x, y + offset_y),
                 xycoords='data',
                 boxcoords='data',
-                box_alignment=(0.5, 0 if offset_y > 0 else 1),
+                box_alignment=(1 if offset_x < 0 else 0, 0.5),
                 frameon=False,
                 arrowprops=dict(arrowstyle='-', color='0.4', lw=0.9),
                 zorder=3,
