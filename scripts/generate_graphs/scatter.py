@@ -45,10 +45,10 @@ NEARBY_LABEL_OFFSETS = {
 }
 
 CALLOUT_OFFSETS = {
-    "gpt-6-sol": (-0.12, +0.11),
-    "claude-opus-5": (+0.11, +0.09),
-    "gpt-6-astra": (-0.09, -0.075),
-    "claude-opus-5.5": (+0.11, -0.08),
+    "gpt-6-sol": (-0.07, +0.11),
+    "claude-opus-5": (+0.07, +0.09),
+    "gpt-6-astra": (+0.10, -0.09),
+    "claude-opus-5.5": (-0.08, -0.13),
 }
 
 def small_after_dash(label: str, main_size=14, small_size=12, weight='bold'):
@@ -148,14 +148,14 @@ def plot_safety_vs_quality(data: pd.DataFrame, metric: str, models: list, title:
         elif model in CALLOUT_OFFSETS:
             offset_x, offset_y = CALLOUT_OFFSETS[model]
             packed = small_after_dash(MODEL_LABELS[model]['label'], main_size=11, small_size=10)
+            end_x, end_y = x + offset_x, y + offset_y
+            ax.plot((x, end_x), (y, end_y), color='0.4', lw=0.9, zorder=1)
+            label_gap = -0.005 if offset_x < 0 else 0.005
             ax.add_artist(AnnotationBbox(
-                packed, (x, y),
-                xybox=(x + offset_x, y + offset_y),
+                packed, (end_x + label_gap, end_y),
                 xycoords='data',
-                boxcoords='data',
                 box_alignment=(1 if offset_x < 0 else 0, 0.5),
                 frameon=False,
-                arrowprops=dict(arrowstyle='-', color='0.4', lw=0.9),
                 zorder=3,
             ))
         elif model in MODEL_LABELS:
