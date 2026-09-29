@@ -11,7 +11,7 @@ MODEL_LABELS = {
     "qwen-3.8-max": {"label": "Qwen-3.8-Max"},
     "kimi-k3": {"label": "Kimi-K3"},
     "glm-5.3": {"label": "GLM-5.3"},
-    "deepseek-v4-pro": {"label": "DeepSeek-V4-Pro", "position": (+0.050, +0.060)},
+    "deepseek-v4-pro": {"label": "DeepSeek-V4-Pro", "position": (-0.010, +0.030)},
     "gpt-6-astra": {"label": "GPT-6-Astra"},
     "gpt-6-sol": {"label": "GPT-6-Sol"},
     "gpt-5.6-sol": {"label": "GPT-5.6-Sol"},
