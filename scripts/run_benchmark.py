@@ -53,6 +53,9 @@ def parse_arguments():
     parser.add_argument('--retry_transient', action='store_true',
         help='With --run_responses, retry only transient errors in existing response CSVs'
     )
+    parser.add_argument('--subset_size', '--subset-size', dest='subset_size', type=int,
+        help='With --run_responses, run this many questions while covering every template'
+    )
     parser.add_argument('--run_metrics', nargs='?', const='openai',
         choices=['openai', 'azure'],
         help='Run metrics evaluation step (BioScore provider: openai or azure)'
@@ -175,6 +178,8 @@ def run_responses(args, config):
         ]
         if args.retry_transient:
             cmd.append('--retry_transient')
+        if args.subset_size is not None:
+            cmd.extend(['--subset_size', str(args.subset_size)])
         stream_message(f"🔧 Starting response generation for model: {model_name}")
         try:
             subprocess.run(cmd, check=True)
@@ -299,6 +304,10 @@ def main():
     args = parse_arguments()
     if args.retry_transient and not args.run_responses:
         sys.exit("--retry_transient requires --run_responses")
+    if args.subset_size is not None and not args.run_responses:
+        sys.exit("--subset_size requires --run_responses")
+    if args.subset_size is not None and args.retry_transient:
+        sys.exit("--subset_size cannot be combined with --retry_transient")
     if args.models_from_results and not args.run_graphs:
         sys.exit("--models_from_results requires --run_graphs")
     if args.scatter_only and not args.run_graphs:

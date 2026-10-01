@@ -15,7 +15,7 @@ from typing import List, Callable, Tuple
 import pandas as pd
 from tqdm import tqdm
 
-from scripts.scripts_utils import load_dataset, save_dataset
+from scripts.scripts_utils import load_dataset, save_dataset, sample_template_subset
 from scripts.collect_responses.gpt_query import GPTQuery
 from scripts.collect_responses.azure_query import AzureQuery
 from scripts.collect_responses.openrouter_query import OpenRouterQuery
@@ -385,6 +385,9 @@ def main():
     parser.add_argument('--retry_transient', action='store_true',
         help='Retry only transient errors in the existing model response CSV'
     )
+    parser.add_argument('--subset_size', '--subset-size', dest='subset_size', type=int,
+        help='Run an exact-size subset containing every question template'
+    )
     parser.add_argument('--hyperparams', type=str, required=True, 
         help='Model hyperparameters as JSON string'
     )
@@ -405,6 +408,16 @@ def main():
     if not args.retry_transient and data.empty:
         print("❌ No data to process. Exiting.")
         return
+
+    if args.subset_size is not None:
+        try:
+            data = sample_template_subset(data, args.subset_size)
+        except ValueError as error:
+            parser.error(str(error))
+        print(
+            f"🔧 Selected {len(data)} questions across "
+            f"{data['template_uuid'].nunique()} templates"
+        )
 
     if not args.retry_transient:
         print(f"🔧 Getting model responses on {len(data)} Q/A for {model_name}")
