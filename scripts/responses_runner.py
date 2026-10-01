@@ -269,6 +269,7 @@ def get_model_responses(
     retries: int = 3,
     initial_delay: int = 2,
     retry_transient: bool = False,
+    subset_size: int = None,
 ) -> pd.DataFrame:
     """
     Get responses from a single LLM for each query in the dataset and save the results.
@@ -281,14 +282,20 @@ def get_model_responses(
         query_col (str, optional): Column name containing the queries. Defaults to 'question'.
         retries (int, optional): Number of retries for each query. Defaults to 3.
         initial_delay (int, optional): Initial delay between retries. Defaults to 2.
+        subset_size (int, optional): Subset size used to namespace output files.
 
     Returns:
         pd.DataFrame: DataFrame with the model responses added.
     """
     response_column = f'{model_name}_response'
     trace_id_column = f'{model_name}_trace_id'
-    save_path = os.path.join(res_by_model_dir, f'{model_name}_responses.csv')
-    trace_file_path = os.path.join(res_by_model_dir, f'{model_name}_traces.jsonl')
+    subset_suffix = f'_subset_{subset_size}' if subset_size is not None else ''
+    save_path = os.path.join(
+        res_by_model_dir, f'{model_name}_responses{subset_suffix}.csv'
+    )
+    trace_file_path = os.path.join(
+        res_by_model_dir, f'{model_name}_traces{subset_suffix}.jsonl'
+    )
     if retry_transient:
         from scripts.compute_metrics.BioScore import (
             RESPONSE_TRANSIENT_ERROR,
@@ -393,6 +400,13 @@ def main():
     )
     args = parser.parse_args()
 
+    if args.subset_size is not None and args.retry_transient:
+        parser.error("--subset_size cannot be combined with --retry_transient")
+    if args.subset_size is not None:
+        os.environ["CARDBIOMEDBENCH_CACHE_SUFFIX"] = (
+            f"subset_{args.subset_size}"
+        )
+
     # Deserialize hyperparameters
     try:
         hyperparams = json.loads(args.hyperparams)
@@ -427,6 +441,7 @@ def main():
         res_by_model_dir=res_by_model_dir,
         hyperparams=hyperparams,
         retry_transient=args.retry_transient,
+        subset_size=args.subset_size,
     )
     print(f"🔧 Responses collected and saved to for {model_name}")
 

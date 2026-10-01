@@ -1,7 +1,18 @@
 """Shared validation helpers for model response caches."""
 
+import os
+
 
 INTERNAL_ERROR_PREFIXES = ("Error in ", "ERROR:")
+
+
+def add_cache_suffix(filename: str) -> str:
+    """Add the optional benchmark-run suffix before a cache extension."""
+    suffix = os.environ.get("CARDBIOMEDBENCH_CACHE_SUFFIX")
+    if not suffix:
+        return filename
+    stem, extension = os.path.splitext(filename)
+    return f"{stem}_{suffix}{extension}"
 
 
 def is_valid_cached_response(value) -> bool:

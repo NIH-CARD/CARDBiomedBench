@@ -8,6 +8,7 @@ from dotenv import load_dotenv
 from openai import OpenAI
 
 from scripts.collect_responses.cache_utils import (
+    add_cache_suffix,
     is_valid_cached_response,
 )
 
@@ -74,7 +75,8 @@ class CustomChatCompletionsQuery:
         endpoint_id = sha256(self.endpoint.encode()).hexdigest()[:12]
         safe_model = self.model_name.replace("/", "__")
         return os.path.join(
-            cache_dir, f"custom_{safe_model}_{endpoint_id}_cache.json"
+            cache_dir,
+            add_cache_suffix(f"custom_{safe_model}_{endpoint_id}_cache.json"),
         )
 
     def load_cache(self):

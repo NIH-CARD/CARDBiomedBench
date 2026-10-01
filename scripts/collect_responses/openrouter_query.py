@@ -6,6 +6,7 @@ from dotenv import load_dotenv
 from openai import OpenAI
 
 from scripts.collect_responses.cache_utils import (
+    add_cache_suffix,
     filter_valid_cache,
     is_valid_cached_response,
 )
@@ -57,7 +58,9 @@ class OpenRouterQuery:
         )
         os.makedirs(cache_dir, exist_ok=True)
         cache_name = self.model_name.replace("/", "__")
-        return os.path.join(cache_dir, f"openrouter_{cache_name}_cache.json")
+        return os.path.join(
+            cache_dir, add_cache_suffix(f"openrouter_{cache_name}_cache.json")
+        )
 
     def load_cache(self):
         if os.path.exists(self.cache_file):

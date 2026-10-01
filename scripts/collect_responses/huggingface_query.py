@@ -7,6 +7,7 @@ from dotenv import load_dotenv
 from transformers import AutoModelForCausalLM, AutoTokenizer, TRANSFORMERS_CACHE
 
 from scripts.collect_responses.cache_utils import (
+    add_cache_suffix,
     filter_valid_cache,
     is_valid_cached_response,
 )
@@ -60,7 +61,9 @@ class HuggingFaceQuery:
         os.makedirs(cache_dir, exist_ok=True)
         
         # Return the path to the cache file
-        return os.path.join(cache_dir, f'{model_base_name}_cache.json')
+        return os.path.join(
+            cache_dir, add_cache_suffix(f'{model_base_name}_cache.json')
+        )
 
 
     def load_cache(self):
