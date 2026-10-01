@@ -290,11 +290,12 @@ def get_model_responses(
     response_column = f'{model_name}_response'
     trace_id_column = f'{model_name}_trace_id'
     subset_suffix = f'_subset_{subset_size}' if subset_size is not None else ''
+    trace_suffix = '_subset' if subset_size is not None else ''
     save_path = os.path.join(
         res_by_model_dir, f'{model_name}_responses{subset_suffix}.csv'
     )
     trace_file_path = os.path.join(
-        res_by_model_dir, f'{model_name}_traces{subset_suffix}.jsonl'
+        res_by_model_dir, f'{model_name}_traces{trace_suffix}.jsonl'
     )
     if retry_transient:
         from scripts.compute_metrics.BioScore import (
@@ -403,9 +404,7 @@ def main():
     if args.subset_size is not None and args.retry_transient:
         parser.error("--subset_size cannot be combined with --retry_transient")
     if args.subset_size is not None:
-        os.environ["CARDBIOMEDBENCH_CACHE_SUFFIX"] = (
-            f"subset_{args.subset_size}"
-        )
+        os.environ["CARDBIOMEDBENCH_CACHE_SUFFIX"] = "subset"
 
     # Deserialize hyperparameters
     try:
