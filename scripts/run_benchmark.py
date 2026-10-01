@@ -53,7 +53,7 @@ def parse_arguments():
     parser.add_argument('--retry_transient', action='store_true',
         help='With --run_responses, retry only transient errors in existing response CSVs'
     )
-    parser.add_argument('--subset_size', '--subset-size', dest='subset_size', type=int,
+    parser.add_argument('--subset_size', type=int,
         help='With --run_responses, run this many questions while covering every template'
     )
     parser.add_argument('--run_metrics', nargs='?', const='openai',

@@ -20,7 +20,7 @@ while [[ $# -gt 0 ]]; do
             ARGS+=("--model" "$2")
             shift 2
             ;;
-        --subset-size|--subset_size)
+        --subset_size)
             ARGS+=("$1" "$2")
             shift 2
             ;;

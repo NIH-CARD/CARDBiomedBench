@@ -393,7 +393,7 @@ def main():
     parser.add_argument('--retry_transient', action='store_true',
         help='Retry only transient errors in the existing model response CSV'
     )
-    parser.add_argument('--subset_size', '--subset-size', dest='subset_size', type=int,
+    parser.add_argument('--subset_size', type=int,
         help='Run an exact-size subset containing every question template'
     )
     parser.add_argument('--hyperparams', type=str, required=True, 
