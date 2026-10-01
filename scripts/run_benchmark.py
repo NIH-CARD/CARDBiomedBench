@@ -236,6 +236,8 @@ def run_metrics(args, config):
         '--bioscore_grading_prompt', bioscore_grading_prompt,
         '--bioscore_provider', args.run_metrics,
     ]
+    if args.subset_size is not None:
+        cmd.extend(['--subset_size', str(args.subset_size)])
 
     try:
         subprocess.run(cmd, check=True)
@@ -304,8 +306,8 @@ def main():
     args = parse_arguments()
     if args.retry_transient and not args.run_responses:
         sys.exit("--retry_transient requires --run_responses")
-    if args.subset_size is not None and not args.run_responses:
-        sys.exit("--subset_size requires --run_responses")
+    if args.subset_size is not None and not (args.run_responses or args.run_metrics):
+        sys.exit("--subset_size requires --run_responses or --run_metrics")
     if args.subset_size is not None and args.retry_transient:
         sys.exit("--subset_size cannot be combined with --retry_transient")
     if args.models_from_results and not args.run_graphs:

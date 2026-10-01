@@ -36,6 +36,9 @@ def main():
     parser.add_argument('--bioscore_provider', choices=['openai', 'azure'],
         default='openai', help='Provider used for BioScore grading'
     )
+    parser.add_argument('--subset_size', type=int,
+        help='Grade the response file for this subset size'
+    )
     args = parser.parse_args()
 
     res_dir: str = args.res_by_model_dir
@@ -59,12 +62,15 @@ def main():
             hyperparams,
             bioscore_grading_prompt,
             grading_provider=args.bioscore_provider,
+            subset_size=args.subset_size,
         )
         print("🔧 BioScore Completed")
 
     if "BLEU_ROUGE_BERT" in metrics_to_use:
         print("🔧 Getting BLEU, ROUGE, and BERTScore")
-        get_all_model_BLEU_ROUGE_BERT(res_dir, models_to_grade)
+        get_all_model_BLEU_ROUGE_BERT(
+            res_dir, models_to_grade, subset_size=args.subset_size
+        )
         print("🔧 BLEU, ROUGE, and BERTScore Completed")
 
 

@@ -416,7 +416,8 @@ def submit_batches(
     res_dir: str,
     query_col: str = 'question',
     gold_col: str = 'answer',
-    response_col: str = 'response'
+    response_col: str = 'response',
+    subset_size: int = None,
 ) -> Dict[str, str]:
     """
     Submit batch files for BioScore grading for all models in models_to_use.
@@ -435,10 +436,14 @@ def submit_batches(
         Dict[str, str]: Dictionary mapping model names to batch IDs.
     """
     batch_ids = {}
+    subset_suffix = f'_subset_{subset_size}' if subset_size is not None else ''
 
     for model in models_to_use:
         # Load the dataset
-        data = load_dataset(f'{res_dir}/{model}_responses.csv')
+        response_path = os.path.join(
+            res_dir, f'{model}_responses{subset_suffix}.csv'
+        )
+        data = load_dataset(response_path)
 
         # Only genuine model responses are sent to GPT-4o. Known terminal
         # outcomes receive direct scores during result mapping, and all other
@@ -469,7 +474,9 @@ def submit_batches(
         print(f"BioScore response classification for {model}: {status_summary}")
 
         # Generate the batch file for this model
-        batch_file_path = f"{CACHE_DIR}/{model}_grading_batch.jsonl"
+        batch_file_path = (
+            f"{CACHE_DIR}/{model}_grading_batch{subset_suffix}.jsonl"
+        )
         batch_file_created = generate_batch_file(
             bioscore_grading_prompts,
             batch_file_path,
@@ -504,7 +511,8 @@ def poll_batch_results(
     res_dir: str,
     query_col: str = 'question',
     gold_col: str = 'answer',
-    response_col: str = 'response'
+    response_col: str = 'response',
+    subset_size: int = None,
 ) -> Dict[str, float]:
     """
     Poll the batch results for a specific model and process the results.
@@ -526,13 +534,16 @@ def poll_batch_results(
     batch_results = grading_model.poll_batch_status(batch_id)
 
     # Save the batch results to a JSONL file
-    batch_result_path = f"{CACHE_DIR}/{model}_grading_batch_results.jsonl"
+    subset_suffix = f'_subset_{subset_size}' if subset_size is not None else ''
+    batch_result_path = (
+        f"{CACHE_DIR}/{model}_grading_batch_results{subset_suffix}.jsonl"
+    )
     with open(batch_result_path, 'w') as f:
         f.write(batch_results)
     print(f"Batch results saved for {model} to {batch_result_path}")
 
     # Process the results and validate them
-    batch_file_path = f"{CACHE_DIR}/{model}_grading_batch.jsonl"
+    batch_file_path = f"{CACHE_DIR}/{model}_grading_batch{subset_suffix}.jsonl"
     bioscore_results = process_batch_results(
         batch_result_path,
         batch_file_path,
@@ -550,7 +561,8 @@ def get_all_model_BioScore(
     grading_provider: str = 'openai',
     query_col: str = 'question',
     gold_col: str = 'answer',
-    response_col: str = 'response'
+    response_col: str = 'response',
+    subset_size: int = None,
 ) -> None:
     """
     Grade responses from multiple LLMs with a specific prompt using GPT-4o for each query in the dataset.
@@ -593,7 +605,8 @@ def get_all_model_BioScore(
         res_dir,
         query_col,
         gold_col,
-        response_col
+        response_col,
+        subset_size,
     )
 
     # Step 2: Poll each model for batch results after all submissions
@@ -606,13 +619,18 @@ def get_all_model_BioScore(
                 res_dir,
                 query_col,
                 gold_col,
-                response_col
+                response_col,
+                subset_size,
             )
         else:
             new_bioscore_results = {}
 
         # Load the original dataset
-        data = load_dataset(f'{res_dir}/{model}_responses.csv')
+        subset_suffix = f'_subset_{subset_size}' if subset_size is not None else ''
+        response_path = os.path.join(
+            res_dir, f'{model}_responses{subset_suffix}.csv'
+        )
+        data = load_dataset(response_path)
 
         # Map the BioScore results to the DataFrame
         data = map_bioscore_results_to_dataframe(
@@ -627,8 +645,8 @@ def get_all_model_BioScore(
         )
 
         # Save the updated DataFrame
-        save_dataset(f'{res_dir}/{model}_responses.csv', data)
-        print(f"BioScore computed and saved for {model} to {res_dir}{model}_responses.csv")
+        save_dataset(response_path, data)
+        print(f"BioScore computed and saved for {model} to {response_path}")
 
     # Cleanup
     print("All batches submitted and results processed.")

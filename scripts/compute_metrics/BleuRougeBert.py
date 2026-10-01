@@ -1,3 +1,5 @@
+import os
+
 import pandas as pd
 from evaluate import load
 from scripts.scripts_utils import load_dataset, save_dataset
@@ -6,7 +8,13 @@ from tqdm import tqdm
 
 warnings.filterwarnings("ignore", category=FutureWarning, module='transformers')
 
-def get_all_model_BLEU_ROUGE_BERT(res_dir: str, models_to_grade: list, gold_col: str='answer', response_col: str='response') -> None:
+def get_all_model_BLEU_ROUGE_BERT(
+    res_dir: str,
+    models_to_grade: list,
+    gold_col: str = 'answer',
+    response_col: str = 'response',
+    subset_size: int = None,
+) -> None:
     """Compute BLEU (per-example), ROUGE (per-example), BERTScore (batched) for each model's responses and save to CSV."""
 
     # Load BLEU, ROUGE, and BERT evaluators once
@@ -18,7 +26,11 @@ def get_all_model_BLEU_ROUGE_BERT(res_dir: str, models_to_grade: list, gold_col:
         print(f"\n=== Working on model: {model} ===")
 
         # Load dataset
-        data = load_dataset(f'{res_dir}/{model}_responses.csv')
+        subset_suffix = f'_subset_{subset_size}' if subset_size is not None else ''
+        response_path = os.path.join(
+            res_dir, f'{model}_responses{subset_suffix}.csv'
+        )
+        data = load_dataset(response_path)
 
         # Initialize columns
         for metric in ['BLEU', 'ROUGE2', 'ROUGEL', 'BERTScore']:
@@ -59,5 +71,5 @@ def get_all_model_BLEU_ROUGE_BERT(res_dir: str, models_to_grade: list, gold_col:
         print(f"=== Finished model: {model} ===")
 
         # Save updated dataset
-        save_dataset(f'{res_dir}/{model}_responses.csv', data)
-        print(f"Results saved to {res_dir}/{model}_responses.csv\n")
+        save_dataset(response_path, data)
+        print(f"Results saved to {response_path}\n")
