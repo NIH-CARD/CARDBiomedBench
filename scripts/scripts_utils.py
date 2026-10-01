@@ -89,6 +89,57 @@ def sample_by_template(
     return final_sampled_df.reset_index(drop=True)
 
 
+def sample_template_subset(
+    data: pd.DataFrame,
+    subset_size: int,
+    template_col: str = "template_uuid",
+    random_state: int = 12,
+) -> pd.DataFrame:
+    """Select an exact-size, balanced subset containing every template.
+
+    Rows within each template are deterministically shuffled. Slots are then
+    allocated round-robin across templates, skipping templates that have no
+    rows left. This keeps template counts as even as their available row counts
+    permit and makes smaller requested subsets nested within larger ones.
+    """
+    if template_col not in data.columns:
+        raise ValueError(f"Dataset does not contain '{template_col}'")
+    if data[template_col].isna().any():
+        raise ValueError(f"Dataset contains missing values in '{template_col}'")
+    if subset_size <= 0:
+        raise ValueError("Subset size must be greater than zero")
+    if subset_size > len(data):
+        raise ValueError(
+            f"Subset size {subset_size} exceeds dataset size {len(data)}"
+        )
+
+    grouped_indices = {
+        template: group.sample(frac=1, random_state=random_state).index.tolist()
+        for template, group in data.groupby(template_col, sort=True)
+    }
+    template_count = len(grouped_indices)
+    if subset_size < template_count:
+        raise ValueError(
+            f"Subset size must be at least {template_count} to include every "
+            f"'{template_col}' (received {subset_size})"
+        )
+
+    selected_indices = []
+    offsets = {template: 0 for template in grouped_indices}
+    while len(selected_indices) < subset_size:
+        for template, indices in grouped_indices.items():
+            offset = offsets[template]
+            if offset < len(indices):
+                selected_indices.append(indices[offset])
+                offsets[template] += 1
+                if len(selected_indices) == subset_size:
+                    break
+
+    # Preserve source order so downstream output remains easy to compare with
+    # the full benchmark dataset.
+    return data.loc[sorted(selected_indices)].reset_index(drop=True)
+
+
 if __name__ == "__main__":
     # Load the original data
     orig = pd.read_csv("data/CARDBiomedBench.csv")

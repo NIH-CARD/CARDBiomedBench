@@ -15,10 +15,11 @@ from typing import List, Callable, Tuple
 import pandas as pd
 from tqdm import tqdm
 
-from scripts.scripts_utils import load_dataset, save_dataset
+from scripts.scripts_utils import load_dataset, save_dataset, sample_template_subset
 from scripts.collect_responses.gpt_query import GPTQuery
 from scripts.collect_responses.azure_query import AzureQuery
 from scripts.collect_responses.openrouter_query import OpenRouterQuery
+from scripts.collect_responses.custom_chat_completions_query import CustomChatCompletionsQuery
 from scripts.collect_responses.gemini_query import GeminiQuery
 from scripts.collect_responses.claude_query import ClaudeQuery
 from scripts.collect_responses.perplexity_query import PerplexityQuery
@@ -31,6 +32,8 @@ def initialize_model(
     max_new_tokens: int,
     temperature: float,
     model_type: str = None,
+    provider_config: dict = None,
+    trace_file_path: str = None,
 ):
     """
     Initialize the model client and create an instance of the query class for the specified model.
@@ -69,7 +72,17 @@ def initialize_model(
             'reasoning_effort': 'low',
         },
     }
-    if model_type == 'azure_openai':
+    if model_type == 'custom_chat_completions':
+        provider_config = provider_config or {}
+        return CustomChatCompletionsQuery(
+            system_prompt,
+            provider_config.get('model', model_name),
+            endpoint_env=provider_config.get('endpoint_env'),
+            token_env=provider_config.get('token_env'),
+            extra_body_env=provider_config.get('extra_body_env'),
+            trace_file_path=trace_file_path,
+        )
+    elif model_type == 'azure_openai':
         return AzureQuery(
             system_prompt,
             model_name,
@@ -238,9 +251,12 @@ def collect_single_model_responses(
         List[str]: List of responses from the model.
     """
     responses = []
+    trace_ids = []
     for query in tqdm(queries, desc=f"🔧 Running queries on {model_name}"):
         response = query_model_retries(query, query_instance, query_checker, retries, initial_delay)
         responses.append(response)
+        trace_ids.append(getattr(query_instance, 'last_trace_id', None))
+    query_instance.collected_trace_ids = trace_ids
     return responses
 
 
@@ -253,6 +269,7 @@ def get_model_responses(
     retries: int = 3,
     initial_delay: int = 2,
     retry_transient: bool = False,
+    subset_size: int = None,
 ) -> pd.DataFrame:
     """
     Get responses from a single LLM for each query in the dataset and save the results.
@@ -265,12 +282,20 @@ def get_model_responses(
         query_col (str, optional): Column name containing the queries. Defaults to 'question'.
         retries (int, optional): Number of retries for each query. Defaults to 3.
         initial_delay (int, optional): Initial delay between retries. Defaults to 2.
+        subset_size (int, optional): Subset size used to namespace output files.
 
     Returns:
         pd.DataFrame: DataFrame with the model responses added.
     """
     response_column = f'{model_name}_response'
-    save_path = os.path.join(res_by_model_dir, f'{model_name}_responses.csv')
+    trace_id_column = f'{model_name}_trace_id'
+    subset_suffix = f'_subset_{subset_size}' if subset_size is not None else ''
+    save_path = os.path.join(
+        res_by_model_dir, f'{model_name}_responses{subset_suffix}.csv'
+    )
+    trace_file_path = os.path.join(
+        res_by_model_dir, f'{model_name}_traces{subset_suffix}.jsonl'
+    )
     if retry_transient:
         from scripts.compute_metrics.BioScore import (
             RESPONSE_TRANSIENT_ERROR,
@@ -293,6 +318,7 @@ def get_model_responses(
     max_new_tokens = hyperparams.get('max_new_tokens', 1024)
     temperature = hyperparams.get('temperature', 0.0)
     model_type = hyperparams.get('model_type')
+    provider_config = hyperparams.get('provider_config')
 
     query_instance = initialize_model(
         model_name,
@@ -300,6 +326,10 @@ def get_model_responses(
         max_new_tokens,
         temperature,
         model_type=model_type,
+        provider_config=provider_config,
+        trace_file_path=(
+            trace_file_path if model_type == 'custom_chat_completions' else None
+        ),
     )
     responses = collect_single_model_responses(
         model_name,
@@ -311,11 +341,17 @@ def get_model_responses(
     )
     if retry_transient:
         data.loc[retry_rows, response_column] = responses
+        if model_type == 'custom_chat_completions':
+            if trace_id_column not in data:
+                data[trace_id_column] = None
+            data.loc[retry_rows, trace_id_column] = query_instance.collected_trace_ids
         score_column = f'{model_name}_BioScore'
         if score_column in data:
             data.loc[retry_rows, score_column] = float('nan')
     else:
         data[response_column] = responses
+        if model_type == 'custom_chat_completions':
+            data[trace_id_column] = query_instance.collected_trace_ids
 
     failed_response_count = sum(
         isinstance(response, str)
@@ -356,10 +392,20 @@ def main():
     parser.add_argument('--retry_transient', action='store_true',
         help='Retry only transient errors in the existing model response CSV'
     )
+    parser.add_argument('--subset_size', '--subset-size', dest='subset_size', type=int,
+        help='Run an exact-size subset containing every question template'
+    )
     parser.add_argument('--hyperparams', type=str, required=True, 
         help='Model hyperparameters as JSON string'
     )
     args = parser.parse_args()
+
+    if args.subset_size is not None and args.retry_transient:
+        parser.error("--subset_size cannot be combined with --retry_transient")
+    if args.subset_size is not None:
+        os.environ["CARDBIOMEDBENCH_CACHE_SUFFIX"] = (
+            f"subset_{args.subset_size}"
+        )
 
     # Deserialize hyperparameters
     try:
@@ -377,6 +423,16 @@ def main():
         print("❌ No data to process. Exiting.")
         return
 
+    if args.subset_size is not None:
+        try:
+            data = sample_template_subset(data, args.subset_size)
+        except ValueError as error:
+            parser.error(str(error))
+        print(
+            f"🔧 Selected {len(data)} questions across "
+            f"{data['template_uuid'].nunique()} templates"
+        )
+
     if not args.retry_transient:
         print(f"🔧 Getting model responses on {len(data)} Q/A for {model_name}")
     data = get_model_responses(
@@ -385,6 +441,7 @@ def main():
         res_by_model_dir=res_by_model_dir,
         hyperparams=hyperparams,
         retry_transient=args.retry_transient,
+        subset_size=args.subset_size,
     )
     print(f"🔧 Responses collected and saved to for {model_name}")
 

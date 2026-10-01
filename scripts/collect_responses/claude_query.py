@@ -5,6 +5,7 @@ from dotenv import load_dotenv
 import anthropic
 
 from scripts.collect_responses.cache_utils import (
+    add_cache_suffix,
     filter_valid_cache,
     is_valid_cached_response,
 )
@@ -60,7 +61,9 @@ class ClaudeQuery:
         """
         cache_dir = os.path.join(os.path.dirname(__file__), '..', '..', '.cache', 'model_responses_cache')
         os.makedirs(cache_dir, exist_ok=True)
-        return os.path.join(cache_dir, f'{self.model_name}_cache.json')
+        return os.path.join(
+            cache_dir, add_cache_suffix(f'{self.model_name}_cache.json')
+        )
 
     def load_cache(self):
         """
