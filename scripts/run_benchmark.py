@@ -152,8 +152,18 @@ def run_responses(args, config):
         model_config = next(
             model for model in config['models'] if model['name'] == model_name
         )
-        if model_config.get('type') in {'azure_openai', 'openrouter'}:
+        if model_config.get('type') in {
+            'azure_openai', 'openrouter', 'custom_chat_completions'
+        }:
             current_model_hyperparams['model_type'] = model_config['type']
+        if model_config.get('type') == 'custom_chat_completions':
+            current_model_hyperparams['provider_config'] = {
+                key: model_config[key]
+                for key in (
+                    'model', 'endpoint_env', 'token_env', 'extra_body_env'
+                )
+                if key in model_config
+            }
 
         model_hyperparams_str = json.dumps(current_model_hyperparams)
         cmd = [

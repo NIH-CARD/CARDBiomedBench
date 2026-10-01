@@ -19,6 +19,7 @@ from scripts.scripts_utils import load_dataset, save_dataset
 from scripts.collect_responses.gpt_query import GPTQuery
 from scripts.collect_responses.azure_query import AzureQuery
 from scripts.collect_responses.openrouter_query import OpenRouterQuery
+from scripts.collect_responses.custom_chat_completions_query import CustomChatCompletionsQuery
 from scripts.collect_responses.gemini_query import GeminiQuery
 from scripts.collect_responses.claude_query import ClaudeQuery
 from scripts.collect_responses.perplexity_query import PerplexityQuery
@@ -31,6 +32,7 @@ def initialize_model(
     max_new_tokens: int,
     temperature: float,
     model_type: str = None,
+    provider_config: dict = None,
 ):
     """
     Initialize the model client and create an instance of the query class for the specified model.
@@ -69,7 +71,16 @@ def initialize_model(
             'reasoning_effort': 'low',
         },
     }
-    if model_type == 'azure_openai':
+    if model_type == 'custom_chat_completions':
+        provider_config = provider_config or {}
+        return CustomChatCompletionsQuery(
+            system_prompt,
+            provider_config.get('model', model_name),
+            endpoint_env=provider_config.get('endpoint_env'),
+            token_env=provider_config.get('token_env'),
+            extra_body_env=provider_config.get('extra_body_env'),
+        )
+    elif model_type == 'azure_openai':
         return AzureQuery(
             system_prompt,
             model_name,
@@ -293,6 +304,7 @@ def get_model_responses(
     max_new_tokens = hyperparams.get('max_new_tokens', 1024)
     temperature = hyperparams.get('temperature', 0.0)
     model_type = hyperparams.get('model_type')
+    provider_config = hyperparams.get('provider_config')
 
     query_instance = initialize_model(
         model_name,
@@ -300,6 +312,7 @@ def get_model_responses(
         max_new_tokens,
         temperature,
         model_type=model_type,
+        provider_config=provider_config,
     )
     responses = collect_single_model_responses(
         model_name,
