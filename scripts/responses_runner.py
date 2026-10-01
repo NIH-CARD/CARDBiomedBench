@@ -33,6 +33,7 @@ def initialize_model(
     temperature: float,
     model_type: str = None,
     provider_config: dict = None,
+    trace_file_path: str = None,
 ):
     """
     Initialize the model client and create an instance of the query class for the specified model.
@@ -79,6 +80,7 @@ def initialize_model(
             endpoint_env=provider_config.get('endpoint_env'),
             token_env=provider_config.get('token_env'),
             extra_body_env=provider_config.get('extra_body_env'),
+            trace_file_path=trace_file_path,
         )
     elif model_type == 'azure_openai':
         return AzureQuery(
@@ -249,9 +251,12 @@ def collect_single_model_responses(
         List[str]: List of responses from the model.
     """
     responses = []
+    trace_ids = []
     for query in tqdm(queries, desc=f"🔧 Running queries on {model_name}"):
         response = query_model_retries(query, query_instance, query_checker, retries, initial_delay)
         responses.append(response)
+        trace_ids.append(getattr(query_instance, 'last_trace_id', None))
+    query_instance.collected_trace_ids = trace_ids
     return responses
 
 
@@ -281,7 +286,9 @@ def get_model_responses(
         pd.DataFrame: DataFrame with the model responses added.
     """
     response_column = f'{model_name}_response'
+    trace_id_column = f'{model_name}_trace_id'
     save_path = os.path.join(res_by_model_dir, f'{model_name}_responses.csv')
+    trace_file_path = os.path.join(res_by_model_dir, f'{model_name}_traces.jsonl')
     if retry_transient:
         from scripts.compute_metrics.BioScore import (
             RESPONSE_TRANSIENT_ERROR,
@@ -313,6 +320,9 @@ def get_model_responses(
         temperature,
         model_type=model_type,
         provider_config=provider_config,
+        trace_file_path=(
+            trace_file_path if model_type == 'custom_chat_completions' else None
+        ),
     )
     responses = collect_single_model_responses(
         model_name,
@@ -324,11 +334,17 @@ def get_model_responses(
     )
     if retry_transient:
         data.loc[retry_rows, response_column] = responses
+        if model_type == 'custom_chat_completions':
+            if trace_id_column not in data:
+                data[trace_id_column] = None
+            data.loc[retry_rows, trace_id_column] = query_instance.collected_trace_ids
         score_column = f'{model_name}_BioScore'
         if score_column in data:
             data.loc[retry_rows, score_column] = float('nan')
     else:
         data[response_column] = responses
+        if model_type == 'custom_chat_completions':
+            data[trace_id_column] = query_instance.collected_trace_ids
 
     failed_response_count = sum(
         isinstance(response, str)
