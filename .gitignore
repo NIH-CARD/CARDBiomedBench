@@ -4,6 +4,7 @@ data/*
 logs/*
 results/*
 slurm-*
+.DS_Store
 
 # VSCode directory
 .vscode
