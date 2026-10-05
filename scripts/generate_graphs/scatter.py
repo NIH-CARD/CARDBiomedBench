@@ -8,6 +8,7 @@ from matplotlib.offsetbox import AnnotationBbox, TextArea, HPacker
 
 
 MODEL_LABELS = {
+    "codon-gpt-5.4": {"label": "codon.bio-GPT-5.4"},
     "qwen-3.8-max": {"label": "Qwen-3.8-Max"},
     "kimi-k3": {"label": "Kimi-K3"},
     "glm-5.3": {"label": "GLM-5.3"},
@@ -39,6 +40,7 @@ MODEL_LABELS = {
 }
 
 NEARBY_LABEL_OFFSETS = {
+    "codon-gpt-5.4": +0.025,
     "qwen-3.8-max": +0.025,
     "claude-fable-5.1": +0.025,
     "gpt-5.6-sol": +0.025,
