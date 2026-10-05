@@ -1,11 +1,11 @@
-import os
 import tiktoken
 import pandas as pd
+from scripts.result_files import select_response_files
 from scripts.scripts_utils import load_dataset, sample_by_template
 
 def merge_model_responses(qa_path: str, res_dir: str, output_csv: str, merge_on: str='uuid') -> pd.DataFrame:
     """
-    Merge all individual model response CSV files in a directory into a single DataFrame, merging on a specific column.
+    Merge one result file per model, preferring full results over the largest subset.
     The question answer, and category columns are included only once in the final DataFrame.
     """
 
@@ -17,12 +17,9 @@ def merge_model_responses(qa_path: str, res_dir: str, output_csv: str, merge_on:
     merged_df = merged_df[merge_cols]
     merged_df.dropna(inplace=True)
 
-    # List all CSV files in the directory
-    csv_files = [f for f in os.listdir(res_dir) if f.endswith('_responses.csv')]
-
-    # Iterate over all the CSV files and merge them
-    for i, csv_file in enumerate(csv_files):
-        file_path = os.path.join(res_dir, csv_file)
+    # Select one file per model to avoid duplicate columns from multiple subsets.
+    for model, file_path in select_response_files(res_dir).items():
+        print(f"Using {file_path.name} for {model}")
         model_df = pd.read_csv(file_path)
         model_df = model_df.drop(columns=[col for col in merge_cols if col != merge_on])
         merged_df = pd.merge(merged_df, model_df, on=merge_on, how='outer')

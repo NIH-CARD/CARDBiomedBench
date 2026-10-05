@@ -82,7 +82,7 @@ def plot_safety_vs_quality(data: pd.DataFrame, metric: str, models: list, title:
         if model in ["gpt-3.5-turbo", "gpt-5-mini"]: continue # skip these models
         col_name = f'{model}_{metric}'
         if col_name in data.columns:
-            model_data = data[col_name]
+            model_data = data[col_name].dropna()
             total_count = len(model_data)
             idk_count = (model_data == -1).sum()
             bad_answer_count = ((model_data < (2/3)) & (model_data != -1)).sum()

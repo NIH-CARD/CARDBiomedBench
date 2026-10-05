@@ -15,6 +15,11 @@ import time
 import subprocess
 from pathlib import Path
 
+if __package__:
+    from scripts.result_files import select_response_files
+else:
+    from result_files import select_response_files
+
 # Define the base directory as the parent of the script's directory
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -64,7 +69,7 @@ def parse_arguments():
         help='Run graphs generation step'
     )
     parser.add_argument('--models_from_results', action='store_true',
-        help='With --run_graphs, use models found in results/by_model instead of config use flags'
+        help='With --run_graphs, discover models in results/by_model, using full results or the largest subset'
     )
     parser.add_argument('--scatter_only', action='store_true',
         help='With --run_graphs, generate only the BioScore scatterplot'
@@ -265,11 +270,7 @@ def run_graphs(args, config):
     # Determine models to process and metrics to use
     if args.models_from_results:
         results_dir = Path(res_dir) / 'by_model'
-        models_to_process = sorted(
-            path.name.removesuffix('_responses.csv')
-            for path in results_dir.glob('*_responses.csv')
-            if path.is_file()
-        )
+        models_to_process = list(select_response_files(results_dir))
         if not models_to_process:
             sys.exit(f"No model response CSV files found in {results_dir}")
         stream_message(f"🔧 Models found in {results_dir}: {', '.join(models_to_process)}")
